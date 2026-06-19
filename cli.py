@@ -55,6 +55,9 @@ def _parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--force-together", action="append", default=[],
                    help="Comma-separated peaks to keep in one trip "
                         "(repeatable for multiple groups)")
+    p.add_argument("--by-trailhead", action="store_true",
+                   help="Keep peaks that share a trailhead in the same trip "
+                        "(then eps still merges nearby trailheads)")
     p.add_argument("--merge", action="append", default=[],
                    help="Comma-separated cluster IDs to merge after the first pass "
                         "(repeatable)")
@@ -105,6 +108,7 @@ def main(argv=None) -> int:
         method=args.method,
         exclude=_split_csv(args.exclude),
         force_together=[_split_csv(g) for g in args.force_together],
+        by_trailhead=args.by_trailhead,
     )
 
     list_filter = None if args.list.lower() == "all" else args.list

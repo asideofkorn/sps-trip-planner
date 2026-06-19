@@ -121,6 +121,25 @@ def test_force_together_keeps_peaks_in_one_cluster():
         raise AssertionError("Mount Dana not found in any cluster")
 
 
+def test_by_trailhead_keeps_shared_trailhead_together():
+    # Two peaks ~40 mi apart (DBSCAN would separate them) that share a trailhead.
+    far_a = Peak("A", 36.50, -118.30, 13000, meta={"trailhead": "Shared TH"})
+    far_b = Peak("B", 37.10, -118.55, 13000, meta={"trailhead": "Shared TH"})
+    other = Peak("C", 40.30, -120.30, 9000, meta={"trailhead": "Other TH"})
+    peaks = [far_a, far_b, other]
+
+    # Without the flag the two distant peaks land in separate trips.
+    base = plan_trips(peaks, ClusterConfig(eps_mi=6.0, max_days=10))
+    a_trip = next(c for c in base if "A" in c.peak_names)
+    assert "B" not in a_trip.peak_names
+
+    # With the flag they share a trip despite the distance.
+    by_th = plan_trips(peaks, ClusterConfig(eps_mi=6.0, max_days=10, by_trailhead=True))
+    a_trip = next(c for c in by_th if "A" in c.peak_names)
+    assert "B" in a_trip.peak_names
+    assert "C" not in a_trip.peak_names
+
+
 def test_manual_merge_and_split_roundtrip():
     peaks = load_peaks(DATA)
     config = ClusterConfig()

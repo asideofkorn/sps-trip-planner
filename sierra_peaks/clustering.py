@@ -37,6 +37,7 @@ class ClusterConfig:
     method: str = "dbscan"        # "dbscan" or "agglomerative"
     exclude: List[str] = field(default_factory=list)
     force_together: List[List[str]] = field(default_factory=list)
+    by_trailhead: bool = False    # keep peaks sharing a trailhead in one trip
 
     @property
     def max_effective_mi(self) -> float:
@@ -98,6 +99,23 @@ def _build_units(
     return list(buckets.values())
 
 
+def _trailhead_groups(peaks: Sequence[Peak]) -> List[List[str]]:
+    """Group peak names by their ``trailhead`` metadata.
+
+    Peaks reached from the same trailhead form a must-link group, so they end up
+    in the same trip. Peaks with no trailhead are left ungrouped.
+    """
+    buckets: Dict[str, List[str]] = {}
+    for p in peaks:
+        th = p.meta.get("trailhead")
+        if th is None:
+            continue
+        key = str(th).strip()
+        if key:
+            buckets.setdefault(key, []).append(p.name)
+    return [names for names in buckets.values() if len(names) > 1]
+
+
 def _unit_centroid(unit: Sequence[Peak]) -> Tuple[float, float]:
     return (
         float(np.mean([p.latitude for p in unit])),
@@ -151,7 +169,10 @@ def cluster_peaks(
     if not active:
         return []
 
-    units = _build_units(active, config.force_together)
+    link_groups = list(config.force_together)
+    if config.by_trailhead:
+        link_groups += _trailhead_groups(active)
+    units = _build_units(active, link_groups)
 
     # Stage 1: spatial grouping over unit centroids.
     if len(units) == 1:
