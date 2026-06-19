@@ -70,7 +70,7 @@ def plot_clusters(
     fig.tight_layout()
 
     if output_path:
-        fig.savefig(output_path, dpi=150)
+        fig.savefig(output_path, dpi=300)
     if show:  # pragma: no cover
         plt.show()
     return fig

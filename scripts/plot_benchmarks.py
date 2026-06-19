@@ -83,7 +83,7 @@ def plot_ladder(df: pd.DataFrame, stamp: str) -> Path:
     ax.grid(axis="x", linestyle=":", alpha=0.5)
     fig.tight_layout()
     out = CHARTS / f"benchmark_progression_ladder_{stamp}.png"
-    fig.savefig(out, dpi=150)
+    fig.savefig(out, dpi=300)
     plt.close(fig)
     return out
 
@@ -110,7 +110,7 @@ def plot_map(df: pd.DataFrame, stamp: str) -> Path:
     ax.grid(linestyle=":", alpha=0.5)
     fig.tight_layout()
     out = CHARTS / f"benchmark_peaks_map_{stamp}.png"
-    fig.savefig(out, dpi=150)
+    fig.savefig(out, dpi=300)
     plt.close(fig)
     return out
 
