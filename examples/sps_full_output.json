@@ -1,0 +1,5663 @@
+{
+  "summary": {
+    "num_clusters": 53,
+    "total_peaks": 247,
+    "total_estimated_days": 69,
+    "total_distance_mi": 407.43,
+    "total_elevation_gain_ft": 43081.0
+  },
+  "clusters": [
+    {
+      "cluster_id": 0,
+      "num_peaks": 12,
+      "peaks": [
+        {
+          "name": "Disappointment Peak",
+          "latitude": 37.067903,
+          "longitude": -118.467557,
+          "elevation_ft": 13917.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "4",
+            "section": 12.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6.8,
+            "gain_ft": 6315,
+            "loss_ft": 200,
+            "trailhead": "South Fork Trail",
+            "quad": "Split Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Middle Palisade",
+          "latitude": 37.07029,
+          "longitude": -118.469138,
+          "elevation_ft": 14012.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 12.8,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 6.7,
+            "gain_ft": 6410,
+            "loss_ft": 200,
+            "trailhead": "South Fork Trail",
+            "quad": "Split Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Norman Clyde Peak",
+          "latitude": 37.074485,
+          "longitude": -118.474422,
+          "elevation_ft": 13855.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "4",
+            "section": 12.9,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 6.8,
+            "gain_ft": 6255,
+            "loss_ft": 200,
+            "trailhead": "South Fork Trail",
+            "quad": "Split Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Palisade Crest",
+          "latitude": 37.081447,
+          "longitude": -118.48958,
+          "elevation_ft": 13553.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "4",
+            "section": 12.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6.8,
+            "gain_ft": 5955,
+            "loss_ft": 200,
+            "trailhead": "South Fork Trail",
+            "quad": "Split Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Temple Crag",
+          "latitude": 37.109718,
+          "longitude": -118.491327,
+          "elevation_ft": 12976.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 14.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.5,
+            "gain_ft": 5475,
+            "loss_ft": 300,
+            "trailhead": "South Fork Trail",
+            "quad": "Split Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Gayley",
+          "latitude": 37.103001,
+          "longitude": -118.499807,
+          "elevation_ft": 13510.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 14.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.5,
+            "gain_ft": 5810,
+            "loss_ft": 100,
+            "trailhead": "North Fork Trail",
+            "quad": "Split Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Sill",
+          "latitude": 37.095985,
+          "longitude": -118.503396,
+          "elevation_ft": 14153.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 14.3,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 11.9,
+            "gain_ft": 7685,
+            "loss_ft": 1340,
+            "trailhead": "North Fork Trail",
+            "quad": "North Palisade",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "NORTH PALISADE",
+          "latitude": 37.094243,
+          "longitude": -118.514437,
+          "elevation_ft": 14242.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "4",
+            "section": 14.4,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 10.5,
+            "gain_ft": 6530,
+            "loss_ft": 100,
+            "trailhead": "North Fork Trail",
+            "quad": "NORTH PALISADE",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Thunderbolt Peak",
+          "latitude": 37.097488,
+          "longitude": -118.517293,
+          "elevation_ft": 14003.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "4s5",
+            "section": 14.5,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 8.6,
+            "gain_ft": 4395,
+            "loss_ft": 200,
+            "trailhead": "Bishop Pass Trail",
+            "quad": "North Palisade",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Winchell",
+          "latitude": 37.104596,
+          "longitude": -118.526166,
+          "elevation_ft": 13775.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 14.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.7,
+            "gain_ft": 6065,
+            "loss_ft": 100,
+            "trailhead": "North Fork Trail",
+            "quad": "North Palisade",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Agassiz",
+          "latitude": 37.111877,
+          "longitude": -118.530755,
+          "elevation_ft": 13893.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 14.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7.2,
+            "gain_ft": 4185,
+            "loss_ft": 100,
+            "trailhead": "Bishop Pass Trail",
+            "quad": "North Palisade",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Cloudripper",
+          "latitude": 37.142753,
+          "longitude": -118.530469,
+          "elevation_ft": 13525.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 14.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5,
+            "gain_ft": 4295,
+            "loss_ft": 50,
+            "trailhead": "North Fork Trail",
+            "quad": "Mount Thompson",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Disappointment Peak",
+        "Middle Palisade",
+        "Norman Clyde Peak",
+        "Palisade Crest",
+        "Temple Crag",
+        "Mount Gayley",
+        "Mount Sill",
+        "NORTH PALISADE",
+        "Thunderbolt Peak",
+        "Mount Winchell",
+        "Mount Agassiz",
+        "Cloudripper"
+      ],
+      "total_distance_mi": 8.98,
+      "total_effective_mi": 11.2,
+      "total_elevation_gain_ft": 1479.0,
+      "estimated_days": 1,
+      "efficiency_score": 5.6599,
+      "emblem_peaks": 1,
+      "mountaineers_peaks": 4
+    },
+    {
+      "cluster_id": 1,
+      "num_peaks": 13,
+      "peaks": [
+        {
+          "name": "Mount Goethe",
+          "latitude": 37.206148,
+          "longitude": -118.702298,
+          "elevation_ft": 13264.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 16.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.6,
+            "gain_ft": 6025,
+            "loss_ft": 2020,
+            "trailhead": "Lamark Lakes Trail",
+            "quad": "Mount Darwin",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Lamarck",
+          "latitude": 37.19487,
+          "longitude": -118.670615,
+          "elevation_ft": 13417.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 15.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.6,
+            "gain_ft": 4155,
+            "trailhead": "Lamark Lakes Trail",
+            "quad": "Mount Darwin",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Mendel",
+          "latitude": 37.174841,
+          "longitude": -118.682236,
+          "elevation_ft": 13710.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 15.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7.5,
+            "gain_ft": 5830,
+            "loss_ft": 380,
+            "trailhead": "Lamark Lakes Trail",
+            "quad": "Mount Darwin",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "MOUNT DARWIN",
+          "latitude": 37.167022,
+          "longitude": -118.672388,
+          "elevation_ft": 13831.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3s4",
+            "section": 15.7,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 8,
+            "gain_ft": 5950,
+            "loss_ft": 1380,
+            "trailhead": "Lamark Lakes Trail",
+            "quad": "MOUNT DARWIN",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Huxley",
+          "latitude": 37.136036,
+          "longitude": -118.682739,
+          "elevation_ft": 13086.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 15.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10.2,
+            "gain_ft": 5875,
+            "loss_ft": 1850,
+            "trailhead": "Sabrina Basin Trail",
+            "quad": "Mount Darwin",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Fiske",
+          "latitude": 37.136569,
+          "longitude": -118.667835,
+          "elevation_ft": 13503.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 15.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 11.5,
+            "gain_ft": 5630,
+            "loss_ft": 1200,
+            "trailhead": "Sabrina Basin Trail",
+            "quad": "Mount Darwin",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Haeckel",
+          "latitude": 37.150992,
+          "longitude": -118.661007,
+          "elevation_ft": 13418.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 15.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.7,
+            "gain_ft": 4495,
+            "loss_ft": 150,
+            "trailhead": "Sabrina Basin Trail",
+            "quad": "Mount Darwin",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Wallace",
+          "latitude": 37.146807,
+          "longitude": -118.656798,
+          "elevation_ft": 13377.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2s3",
+            "section": 15.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10.2,
+            "gain_ft": 4450,
+            "loss_ft": 150,
+            "trailhead": "Sabrina Basin Trail",
+            "quad": "Mount Darwin",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Powell",
+          "latitude": 37.138674,
+          "longitude": -118.634023,
+          "elevation_ft": 13360.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 15.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.2,
+            "gain_ft": 5785,
+            "loss_ft": 1500,
+            "trailhead": "Sabrina Basin Trail",
+            "quad": "Mount Thompson",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Thompson",
+          "latitude": 37.142882,
+          "longitude": -118.613612,
+          "elevation_ft": 13494.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 15.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.1,
+            "gain_ft": 5620,
+            "loss_ft": 1200,
+            "trailhead": "Sabrina Basin Trail",
+            "quad": "Mount Thompson",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Gilbert",
+          "latitude": 37.136369,
+          "longitude": -118.598223,
+          "elevation_ft": 13106.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 14.11,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.5,
+            "gain_ft": 3675,
+            "loss_ft": 380,
+            "trailhead": "Bishop Pass Trail",
+            "quad": "Mount Thompson",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Johnson",
+          "latitude": 37.128459,
+          "longitude": -118.586358,
+          "elevation_ft": 12871.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 14.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5,
+            "gain_ft": 3360,
+            "loss_ft": 300,
+            "trailhead": "Bishop Pass Trail",
+            "quad": "Mount Thompson",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Goode",
+          "latitude": 37.123027,
+          "longitude": -118.568106,
+          "elevation_ft": 13085.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 14.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6.2,
+            "gain_ft": 3375,
+            "loss_ft": 100,
+            "trailhead": "Bishop Pass Trail",
+            "quad": "North Palisade",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mount Goethe",
+        "Mount Lamarck",
+        "Mount Mendel",
+        "MOUNT DARWIN",
+        "Mount Huxley",
+        "Mount Fiske",
+        "Mount Haeckel",
+        "Mount Wallace",
+        "Mount Powell",
+        "Mount Thompson",
+        "Mount Gilbert",
+        "Mount Johnson",
+        "Mount Goode"
+      ],
+      "total_distance_mi": 14.09,
+      "total_effective_mi": 16.09,
+      "total_elevation_gain_ft": 1332.0,
+      "estimated_days": 2,
+      "efficiency_score": 4.9825,
+      "emblem_peaks": 1,
+      "mountaineers_peaks": 0
+    },
+    {
+      "cluster_id": 2,
+      "num_peaks": 11,
+      "peaks": [
+        {
+          "name": "Mount Young",
+          "latitude": 36.581042,
+          "longitude": -118.327623,
+          "elevation_ft": 13176.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 5.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10.8,
+            "gain_ft": 6625,
+            "loss_ft": 1750,
+            "trailhead": "Mount Whitney Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Hale",
+          "latitude": 36.588037,
+          "longitude": -118.314654,
+          "elevation_ft": 13494.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 5.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10.7,
+            "gain_ft": 6945,
+            "loss_ft": 1750,
+            "trailhead": "Mount Whitney Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Muir",
+          "latitude": 36.564739,
+          "longitude": -118.291329,
+          "elevation_ft": 14012.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 4.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.2,
+            "gain_ft": 5910,
+            "loss_ft": 200,
+            "trailhead": "Mount Whitney Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "MOUNT WHITNEY",
+          "latitude": 36.57857,
+          "longitude": -118.292422,
+          "elevation_ft": 14491.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 4.7,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 10.9,
+            "gain_ft": 6390,
+            "loss_ft": 200,
+            "trailhead": "Mount Whitney Trail",
+            "quad": "MOUNT WHITNEY",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Russell",
+          "latitude": 36.590671,
+          "longitude": -118.289036,
+          "elevation_ft": 14088.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 5.3,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 4.5,
+            "gain_ft": 6100,
+            "loss_ft": 310,
+            "trailhead": "Mount Whitney Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Carillion",
+          "latitude": 36.592421,
+          "longitude": -118.277909,
+          "elevation_ft": 13517.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 5.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 4.2,
+            "gain_ft": 5465,
+            "loss_ft": 250,
+            "trailhead": "Mount Whitney Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Tunnabora Peak",
+          "latitude": 36.605128,
+          "longitude": -118.282185,
+          "elevation_ft": 13563.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 5.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5,
+            "gain_ft": 5365,
+            "loss_ft": 300,
+            "trailhead": "Mount Whitney Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Barnard",
+          "latitude": 36.628403,
+          "longitude": -118.321599,
+          "elevation_ft": 13990.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 5.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 13.9,
+            "gain_ft": 9330,
+            "loss_ft": 1650,
+            "trailhead": "Shepherd Pass Trail",
+            "quad": "Mount Williamson",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Trojan Peak",
+          "latitude": 36.642322,
+          "longitude": -118.315286,
+          "elevation_ft": 13947.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 5.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 12.6,
+            "gain_ft": 8565,
+            "loss_ft": 920,
+            "trailhead": "Shepherd Pass Trail",
+            "quad": "Mount Williamson",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "MOUNT WILLIAMSON",
+          "latitude": 36.655954,
+          "longitude": -118.311085,
+          "elevation_ft": 14370.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 5.9,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 12.9,
+            "gain_ft": 8990,
+            "loss_ft": 920,
+            "trailhead": "Shepherd Pass Trail",
+            "quad": "MOUNT WILLIAMSON",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Tyndall",
+          "latitude": 36.655744,
+          "longitude": -118.337273,
+          "elevation_ft": 14019.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 5.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 11.1,
+            "gain_ft": 8360,
+            "loss_ft": 650,
+            "trailhead": "Shepherd Pass Trail",
+            "quad": "Mount Williamson",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mount Young",
+        "Mount Hale",
+        "Mount Muir",
+        "MOUNT WHITNEY",
+        "Mount Russell",
+        "Mount Carillion",
+        "Tunnabora Peak",
+        "Mount Barnard",
+        "Trojan Peak",
+        "MOUNT WILLIAMSON",
+        "Mount Tyndall"
+      ],
+      "total_distance_mi": 12.44,
+      "total_effective_mi": 15.76,
+      "total_elevation_gain_ft": 2211.0,
+      "estimated_days": 2,
+      "efficiency_score": 4.2701,
+      "emblem_peaks": 2,
+      "mountaineers_peaks": 1
+    },
+    {
+      "cluster_id": 3,
+      "num_peaks": 7,
+      "peaks": [
+        {
+          "name": "North Guard",
+          "latitude": 36.716527,
+          "longitude": -118.490038,
+          "elevation_ft": 13327.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3s4",
+            "section": 7.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 12,
+            "gain_ft": 5715,
+            "loss_ft": 200,
+            "trailhead": "Roads end to Bubbs Creek Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "MOUNT BREWER",
+          "latitude": 36.708319,
+          "longitude": -118.485233,
+          "elevation_ft": 13570.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 7.9,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 13.5,
+            "gain_ft": 6310,
+            "loss_ft": 550,
+            "trailhead": "Roads end to Bubbs Creek Trail",
+            "quad": "MOUNT BREWER",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "South Guard",
+          "latitude": 36.693459,
+          "longitude": -118.483874,
+          "elevation_ft": 13232.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 7.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 15,
+            "gain_ft": 6620,
+            "loss_ft": 1200,
+            "trailhead": "Roads end to Bubbs Creek Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Thunder Mountain",
+          "latitude": 36.668952,
+          "longitude": -118.475777,
+          "elevation_ft": 13517.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3s4",
+            "section": 7.7,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 20,
+            "gain_ft": 9625,
+            "loss_ft": 2420,
+            "trailhead": "Shepherd Pass Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Table Mountain",
+          "latitude": 36.659904,
+          "longitude": -118.473704,
+          "elevation_ft": 13632.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 7.6,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 19.9,
+            "gain_ft": 9920,
+            "loss_ft": 2600,
+            "trailhead": "Shepherd Pass Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Midway Mountain",
+          "latitude": 36.643325,
+          "longitude": -118.48371,
+          "elevation_ft": 13665.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 7.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 20.2,
+            "gain_ft": 9955,
+            "loss_ft": 2600,
+            "trailhead": "Shepherd Pass Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Milestone Mountain",
+          "latitude": 36.634474,
+          "longitude": -118.484532,
+          "elevation_ft": 13638.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 7.4,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 20.1,
+            "gain_ft": 9930,
+            "loss_ft": 2600,
+            "trailhead": "Shepherd Pass Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "North Guard",
+        "MOUNT BREWER",
+        "South Guard",
+        "Thunder Mountain",
+        "Table Mountain",
+        "Midway Mountain",
+        "Milestone Mountain"
+      ],
+      "total_distance_mi": 5.93,
+      "total_effective_mi": 6.94,
+      "total_elevation_gain_ft": 676.0,
+      "estimated_days": 1,
+      "efficiency_score": 4.1314,
+      "emblem_peaks": 1,
+      "mountaineers_peaks": 3
+    },
+    {
+      "cluster_id": 4,
+      "num_peaks": 15,
+      "peaks": [
+        {
+          "name": "Cirque Peak",
+          "latitude": 36.476936,
+          "longitude": -118.236977,
+          "elevation_ft": 12900.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 3.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7.2,
+            "gain_ft": 3060,
+            "loss_ft": 100,
+            "trailhead": "Cottonwood Pass Trail",
+            "quad": "Cirque Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Langley",
+          "latitude": 36.523367,
+          "longitude": -118.239416,
+          "elevation_ft": 14026.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 3.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 11.1,
+            "gain_ft": 4795,
+            "loss_ft": 400,
+            "trailhead": "Cottonwood Lakes Trail",
+            "quad": "Mount Langley",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Corcoran",
+          "latitude": 36.538552,
+          "longitude": -118.250484,
+          "elevation_ft": 13714.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 4.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 8,
+            "gain_ft": 7155,
+            "trailhead": "Granite View Drive",
+            "quad": "Mount Langley",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount LeConte",
+          "latitude": 36.541617,
+          "longitude": -118.252225,
+          "elevation_ft": 13830.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 4.2,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 8.1,
+            "gain_ft": 7270,
+            "trailhead": "Granite View Drive",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Lone Pine Peak",
+          "latitude": 36.561734,
+          "longitude": -118.2257,
+          "elevation_ft": 12943.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 4.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 4.8,
+            "gain_ft": 5085,
+            "trailhead": "Meysan Lakes Trail",
+            "quad": "Mount Langley",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Thor Peak",
+          "latitude": 36.576855,
+          "longitude": -118.26574,
+          "elevation_ft": 12306.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 4.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 4.8,
+            "gain_ft": 4005,
+            "trailhead": "Mount Whitney Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Irvine",
+          "latitude": 36.55591,
+          "longitude": -118.263539,
+          "elevation_ft": 13780.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 4.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7,
+            "gain_ft": 5580,
+            "loss_ft": 100,
+            "trailhead": "Meysan Lake Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Mallory",
+          "latitude": 36.549086,
+          "longitude": -118.262276,
+          "elevation_ft": 13845.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 4.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7,
+            "gain_ft": 5985,
+            "trailhead": "Meysan Lake Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount McAdie",
+          "latitude": 36.551753,
+          "longitude": -118.276336,
+          "elevation_ft": 13799.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 4.5,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 6.9,
+            "gain_ft": 5500,
+            "trailhead": "Mount Whitney Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Newcomb",
+          "latitude": 36.540068,
+          "longitude": -118.293411,
+          "elevation_ft": 13422.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 3.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 19,
+            "gain_ft": 5380,
+            "loss_ft": 1900,
+            "trailhead": "Cottonwood Pass Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Pickering",
+          "latitude": 36.527273,
+          "longitude": -118.290889,
+          "elevation_ft": 13474.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 3.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 18.5,
+            "gain_ft": 5900,
+            "loss_ft": 2365,
+            "trailhead": "Cottonwood Pass Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Joe Devel Peak",
+          "latitude": 36.515326,
+          "longitude": -118.296379,
+          "elevation_ft": 13327.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 3.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 17,
+            "gain_ft": 5285,
+            "loss_ft": 1900,
+            "trailhead": "Cottonwood Pass Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Chamberlin",
+          "latitude": 36.533542,
+          "longitude": -118.310654,
+          "elevation_ft": 13169.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 3.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 18.8,
+            "gain_ft": 5130,
+            "loss_ft": 1900,
+            "trailhead": "Cottonwood Pass Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Hitchcock",
+          "latitude": 36.554866,
+          "longitude": -118.311852,
+          "elevation_ft": 13186.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 3.11,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10.3,
+            "gain_ft": 5300,
+            "loss_ft": 475,
+            "trailhead": "Mount Whitney Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Guyot",
+          "latitude": 36.509234,
+          "longitude": -118.362641,
+          "elevation_ft": 12300.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 3.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 18.1,
+            "gain_ft": 4760,
+            "loss_ft": 2400,
+            "trailhead": "Cottonwood Pass Trail",
+            "quad": "Mount Whitney",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Cirque Peak",
+        "Mount Langley",
+        "Mount Corcoran",
+        "Mount LeConte",
+        "Lone Pine Peak",
+        "Thor Peak",
+        "Mount Irvine",
+        "Mount Mallory",
+        "Mount McAdie",
+        "Mount Newcomb",
+        "Mount Pickering",
+        "Joe Devel Peak",
+        "Mount Chamberlin",
+        "Mount Hitchcock",
+        "Mount Guyot"
+      ],
+      "total_distance_mi": 22.08,
+      "total_effective_mi": 26.36,
+      "total_elevation_gain_ft": 2850.0,
+      "estimated_days": 2,
+      "efficiency_score": 4.1257,
+      "emblem_peaks": 0,
+      "mountaineers_peaks": 2
+    },
+    {
+      "cluster_id": 5,
+      "num_peaks": 14,
+      "peaks": [
+        {
+          "name": "Mount Bago",
+          "latitude": 36.769994,
+          "longitude": -118.438088,
+          "elevation_ft": 11870.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 9.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.7,
+            "gain_ft": 4110,
+            "loss_ft": 1430,
+            "trailhead": "Kearsarge Pass Trail",
+            "quad": "Mount Clarence King",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "West Vidette",
+          "latitude": 36.733905,
+          "longitude": -118.419727,
+          "elevation_ft": 12533.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 8.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 12.7,
+            "gain_ft": 5695,
+            "loss_ft": 2350,
+            "trailhead": "Kearsarge Pass Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "East Vidette",
+          "latitude": 36.743814,
+          "longitude": -118.400555,
+          "elevation_ft": 12356.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2s3",
+            "section": 8.6,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 12.5,
+            "gain_ft": 5515,
+            "loss_ft": 1350,
+            "trailhead": "Kearsarge Pass Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "University Peak",
+          "latitude": 36.748079,
+          "longitude": -118.36187,
+          "elevation_ft": 13589.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 9.1,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 3.9,
+            "gain_ft": 4540,
+            "loss_ft": 150,
+            "trailhead": "Kearsarge Pass Trail",
+            "quad": "Mount Williamson",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Bradley",
+          "latitude": 36.728643,
+          "longitude": -118.338717,
+          "elevation_ft": 13264.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 8.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.7,
+            "gain_ft": 7825,
+            "loss_ft": 480,
+            "trailhead": "Pinyon Creek Trail",
+            "quad": "Mount Williamson",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Center Peak",
+          "latitude": 36.721928,
+          "longitude": -118.36264,
+          "elevation_ft": 12730.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2s4",
+            "section": 8.11,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 15.7,
+            "gain_ft": 5815,
+            "loss_ft": 2275,
+            "trailhead": "Kearsarge Pass Trail",
+            "quad": "Mount Williamson",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Keith",
+          "latitude": 36.700069,
+          "longitude": -118.343416,
+          "elevation_ft": 13976.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 8.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.7,
+            "gain_ft": 8315,
+            "loss_ft": 650,
+            "trailhead": "Shepherd Pass Trail",
+            "quad": "Mount Williamson",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Junction Peak",
+          "latitude": 36.690962,
+          "longitude": -118.366282,
+          "elevation_ft": 13845.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 8.8,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 12.4,
+            "gain_ft": 8185,
+            "loss_ft": 650,
+            "trailhead": "Shepherd Pass Trail",
+            "quad": "Mount Williamson",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Caltech Peak",
+          "latitude": 36.688415,
+          "longitude": -118.390488,
+          "elevation_ft": 13832.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 8.12,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 18.9,
+            "gain_ft": 9275,
+            "loss_ft": 1775,
+            "trailhead": "Shepherd Pass Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Stanford (S)",
+          "latitude": 36.703965,
+          "longitude": -118.395703,
+          "elevation_ft": 13973.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 8.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 18.5,
+            "gain_ft": 9140,
+            "loss_ft": 200,
+            "trailhead": "Roads end to Bubbs Creek Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Deerhorn Mountain",
+          "latitude": 36.712963,
+          "longitude": -118.41045,
+          "elevation_ft": 13281.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 8.5,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 14,
+            "gain_ft": 6440,
+            "loss_ft": 2350,
+            "trailhead": "Kearsarge Pass Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Ericsson",
+          "latitude": 36.697153,
+          "longitude": -118.414464,
+          "elevation_ft": 13583.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 8.3,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 17.5,
+            "gain_ft": 8150,
+            "loss_ft": 200,
+            "trailhead": "Roads end to Bubbs Creek Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Genevra",
+          "latitude": 36.683307,
+          "longitude": -118.434325,
+          "elevation_ft": 13054.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 8.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 20.3,
+            "gain_ft": 9620,
+            "loss_ft": 1600,
+            "trailhead": "Roads end to Bubbs Creek Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Jordan",
+          "latitude": 36.682248,
+          "longitude": -118.449785,
+          "elevation_ft": 13320.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3s4",
+            "section": 8.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 20.8,
+            "gain_ft": 9885,
+            "loss_ft": 1600,
+            "trailhead": "Granite Pass Trail",
+            "quad": "Mount Brewer",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mount Bago",
+        "West Vidette",
+        "East Vidette",
+        "University Peak",
+        "Mount Bradley",
+        "Center Peak",
+        "Mount Keith",
+        "Junction Peak",
+        "Caltech Peak",
+        "Mount Stanford (S)",
+        "Deerhorn Mountain",
+        "Mount Ericsson",
+        "Mount Genevra",
+        "Mount Jordan"
+      ],
+      "total_distance_mi": 19.56,
+      "total_effective_mi": 25.34,
+      "total_elevation_gain_ft": 3851.0,
+      "estimated_days": 2,
+      "efficiency_score": 3.9614,
+      "emblem_peaks": 0,
+      "mountaineers_peaks": 5
+    },
+    {
+      "cluster_id": 6,
+      "num_peaks": 16,
+      "peaks": [
+        {
+          "name": "Mount Hooper",
+          "latitude": 37.292179,
+          "longitude": -118.895106,
+          "elevation_ft": 12349.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2s4",
+            "section": 16.11,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 18.2,
+            "gain_ft": 5790,
+            "loss_ft": 800,
+            "trailhead": "Blayney Meadows Trail",
+            "quad": "Florence Lake",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Senger",
+          "latitude": 37.277702,
+          "longitude": -118.858395,
+          "elevation_ft": 12286.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 16.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 16.2,
+            "gain_ft": 5725,
+            "loss_ft": 800,
+            "trailhead": "Blayney Meadows Trail",
+            "quad": "Mount Hilgard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Seven Gables",
+          "latitude": 37.310878,
+          "longitude": -118.833523,
+          "elevation_ft": 13080.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 16.9,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 14.7,
+            "gain_ft": 6580,
+            "loss_ft": 1150,
+            "trailhead": "Bear Ridge Trail",
+            "quad": "Mount Hilgard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Gemini",
+          "latitude": 37.296552,
+          "longitude": -118.816987,
+          "elevation_ft": 12880.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 16.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 16,
+            "gain_ft": 6380,
+            "loss_ft": 1150,
+            "trailhead": "Bear Ridge Trail",
+            "quad": "Mount Hilgard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Pilot Knob (N)",
+          "latitude": 37.273405,
+          "longitude": -118.757111,
+          "elevation_ft": 12245.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 16.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10.5,
+            "gain_ft": 3795,
+            "loss_ft": 800,
+            "trailhead": "North Lake Trail",
+            "quad": "Mount Hilgard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Merriam Peak",
+          "latitude": 37.309126,
+          "longitude": -118.765212,
+          "elevation_ft": 13103.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 17.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.4,
+            "gain_ft": 5855,
+            "loss_ft": 150,
+            "trailhead": "Pine Creek Pass Trail",
+            "quad": "Mount Hilgard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Royce Peak",
+          "latitude": 37.318174,
+          "longitude": -118.770896,
+          "elevation_ft": 13280.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 17.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.7,
+            "gain_ft": 6030,
+            "loss_ft": 150,
+            "trailhead": "Pine Creek Pass Trail",
+            "quad": "Mount Hilgard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Julius Ceasar",
+          "latitude": 37.356733,
+          "longitude": -118.781666,
+          "elevation_ft": 13200.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 17.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10.3,
+            "gain_ft": 6100,
+            "loss_ft": 300,
+            "trailhead": "Pine Creek Pass Trail",
+            "quad": "Mount Hilgard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Bear Creek Spire",
+          "latitude": 37.368053,
+          "longitude": -118.767608,
+          "elevation_ft": 13720.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3s4",
+            "section": 17.7,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 5.8,
+            "gain_ft": 3590,
+            "loss_ft": 100,
+            "trailhead": "Mono Pass Trail",
+            "quad": "Mount Hilgard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Morgan (S)",
+          "latitude": 37.405177,
+          "longitude": -118.732947,
+          "elevation_ft": 13748.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 17.11,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.3,
+            "gain_ft": 4340,
+            "loss_ft": 300,
+            "trailhead": "Tamarack Lakes Trail",
+            "quad": "Mount Morgan",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Dade",
+          "latitude": 37.381913,
+          "longitude": -118.779489,
+          "elevation_ft": 13600.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 17.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.3,
+            "gain_ft": 3470,
+            "loss_ft": 100,
+            "trailhead": "Mono Pass Trail",
+            "quad": "Mount Abbot",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "MOUNT ABBOT",
+          "latitude": 37.386353,
+          "longitude": -118.784831,
+          "elevation_ft": 13704.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 17.9,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 5.3,
+            "gain_ft": 3575,
+            "loss_ft": 100,
+            "trailhead": "Mono Pass Trail",
+            "quad": "MOUNT ABBOT",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Mills",
+          "latitude": 37.393853,
+          "longitude": -118.789998,
+          "elevation_ft": 13451.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 17.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.1,
+            "gain_ft": 3320,
+            "loss_ft": 100,
+            "trailhead": "Mono Pass Trail",
+            "quad": "Mount Abbot",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Gabb",
+          "latitude": 37.376631,
+          "longitude": -118.802736,
+          "elevation_ft": 13680.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 17.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 13.8,
+            "gain_ft": 7905,
+            "loss_ft": 1625,
+            "trailhead": "Pine Creek Pass Trail",
+            "quad": "Mount Abbot",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Hilgard",
+          "latitude": 37.360312,
+          "longitude": -118.826932,
+          "elevation_ft": 13361.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 17.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 13.7,
+            "gain_ft": 7760,
+            "loss_ft": 1800,
+            "trailhead": "Pine Creek Pass Trail",
+            "quad": "Mount Hilgard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Recess Peak",
+          "latitude": 37.38242,
+          "longitude": -118.855452,
+          "elevation_ft": 12813.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 17.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 12.9,
+            "gain_ft": 6385,
+            "loss_ft": 1150,
+            "trailhead": "Bear Ridge Trail",
+            "quad": "Mount Abbot",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mount Hooper",
+        "Mount Senger",
+        "Seven Gables",
+        "Gemini",
+        "Pilot Knob (N)",
+        "Merriam Peak",
+        "Royce Peak",
+        "Mount Julius Ceasar",
+        "Bear Creek Spire",
+        "Mount Morgan (S)",
+        "Mount Dade",
+        "MOUNT ABBOT",
+        "Mount Mills",
+        "Mount Gabb",
+        "Mount Hilgard",
+        "Recess Peak"
+      ],
+      "total_distance_mi": 29.5,
+      "total_effective_mi": 33.56,
+      "total_elevation_gain_ft": 2710.0,
+      "estimated_days": 3,
+      "efficiency_score": 3.6729,
+      "emblem_peaks": 1,
+      "mountaineers_peaks": 2
+    },
+    {
+      "cluster_id": 7,
+      "num_peaks": 10,
+      "peaks": [
+        {
+          "name": "Independence Peak",
+          "latitude": 36.76096,
+          "longitude": -118.331834,
+          "elevation_ft": 11742.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 9.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 2,
+            "gain_ft": 2595,
+            "loss_ft": 45,
+            "trailhead": "Robertson Lake Trail",
+            "quad": "Kearsarge Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Kearsarge Peak",
+          "latitude": 36.789474,
+          "longitude": -118.3472,
+          "elevation_ft": 12618.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 9.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3.2,
+            "gain_ft": 3855,
+            "loss_ft": 190,
+            "trailhead": "Old mining trail",
+            "quad": "Kearsarge Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Dragon Peak",
+          "latitude": 36.789847,
+          "longitude": -118.375894,
+          "elevation_ft": 12927.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3s4",
+            "section": 9.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3.5,
+            "gain_ft": 4020,
+            "loss_ft": 280,
+            "trailhead": "Golden Trout Lakes Trail",
+            "quad": "Kearsarge Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Gould",
+          "latitude": 36.779776,
+          "longitude": -118.377876,
+          "elevation_ft": 13005.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1s3",
+            "section": 9.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6,
+            "gain_ft": 4150,
+            "loss_ft": 335,
+            "trailhead": "Kearsarge Pass Trail",
+            "quad": "Mt. Clarence King",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Rixford",
+          "latitude": 36.784856,
+          "longitude": -118.398887,
+          "elevation_ft": 12887.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 9.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 8.3,
+            "gain_ft": 4560,
+            "loss_ft": 865,
+            "trailhead": "Kearsarge Pass Trail",
+            "quad": "Mount Clarence King",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Black Mountain",
+          "latitude": 36.809148,
+          "longitude": -118.378012,
+          "elevation_ft": 13291.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 9.11,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10,
+            "gain_ft": 7640,
+            "loss_ft": 275,
+            "trailhead": "Baxter Pass Trail",
+            "quad": "Mount Clarence King",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Diamond Peak",
+          "latitude": 36.826359,
+          "longitude": -118.390272,
+          "elevation_ft": 13127.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 9.12,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 11.6,
+            "gain_ft": 8860,
+            "loss_ft": 1765,
+            "trailhead": "Baxter Pass Trail",
+            "quad": "Mount Clarence King",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "MOUNT CLARENCE KING",
+          "latitude": 36.833753,
+          "longitude": -118.446185,
+          "elevation_ft": 12907.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "4s5",
+            "section": 9.9,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 17.2,
+            "gain_ft": 6445,
+            "loss_ft": 2730,
+            "trailhead": "Kearsarge Pass Trail",
+            "quad": "MT CLARENCE KING",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Cotter",
+          "latitude": 36.818794,
+          "longitude": -118.44186,
+          "elevation_ft": 12713.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 9.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 16.2,
+            "gain_ft": 6255,
+            "loss_ft": 2730,
+            "trailhead": "Kearsarge Pass Trail",
+            "quad": "Mount Clarence King",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Gardiner",
+          "latitude": 36.8061,
+          "longitude": -118.459192,
+          "elevation_ft": 12907.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "4",
+            "section": 9.7,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 14.2,
+            "gain_ft": 5535,
+            "loss_ft": 1820,
+            "trailhead": "Kearsarge Pass Trail",
+            "quad": "Mount Clarence King",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Independence Peak",
+        "Kearsarge Peak",
+        "Dragon Peak",
+        "Mount Gould",
+        "Mount Rixford",
+        "Black Mountain",
+        "Diamond Peak",
+        "MOUNT CLARENCE KING",
+        "Mount Cotter",
+        "Mount Gardiner"
+      ],
+      "total_distance_mi": 14.55,
+      "total_effective_mi": 17.34,
+      "total_elevation_gain_ft": 1861.0,
+      "estimated_days": 2,
+      "efficiency_score": 3.657,
+      "emblem_peaks": 1,
+      "mountaineers_peaks": 1
+    },
+    {
+      "cluster_id": 8,
+      "num_peaks": 7,
+      "peaks": [
+        {
+          "name": "Mount Baxter",
+          "latitude": 36.861438,
+          "longitude": -118.36222,
+          "elevation_ft": 13136.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 10.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10.6,
+            "gain_ft": 8355,
+            "loss_ft": 1200,
+            "trailhead": "Baxter Pass Trail",
+            "quad": "Kearsarge Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Colosseum Mountain",
+          "latitude": 36.90719,
+          "longitude": -118.367004,
+          "elevation_ft": 12473.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 10.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 13,
+            "gain_ft": 8405,
+            "loss_ft": 520,
+            "trailhead": "Sawmill Pass Trail",
+            "quad": "Aberdeen",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Perkins",
+          "latitude": 36.927166,
+          "longitude": -118.381436,
+          "elevation_ft": 12566.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 10.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9,
+            "gain_ft": 6830,
+            "trailhead": "Armstong Canyon",
+            "quad": "Mount Pinchot",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Wynne",
+          "latitude": 36.938011,
+          "longitude": -118.402918,
+          "elevation_ft": 13179.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 10.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10,
+            "gain_ft": 7995,
+            "loss_ft": 550,
+            "trailhead": "Scotty Spring",
+            "quad": "Mount Pinchot",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Pinchot",
+          "latitude": 36.947328,
+          "longitude": -118.4052,
+          "elevation_ft": 13494.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 10.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10.1,
+            "gain_ft": 8010,
+            "loss_ft": 250,
+            "trailhead": "Scotty Spring",
+            "quad": "Mount Pinchot",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Striped Mountain",
+          "latitude": 36.965621,
+          "longitude": -118.403766,
+          "elevation_ft": 13179.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 10.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 11.4,
+            "gain_ft": 7810,
+            "loss_ft": 40,
+            "trailhead": "Taboose Pass Trail",
+            "quad": "Mount Pinchot",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Goodale Mountain",
+          "latitude": 36.972169,
+          "longitude": -118.385438,
+          "elevation_ft": 12772.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2s3",
+            "section": 10.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 11,
+            "gain_ft": 7395,
+            "loss_ft": 40,
+            "trailhead": "Taboose Pass Trail",
+            "quad": "Mount Pinchot",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mount Baxter",
+        "Colosseum Mountain",
+        "Mount Perkins",
+        "Mount Wynne",
+        "Mount Pinchot",
+        "Striped Mountain",
+        "Goodale Mountain"
+      ],
+      "total_distance_mi": 9.2,
+      "total_effective_mi": 10.73,
+      "total_elevation_gain_ft": 1021.0,
+      "estimated_days": 1,
+      "efficiency_score": 3.3765
+    },
+    {
+      "cluster_id": 9,
+      "num_peaks": 11,
+      "peaks": [
+        {
+          "name": "Whaleback",
+          "latitude": 36.63028,
+          "longitude": -118.531162,
+          "elevation_ft": 11717.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 7.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 24,
+            "gain_ft": 6225,
+            "loss_ft": 2850,
+            "trailhead": "Marvin Pass Trail",
+            "quad": "Sphinx Lake",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Glacier Ridge",
+          "latitude": 36.617446,
+          "longitude": -118.558827,
+          "elevation_ft": 12360.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2s4",
+            "section": 7.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 25,
+            "gain_ft": 6870,
+            "loss_ft": 2850,
+            "trailhead": "Marvin Pass Trail",
+            "quad": "Triple Divide Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Triple Divide Peak",
+          "latitude": 36.592884,
+          "longitude": -118.530756,
+          "elevation_ft": 12634.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 7.1,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 19.2,
+            "gain_ft": 7325,
+            "loss_ft": 2450,
+            "trailhead": "Alta Peak Trail",
+            "quad": "Triple Divide Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Lion Rock",
+          "latitude": 36.582348,
+          "longitude": -118.541987,
+          "elevation_ft": 12360.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 6.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 18.5,
+            "gain_ft": 7650,
+            "loss_ft": 2550,
+            "trailhead": "Alta Peak Trail",
+            "quad": "Triple Divide Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Stewart",
+          "latitude": 36.569665,
+          "longitude": -118.554655,
+          "elevation_ft": 12200.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 6.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 22.7,
+            "gain_ft": 7940,
+            "loss_ft": 3000,
+            "trailhead": "Alta Peak Trail",
+            "quad": "Triple Divide Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Eagle Scout Peak",
+          "latitude": 36.545714,
+          "longitude": -118.561578,
+          "elevation_ft": 12000.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 6.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 22.2,
+            "gain_ft": 8290,
+            "loss_ft": 3350,
+            "trailhead": "Alta Peak Trail",
+            "quad": "Triple Divide Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Black Kaweah",
+          "latitude": 36.545384,
+          "longitude": -118.51583,
+          "elevation_ft": 13720.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 6.1,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 22.7,
+            "gain_ft": 10010,
+            "loss_ft": 4100,
+            "trailhead": "Sawtooth Pass Trail",
+            "quad": "Triple Divide Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Red Kaweah",
+          "latitude": 36.54,
+          "longitude": -118.505625,
+          "elevation_ft": 13720.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 6.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 23,
+            "gain_ft": 10010,
+            "loss_ft": 4100,
+            "trailhead": "Sawtooth Pass Trail",
+            "quad": "Triple Divide Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "MOUNT KAWEAH",
+          "latitude": 36.52601,
+          "longitude": -118.478553,
+          "elevation_ft": 13802.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 6.8,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 25,
+            "gain_ft": 10390,
+            "loss_ft": 4400,
+            "trailhead": "Sawtooth Pass Trail",
+            "quad": "MOUNT KAWEAH",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Picket Guard Peak",
+          "latitude": 36.576609,
+          "longitude": -118.47221,
+          "elevation_ft": 12303.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 6.11,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 23.2,
+            "gain_ft": 10595,
+            "loss_ft": 4600,
+            "trailhead": "Shepherd Pass Trail",
+            "quad": "Mount Kaweah",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Kern Point",
+          "latitude": 36.596685,
+          "longitude": -118.444891,
+          "elevation_ft": 12730.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 6.12,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 23.5,
+            "gain_ft": 11020,
+            "loss_ft": 4600,
+            "trailhead": "Shepherd Pass Trail",
+            "quad": "Mount Kaweah",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Whaleback",
+        "Glacier Ridge",
+        "Triple Divide Peak",
+        "Lion Rock",
+        "Mount Stewart",
+        "Eagle Scout Peak",
+        "Black Kaweah",
+        "Red Kaweah",
+        "MOUNT KAWEAH",
+        "Picket Guard Peak",
+        "Kern Point"
+      ],
+      "total_distance_mi": 18.43,
+      "total_effective_mi": 23.15,
+      "total_elevation_gain_ft": 3146.0,
+      "estimated_days": 2,
+      "efficiency_score": 3.3186,
+      "emblem_peaks": 1,
+      "mountaineers_peaks": 2
+    },
+    {
+      "cluster_id": 10,
+      "num_peaks": 7,
+      "peaks": [
+        {
+          "name": "Mount Tinemaha",
+          "latitude": 37.036314,
+          "longitude": -118.396367,
+          "elevation_ft": 12520.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 12.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.3,
+            "gain_ft": 7785,
+            "loss_ft": 80,
+            "trailhead": "Red Lake Trail",
+            "quad": "Split Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Birch Mountain",
+          "latitude": 37.062492,
+          "longitude": -118.419066,
+          "elevation_ft": 13602.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 12.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 8.3,
+            "gain_ft": 7780,
+            "loss_ft": 150,
+            "trailhead": "McMurray Meadows Road",
+            "quad": "Split Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "The Thumb",
+          "latitude": 37.07148,
+          "longitude": -118.445977,
+          "elevation_ft": 13356.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 12.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 8.9,
+            "gain_ft": 7535,
+            "loss_ft": 150,
+            "trailhead": "McMurray Meadows Road",
+            "quad": "Split Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Bolton-Brown",
+          "latitude": 37.046129,
+          "longitude": -118.441029,
+          "elevation_ft": 13491.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 12.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.6,
+            "gain_ft": 8220,
+            "loss_ft": 700,
+            "trailhead": "McMurray Meadows Road",
+            "quad": "Split Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Prater",
+          "latitude": 37.036793,
+          "longitude": -118.434705,
+          "elevation_ft": 13471.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 12.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 11.3,
+            "gain_ft": 8735,
+            "loss_ft": 80,
+            "trailhead": "Red Lake Trail",
+            "quad": "Split Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "SPLIT MOUNTAIN",
+          "latitude": 37.02096,
+          "longitude": -118.422536,
+          "elevation_ft": 14042.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 12.1,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 10.5,
+            "gain_ft": 9305,
+            "loss_ft": 80,
+            "trailhead": "Red Lake Trail",
+            "quad": "SPLIT MOUNTAIN",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Cardinal Mountain",
+          "latitude": 36.999405,
+          "longitude": -118.412737,
+          "elevation_ft": 13396.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 10.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.8,
+            "gain_ft": 7980,
+            "loss_ft": 40,
+            "trailhead": "Taboose Pass Trail",
+            "quad": "Mount Pinchot",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mount Tinemaha",
+        "Birch Mountain",
+        "The Thumb",
+        "Mount Bolton-Brown",
+        "Mount Prater",
+        "SPLIT MOUNTAIN",
+        "Cardinal Mountain"
+      ],
+      "total_distance_mi": 9.18,
+      "total_effective_mi": 11.86,
+      "total_elevation_gain_ft": 1788.0,
+      "estimated_days": 1,
+      "efficiency_score": 3.2016,
+      "emblem_peaks": 1,
+      "mountaineers_peaks": 0
+    },
+    {
+      "cluster_id": 11,
+      "num_peaks": 9,
+      "peaks": [
+        {
+          "name": "Giraud Peak",
+          "latitude": 37.077297,
+          "longitude": -118.564477,
+          "elevation_ft": 12608.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 13.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10.6,
+            "gain_ft": 5045,
+            "loss_ft": 1350,
+            "trailhead": "Bishop Pass Trail",
+            "quad": "North Palisade",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Devils Crag #1",
+          "latitude": 37.038056,
+          "longitude": -118.612461,
+          "elevation_ft": 12400.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "4",
+            "section": 13.3,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 18.5,
+            "gain_ft": 6410,
+            "loss_ft": 3820,
+            "trailhead": "Bishop Pass Trail",
+            "quad": "North Palisade",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Wheel Mountain",
+          "latitude": 37.046727,
+          "longitude": -118.629452,
+          "elevation_ft": 12774.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 13.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 18.7,
+            "gain_ft": 6815,
+            "loss_ft": 3850,
+            "trailhead": "Bishop Pass Trail",
+            "quad": "Mount Goddard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount McDuffie",
+          "latitude": 37.073525,
+          "longitude": -118.643919,
+          "elevation_ft": 13282.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 13.5,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 17,
+            "gain_ft": 8870,
+            "loss_ft": 3400,
+            "trailhead": "Bishop Pass Trail",
+            "quad": "Mount Goddard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Black Giant",
+          "latitude": 37.102239,
+          "longitude": -118.648707,
+          "elevation_ft": 13330.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 13.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 13.5,
+            "gain_ft": 5655,
+            "loss_ft": 1400,
+            "trailhead": "Sabrina Basin Trail",
+            "quad": "Mount Goddard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Charybdis",
+          "latitude": 37.086854,
+          "longitude": -118.668169,
+          "elevation_ft": 13096.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 13.7,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 14,
+            "gain_ft": 5820,
+            "loss_ft": 1800,
+            "trailhead": "Sabrina Basin Trail",
+            "quad": "Mount Goddard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Scylla",
+          "latitude": 37.080129,
+          "longitude": -118.689668,
+          "elevation_ft": 12956.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 13.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 16.2,
+            "gain_ft": 6195,
+            "loss_ft": 2400,
+            "trailhead": "Sabrina Basin Trail",
+            "quad": "Mount Goddard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Finger Peak",
+          "latitude": 37.029844,
+          "longitude": -118.730253,
+          "elevation_ft": 12404.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 13.11,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 28,
+            "gain_ft": 7485,
+            "loss_ft": 1800,
+            "trailhead": "Crown Valley Trail",
+            "quad": "Mount Goddard",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Tunemah Peak",
+          "latitude": 36.995323,
+          "longitude": -118.688309,
+          "elevation_ft": 11894.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 13.12,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 24,
+            "gain_ft": 7625,
+            "loss_ft": 2450,
+            "trailhead": "Crown Valley Trail",
+            "quad": "Slide Bluffs",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Giraud Peak",
+        "Devils Crag #1",
+        "Wheel Mountain",
+        "Mount McDuffie",
+        "Black Giant",
+        "Charybdis",
+        "Scylla",
+        "Finger Peak",
+        "Tunemah Peak"
+      ],
+      "total_distance_mi": 19.16,
+      "total_effective_mi": 20.55,
+      "total_elevation_gain_ft": 930.0,
+      "estimated_days": 2,
+      "efficiency_score": 2.9458,
+      "emblem_peaks": 0,
+      "mountaineers_peaks": 3
+    },
+    {
+      "cluster_id": 12,
+      "num_peaks": 9,
+      "peaks": [
+        {
+          "name": "MATTERHORN PEAK",
+          "latitude": 38.09297,
+          "longitude": -119.38179,
+          "elevation_ft": 12279.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 22.9,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 6.2,
+            "gain_ft": 5180,
+            "trailhead": "Horse Creek Trail",
+            "quad": "MATTERHORN PEAK",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Whorl Mountain",
+          "latitude": 38.074121,
+          "longitude": -119.383428,
+          "elevation_ft": 12033.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 22.8,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 8.5,
+            "gain_ft": 6095,
+            "loss_ft": 1160,
+            "trailhead": "Horse Creek Trail",
+            "quad": "Matterhorn Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Virginia Peak",
+          "latitude": 38.065851,
+          "longitude": -119.357893,
+          "elevation_ft": 12001.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 22.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.3,
+            "gain_ft": 3990,
+            "loss_ft": 1800,
+            "trailhead": "Virginia Lakes Trail",
+            "quad": "Dunderberg Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Twin Peaks",
+          "latitude": 38.080489,
+          "longitude": -119.357527,
+          "elevation_ft": 12323.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 22.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.3,
+            "gain_ft": 4895,
+            "loss_ft": 2300,
+            "trailhead": "Virginia Lakes Trail",
+            "quad": "Dunderberg Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Dunderberg Peak",
+          "latitude": 38.064445,
+          "longitude": -119.274289,
+          "elevation_ft": 12374.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 22.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 2.3,
+            "gain_ft": 2745,
+            "loss_ft": 180,
+            "trailhead": "Virginia Lakes Trail",
+            "quad": "Dunderberg Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Excelsior Mountain",
+          "latitude": 38.024581,
+          "longitude": -119.305392,
+          "elevation_ft": 12446.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 22.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 4.6,
+            "gain_ft": 2995,
+            "loss_ft": 360,
+            "trailhead": "Virginia Lakes Trail",
+            "quad": "Dunderberg Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "North Peak",
+          "latitude": 37.982191,
+          "longitude": -119.315072,
+          "elevation_ft": 12242.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 22.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 4.2,
+            "gain_ft": 2630,
+            "loss_ft": 490,
+            "trailhead": "Saddlebag Lake",
+            "quad": "Tioga Pass",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Conness",
+          "latitude": 37.967053,
+          "longitude": -119.321395,
+          "elevation_ft": 12590.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 22.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3.3,
+            "gain_ft": 2860,
+            "loss_ft": 370,
+            "trailhead": "Saddlebag Lake",
+            "quad": "Tioga Pass",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Warren",
+          "latitude": 37.989934,
+          "longitude": -119.223357,
+          "elevation_ft": 12327.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 22.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3.5,
+            "gain_ft": 4515,
+            "trailhead": "Lundy Lake",
+            "quad": "Mount Dana",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "MATTERHORN PEAK",
+        "Whorl Mountain",
+        "Virginia Peak",
+        "Twin Peaks",
+        "Dunderberg Peak",
+        "Excelsior Mountain",
+        "North Peak",
+        "Mount Conness",
+        "Mount Warren"
+      ],
+      "total_distance_mi": 21.36,
+      "total_effective_mi": 22.55,
+      "total_elevation_gain_ft": 793.0,
+      "estimated_days": 2,
+      "efficiency_score": 2.7651,
+      "emblem_peaks": 1,
+      "mountaineers_peaks": 1
+    },
+    {
+      "cluster_id": 13,
+      "num_peaks": 6,
+      "peaks": [
+        {
+          "name": "Vandever Mountain",
+          "latitude": 36.398358,
+          "longitude": -118.581235,
+          "elevation_ft": 11947.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 2.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6.9,
+            "gain_ft": 4085,
+            "trailhead": "Farewell Gap Trail",
+            "quad": "Mineral King",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Florence Peak",
+          "latitude": 36.406221,
+          "longitude": -118.55087,
+          "elevation_ft": 12432.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 2.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 8,
+            "gain_ft": 6520,
+            "loss_ft": 1940,
+            "trailhead": "Farewell Gap Trail",
+            "quad": "Mineral King",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Needham Mountain",
+          "latitude": 36.454322,
+          "longitude": -118.537352,
+          "elevation_ft": 12520.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2s3",
+            "section": 2.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7.8,
+            "gain_ft": 6060,
+            "loss_ft": 1350,
+            "trailhead": "Sawtooth Pass Trail",
+            "quad": "Mineral King",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Sawtooth Peak (N)",
+          "latitude": 36.455161,
+          "longitude": -118.555499,
+          "elevation_ft": 12343.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 2.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6.5,
+            "gain_ft": 5085,
+            "loss_ft": 550,
+            "trailhead": "Sawtooth Pass Trail",
+            "quad": "Mineral King",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Eisen",
+          "latitude": 36.498281,
+          "longitude": -118.568505,
+          "elevation_ft": 12160.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 6.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 16.5,
+            "gain_ft": 6750,
+            "loss_ft": 2400,
+            "trailhead": "Sawtooth Pass Trail",
+            "quad": "Mineral King",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Lippincott",
+          "latitude": 36.521169,
+          "longitude": -118.563106,
+          "elevation_ft": 12265.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 6.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 22,
+            "gain_ft": 8405,
+            "loss_ft": 3950,
+            "trailhead": "Sawtooth Pass Trail",
+            "quad": "Triple Divide Peak",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Vandever Mountain",
+        "Florence Peak",
+        "Needham Mountain",
+        "Sawtooth Peak (N)",
+        "Mount Eisen",
+        "Mount Lippincott"
+      ],
+      "total_distance_mi": 10.87,
+      "total_effective_mi": 11.88,
+      "total_elevation_gain_ft": 678.0,
+      "estimated_days": 1,
+      "efficiency_score": 2.7418
+    },
+    {
+      "cluster_id": 14,
+      "num_peaks": 8,
+      "peaks": [
+        {
+          "name": "Bloody Mountain",
+          "latitude": 37.560555,
+          "longitude": -118.906759,
+          "elevation_ft": 12552.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 18.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.6,
+            "gain_ft": 5250,
+            "trailhead": "Laurel Creek Trail",
+            "quad": "Bloody Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Morrison",
+          "latitude": 37.561387,
+          "longitude": -118.858277,
+          "elevation_ft": 12277.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 18.8,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 4,
+            "gain_ft": 4870,
+            "loss_ft": 240,
+            "trailhead": "Convict Lake",
+            "quad": "Convict Lake",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Baldwin",
+          "latitude": 37.532061,
+          "longitude": -118.851269,
+          "elevation_ft": 12615.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 18.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7.5,
+            "gain_ft": 5385,
+            "loss_ft": 400,
+            "trailhead": "Convict Creek Trail",
+            "quad": "Convict Lake",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Red Slate Mountain",
+          "latitude": 37.507448,
+          "longitude": -118.86915,
+          "elevation_ft": 13123.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 18.4,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 10.9,
+            "gain_ft": 4990,
+            "trailhead": "McGee Creek Trail",
+            "quad": "Convict Lake",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Izaak Walton",
+          "latitude": 37.469966,
+          "longitude": -118.889922,
+          "elevation_ft": 12077.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 18.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 12.6,
+            "gain_ft": 5215,
+            "loss_ft": 800,
+            "trailhead": "Mono Creek Trail",
+            "quad": "Graveyard Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Red and White Mountain",
+          "latitude": 37.479892,
+          "longitude": -118.857269,
+          "elevation_ft": 12816.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 18.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 8.4,
+            "gain_ft": 5080,
+            "loss_ft": 400,
+            "trailhead": "McGee Creek Trail",
+            "quad": "Mount Abbot",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Stanford (N)",
+          "latitude": 37.489339,
+          "longitude": -118.796287,
+          "elevation_ft": 12836.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 18.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7.6,
+            "gain_ft": 3355,
+            "loss_ft": 360,
+            "trailhead": "Davis Lake Trail",
+            "quad": "Mount Abbot",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Morgan (N)",
+          "latitude": 37.511317,
+          "longitude": -118.779836,
+          "elevation_ft": 13002.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 18.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7.3,
+            "gain_ft": 4100,
+            "loss_ft": 940,
+            "trailhead": "Davis Lake Trail",
+            "quad": "Convict Lake",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Bloody Mountain",
+        "Mount Morrison",
+        "Mount Baldwin",
+        "Red Slate Mountain",
+        "Mount Izaak Walton",
+        "Red and White Mountain",
+        "Mount Stanford (N)",
+        "Mount Morgan (N)"
+      ],
+      "total_distance_mi": 16.6,
+      "total_effective_mi": 19.26,
+      "total_elevation_gain_ft": 1771.0,
+      "estimated_days": 2,
+      "efficiency_score": 2.7344,
+      "emblem_peaks": 0,
+      "mountaineers_peaks": 2
+    },
+    {
+      "cluster_id": 15,
+      "num_peaks": 13,
+      "peaks": [
+        {
+          "name": "Cathedral Peak",
+          "latitude": 37.847829,
+          "longitude": -119.405621,
+          "elevation_ft": 10911.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3s4",
+            "section": 21.1,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 2.9,
+            "gain_ft": 2440,
+            "loss_ft": 100,
+            "trailhead": "Tuolumne Meadows",
+            "quad": "Tenaya Lake",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Vogelsang Peak",
+          "latitude": 37.777365,
+          "longitude": -119.349521,
+          "elevation_ft": 11493.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 21.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.1,
+            "gain_ft": 3485,
+            "loss_ft": 710,
+            "trailhead": "John Muir Trail",
+            "quad": "Vogelsang Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Florence",
+          "latitude": 37.739772,
+          "longitude": -119.316033,
+          "elevation_ft": 12561.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 21.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 13.2,
+            "gain_ft": 5050,
+            "loss_ft": 100,
+            "trailhead": "John Muir Trail",
+            "quad": "Mount Lyell",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount MacClure",
+          "latitude": 37.74357,
+          "longitude": -119.280355,
+          "elevation_ft": 12880.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 21.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 13.8,
+            "gain_ft": 4280,
+            "loss_ft": 120,
+            "trailhead": "John Muir Trail",
+            "quad": "Mount Lyell",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "MOUNT LYELL",
+          "latitude": 37.739412,
+          "longitude": -119.271888,
+          "elevation_ft": 13144.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 21.5,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 13.8,
+            "gain_ft": 4545,
+            "loss_ft": 120,
+            "trailhead": "John Muir Trail",
+            "quad": "MOUNT LYELL",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Forester Peak",
+          "latitude": 37.690021,
+          "longitude": -119.290751,
+          "elevation_ft": 12057.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 19.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 19.8,
+            "gain_ft": 6385,
+            "loss_ft": 1300,
+            "trailhead": "Iceberg Pass Trail",
+            "quad": "Mount Lyell",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Electra Peak",
+          "latitude": 37.705208,
+          "longitude": -119.260172,
+          "elevation_ft": 12442.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 19.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 13.5,
+            "gain_ft": 7800,
+            "loss_ft": 2600,
+            "trailhead": "Rush Creek Trail",
+            "quad": "Mount Lyell",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Davis",
+          "latitude": 37.714989,
+          "longitude": -119.219382,
+          "elevation_ft": 12303.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 19.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 11.4,
+            "gain_ft": 5100,
+            "loss_ft": 1120,
+            "trailhead": "Pacific Crest Trail",
+            "quad": "Mount Ritter",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Banner Peak",
+          "latitude": 37.696442,
+          "longitude": -119.194743,
+          "elevation_ft": 12936.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 19.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 11.4,
+            "gain_ft": 5730,
+            "loss_ft": 1120,
+            "trailhead": "Pacific Crest Trail",
+            "quad": "Mount Ritter",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "MOUNT RITTER",
+          "latitude": 37.688965,
+          "longitude": -119.199575,
+          "elevation_ft": 13143.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 19.3,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 12.2,
+            "gain_ft": 6070,
+            "loss_ft": 1250,
+            "trailhead": "Pacific Crest Trail",
+            "quad": "MOUNT RITTER",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Clyde Minaret",
+          "latitude": 37.66028,
+          "longitude": -119.1739,
+          "elevation_ft": 12264.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "4",
+            "section": 19.2,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 9.1,
+            "gain_ft": 3935,
+            "trailhead": "River Trail",
+            "quad": "Mount Ritter",
+            "coord_source": "peakbagger"
+          }
+        },
+        {
+          "name": "Iron Mountain",
+          "latitude": 37.611423,
+          "longitude": -119.164761,
+          "elevation_ft": 11148.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 19.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7.7,
+            "gain_ft": 4560,
+            "loss_ft": 540,
+            "trailhead": "West campground parking",
+            "quad": "Cattle Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "San Joaquin Mountain",
+          "latitude": 37.719094,
+          "longitude": -119.1062,
+          "elevation_ft": 11598.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 19.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.9,
+            "gain_ft": 2340,
+            "trailhead": "Minaret Vista Parking",
+            "quad": "Mammoth Mountain",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Cathedral Peak",
+        "Vogelsang Peak",
+        "Mount Florence",
+        "Mount MacClure",
+        "MOUNT LYELL",
+        "Forester Peak",
+        "Electra Peak",
+        "Mount Davis",
+        "Banner Peak",
+        "MOUNT RITTER",
+        "Clyde Minaret",
+        "Iron Mountain",
+        "San Joaquin Mountain"
+      ],
+      "total_distance_mi": 35.69,
+      "total_effective_mi": 41.55,
+      "total_elevation_gain_ft": 3908.0,
+      "estimated_days": 3,
+      "efficiency_score": 2.5218,
+      "emblem_peaks": 2,
+      "mountaineers_peaks": 2
+    },
+    {
+      "cluster_id": 16,
+      "num_peaks": 6,
+      "peaks": [
+        {
+          "name": "Mount Henry",
+          "latitude": 37.183191,
+          "longitude": -118.827236,
+          "elevation_ft": 12196.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 15.13,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 20,
+            "gain_ft": 4715,
+            "loss_ft": 700,
+            "trailhead": "Blackcap Basin Trail",
+            "quad": "Mount Henry",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Emerald Peak",
+          "latitude": 37.165368,
+          "longitude": -118.763821,
+          "elevation_ft": 12546.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 15.12,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 21.5,
+            "gain_ft": 6035,
+            "loss_ft": 850,
+            "trailhead": "Blayney Meadows Trail",
+            "quad": "Mount Henry",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "The Hermit",
+          "latitude": 37.162897,
+          "longitude": -118.718487,
+          "elevation_ft": 12328.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2s5",
+            "section": 15.1,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 12.5,
+            "gain_ft": 6195,
+            "loss_ft": 3125,
+            "trailhead": "Lamark Lakes Trail",
+            "quad": "Mount Darwin",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount McGee",
+          "latitude": 37.138821,
+          "longitude": -118.738153,
+          "elevation_ft": 12944.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 15.11,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 18.5,
+            "gain_ft": 7140,
+            "loss_ft": 3450,
+            "trailhead": "Lamark Lakes Trail",
+            "quad": "Mount Darwin",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "MOUNT GODDARD",
+          "latitude": 37.102915,
+          "longitude": -118.719884,
+          "elevation_ft": 13568.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 13.9,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 18.8,
+            "gain_ft": 7960,
+            "loss_ft": 2200,
+            "trailhead": "Bishop Pass Trail",
+            "quad": "MOUNT GODDARD",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Reinstein",
+          "latitude": 37.07942,
+          "longitude": -118.738353,
+          "elevation_ft": 12586.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 13.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 29.5,
+            "gain_ft": 5385,
+            "loss_ft": 1000,
+            "trailhead": "Maxson Trail",
+            "quad": "Mount Goddard",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mount Henry",
+        "Emerald Peak",
+        "The Hermit",
+        "Mount McGee",
+        "MOUNT GODDARD",
+        "Mount Reinstein"
+      ],
+      "total_distance_mi": 12.78,
+      "total_effective_mi": 15.17,
+      "total_elevation_gain_ft": 1590.0,
+      "estimated_days": 2,
+      "efficiency_score": 2.384,
+      "emblem_peaks": 1,
+      "mountaineers_peaks": 1
+    },
+    {
+      "cluster_id": 17,
+      "num_peaks": 7,
+      "peaks": [
+        {
+          "name": "Clouds Rest",
+          "latitude": 37.767825,
+          "longitude": -119.489196,
+          "elevation_ft": 9926.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 20.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6.8,
+            "gain_ft": 2460,
+            "loss_ft": 700,
+            "trailhead": "Sunrise Lakes Trail",
+            "quad": "Tenaya Lake",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Half Dome",
+          "latitude": 37.744402,
+          "longitude": -119.534053,
+          "elevation_ft": 8840.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 20.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 8.2,
+            "gain_ft": 5975,
+            "loss_ft": 1160,
+            "trailhead": "John Muir Trail",
+            "quad": "Half Dome",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Starr King",
+          "latitude": 37.702793,
+          "longitude": -119.517592,
+          "elevation_ft": 9092.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "5",
+            "section": 20.5,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 7.2,
+            "gain_ft": 3475,
+            "loss_ft": 1415,
+            "trailhead": "Mono Meadows Trail",
+            "quad": "Half Dome",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Clark",
+          "latitude": 37.696373,
+          "longitude": -119.428613,
+          "elevation_ft": 11522.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3s4",
+            "section": 20.4,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 12.5,
+            "gain_ft": 5190,
+            "loss_ft": 900,
+            "trailhead": "Mono Meadows Trail",
+            "quad": "Merced Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Gray Peak",
+          "latitude": 37.673668,
+          "longitude": -119.418746,
+          "elevation_ft": 11573.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 20.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 22,
+            "gain_ft": 6045,
+            "loss_ft": 1700,
+            "trailhead": "Mono Meadows Trail",
+            "quad": "Merced Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Red Peak",
+          "latitude": 37.653725,
+          "longitude": -119.409495,
+          "elevation_ft": 11699.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 20.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 19.5,
+            "gain_ft": 5470,
+            "loss_ft": 1000,
+            "trailhead": "Mono Meadows Trail",
+            "quad": "Merced Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Merced Peak",
+          "latitude": 37.634866,
+          "longitude": -119.394556,
+          "elevation_ft": 11726.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 20.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 18.5,
+            "gain_ft": 6900,
+            "loss_ft": 2405,
+            "trailhead": "Mono Meadows TH",
+            "quad": "Merced Peak",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Clouds Rest",
+        "Half Dome",
+        "Mount Starr King",
+        "Mount Clark",
+        "Gray Peak",
+        "Red Peak",
+        "Merced Peak"
+      ],
+      "total_distance_mi": 15.5,
+      "total_effective_mi": 19.83,
+      "total_elevation_gain_ft": 2886.0,
+      "estimated_days": 2,
+      "efficiency_score": 2.3468,
+      "emblem_peaks": 0,
+      "mountaineers_peaks": 2
+    },
+    {
+      "cluster_id": 18,
+      "num_peaks": 5,
+      "peaks": [
+        {
+          "name": "Mount Emerson",
+          "latitude": 37.2447,
+          "longitude": -118.659728,
+          "elevation_ft": 13204.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 16.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5,
+            "gain_ft": 3955,
+            "trailhead": "Piute Pass Trail",
+            "quad": "Mount Darwin",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "MOUNT HUMPHREYS",
+          "latitude": 37.269972,
+          "longitude": -118.671653,
+          "elevation_ft": 13986.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "4",
+            "section": 16.3,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 10.2,
+            "gain_ft": 5045,
+            "loss_ft": 400,
+            "trailhead": "Piute Pass Trail",
+            "quad": "MOUNT TOM",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Basin Mountain",
+          "latitude": 37.296143,
+          "longitude": -118.660409,
+          "elevation_ft": 13181.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 16.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7.1,
+            "gain_ft": 5500,
+            "loss_ft": 100,
+            "trailhead": "Horton Lakes Trail",
+            "quad": "Mount Tom",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Four Gables",
+          "latitude": 37.302473,
+          "longitude": -118.699931,
+          "elevation_ft": 12720.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 16.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 8.3,
+            "gain_ft": 5050,
+            "loss_ft": 100,
+            "trailhead": "Horton Lakes Trail",
+            "quad": "Mount Tom",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Tom",
+          "latitude": 37.338556,
+          "longitude": -118.656936,
+          "elevation_ft": 13652.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 16.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 8.2,
+            "gain_ft": 5980,
+            "loss_ft": 100,
+            "trailhead": "Horton Lakes Trail",
+            "quad": "Mount Tom",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mount Emerson",
+        "MOUNT HUMPHREYS",
+        "Basin Mountain",
+        "Four Gables",
+        "Mount Tom"
+      ],
+      "total_distance_mi": 9.43,
+      "total_effective_mi": 12.0,
+      "total_elevation_gain_ft": 1714.0,
+      "estimated_days": 1,
+      "efficiency_score": 2.273,
+      "emblem_peaks": 1,
+      "mountaineers_peaks": 0
+    },
+    {
+      "cluster_id": 19,
+      "num_peaks": 7,
+      "peaks": [
+        {
+          "name": "Goat Mountain",
+          "latitude": 36.869469,
+          "longitude": -118.574211,
+          "elevation_ft": 12207.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 11.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10.1,
+            "gain_ft": 7410,
+            "loss_ft": 240,
+            "trailhead": "Granite Pass Trail",
+            "quad": "The Sphinx",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "State Peak",
+          "latitude": 36.931979,
+          "longitude": -118.545429,
+          "elevation_ft": 12620.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 11.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 18.7,
+            "gain_ft": 8305,
+            "loss_ft": 720,
+            "trailhead": "Granite Pass Trail",
+            "quad": "Marion Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Marion Peak",
+          "latitude": 36.956863,
+          "longitude": -118.522297,
+          "elevation_ft": 12719.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 11.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 20,
+            "gain_ft": 10655,
+            "loss_ft": 3350,
+            "trailhead": "Taboose Pass Trail",
+            "quad": "Marion Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Arrow Peak",
+          "latitude": 36.928521,
+          "longitude": -118.490881,
+          "elevation_ft": 12959.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 10.7,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 15,
+            "gain_ft": 8160,
+            "loss_ft": 250,
+            "trailhead": "Roads end to Bubbs Creek Trail",
+            "quad": "Mount Pinchot",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Pyramid Peak (S)",
+          "latitude": 36.906413,
+          "longitude": -118.462111,
+          "elevation_ft": 12779.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 10.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 14,
+            "gain_ft": 7980,
+            "loss_ft": 250,
+            "trailhead": "Sawmill Pass Trail",
+            "quad": "Mount Pinchot",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Ruskin",
+          "latitude": 36.978467,
+          "longitude": -118.473353,
+          "elevation_ft": 12920.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 11.1,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 18.5,
+            "gain_ft": 9705,
+            "loss_ft": 2200,
+            "trailhead": "Taboose Pass Trail",
+            "quad": "Mount Pinchot",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Observation Peak",
+          "latitude": 37.023215,
+          "longitude": -118.523665,
+          "elevation_ft": 12362.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 13.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 20.7,
+            "gain_ft": 7550,
+            "loss_ft": 4000,
+            "trailhead": "Bishop Pass Trail",
+            "quad": "North Palisade",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Goat Mountain",
+        "State Peak",
+        "Marion Peak",
+        "Arrow Peak",
+        "Pyramid Peak (S)",
+        "Mount Ruskin",
+        "Observation Peak"
+      ],
+      "total_distance_mi": 20.74,
+      "total_effective_mi": 22.08,
+      "total_elevation_gain_ft": 893.0,
+      "estimated_days": 2,
+      "efficiency_score": 2.1823,
+      "emblem_peaks": 0,
+      "mountaineers_peaks": 2
+    },
+    {
+      "cluster_id": 20,
+      "num_peaks": 4,
+      "peaks": [
+        {
+          "name": "Sawtooth Peak (S)",
+          "latitude": 35.823138,
+          "longitude": -117.998651,
+          "elevation_ft": 8000.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 1.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 4.1,
+            "gain_ft": 2445,
+            "trailhead": "Pacific Crest Trail",
+            "quad": "Nine Mile Canyon",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Lamont Peak",
+          "latitude": 35.792046,
+          "longitude": -118.043567,
+          "elevation_ft": 7429.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 1.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 1.9,
+            "gain_ft": 2560,
+            "loss_ft": 330,
+            "trailhead": "Lamont Peak Trail",
+            "quad": "Lamont Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Spanish Needle",
+          "latitude": 35.77155,
+          "longitude": -118.0012,
+          "elevation_ft": 7841.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 1.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6.6,
+            "gain_ft": 2520,
+            "trailhead": "Pacific Crest Trail",
+            "quad": "Lamont Peak",
+            "coord_source": "peakbagger"
+          }
+        },
+        {
+          "name": "Owens Peak",
+          "latitude": 35.738123,
+          "longitude": -117.996877,
+          "elevation_ft": 8453.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 1.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3.5,
+            "gain_ft": 3200,
+            "loss_ft": 145,
+            "trailhead": "Indian Wells Canyon",
+            "quad": "Owens Peak",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Sawtooth Peak (S)",
+        "Lamont Peak",
+        "Spanish Needle",
+        "Owens Peak"
+      ],
+      "total_distance_mi": 8.4,
+      "total_effective_mi": 9.93,
+      "total_elevation_gain_ft": 1024.0,
+      "estimated_days": 1,
+      "efficiency_score": 2.0068
+    },
+    {
+      "cluster_id": 21,
+      "num_peaks": 3,
+      "peaks": [
+        {
+          "name": "Mount Dana",
+          "latitude": 37.899686,
+          "longitude": -119.221249,
+          "elevation_ft": 13057.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 21.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3.1,
+            "gain_ft": 3440,
+            "loss_ft": 325,
+            "trailhead": "Tioga Pass",
+            "quad": "Mount Dana",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Gibbs",
+          "latitude": 37.877094,
+          "longitude": -119.211836,
+          "elevation_ft": 12773.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 21.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3.5,
+            "gain_ft": 3195,
+            "loss_ft": 110,
+            "trailhead": "Mono Pass Trail",
+            "quad": "Mount Dana",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Koip Peak",
+          "latitude": 37.813721,
+          "longitude": -119.201544,
+          "elevation_ft": 12962.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 21.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.7,
+            "gain_ft": 3005,
+            "loss_ft": 400,
+            "trailhead": "Mono Pass Trail",
+            "quad": "Koip Peak",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mount Dana",
+        "Mount Gibbs",
+        "Koip Peak"
+      ],
+      "total_distance_mi": 6.06,
+      "total_effective_mi": 6.34,
+      "total_elevation_gain_ft": 189.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.8359
+    },
+    {
+      "cluster_id": 22,
+      "num_peaks": 3,
+      "peaks": [
+        {
+          "name": "Mount Tallac",
+          "latitude": 38.905897,
+          "longitude": -120.098848,
+          "elevation_ft": 9735.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 23.11,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 4.6,
+            "gain_ft": 3295,
+            "loss_ft": 65,
+            "trailhead": "Mount Tallac Trail",
+            "quad": "Emerald Bay",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Dicks Peak",
+          "latitude": 38.900458,
+          "longitude": -120.1509,
+          "elevation_ft": 9974.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 23.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6.5,
+            "gain_ft": 3740,
+            "loss_ft": 325,
+            "trailhead": "12N16 Parking",
+            "quad": "Rockbound Vly.",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Pyramid Peak (N)",
+          "latitude": 38.844869,
+          "longitude": -120.157782,
+          "elevation_ft": 9983.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 23.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6,
+            "gain_ft": 3285,
+            "trailhead": "Lyon Creek Trail",
+            "quad": "Pyramid Peak",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mount Tallac",
+        "Dicks Peak",
+        "Pyramid Peak (N)"
+      ],
+      "total_distance_mi": 6.68,
+      "total_effective_mi": 7.05,
+      "total_elevation_gain_ft": 248.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.7591
+    },
+    {
+      "cluster_id": 23,
+      "num_peaks": 3,
+      "peaks": [
+        {
+          "name": "Kennedy Mountain",
+          "latitude": 36.879116,
+          "longitude": -118.668186,
+          "elevation_ft": 11433.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 11.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 12.2,
+            "gain_ft": 7685,
+            "loss_ft": 800,
+            "trailhead": "Jerky Meadows Trail",
+            "quad": "Slide Bluffs",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Harrington",
+          "latitude": 36.870005,
+          "longitude": -118.733645,
+          "elevation_ft": 11009.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 11.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 12.4,
+            "gain_ft": 7210,
+            "loss_ft": 750,
+            "trailhead": "Kennedy Pass Trail",
+            "quad": "Cedar Grove",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Tehipite Dome",
+          "latitude": 36.918839,
+          "longitude": -118.780689,
+          "elevation_ft": 7708.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2s3",
+            "section": 11.7,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 13.5,
+            "gain_ft": 5680,
+            "loss_ft": 2800,
+            "trailhead": "Rancheria Trail",
+            "quad": "Tehipite Dome",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Kennedy Mountain",
+        "Mount Harrington",
+        "Tehipite Dome"
+      ],
+      "total_distance_mi": 7.93,
+      "total_effective_mi": 7.93,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.673,
+      "emblem_peaks": 0,
+      "mountaineers_peaks": 1
+    },
+    {
+      "cluster_id": 24,
+      "num_peaks": 2,
+      "peaks": [
+        {
+          "name": "Granite Chief",
+          "latitude": 39.198184,
+          "longitude": -120.287087,
+          "elevation_ft": 9006.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 24.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.7,
+            "gain_ft": 3380,
+            "loss_ft": 620,
+            "trailhead": "Squaw Valley Fire Station",
+            "quad": "Granite Chief",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Tinker Knob",
+          "latitude": 39.244635,
+          "longitude": -120.28493,
+          "elevation_ft": 8949.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 24.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7.2,
+            "gain_ft": 1890,
+            "trailhead": "Pacific Crest Trail",
+            "quad": "Granite Chief",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Granite Chief",
+        "Tinker Knob"
+      ],
+      "total_distance_mi": 3.21,
+      "total_effective_mi": 3.21,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.5138
+    },
+    {
+      "cluster_id": 25,
+      "num_peaks": 3,
+      "peaks": [
+        {
+          "name": "Sirretta Peak",
+          "latitude": 35.924301,
+          "longitude": -118.333185,
+          "elevation_ft": 9977.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 1.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3.3,
+            "gain_ft": 2215,
+            "loss_ft": 70,
+            "trailhead": "Cannell Meadows Trail 33E22",
+            "quad": "Sirretta Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Taylor Dome",
+          "latitude": 35.85635,
+          "longitude": -118.30342,
+          "elevation_ft": 8802.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2s3",
+            "section": 1.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 2.3,
+            "gain_ft": 1155,
+            "loss_ft": 185,
+            "trailhead": "Big Meadows Trail",
+            "quad": "Cannell Peak",
+            "coord_source": "peakbagger"
+          }
+        },
+        {
+          "name": "Rockhouse Peak",
+          "latitude": 35.90099,
+          "longitude": -118.22839,
+          "elevation_ft": 8360.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 1.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.7,
+            "gain_ft": 3035,
+            "loss_ft": 520,
+            "trailhead": "Rockhouse Basin Trail",
+            "quad": "Rockhouse Basin",
+            "coord_source": "peakbagger"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Sirretta Peak",
+        "Taylor Dome",
+        "Rockhouse Peak"
+      ],
+      "total_distance_mi": 10.19,
+      "total_effective_mi": 10.19,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.4857
+    },
+    {
+      "cluster_id": 26,
+      "num_peaks": 2,
+      "peaks": [
+        {
+          "name": "Moses Mountain",
+          "latitude": 36.278722,
+          "longitude": -118.68081,
+          "elevation_ft": 9331.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 2.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3.7,
+            "gain_ft": 3510,
+            "loss_ft": 100,
+            "trailhead": "Long Meadow Trail",
+            "quad": "Moses Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "North Maggie Mountain",
+          "latitude": 36.276772,
+          "longitude": -118.637698,
+          "elevation_ft": 10234.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 2.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 4.3,
+            "gain_ft": 4315,
+            "trailhead": "Shakes Camp",
+            "quad": "Moses Mountain",
+            "coord_source": "peakbagger"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Moses Mountain",
+        "North Maggie Mountain"
+      ],
+      "total_distance_mi": 2.41,
+      "total_effective_mi": 3.76,
+      "total_elevation_gain_ft": 903.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.4535
+    },
+    {
+      "cluster_id": 27,
+      "num_peaks": 2,
+      "peaks": [
+        {
+          "name": "Alta Peak",
+          "latitude": 36.590493,
+          "longitude": -118.663418,
+          "elevation_ft": 11240.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 6.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6.3,
+            "gain_ft": 4060,
+            "loss_ft": 80,
+            "trailhead": "Alta Peak Trail",
+            "quad": "Lodgepole",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Silliman",
+          "latitude": 36.643245,
+          "longitude": -118.696764,
+          "elevation_ft": 11188.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 6.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 11,
+            "gain_ft": 4770,
+            "loss_ft": 330,
+            "trailhead": "Silliman Pass Trail",
+            "quad": "Mount Silliman",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Alta Peak",
+        "Mount Silliman"
+      ],
+      "total_distance_mi": 4.09,
+      "total_effective_mi": 4.09,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.4197
+    },
+    {
+      "cluster_id": 28,
+      "num_peaks": 2,
+      "peaks": [
+        {
+          "name": "Smith Mountain",
+          "latitude": 36.127229,
+          "longitude": -118.224235,
+          "elevation_ft": 9533.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 1.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 1.4,
+            "gain_ft": 995,
+            "trailhead": "SNF 21S36",
+            "quad": "Monache Mtn.",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Crag Peak",
+          "latitude": 36.11176,
+          "longitude": -118.153446,
+          "elevation_ft": 9480.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 1.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6.4,
+            "gain_ft": 1885,
+            "loss_ft": 800,
+            "trailhead": "SNF 21S36",
+            "quad": "Crag Peak",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Smith Mountain",
+        "Crag Peak"
+      ],
+      "total_distance_mi": 4.09,
+      "total_effective_mi": 4.09,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.4191
+    },
+    {
+      "cluster_id": 29,
+      "num_peaks": 2,
+      "peaks": [
+        {
+          "name": "Angora Mountain",
+          "latitude": 36.264326,
+          "longitude": -118.446047,
+          "elevation_ft": 10198.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 2.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10.2,
+            "gain_ft": 5880,
+            "loss_ft": 1500,
+            "trailhead": "Jerky Meadows Trail",
+            "quad": "Kern Lake",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Coyote Peaks",
+          "latitude": 36.312087,
+          "longitude": -118.447367,
+          "elevation_ft": 10892.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 2.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 14.3,
+            "gain_ft": 7170,
+            "loss_ft": 2100,
+            "trailhead": "Jerky Meadows Trail",
+            "quad": "Kern Lake",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Angora Mountain",
+        "Coyote Peaks"
+      ],
+      "total_distance_mi": 3.3,
+      "total_effective_mi": 4.34,
+      "total_elevation_gain_ft": 694.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.3945
+    },
+    {
+      "cluster_id": 30,
+      "num_peaks": 3,
+      "peaks": [
+        {
+          "name": "Mount Muah",
+          "latitude": 36.400691,
+          "longitude": -118.12514,
+          "elevation_ft": 11016.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 3.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6.2,
+            "gain_ft": 1980,
+            "loss_ft": 880,
+            "trailhead": "Mulkey Stock Horseshoe Meadow Road",
+            "quad": "Bartlett",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Cartago Peak",
+          "latitude": 36.32457,
+          "longitude": -118.10213,
+          "elevation_ft": 10480.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2s3",
+            "section": 3.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5,
+            "gain_ft": 6710,
+            "trailhead": "West side of aquaduct",
+            "quad": "Olancha",
+            "coord_source": "peakbagger"
+          }
+        },
+        {
+          "name": "OLANCHA PEAK",
+          "latitude": 36.265368,
+          "longitude": -118.118152,
+          "elevation_ft": 12123.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 3.1,
+            "emblem": true,
+            "mountaineers": false,
+            "mileage_rt": 11,
+            "gain_ft": 6435,
+            "loss_ft": 100,
+            "trailhead": "Olancha Pass Trail",
+            "quad": "OLANCHA",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mount Muah",
+        "Cartago Peak",
+        "OLANCHA PEAK"
+      ],
+      "total_distance_mi": 9.6,
+      "total_effective_mi": 12.06,
+      "total_elevation_gain_ft": 1643.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.3597,
+      "emblem_peaks": 1,
+      "mountaineers_peaks": 0
+    },
+    {
+      "cluster_id": 31,
+      "num_peaks": 2,
+      "peaks": [
+        {
+          "name": "Castle Peak",
+          "latitude": 39.366152,
+          "longitude": -120.35174,
+          "elevation_ft": 9103.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1s3",
+            "section": 24.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 4.2,
+            "gain_ft": 2235,
+            "loss_ft": 360,
+            "trailhead": "Boreal Ridge Parking",
+            "quad": "Nordon",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Mount Lola",
+          "latitude": 39.432988,
+          "longitude": -120.364895,
+          "elevation_ft": 9148.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 24.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 4.8,
+            "gain_ft": 1405,
+            "loss_ft": 255,
+            "trailhead": "Mt Lola Trail",
+            "quad": "Indepence Lk.",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Castle Peak",
+        "Mount Lola"
+      ],
+      "total_distance_mi": 4.67,
+      "total_effective_mi": 4.74,
+      "total_elevation_gain_ft": 45.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.357
+    },
+    {
+      "cluster_id": 32,
+      "num_peaks": 2,
+      "peaks": [
+        {
+          "name": "Piute Mountain",
+          "latitude": 38.033526,
+          "longitude": -119.548096,
+          "elevation_ft": 10541.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 22.12,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 18.7,
+            "gain_ft": 4640,
+            "loss_ft": 1200,
+            "trailhead": "Barney Lake Trail",
+            "quad": "Piute Mountain",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Pettit Peak",
+          "latitude": 37.985194,
+          "longitude": -119.480153,
+          "elevation_ft": 10788.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 22.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 25,
+            "gain_ft": 6390,
+            "loss_ft": 2700,
+            "trailhead": "Barney Lake Trail",
+            "quad": "Falls Ridge",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Piute Mountain",
+        "Pettit Peak"
+      ],
+      "total_distance_mi": 4.98,
+      "total_effective_mi": 5.35,
+      "total_elevation_gain_ft": 247.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.3026
+    },
+    {
+      "cluster_id": 33,
+      "num_peaks": 2,
+      "peaks": [
+        {
+          "name": "Stanislaus Peak",
+          "latitude": 38.383989,
+          "longitude": -119.667084,
+          "elevation_ft": 11233.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 23.3,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 4.2,
+            "gain_ft": 2570,
+            "loss_ft": 755,
+            "trailhead": "St. Mary's Pass Trail",
+            "quad": "Disaster Peak",
+            "coord_source": "GNIS"
+          }
+        },
+        {
+          "name": "Disaster Peak",
+          "latitude": 38.448743,
+          "longitude": -119.733666,
+          "elevation_ft": 10047.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 23.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6.7,
+            "gain_ft": 4165,
+            "loss_ft": 550,
+            "trailhead": "Disaster Creek Trail",
+            "quad": "Disaster Peak",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Stanislaus Peak",
+        "Disaster Peak"
+      ],
+      "total_distance_mi": 5.75,
+      "total_effective_mi": 5.75,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.2702
+    },
+    {
+      "cluster_id": 34,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Adams Peak",
+          "latitude": 39.910584,
+          "longitude": -120.100105,
+          "elevation_ft": 8197.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 24.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3,
+            "gain_ft": 1885,
+            "trailhead": "Forest service road",
+            "quad": "Constantia",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Adams Peak"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 35,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Mount Elwell",
+          "latitude": 39.708193,
+          "longitude": -120.689142,
+          "elevation_ft": 7818.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 24.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3.4,
+            "gain_ft": 2080,
+            "loss_ft": 820,
+            "trailhead": "Lake Basin campground",
+            "quad": "Gold Lake",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mount Elwell"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 36,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Sierra Buttes",
+          "latitude": 39.593538,
+          "longitude": -120.647045,
+          "elevation_ft": 8591.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 24.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3.2,
+            "gain_ft": 2485,
+            "loss_ft": 125,
+            "trailhead": "Forest Route 93",
+            "quad": "Sierra City",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Sierra Buttes"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 37,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "English Mountain",
+          "latitude": 39.446352,
+          "longitude": -120.551138,
+          "elevation_ft": 8373.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 24.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 1.9,
+            "gain_ft": 1300,
+            "trailhead": "Tollhouse Lake",
+            "quad": "English Mtn.",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "English Mountain"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 38,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Mount Rose",
+          "latitude": 39.343776,
+          "longitude": -119.917938,
+          "elevation_ft": 10776.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 24.4,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.2,
+            "gain_ft": 1955,
+            "trailhead": "Mount  Rose Highway",
+            "quad": "Mount Rose",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mount Rose"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 39,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Freel Peak",
+          "latitude": 38.857429,
+          "longitude": -119.900123,
+          "elevation_ft": 10881.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 23.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.4,
+            "gain_ft": 3050,
+            "trailhead": "Fountain Place",
+            "quad": "Freel Peak",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Freel Peak"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 40,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Round Top",
+          "latitude": 38.663553,
+          "longitude": -120.00127,
+          "elevation_ft": 10381.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 23.7,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3.1,
+            "gain_ft": 2320,
+            "loss_ft": 150,
+            "trailhead": "Wood Lake Trail",
+            "quad": "Carson Pass",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Round Top"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 41,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Highland Peak",
+          "latitude": 38.543624,
+          "longitude": -119.755548,
+          "elevation_ft": 10935.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 23.5,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 6.1,
+            "gain_ft": 2935,
+            "loss_ft": 640,
+            "trailhead": "Pacific Crest Trail",
+            "quad": "Ebbetts Pass",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Highland Peak"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 42,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Mokelumne Peak",
+          "latitude": 38.538045,
+          "longitude": -120.094341,
+          "elevation_ft": 9334.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 23.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 8.2,
+            "gain_ft": 4135,
+            "loss_ft": 1200,
+            "trailhead": "Tanglefoot Trail",
+            "quad": "Mokelumne Pk.",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Mokelumne Peak"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 43,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Leavitt Peak",
+          "latitude": 38.286112,
+          "longitude": -119.651229,
+          "elevation_ft": 11569.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 23.2,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 5.8,
+            "gain_ft": 2400,
+            "loss_ft": 450,
+            "trailhead": "Pacific Crest Trail",
+            "quad": "Sonora Pass",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Leavitt Peak"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 44,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Black Hawk Mountain",
+          "latitude": 38.20597,
+          "longitude": -119.708986,
+          "elevation_ft": 10348.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 23.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 11.4,
+            "gain_ft": 4190,
+            "loss_ft": 200,
+            "trailhead": "Huckleberry Trail",
+            "quad": "Emigrant Lake",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Black Hawk Mountain"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 45,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Tower Peak",
+          "latitude": 38.144463,
+          "longitude": -119.54772,
+          "elevation_ft": 11755.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "3",
+            "section": 22.13,
+            "emblem": false,
+            "mountaineers": true,
+            "mileage_rt": 17.7,
+            "gain_ft": 5325,
+            "loss_ft": 800,
+            "trailhead": "Leavitt Meadows Trail",
+            "quad": "Tower Peak",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Tower Peak"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0,
+      "emblem_peaks": 0,
+      "mountaineers_peaks": 1
+    },
+    {
+      "cluster_id": 46,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Silver Peak",
+          "latitude": 37.469703,
+          "longitude": -119.0212,
+          "elevation_ft": 11878.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 18.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 9.5,
+            "gain_ft": 4220,
+            "trailhead": "Devils Bathtub Trail",
+            "quad": "Sharktooth Peak",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Silver Peak"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 47,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Three Sisters",
+          "latitude": 37.141226,
+          "longitude": -119.060785,
+          "elevation_ft": 10612.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 11.9,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7.1,
+            "gain_ft": 2440,
+            "loss_ft": 280,
+            "trailhead": "Cliff Lake Trail",
+            "quad": "Dogtooth Peak",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Three Sisters"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 48,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Spanish Mountain",
+          "latitude": 36.909209,
+          "longitude": -118.891391,
+          "elevation_ft": 10051.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 11.8,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 10.4,
+            "gain_ft": 3610,
+            "loss_ft": 280,
+            "trailhead": "Crown Valley Trail",
+            "quad": "Rough Spur",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Spanish Mountain"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 49,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Homers Nose",
+          "latitude": 36.384673,
+          "longitude": -118.738877,
+          "elevation_ft": 9023.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 2.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 7.3,
+            "gain_ft": 6260,
+            "loss_ft": 925,
+            "trailhead": "Cahoon Trail",
+            "quad": "Silver City",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Homers Nose"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 50,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Kern Peak",
+          "latitude": 36.308403,
+          "longitude": -118.287853,
+          "elevation_ft": 11510.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "1",
+            "section": 2.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 17.2,
+            "gain_ft": 4920,
+            "loss_ft": 3350,
+            "trailhead": "Cottonwood Pass Trail",
+            "quad": "Kern Peak",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Kern Peak"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 51,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Rogers Peak",
+          "latitude": 36.217999,
+          "longitude": -117.08498,
+          "elevation_ft": 12978.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 19.6,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 13.5,
+            "gain_ft": 7490,
+            "loss_ft": 1750,
+            "trailhead": "Rush Creek Trail",
+            "quad": "Mount Lyell",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Rogers Peak"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 52,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Pilot Knob (S)",
+          "latitude": 35.728662,
+          "longitude": -118.212246,
+          "elevation_ft": 6200.0,
+          "attributes": {
+            "list": "SPS",
+            "class": "2",
+            "section": 1.1,
+            "emblem": false,
+            "mountaineers": false,
+            "mileage_rt": 3.7,
+            "gain_ft": 3610,
+            "loss_ft": 120,
+            "trailhead": "Dirt road",
+            "quad": "Onyx",
+            "coord_source": "GNIS"
+          }
+        }
+      ],
+      "recommended_order": [
+        "Pilot Knob (S)"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    }
+  ],
+  "config": {
+    "eps_mi": 6.0,
+    "miles_per_day": 15.0,
+    "max_days": 3,
+    "max_effective_mi": 45.0,
+    "method": "dbscan",
+    "exclude": [],
+    "force_together": []
+  }
+}

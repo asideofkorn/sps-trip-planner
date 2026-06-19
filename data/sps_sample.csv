@@ -1,0 +1,31 @@
+name,latitude,longitude,elevation_ft,region
+Mount Whitney,36.5785,-118.2923,14505,Whitney
+Mount Muir,36.5644,-118.2931,14012,Whitney
+Mount Russell,36.5897,-118.2925,14094,Whitney
+Mount Langley,36.5235,-118.2400,14026,Whitney
+Mount Williamson,36.6559,-118.3110,14375,Williamson
+Mount Tyndall,36.6553,-118.3346,14019,Williamson
+Mount Gould,36.7717,-118.3739,13005,Kearsarge
+University Peak,36.7392,-118.3494,13632,Kearsarge
+Split Mountain,37.0214,-118.4225,14064,Palisades
+Middle Palisade,37.0644,-118.4636,14012,Palisades
+North Palisade,37.0945,-118.5147,14248,Palisades
+Polemonium Peak,37.0958,-118.5108,14080,Palisades
+Thunderbolt Peak,37.0975,-118.5181,14003,Palisades
+Mount Sill,37.0942,-118.5042,14159,Palisades
+Mount Agassiz,37.1108,-118.5500,13893,Palisades
+Mount Darwin,37.1672,-118.6739,13837,Evolution
+Mount Mendel,37.1739,-118.6772,13710,Evolution
+Mount Goddard,37.1019,-118.7286,13568,Evolution
+Mount Gabb,37.3722,-118.7906,13741,Mono Divide
+Mount Abbot,37.3878,-118.7783,13715,Mono Divide
+Bear Creek Spire,37.3628,-118.7672,13713,Mono Divide
+Mount Dade,37.3683,-118.7783,13635,Mono Divide
+Mount Morgan South,37.4047,-118.7339,13748,Mono Divide
+Red Slate Mountain,37.5072,-118.8675,13163,Mono Divide
+Mount Ritter,37.6911,-119.1992,13143,Ritter Range
+Banner Peak,37.7008,-119.1989,12936,Ritter Range
+Mount Lyell,37.7392,-119.2714,13114,Tuolumne
+Mount Dana,37.8997,-119.2211,13061,Tuolumne
+Mount Conness,37.9686,-119.3206,12590,Tuolumne
+Matterhorn Peak,38.0817,-119.3611,12279,Sawtooth

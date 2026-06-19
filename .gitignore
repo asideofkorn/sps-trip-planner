@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+*.png
+!examples/*.png
+out.json

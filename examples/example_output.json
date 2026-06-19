@@ -1,0 +1,377 @@
+{
+  "summary": {
+    "num_clusters": 9,
+    "total_peaks": 30,
+    "total_estimated_days": 10,
+    "total_distance_mi": 46.74,
+    "total_elevation_gain_ft": 1704.0
+  },
+  "clusters": [
+    {
+      "cluster_id": 0,
+      "num_peaks": 7,
+      "peaks": [
+        {
+          "name": "Mount Agassiz",
+          "latitude": 37.1108,
+          "longitude": -118.55,
+          "elevation_ft": 13893.0,
+          "region": "Palisades"
+        },
+        {
+          "name": "Thunderbolt Peak",
+          "latitude": 37.0975,
+          "longitude": -118.5181,
+          "elevation_ft": 14003.0,
+          "region": "Palisades"
+        },
+        {
+          "name": "North Palisade",
+          "latitude": 37.0945,
+          "longitude": -118.5147,
+          "elevation_ft": 14248.0,
+          "region": "Palisades"
+        },
+        {
+          "name": "Polemonium Peak",
+          "latitude": 37.0958,
+          "longitude": -118.5108,
+          "elevation_ft": 14080.0,
+          "region": "Palisades"
+        },
+        {
+          "name": "Mount Sill",
+          "latitude": 37.0942,
+          "longitude": -118.5042,
+          "elevation_ft": 14159.0,
+          "region": "Palisades"
+        },
+        {
+          "name": "Middle Palisade",
+          "latitude": 37.0644,
+          "longitude": -118.4636,
+          "elevation_ft": 14012.0,
+          "region": "Palisades"
+        },
+        {
+          "name": "Split Mountain",
+          "latitude": 37.0214,
+          "longitude": -118.4225,
+          "elevation_ft": 14064.0,
+          "region": "Palisades"
+        }
+      ],
+      "recommended_order": [
+        "Mount Agassiz",
+        "Thunderbolt Peak",
+        "North Palisade",
+        "Polemonium Peak",
+        "Mount Sill",
+        "Middle Palisade",
+        "Split Mountain"
+      ],
+      "total_distance_mi": 9.65,
+      "total_effective_mi": 10.38,
+      "total_elevation_gain_ft": 486.0,
+      "estimated_days": 1,
+      "efficiency_score": 3.4342
+    },
+    {
+      "cluster_id": 1,
+      "num_peaks": 5,
+      "peaks": [
+        {
+          "name": "Bear Creek Spire",
+          "latitude": 37.3628,
+          "longitude": -118.7672,
+          "elevation_ft": 13713.0,
+          "region": "Mono Divide"
+        },
+        {
+          "name": "Mount Dade",
+          "latitude": 37.3683,
+          "longitude": -118.7783,
+          "elevation_ft": 13635.0,
+          "region": "Mono Divide"
+        },
+        {
+          "name": "Mount Gabb",
+          "latitude": 37.3722,
+          "longitude": -118.7906,
+          "elevation_ft": 13741.0,
+          "region": "Mono Divide"
+        },
+        {
+          "name": "Mount Abbot",
+          "latitude": 37.3878,
+          "longitude": -118.7783,
+          "elevation_ft": 13715.0,
+          "region": "Mono Divide"
+        },
+        {
+          "name": "Mount Morgan South",
+          "latitude": 37.4047,
+          "longitude": -118.7339,
+          "elevation_ft": 13748.0,
+          "region": "Mono Divide"
+        }
+      ],
+      "recommended_order": [
+        "Bear Creek Spire",
+        "Mount Dade",
+        "Mount Gabb",
+        "Mount Abbot",
+        "Mount Morgan South"
+      ],
+      "total_distance_mi": 5.42,
+      "total_effective_mi": 5.63,
+      "total_elevation_gain_ft": 139.0,
+      "estimated_days": 1,
+      "efficiency_score": 3.1993
+    },
+    {
+      "cluster_id": 2,
+      "num_peaks": 8,
+      "peaks": [
+        {
+          "name": "Mount Langley",
+          "latitude": 36.5235,
+          "longitude": -118.24,
+          "elevation_ft": 14026.0,
+          "region": "Whitney"
+        },
+        {
+          "name": "Mount Muir",
+          "latitude": 36.5644,
+          "longitude": -118.2931,
+          "elevation_ft": 14012.0,
+          "region": "Whitney"
+        },
+        {
+          "name": "Mount Whitney",
+          "latitude": 36.5785,
+          "longitude": -118.2923,
+          "elevation_ft": 14505.0,
+          "region": "Whitney"
+        },
+        {
+          "name": "Mount Russell",
+          "latitude": 36.5897,
+          "longitude": -118.2925,
+          "elevation_ft": 14094.0,
+          "region": "Whitney"
+        },
+        {
+          "name": "Mount Williamson",
+          "latitude": 36.6559,
+          "longitude": -118.311,
+          "elevation_ft": 14375.0,
+          "region": "Williamson"
+        },
+        {
+          "name": "Mount Tyndall",
+          "latitude": 36.6553,
+          "longitude": -118.3346,
+          "elevation_ft": 14019.0,
+          "region": "Williamson"
+        },
+        {
+          "name": "University Peak",
+          "latitude": 36.7392,
+          "longitude": -118.3494,
+          "elevation_ft": 13632.0,
+          "region": "Kearsarge"
+        },
+        {
+          "name": "Mount Gould",
+          "latitude": 36.7717,
+          "longitude": -118.3739,
+          "elevation_ft": 13005.0,
+          "region": "Kearsarge"
+        }
+      ],
+      "recommended_order": [
+        "Mount Langley",
+        "Mount Muir",
+        "Mount Whitney",
+        "Mount Russell",
+        "Mount Williamson",
+        "Mount Tyndall",
+        "University Peak",
+        "Mount Gould"
+      ],
+      "total_distance_mi": 20.31,
+      "total_effective_mi": 21.47,
+      "total_elevation_gain_ft": 774.0,
+      "estimated_days": 2,
+      "efficiency_score": 2.5423
+    },
+    {
+      "cluster_id": 3,
+      "num_peaks": 3,
+      "peaks": [
+        {
+          "name": "Mount Ritter",
+          "latitude": 37.6911,
+          "longitude": -119.1992,
+          "elevation_ft": 13143.0,
+          "region": "Ritter Range"
+        },
+        {
+          "name": "Banner Peak",
+          "latitude": 37.7008,
+          "longitude": -119.1989,
+          "elevation_ft": 12936.0,
+          "region": "Ritter Range"
+        },
+        {
+          "name": "Mount Lyell",
+          "latitude": 37.7392,
+          "longitude": -119.2714,
+          "elevation_ft": 13114.0,
+          "region": "Tuolumne"
+        }
+      ],
+      "recommended_order": [
+        "Mount Ritter",
+        "Banner Peak",
+        "Mount Lyell"
+      ],
+      "total_distance_mi": 5.44,
+      "total_effective_mi": 5.71,
+      "total_elevation_gain_ft": 178.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.9101
+    },
+    {
+      "cluster_id": 4,
+      "num_peaks": 3,
+      "peaks": [
+        {
+          "name": "Mount Mendel",
+          "latitude": 37.1739,
+          "longitude": -118.6772,
+          "elevation_ft": 13710.0,
+          "region": "Evolution"
+        },
+        {
+          "name": "Mount Darwin",
+          "latitude": 37.1672,
+          "longitude": -118.6739,
+          "elevation_ft": 13837.0,
+          "region": "Evolution"
+        },
+        {
+          "name": "Mount Goddard",
+          "latitude": 37.1019,
+          "longitude": -118.7286,
+          "elevation_ft": 13568.0,
+          "region": "Evolution"
+        }
+      ],
+      "recommended_order": [
+        "Mount Mendel",
+        "Mount Darwin",
+        "Mount Goddard"
+      ],
+      "total_distance_mi": 5.92,
+      "total_effective_mi": 6.11,
+      "total_elevation_gain_ft": 127.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.8618
+    },
+    {
+      "cluster_id": 5,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Matterhorn Peak",
+          "latitude": 38.0817,
+          "longitude": -119.3611,
+          "elevation_ft": 12279.0,
+          "region": "Sawtooth"
+        }
+      ],
+      "recommended_order": [
+        "Matterhorn Peak"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 6,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Mount Conness",
+          "latitude": 37.9686,
+          "longitude": -119.3206,
+          "elevation_ft": 12590.0,
+          "region": "Tuolumne"
+        }
+      ],
+      "recommended_order": [
+        "Mount Conness"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 7,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Mount Dana",
+          "latitude": 37.8997,
+          "longitude": -119.2211,
+          "elevation_ft": 13061.0,
+          "region": "Tuolumne"
+        }
+      ],
+      "recommended_order": [
+        "Mount Dana"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    },
+    {
+      "cluster_id": 8,
+      "num_peaks": 1,
+      "peaks": [
+        {
+          "name": "Red Slate Mountain",
+          "latitude": 37.5072,
+          "longitude": -118.8675,
+          "elevation_ft": 13163.0,
+          "region": "Mono Divide"
+        }
+      ],
+      "recommended_order": [
+        "Red Slate Mountain"
+      ],
+      "total_distance_mi": 0.0,
+      "total_effective_mi": 0.0,
+      "total_elevation_gain_ft": 0.0,
+      "estimated_days": 1,
+      "efficiency_score": 1.0
+    }
+  ],
+  "config": {
+    "eps_mi": 6.0,
+    "miles_per_day": 15.0,
+    "max_days": 3,
+    "max_effective_mi": 45.0,
+    "method": "dbscan",
+    "exclude": [],
+    "force_together": []
+  }
+}
