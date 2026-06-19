@@ -12,6 +12,7 @@ Usage:
 from __future__ import annotations
 
 import sys
+import textwrap
 from datetime import date
 from pathlib import Path
 
@@ -47,22 +48,31 @@ def plot_ladder(df: pd.DataFrame, stamp: str) -> Path:
     ratings = sorted(df["scrambler_rating"].unique())
     x_of = {r: i for i, r in enumerate(ratings)}
 
-    fig, ax = plt.subplots(figsize=(16, 7))
+    row_gap = 2.0  # vertical spacing between the (up to) two routes per rating
+    fig, ax = plt.subplots(figsize=(17, 9))
     for rating, grp in df.groupby("scrambler_rating"):
         grp = grp.reset_index(drop=True)
         for j, row in grp.iterrows():
             x = x_of[rating]
-            y = j
+            y = j * row_gap
             c = CLASS_COLOR[class_num(row["ydc_class"])]
             ax.scatter(x, y, s=90, color=c, zorder=3, edgecolor="k", linewidth=0.4)
+            # Peak (+ emblem/mountaineering flag) above the marker.
             ax.annotate(f"{row['peak']}{flag_tag(row)}", (x, y),
-                        xytext=(0, 11), textcoords="offset points",
-                        ha="center", fontsize=7, rotation=12)
+                        xytext=(0, 10), textcoords="offset points",
+                        ha="center", va="bottom", fontsize=7.5, fontweight="bold")
+            # Route name below the marker, wrapped so long names don't collide.
+            route = "\n".join(textwrap.wrap(row["route"], width=20))
+            ax.annotate(route, (x, y),
+                        xytext=(0, -12), textcoords="offset points",
+                        ha="center", va="top", fontsize=6.5, style="italic",
+                        color="#333333")
 
     ax.set_xticks(range(len(ratings)))
     ax.set_xticklabels(ratings)
     ax.set_yticks([])
-    ax.set_ylim(-0.6, df.groupby("scrambler_rating").size().max() - 0.2)
+    ax.set_ylim(-row_gap + 0.4,
+                (df.groupby("scrambler_rating").size().max() - 1) * row_gap + row_gap - 0.4)
     ax.set_xlabel("Scrambler rating  (easier  ->  harder)")
     ax.set_title("SPS Benchmark Routes — difficulty progression ladder")
     handles = [plt.Line2D([0], [0], marker="o", linestyle="", markersize=9,
