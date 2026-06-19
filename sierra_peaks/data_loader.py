@@ -54,6 +54,7 @@ def _normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
 _META_COLUMNS = [
     "list", "class", "section", "emblem", "mountaineers",
     "mileage_rt", "gain_ft", "loss_ft", "trailhead", "quad", "coord_source",
+    "benchmark", "benchmark_rating",
 ]
 
 
@@ -116,7 +117,7 @@ def load_peaks(
             val = row[c]
             if pd.isna(val) or (isinstance(val, str) and not val.strip()):
                 continue
-            meta[c] = bool(val) if c in ("emblem", "mountaineers") else val
+            meta[c] = bool(val) if c in ("emblem", "mountaineers", "benchmark") else val
         meta = {k: (int(v) if isinstance(v, float) and v.is_integer() else v)
                 for k, v in meta.items()}
 

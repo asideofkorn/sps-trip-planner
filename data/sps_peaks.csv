@@ -1,602 +1,602 @@
-name,latitude,longitude,elevation_ft,list,section,class,emblem,mountaineers,mileage_rt,gain_ft,loss_ft,trailhead,quad,elev_estimated,coord_source
-Smith Mountain,36.127229,-118.224235,9533,SPS,1.1,2,False,False,1.4,995.0,,SNF 21S36,Monache Mtn.,False,GNIS
-English Mountain,39.446352,-120.551138,8373,SPS,24.6,2,False,False,1.9,1300.0,,Tollhouse Lake,English Mtn.,False,GNIS
-Lamont Peak,35.792046,-118.043567,7429,SPS,1.4,2,False,False,1.9,2560.0,330.0,Lamont Peak Trail,Lamont Peak,False,GNIS
-Independence Peak,36.76096,-118.331834,11742,SPS,9.2,3,False,False,2.0,2595.0,45.0,Robertson Lake Trail,Kearsarge Peak,False,GNIS
-Taylor Dome,35.85635,-118.30342,8802,SPS,1.7,2s3,False,False,2.3,1155.0,185.0,Big Meadows Trail,Cannell Peak,False,peakbagger
-Dunderberg Peak,38.064445,-119.274289,12374,SPS,22.5,2,False,False,2.3,2745.0,180.0,Virginia Lakes Trail,Dunderberg Peak,False,GNIS
-Cathedral Peak,37.847829,-119.405621,10911,SPS,21.1,3s4,False,True,2.9,2440.0,100.0,Tuolumne Meadows,Tenaya Lake,False,GNIS
-Adams Peak,39.910584,-120.100105,8197,SPS,24.9,2,False,False,3.0,1885.0,,Forest service road,Constantia,False,GNIS
-Round Top,38.663553,-120.00127,10381,SPS,23.7,3,False,False,3.1,2320.0,150.0,Wood Lake Trail,Carson Pass,False,GNIS
-Mount Dana,37.899686,-119.221249,13057,SPS,21.8,1,False,False,3.1,3440.0,325.0,Tioga Pass,Mount Dana,False,GNIS
-Sierra Buttes,39.593538,-120.647045,8591,SPS,24.7,1,False,False,3.2,2485.0,125.0,Forest Route 93,Sierra City,False,GNIS
-Kearsarge Peak,36.789474,-118.3472,12618,SPS,9.3,1,False,False,3.2,3855.0,190.0,Old mining trail,Kearsarge Peak,False,GNIS
-Sirretta Peak,35.924301,-118.333185,9977,SPS,1.8,1,False,False,3.3,2215.0,70.0,Cannell Meadows Trail 33E22,Sirretta Peak,False,GNIS
-Mount Conness,37.967053,-119.321395,12590,SPS,22.2,2,False,False,3.3,2860.0,370.0,Saddlebag Lake,Tioga Pass,False,GNIS
-Mount Elwell,39.708193,-120.689142,7818,SPS,24.8,1,False,False,3.4,2080.0,820.0,Lake Basin campground,Gold Lake,False,GNIS
-Mount Gibbs,37.877094,-119.211836,12773,SPS,21.7,1,False,False,3.5,3195.0,110.0,Mono Pass Trail,Mount Dana,False,GNIS
-Owens Peak,35.738123,-117.996877,8453,SPS,1.2,2,False,False,3.5,3200.0,145.0,Indian Wells Canyon,Owens Peak,False,GNIS
-Dragon Peak,36.789847,-118.375894,12927,SPS,9.1,3s4,False,False,3.5,4020.0,280.0,Golden Trout Lakes Trail,Kearsarge Peak,True,GNIS
-Mount Warren,37.989934,-119.223357,12327,SPS,22.1,1,False,False,3.5,4515.0,,Lundy Lake,Mount Dana,False,GNIS
-Moses Mountain,36.278722,-118.68081,9331,SPS,2.5,3,False,False,3.7,3510.0,100.0,Long Meadow Trail,Moses Mountain,False,GNIS
-Pilot Knob (S),35.728662,-118.212246,6200,SPS,1.1,2,False,False,3.7,3610.0,120.0,Dirt road,Onyx,True,GNIS
-University Peak,36.748079,-118.36187,13589,SPS,9.1,2,False,True,3.9,4540.0,150.0,Kearsarge Pass Trail,Mount Williamson,False,GNIS
-Mount Morrison,37.561387,-118.858277,12277,SPS,18.8,2,False,True,4.0,4870.0,240.0,Convict Lake,Convict Lake,False,GNIS
-Sawtooth Peak (S),35.823138,-117.998651,8000,SPS,1.5,2,False,False,4.1,2445.0,,Pacific Crest Trail,Nine Mile Canyon,True,GNIS
-Castle Peak,39.366152,-120.35174,9103,SPS,24.3,1s3,False,False,4.2,2235.0,360.0,Boreal Ridge Parking,Nordon,False,GNIS
-North Peak,37.982191,-119.315072,12242,SPS,22.3,2,False,False,4.2,2630.0,490.0,Saddlebag Lake,Tioga Pass,False,GNIS
-Stanislaus Peak,38.383989,-119.667084,11233,SPS,23.3,1,False,False,4.2,2570.0,755.0,St. Mary's Pass Trail,Disaster Peak,False,GNIS
-Mount Carillion,36.592421,-118.277909,13517,SPS,5.4,2,False,False,4.2,5465.0,250.0,Mount Whitney Trail,Mount Whitney,True,GNIS
-North Maggie Mountain,36.276772,-118.637698,10234,SPS,2.4,1,False,False,4.3,4315.0,,Shakes Camp,Moses Mountain,False,peakbagger
-Mount Russell,36.590671,-118.289036,14088,SPS,5.3,3,False,True,4.5,6100.0,310.0,Mount Whitney Trail,Mount Whitney,False,GNIS
-Mount Tallac,38.905897,-120.098848,9735,SPS,23.11,1,False,False,4.6,3295.0,65.0,Mount Tallac Trail,Emerald Bay,False,GNIS
-Excelsior Mountain,38.024581,-119.305392,12446,SPS,22.4,1,False,False,4.6,2995.0,360.0,Virginia Lakes Trail,Dunderberg Peak,False,GNIS
-Mount Lola,39.432988,-120.364895,9148,SPS,24.5,1,False,False,4.8,1405.0,255.0,Mt Lola Trail,Indepence Lk.,False,GNIS
-Thor Peak,36.576855,-118.26574,12306,SPS,4.8,2,False,False,4.8,4005.0,,Mount Whitney Trail,Mount Whitney,False,GNIS
-Lone Pine Peak,36.561734,-118.2257,12943,SPS,4.9,2,False,False,4.8,5085.0,,Meysan Lakes Trail,Mount Langley,False,GNIS
-Mount Johnson,37.128459,-118.586358,12871,SPS,14.1,2,False,False,5.0,3360.0,300.0,Bishop Pass Trail,Mount Thompson,False,GNIS
-Mount Emerson,37.2447,-118.659728,13204,SPS,16.2,2,False,False,5.0,3955.0,,Piute Pass Trail,Mount Darwin,False,GNIS
-Cloudripper,37.142753,-118.530469,13525,SPS,14.9,2,False,False,5.0,4295.0,50.0,North Fork Trail,Mount Thompson,False,GNIS
-Tunnabora Peak,36.605128,-118.282185,13563,SPS,5.5,2,False,False,5.0,5365.0,300.0,Mount Whitney Trail,Mount Whitney,False,GNIS
-Cartago Peak,36.32457,-118.10213,10480,SPS,3.2,2s3,False,False,5.0,6710.0,,West side of aquaduct,Olancha,True,peakbagger
-Mount Mills,37.393853,-118.789998,13451,SPS,17.1,3,False,False,5.1,3320.0,100.0,Mono Pass Trail,Mount Abbot,False,GNIS
-Mount Rose,39.343776,-119.917938,10776,SPS,24.4,1,False,False,5.2,1955.0,,Mount  Rose Highway,Mount Rose,False,GNIS
-Mount Dade,37.381913,-118.779489,13600,SPS,17.8,2,False,False,5.3,3470.0,100.0,Mono Pass Trail,Mount Abbot,True,GNIS
-MOUNT ABBOT,37.386353,-118.784831,13704,SPS,17.9,3,True,False,5.3,3575.0,100.0,Mono Pass Trail,MOUNT ABBOT,False,GNIS
-Mount Morgan (S),37.405177,-118.732947,13748,SPS,17.11,2,False,False,5.3,4340.0,300.0,Tamarack Lakes Trail,Mount Morgan,False,GNIS
-Freel Peak,38.857429,-119.900123,10881,SPS,23.8,1,False,False,5.4,3050.0,,Fountain Place,Freel Peak,False,GNIS
-Mount Gilbert,37.136369,-118.598223,13106,SPS,14.11,2,False,False,5.5,3675.0,380.0,Bishop Pass Trail,Mount Thompson,False,GNIS
-Temple Crag,37.109718,-118.491327,12976,SPS,14.1,3,False,False,5.5,5475.0,300.0,South Fork Trail,Split Mountain,False,GNIS
-Mount Lamarck,37.19487,-118.670615,13417,SPS,15.9,1,False,False,5.6,4155.0,,Lamark Lakes Trail,Mount Darwin,False,GNIS
-Bloody Mountain,37.560555,-118.906759,12552,SPS,18.9,2,False,False,5.6,5250.0,,Laurel Creek Trail,Bloody Mountain,False,GNIS
-Rockhouse Peak,35.90099,-118.22839,8360,SPS,1.6,2,False,False,5.7,3035.0,520.0,Rockhouse Basin Trail,Rockhouse Basin,True,peakbagger
-Granite Chief,39.198184,-120.287087,9006,SPS,24.1,1,False,False,5.7,3380.0,620.0,Squaw Valley Fire Station,Granite Chief,False,GNIS
-Mount Bradley,36.728643,-118.338717,13264,SPS,8.1,2,False,False,5.7,7825.0,480.0,Pinyon Creek Trail,Mount Williamson,False,GNIS
-Leavitt Peak,38.286112,-119.651229,11569,SPS,23.2,1,False,False,5.8,2400.0,450.0,Pacific Crest Trail,Sonora Pass,False,GNIS
-Bear Creek Spire,37.368053,-118.767608,13720,SPS,17.7,3s4,False,True,5.8,3590.0,100.0,Mono Pass Trail,Mount Hilgard,True,GNIS
-San Joaquin Mountain,37.719094,-119.1062,11598,SPS,19.9,1,False,False,5.9,2340.0,,Minaret Vista Parking,Mammoth Mountain,False,GNIS
-Pyramid Peak (N),38.844869,-120.157782,9983,SPS,23.9,2,False,False,6.0,3285.0,,Lyon Creek Trail,Pyramid Peak,False,GNIS
-Mount Gould,36.779776,-118.377876,13005,SPS,9.4,1s3,False,False,6.0,4150.0,335.0,Kearsarge Pass Trail,Mt. Clarence King,False,GNIS
-Highland Peak,38.543624,-119.755548,10935,SPS,23.5,2,False,False,6.1,2935.0,640.0,Pacific Crest Trail,Ebbetts Pass,False,GNIS
-Mount Muah,36.400691,-118.12514,11016,SPS,3.3,2,False,False,6.2,1980.0,880.0,Mulkey Stock Horseshoe Meadow Road,Bartlett,False,GNIS
-Mount Goode,37.123027,-118.568106,13085,SPS,14.8,2,False,False,6.2,3375.0,100.0,Bishop Pass Trail,North Palisade,False,GNIS
-MATTERHORN PEAK,38.09297,-119.38179,12279,SPS,22.9,2,True,False,6.2,5180.0,,Horse Creek Trail,MATTERHORN PEAK,False,GNIS
-Alta Peak,36.590493,-118.663418,11240,SPS,6.1,1,False,False,6.3,4060.0,80.0,Alta Peak Trail,Lodgepole,True,GNIS
-Crag Peak,36.11176,-118.153446,9480,SPS,1.9,3,False,False,6.4,1885.0,800.0,SNF 21S36,Crag Peak,True,GNIS
-Dicks Peak,38.900458,-120.1509,9974,SPS,23.1,2,False,False,6.5,3740.0,325.0,12N16 Parking,Rockbound Vly.,False,GNIS
-Sawtooth Peak (N),36.455161,-118.555499,12343,SPS,2.9,2,False,False,6.5,5085.0,550.0,Sawtooth Pass Trail,Mineral King,False,GNIS
-Spanish Needle,35.77155,-118.0012,7841,SPS,1.3,3,False,False,6.6,2520.0,,Pacific Crest Trail,Lamont Peak,False,peakbagger
-Disaster Peak,38.448743,-119.733666,10047,SPS,23.4,2,False,False,6.7,4165.0,550.0,Disaster Creek Trail,Disaster Peak,False,GNIS
-Middle Palisade,37.07029,-118.469138,14012,SPS,12.8,3,False,True,6.7,6410.0,200.0,South Fork Trail,Split Mountain,False,GNIS
-Clouds Rest,37.767825,-119.489196,9926,SPS,20.7,1,False,False,6.8,2460.0,700.0,Sunrise Lakes Trail,Tenaya Lake,False,GNIS
-Palisade Crest,37.081447,-118.48958,13553,SPS,12.1,4,False,False,6.8,5955.0,200.0,South Fork Trail,Split Mountain,False,GNIS
-Norman Clyde Peak,37.074485,-118.474422,13855,SPS,12.9,4,False,True,6.8,6255.0,200.0,South Fork Trail,Split Mountain,False,GNIS
-Disappointment Peak,37.067903,-118.467557,13917,SPS,12.7,4,False,False,6.8,6315.0,200.0,South Fork Trail,Split Mountain,False,GNIS
-Vandever Mountain,36.398358,-118.581235,11947,SPS,2.7,1,False,False,6.9,4085.0,,Farewell Gap Trail,Mineral King,False,GNIS
-Mount McAdie,36.551753,-118.276336,13799,SPS,4.5,3,False,True,6.9,5500.0,,Mount Whitney Trail,Mount Whitney,False,GNIS
-Mount Irvine,36.55591,-118.263539,13780,SPS,4.4,2,False,False,7.0,5580.0,100.0,Meysan Lake Trail,Mount Whitney,True,GNIS
-Mount Mallory,36.549086,-118.262276,13845,SPS,4.3,2,False,False,7.0,5985.0,,Meysan Lake Trail,Mount Whitney,False,GNIS
-Three Sisters,37.141226,-119.060785,10612,SPS,11.9,1,False,False,7.1,2440.0,280.0,Cliff Lake Trail,Dogtooth Peak,False,GNIS
-Basin Mountain,37.296143,-118.660409,13181,SPS,16.4,2,False,False,7.1,5500.0,100.0,Horton Lakes Trail,Mount Tom,False,GNIS
-Tinker Knob,39.244635,-120.28493,8949,SPS,24.2,1,False,False,7.2,1890.0,,Pacific Crest Trail,Granite Chief,False,GNIS
-Cirque Peak,36.476936,-118.236977,12900,SPS,3.4,1,False,False,7.2,3060.0,100.0,Cottonwood Pass Trail,Cirque Peak,False,GNIS
-Mount Agassiz,37.111877,-118.530755,13893,SPS,14.7,2,False,False,7.2,4185.0,100.0,Bishop Pass Trail,North Palisade,False,GNIS
-Mount Starr King,37.702793,-119.517592,9092,SPS,20.5,5,False,True,7.2,3475.0,1415.0,Mono Meadows Trail,Half Dome,False,GNIS
-Mount Morgan (N),37.511317,-118.779836,13002,SPS,18.6,2,False,False,7.3,4100.0,940.0,Davis Lake Trail,Convict Lake,False,GNIS
-Homers Nose,36.384673,-118.738877,9023,SPS,2.6,1,False,False,7.3,6260.0,925.0,Cahoon Trail,Silver City,False,GNIS
-Mount Baldwin,37.532061,-118.851269,12615,SPS,18.7,2,False,False,7.5,5385.0,400.0,Convict Creek Trail,Convict Lake,False,GNIS
-Mount Mendel,37.174841,-118.682236,13710,SPS,15.8,3,False,False,7.5,5830.0,380.0,Lamark Lakes Trail,Mount Darwin,False,GNIS
-Mount Stanford (N),37.489339,-118.796287,12836,SPS,18.5,2,False,False,7.6,3355.0,360.0,Davis Lake Trail,Mount Abbot,False,GNIS
-Iron Mountain,37.611423,-119.164761,11148,SPS,19.1,1,False,False,7.7,4560.0,540.0,West campground parking,Cattle Mountain,False,GNIS
-Needham Mountain,36.454322,-118.537352,12520,SPS,2.1,2s3,False,False,7.8,6060.0,1350.0,Sawtooth Pass Trail,Mineral King,True,GNIS
-Mount Corcoran,36.538552,-118.250484,13714,SPS,4.1,2,False,False,8.0,7155.0,,Granite View Drive,Mount Langley,True,GNIS
-MOUNT DARWIN,37.167022,-118.672388,13831,SPS,15.7,3s4,True,False,8.0,5950.0,1380.0,Lamark Lakes Trail,MOUNT DARWIN,False,GNIS
-Florence Peak,36.406221,-118.55087,12432,SPS,2.8,2,False,False,8.0,6520.0,1940.0,Farewell Gap Trail,Mineral King,False,GNIS
-Mount LeConte,36.541617,-118.252225,13830,SPS,4.2,3,False,True,8.1,7270.0,,Granite View Drive,Mount Whitney,False,GNIS
-Mokelumne Peak,38.538045,-120.094341,9334,SPS,23.6,2,False,False,8.2,4135.0,1200.0,Tanglefoot Trail,Mokelumne Pk.,False,GNIS
-Mount Tom,37.338556,-118.656936,13652,SPS,16.6,2,False,False,8.2,5980.0,100.0,Horton Lakes Trail,Mount Tom,False,GNIS
-Half Dome,37.744402,-119.534053,8840,SPS,20.6,2,False,False,8.2,5975.0,1160.0,John Muir Trail,Half Dome,True,GNIS
-Four Gables,37.302473,-118.699931,12720,SPS,16.5,1,False,False,8.3,5050.0,100.0,Horton Lakes Trail,Mount Tom,True,GNIS
-Mount Rixford,36.784856,-118.398887,12887,SPS,9.5,2,False,False,8.3,4560.0,865.0,Kearsarge Pass Trail,Mount Clarence King,False,GNIS
-Birch Mountain,37.062492,-118.419066,13602,SPS,12.5,2,False,False,8.3,7780.0,150.0,McMurray Meadows Road,Split Mountain,False,GNIS
-Red and White Mountain,37.479892,-118.857269,12816,SPS,18.4,2,False,False,8.4,5080.0,400.0,McGee Creek Trail,Mount Abbot,False,GNIS
-Whorl Mountain,38.074121,-119.383428,12033,SPS,22.8,3,False,True,8.5,6095.0,1160.0,Horse Creek Trail,Matterhorn Peak,False,GNIS
-Thunderbolt Peak,37.097488,-118.517293,14003,SPS,14.5,4s5,False,True,8.6,4395.0,200.0,Bishop Pass Trail,North Palisade,False,GNIS
-The Thumb,37.07148,-118.445977,13356,SPS,12.6,2,False,False,8.9,7535.0,150.0,McMurray Meadows Road,Split Mountain,False,GNIS
-Mount Perkins,36.927166,-118.381436,12566,SPS,10.3,2,False,False,9.0,6830.0,,Armstong Canyon,Mount Pinchot,False,GNIS
-Clyde Minaret,37.66028,-119.1739,12264,SPS,19.2,4,False,True,9.1,3935.0,,River Trail,Mount Ritter,False,peakbagger
-Vogelsang Peak,37.777365,-119.349521,11493,SPS,21.2,2,False,False,9.1,3485.0,710.0,John Muir Trail,Vogelsang Peak,False,GNIS
-Mount Thompson,37.142882,-118.613612,13494,SPS,15.1,2,False,False,9.1,5620.0,1200.0,Sabrina Basin Trail,Mount Thompson,False,GNIS
-Mount Muir,36.564739,-118.291329,14012,SPS,4.6,3,False,False,9.2,5910.0,200.0,Mount Whitney Trail,Mount Whitney,False,GNIS
-Mount Powell,37.138674,-118.634023,13360,SPS,15.2,2,False,False,9.2,5785.0,1500.0,Sabrina Basin Trail,Mount Thompson,True,GNIS
-Virginia Peak,38.065851,-119.357893,12001,SPS,22.6,2,False,False,9.3,3990.0,1800.0,Virginia Lakes Trail,Dunderberg Peak,False,GNIS
-Twin Peaks,38.080489,-119.357527,12323,SPS,22.7,2,False,False,9.3,4895.0,2300.0,Virginia Lakes Trail,Dunderberg Peak,False,GNIS
-Mount Tinemaha,37.036314,-118.396367,12520,SPS,12.2,2,False,False,9.3,7785.0,80.0,Red Lake Trail,Split Mountain,False,GNIS
-Merriam Peak,37.309126,-118.765212,13103,SPS,17.1,2,False,False,9.4,5855.0,150.0,Pine Creek Pass Trail,Mount Hilgard,False,GNIS
-Silver Peak,37.469703,-119.0212,11878,SPS,18.1,2,False,False,9.5,4220.0,,Devils Bathtub Trail,Sharktooth Peak,False,GNIS
-Mount Gayley,37.103001,-118.499807,13510,SPS,14.2,3,False,False,9.5,5810.0,100.0,North Fork Trail,Split Mountain,False,GNIS
-Mount Goethe,37.206148,-118.702298,13264,SPS,16.1,1,False,False,9.6,6025.0,2020.0,Lamark Lakes Trail,Mount Darwin,False,GNIS
-Mount Bolton-Brown,37.046129,-118.441029,13491,SPS,12.4,2,False,False,9.6,8220.0,700.0,McMurray Meadows Road,Split Mountain,False,GNIS
-Koip Peak,37.813721,-119.201544,12962,SPS,21.6,1,False,False,9.7,3005.0,400.0,Mono Pass Trail,Koip Peak,False,GNIS
-Mount Haeckel,37.150992,-118.661007,13418,SPS,15.4,3,False,False,9.7,4495.0,150.0,Sabrina Basin Trail,Mount Darwin,False,GNIS
-Mount Bago,36.769994,-118.438088,11870,SPS,9.6,1,False,False,9.7,4110.0,1430.0,Kearsarge Pass Trail,Mount Clarence King,False,GNIS
-Mount Winchell,37.104596,-118.526166,13775,SPS,14.6,3,False,False,9.7,6065.0,100.0,North Fork Trail,North Palisade,False,GNIS
-Royce Peak,37.318174,-118.770896,13280,SPS,17.2,2,False,False,9.7,6030.0,150.0,Pine Creek Pass Trail,Mount Hilgard,True,GNIS
-Mount Keith,36.700069,-118.343416,13976,SPS,8.9,2,False,False,9.7,8315.0,650.0,Shepherd Pass Trail,Mount Williamson,False,GNIS
-Cardinal Mountain,36.999405,-118.412737,13396,SPS,10.1,2,False,False,9.8,7980.0,40.0,Taboose Pass Trail,Mount Pinchot,False,GNIS
-Black Mountain,36.809148,-118.378012,13291,SPS,9.11,2,False,False,10.0,7640.0,275.0,Baxter Pass Trail,Mount Clarence King,False,GNIS
-Mount Wynne,36.938011,-118.402918,13179,SPS,10.4,2,False,False,10.0,7995.0,550.0,Scotty Spring,Mount Pinchot,False,GNIS
-Goat Mountain,36.869469,-118.574211,12207,SPS,11.4,2,False,False,10.1,7410.0,240.0,Granite Pass Trail,The Sphinx,False,GNIS
-Mount Pinchot,36.947328,-118.4052,13494,SPS,10.5,2,False,False,10.1,8010.0,250.0,Scotty Spring,Mount Pinchot,False,GNIS
-Mount Wallace,37.146807,-118.656798,13377,SPS,15.3,2s3,False,False,10.2,4450.0,150.0,Sabrina Basin Trail,Mount Darwin,False,GNIS
-MOUNT HUMPHREYS,37.269972,-118.671653,13986,SPS,16.3,4,True,False,10.2,5045.0,400.0,Piute Pass Trail,MOUNT TOM,False,GNIS
-Angora Mountain,36.264326,-118.446047,10198,SPS,2.2,2,False,False,10.2,5880.0,1500.0,Jerky Meadows Trail,Kern Lake,False,GNIS
-Mount Huxley,37.136036,-118.682739,13086,SPS,15.6,3,False,False,10.2,5875.0,1850.0,Sabrina Basin Trail,Mount Darwin,False,GNIS
-Mount Hitchcock,36.554866,-118.311852,13186,SPS,3.11,1,False,False,10.3,5300.0,475.0,Mount Whitney Trail,Mount Whitney,False,GNIS
-Mount Julius Ceasar,37.356733,-118.781666,13200,SPS,17.3,2,False,False,10.3,6100.0,300.0,Pine Creek Pass Trail,Mount Hilgard,True,GNIS
-Spanish Mountain,36.909209,-118.891391,10051,SPS,11.8,1,False,False,10.4,3610.0,280.0,Crown Valley Trail,Rough Spur,False,GNIS
-Pilot Knob (N),37.273405,-118.757111,12245,SPS,16.7,2,False,False,10.5,3795.0,800.0,North Lake Trail,Mount Hilgard,False,GNIS
-NORTH PALISADE,37.094243,-118.514437,14242,SPS,14.4,4,True,False,10.5,6530.0,100.0,North Fork Trail,NORTH PALISADE,False,GNIS
-SPLIT MOUNTAIN,37.02096,-118.422536,14042,SPS,12.1,1,True,False,10.5,9305.0,80.0,Red Lake Trail,SPLIT MOUNTAIN,True,GNIS
-Giraud Peak,37.077297,-118.564477,12608,SPS,13.2,2,False,False,10.6,5045.0,1350.0,Bishop Pass Trail,North Palisade,False,GNIS
-Mount Baxter,36.861438,-118.36222,13136,SPS,10.1,2,False,False,10.6,8355.0,1200.0,Baxter Pass Trail,Kearsarge Peak,False,GNIS
-Mount Hale,36.588037,-118.314654,13494,SPS,5.2,1,False,False,10.7,6945.0,1750.0,Mount Whitney Trail,Mount Whitney,False,GNIS
-Mount Young,36.581042,-118.327623,13176,SPS,5.1,1,False,False,10.8,6625.0,1750.0,Mount Whitney Trail,Mount Whitney,False,GNIS
-Red Slate Mountain,37.507448,-118.86915,13123,SPS,18.4,1,False,True,10.9,4990.0,,McGee Creek Trail,Convict Lake,True,GNIS
-MOUNT WHITNEY,36.57857,-118.292422,14491,SPS,4.7,1,True,False,10.9,6390.0,200.0,Mount Whitney Trail,MOUNT WHITNEY,False,GNIS
-Mount Silliman,36.643245,-118.696764,11188,SPS,6.2,1,False,False,11.0,4770.0,330.0,Silliman Pass Trail,Mount Silliman,False,GNIS
-OLANCHA PEAK,36.265368,-118.118152,12123,SPS,3.1,2,True,False,11.0,6435.0,100.0,Olancha Pass Trail,OLANCHA,False,GNIS
-Goodale Mountain,36.972169,-118.385438,12772,SPS,10.9,2s3,False,False,11.0,7395.0,40.0,Taboose Pass Trail,Mount Pinchot,False,GNIS
-Mount Langley,36.523367,-118.239416,14026,SPS,3.5,1,False,False,11.1,4795.0,400.0,Cottonwood Lakes Trail,Mount Langley,False,GNIS
-Mount Tyndall,36.655744,-118.337273,14019,SPS,5.8,2,False,False,11.1,8360.0,650.0,Shepherd Pass Trail,Mount Williamson,False,GNIS
-Mount Prater,37.036793,-118.434705,13471,SPS,12.3,1,False,False,11.3,8735.0,80.0,Red Lake Trail,Split Mountain,False,GNIS
-Black Hawk Mountain,38.20597,-119.708986,10348,SPS,23.1,2,False,False,11.4,4190.0,200.0,Huckleberry Trail,Emigrant Lake,False,GNIS
-Mount Davis,37.714989,-119.219382,12303,SPS,19.5,2,False,False,11.4,5100.0,1120.0,Pacific Crest Trail,Mount Ritter,False,GNIS
-Banner Peak,37.696442,-119.194743,12936,SPS,19.4,2,False,False,11.4,5730.0,1120.0,Pacific Crest Trail,Mount Ritter,False,GNIS
-Striped Mountain,36.965621,-118.403766,13179,SPS,10.8,1,False,False,11.4,7810.0,40.0,Taboose Pass Trail,Mount Pinchot,False,GNIS
-Mount Fiske,37.136569,-118.667835,13503,SPS,15.5,2,False,False,11.5,5630.0,1200.0,Sabrina Basin Trail,Mount Darwin,False,GNIS
-Diamond Peak,36.826359,-118.390272,13127,SPS,9.12,2,False,False,11.6,8860.0,1765.0,Baxter Pass Trail,Mount Clarence King,False,GNIS
-Mount Sill,37.095985,-118.503396,14153,SPS,14.3,2,False,True,11.9,7685.0,1340.0,North Fork Trail,North Palisade,False,GNIS
-North Guard,36.716527,-118.490038,13327,SPS,7.1,3s4,False,False,12.0,5715.0,200.0,Roads end to Bubbs Creek Trail,Mount Brewer,False,GNIS
-MOUNT RITTER,37.688965,-119.199575,13143,SPS,19.3,2,True,False,12.2,6070.0,1250.0,Pacific Crest Trail,MOUNT RITTER,False,GNIS
-Kennedy Mountain,36.879116,-118.668186,11433,SPS,11.5,1,False,False,12.2,7685.0,800.0,Jerky Meadows Trail,Slide Bluffs,False,GNIS
-Mount Harrington,36.870005,-118.733645,11009,SPS,11.6,3,False,False,12.4,7210.0,750.0,Kennedy Pass Trail,Cedar Grove,False,GNIS
-Junction Peak,36.690962,-118.366282,13845,SPS,8.8,3,False,True,12.4,8185.0,650.0,Shepherd Pass Trail,Mount Williamson,True,GNIS
-Mount Clark,37.696373,-119.428613,11522,SPS,20.4,3s4,False,True,12.5,5190.0,900.0,Mono Meadows Trail,Merced Peak,False,GNIS
-East Vidette,36.743814,-118.400555,12356,SPS,8.6,2s3,False,True,12.5,5515.0,1350.0,Kearsarge Pass Trail,Mount Brewer,False,GNIS
-The Hermit,37.162897,-118.718487,12328,SPS,15.1,2s5,False,True,12.5,6195.0,3125.0,Lamark Lakes Trail,Mount Darwin,False,GNIS
-Mount Izaak Walton,37.469966,-118.889922,12077,SPS,18.2,2,False,False,12.6,5215.0,800.0,Mono Creek Trail,Graveyard Peak,False,GNIS
-Trojan Peak,36.642322,-118.315286,13947,SPS,5.7,2,False,False,12.6,8565.0,920.0,Shepherd Pass Trail,Mount Williamson,False,GNIS
-West Vidette,36.733905,-118.419727,12533,SPS,8.7,2,False,False,12.7,5695.0,2350.0,Kearsarge Pass Trail,Mount Brewer,True,GNIS
-Recess Peak,37.38242,-118.855452,12813,SPS,17.5,2,False,False,12.9,6385.0,1150.0,Bear Ridge Trail,Mount Abbot,False,GNIS
-MOUNT WILLIAMSON,36.655954,-118.311085,14370,SPS,5.9,2,True,False,12.9,8990.0,920.0,Shepherd Pass Trail,MOUNT WILLIAMSON,True,GNIS
-Colosseum Mountain,36.90719,-118.367004,12473,SPS,10.2,1,False,False,13.0,8405.0,520.0,Sawmill Pass Trail,Aberdeen,False,GNIS
-Mount Florence,37.739772,-119.316033,12561,SPS,21.3,2,False,False,13.2,5050.0,100.0,John Muir Trail,Mount Lyell,False,GNIS
-MOUNT BREWER,36.708319,-118.485233,13570,SPS,7.9,2,True,False,13.5,6310.0,550.0,Roads end to Bubbs Creek Trail,MOUNT BREWER,False,GNIS
-Black Giant,37.102239,-118.648707,13330,SPS,13.6,1,False,False,13.5,5655.0,1400.0,Sabrina Basin Trail,Mount Goddard,False,GNIS
-Tehipite Dome,36.918839,-118.780689,7708,SPS,11.7,2s3,False,True,13.5,5680.0,2800.0,Rancheria Trail,Tehipite Dome,False,GNIS
-Rogers Peak,36.217999,-117.08498,12978,SPS,19.6,2,False,False,13.5,7490.0,1750.0,Rush Creek Trail,Mount Lyell,False,GNIS
-Electra Peak,37.705208,-119.260172,12442,SPS,19.7,2,False,False,13.5,7800.0,2600.0,Rush Creek Trail,Mount Lyell,False,GNIS
-Mount Hilgard,37.360312,-118.826932,13361,SPS,17.4,2,False,False,13.7,7760.0,1800.0,Pine Creek Pass Trail,Mount Hilgard,False,GNIS
-Mount MacClure,37.74357,-119.280355,12880,SPS,21.4,3,False,False,13.8,4280.0,120.0,John Muir Trail,Mount Lyell,True,GNIS
-MOUNT LYELL,37.739412,-119.271888,13144,SPS,21.5,3,True,False,13.8,4545.0,120.0,John Muir Trail,MOUNT LYELL,False,GNIS
-Mount Gabb,37.376631,-118.802736,13680,SPS,17.6,2,False,False,13.8,7905.0,1625.0,Pine Creek Pass Trail,Mount Abbot,True,GNIS
-Mount Barnard,36.628403,-118.321599,13990,SPS,5.6,2,False,False,13.9,9330.0,1650.0,Shepherd Pass Trail,Mount Williamson,False,GNIS
-Charybdis,37.086854,-118.668169,13096,SPS,13.7,3,False,True,14.0,5820.0,1800.0,Sabrina Basin Trail,Mount Goddard,False,GNIS
-Pyramid Peak (S),36.906413,-118.462111,12779,SPS,10.6,2,False,False,14.0,7980.0,250.0,Sawmill Pass Trail,Mount Pinchot,False,GNIS
-Deerhorn Mountain,36.712963,-118.41045,13281,SPS,8.5,3,False,True,14.0,6440.0,2350.0,Kearsarge Pass Trail,Mount Brewer,False,GNIS
-Mount Gardiner,36.8061,-118.459192,12907,SPS,9.7,4,False,True,14.2,5535.0,1820.0,Kearsarge Pass Trail,Mount Clarence King,False,GNIS
-Coyote Peaks,36.312087,-118.447367,10892,SPS,2.3,2,False,False,14.3,7170.0,2100.0,Jerky Meadows Trail,Kern Lake,False,GNIS
-Seven Gables,37.310878,-118.833523,13080,SPS,16.9,2,False,True,14.7,6580.0,1150.0,Bear Ridge Trail,Mount Hilgard,True,GNIS
-South Guard,36.693459,-118.483874,13232,SPS,7.8,2,False,False,15.0,6620.0,1200.0,Roads end to Bubbs Creek Trail,Mount Brewer,False,GNIS
-Arrow Peak,36.928521,-118.490881,12959,SPS,10.7,2,False,True,15.0,8160.0,250.0,Roads end to Bubbs Creek Trail,Mount Pinchot,False,GNIS
-Center Peak,36.721928,-118.36264,12730,SPS,8.11,2s4,False,False,15.7,5815.0,2275.0,Kearsarge Pass Trail,Mount Williamson,True,GNIS
-Gemini,37.296552,-118.816987,12880,SPS,16.8,2,False,False,16.0,6380.0,1150.0,Bear Ridge Trail,Mount Hilgard,True,GNIS
-Mount Senger,37.277702,-118.858395,12286,SPS,16.1,2,False,False,16.2,5725.0,800.0,Blayney Meadows Trail,Mount Hilgard,False,GNIS
-Scylla,37.080129,-118.689668,12956,SPS,13.8,2,False,False,16.2,6195.0,2400.0,Sabrina Basin Trail,Mount Goddard,False,GNIS
-Mount Cotter,36.818794,-118.44186,12713,SPS,9.8,2,False,False,16.2,6255.0,2730.0,Kearsarge Pass Trail,Mount Clarence King,False,GNIS
-Mount Eisen,36.498281,-118.568505,12160,SPS,6.3,2,False,False,16.5,6750.0,2400.0,Sawtooth Pass Trail,Mineral King,True,GNIS
-Joe Devel Peak,36.515326,-118.296379,13327,SPS,3.7,2,False,False,17.0,5285.0,1900.0,Cottonwood Pass Trail,Mount Whitney,False,GNIS
-Mount McDuffie,37.073525,-118.643919,13282,SPS,13.5,2,False,True,17.0,8870.0,3400.0,Bishop Pass Trail,Mount Goddard,False,GNIS
-Kern Peak,36.308403,-118.287853,11510,SPS,2.1,1,False,False,17.2,4920.0,3350.0,Cottonwood Pass Trail,Kern Peak,False,GNIS
-MOUNT CLARENCE KING,36.833753,-118.446185,12907,SPS,9.9,4s5,True,False,17.2,6445.0,2730.0,Kearsarge Pass Trail,MT CLARENCE KING,False,GNIS
-Mount Ericsson,36.697153,-118.414464,13583,SPS,8.3,2,False,True,17.5,8150.0,200.0,Roads end to Bubbs Creek Trail,Mount Brewer,True,GNIS
-Tower Peak,38.144463,-119.54772,11755,SPS,22.13,3,False,True,17.7,5325.0,800.0,Leavitt Meadows Trail,Tower Peak,False,GNIS
-Mount Guyot,36.509234,-118.362641,12300,SPS,3.6,1,False,False,18.1,4760.0,2400.0,Cottonwood Pass Trail,Mount Whitney,False,GNIS
-Mount Hooper,37.292179,-118.895106,12349,SPS,16.11,2s4,False,False,18.2,5790.0,800.0,Blayney Meadows Trail,Florence Lake,False,GNIS
-Mount Pickering,36.527273,-118.290889,13474,SPS,3.8,2,False,False,18.5,5900.0,2365.0,Cottonwood Pass Trail,Mount Whitney,False,GNIS
-Merced Peak,37.634866,-119.394556,11726,SPS,20.1,2,False,False,18.5,6900.0,2405.0,Mono Meadows TH,Merced Peak,False,GNIS
-Mount Stanford (S),36.703965,-118.395703,13973,SPS,8.4,3,False,False,18.5,9140.0,200.0,Roads end to Bubbs Creek Trail,Mount Brewer,False,GNIS
-Devils Crag #1,37.038056,-118.612461,12400,SPS,13.3,4,False,True,18.5,6410.0,3820.0,Bishop Pass Trail,North Palisade,True,GNIS
-Lion Rock,36.582348,-118.541987,12360,SPS,6.7,2,False,False,18.5,7650.0,2550.0,Alta Peak Trail,Triple Divide Peak,True,GNIS
-Mount McGee,37.138821,-118.738153,12944,SPS,15.11,3,False,False,18.5,7140.0,3450.0,Lamark Lakes Trail,Mount Darwin,False,GNIS
-Mount Ruskin,36.978467,-118.473353,12920,SPS,11.1,3,False,True,18.5,9705.0,2200.0,Taboose Pass Trail,Mount Pinchot,False,GNIS
-Piute Mountain,38.033526,-119.548096,10541,SPS,22.12,2,False,False,18.7,4640.0,1200.0,Barney Lake Trail,Piute Mountain,False,GNIS
-State Peak,36.931979,-118.545429,12620,SPS,11.3,2,False,False,18.7,8305.0,720.0,Granite Pass Trail,Marion Peak,False,GNIS
-Wheel Mountain,37.046727,-118.629452,12774,SPS,13.4,3,False,False,18.7,6815.0,3850.0,Bishop Pass Trail,Mount Goddard,False,GNIS
-Mount Chamberlin,36.533542,-118.310654,13169,SPS,3.9,1,False,False,18.8,5130.0,1900.0,Cottonwood Pass Trail,Mount Whitney,False,GNIS
-MOUNT GODDARD,37.102915,-118.719884,13568,SPS,13.9,2,True,False,18.8,7960.0,2200.0,Bishop Pass Trail,MOUNT GODDARD,False,GNIS
-Caltech Peak,36.688415,-118.390488,13832,SPS,8.12,2,False,False,18.9,9275.0,1775.0,Shepherd Pass Trail,Mount Brewer,False,GNIS
-Mount Newcomb,36.540068,-118.293411,13422,SPS,3.1,2,False,False,19.0,5380.0,1900.0,Cottonwood Pass Trail,Mount Whitney,False,GNIS
-Triple Divide Peak,36.592884,-118.530756,12634,SPS,7.1,2,False,True,19.2,7325.0,2450.0,Alta Peak Trail,Triple Divide Peak,False,GNIS
-Red Peak,37.653725,-119.409495,11699,SPS,20.2,2,False,False,19.5,5470.0,1000.0,Mono Meadows Trail,Merced Peak,False,GNIS
-Forester Peak,37.690021,-119.290751,12057,SPS,19.8,2,False,False,19.8,6385.0,1300.0,Iceberg Pass Trail,Mount Lyell,False,GNIS
-Table Mountain,36.659904,-118.473704,13632,SPS,7.6,3,False,True,19.9,9920.0,2600.0,Shepherd Pass Trail,Mount Brewer,False,GNIS
-Mount Henry,37.183191,-118.827236,12196,SPS,15.13,2,False,False,20.0,4715.0,700.0,Blackcap Basin Trail,Mount Henry,False,GNIS
-Thunder Mountain,36.668952,-118.475777,13517,SPS,7.7,3s4,False,True,20.0,9625.0,2420.0,Shepherd Pass Trail,Mount Brewer,True,GNIS
-Marion Peak,36.956863,-118.522297,12719,SPS,11.2,2,False,False,20.0,10655.0,3350.0,Taboose Pass Trail,Marion Peak,False,GNIS
-Milestone Mountain,36.634474,-118.484532,13638,SPS,7.4,3,False,True,20.1,9930.0,2600.0,Shepherd Pass Trail,Mount Brewer,False,GNIS
-Midway Mountain,36.643325,-118.48371,13665,SPS,7.5,2,False,False,20.2,9955.0,2600.0,Shepherd Pass Trail,Mount Brewer,False,GNIS
-Mount Genevra,36.683307,-118.434325,13054,SPS,8.2,2,False,False,20.3,9620.0,1600.0,Roads end to Bubbs Creek Trail,Mount Brewer,False,GNIS
-Observation Peak,37.023215,-118.523665,12362,SPS,13.1,2,False,False,20.7,7550.0,4000.0,Bishop Pass Trail,North Palisade,False,GNIS
-Mount Jordan,36.682248,-118.449785,13320,SPS,8.1,3s4,False,False,20.8,9885.0,1600.0,Granite Pass Trail,Mount Brewer,True,GNIS
-Emerald Peak,37.165368,-118.763821,12546,SPS,15.12,2,False,False,21.5,6035.0,850.0,Blayney Meadows Trail,Mount Henry,False,GNIS
-Gray Peak,37.673668,-119.418746,11573,SPS,20.3,2,False,False,22.0,6045.0,1700.0,Mono Meadows Trail,Merced Peak,False,GNIS
-Mount Lippincott,36.521169,-118.563106,12265,SPS,6.4,2,False,False,22.0,8405.0,3950.0,Sawtooth Pass Trail,Triple Divide Peak,False,GNIS
-Eagle Scout Peak,36.545714,-118.561578,12000,SPS,6.5,2,False,False,22.2,8290.0,3350.0,Alta Peak Trail,Triple Divide Peak,True,GNIS
-Mount Stewart,36.569665,-118.554655,12200,SPS,6.6,2,False,False,22.7,7940.0,3000.0,Alta Peak Trail,Triple Divide Peak,True,GNIS
-Black Kaweah,36.545384,-118.51583,13720,SPS,6.1,3,False,True,22.7,10010.0,4100.0,Sawtooth Pass Trail,Triple Divide Peak,True,GNIS
-Red Kaweah,36.54,-118.505625,13720,SPS,6.9,2,False,False,23.0,10010.0,4100.0,Sawtooth Pass Trail,Triple Divide Peak,True,GNIS
-Picket Guard Peak,36.576609,-118.47221,12303,SPS,6.11,2,False,False,23.2,10595.0,4600.0,Shepherd Pass Trail,Mount Kaweah,False,GNIS
-Kern Point,36.596685,-118.444891,12730,SPS,6.12,2,False,False,23.5,11020.0,4600.0,Shepherd Pass Trail,Mount Kaweah,True,GNIS
-Tunemah Peak,36.995323,-118.688309,11894,SPS,13.12,2,False,False,24.0,7625.0,2450.0,Crown Valley Trail,Slide Bluffs,False,GNIS
-Whaleback,36.63028,-118.531162,11717,SPS,7.3,3,False,False,24.0,6225.0,2850.0,Marvin Pass Trail,Sphinx Lake,False,GNIS
-Pettit Peak,37.985194,-119.480153,10788,SPS,22.1,2,False,False,25.0,6390.0,2700.0,Barney Lake Trail,Falls Ridge,False,GNIS
-Glacier Ridge,36.617446,-118.558827,12360,SPS,7.2,2s4,False,False,25.0,6870.0,2850.0,Marvin Pass Trail,Triple Divide Peak,True,GNIS
-MOUNT KAWEAH,36.52601,-118.478553,13802,SPS,6.8,1,True,False,25.0,10390.0,4400.0,Sawtooth Pass Trail,MOUNT KAWEAH,False,GNIS
-Finger Peak,37.029844,-118.730253,12404,SPS,13.11,2,False,False,28.0,7485.0,1800.0,Crown Valley Trail,Mount Goddard,False,GNIS
-Mount Reinstein,37.07942,-118.738353,12586,SPS,13.1,2,False,False,29.5,5385.0,1000.0,Maxson Trail,Mount Goddard,False,GNIS
-Lamont Point/Benchmark,,,7621,non-SPS,1.11,2,False,False,,,,,Peak,False,
-Chimney Peak,,,7999,non-SPS,1.12,1s2,False,False,,,,,Peak,False,
-Kennedy Peak,,,7202,non-SPS,1.13,2,False,False,,,,,Canyon,False,
-Ball Mountain,,,9258,non-SPS,1.14,2,False,False,,,,,Canyon,False,
-Pine Mountain,,,8150,non-SPS,1.15,1s2,False,False,,,,,Peak,False,
-Cannell Peak,35.864996,-118.361218,9380,non-SPS,1.16,2,False,False,,,,,Peak,False,GNIS
-Cherry Hill,,,8833,non-SPS,1.17,1,False,False,,,,,Fairview,False,
-Bass Peak,,,9945,non-SPS,1.18,2,False,False,,,,,Creek,False,
-Sherman Peak,,,9843,non-SPS,1.19,1,False,False,,,,,Creek,False,
-Lookout Mountain,,,9738,non-SPS,1.2,1s2,False,False,,,,,Creek,False,
-Schaeffer Mountain,36.071381,-118.39578,9328,non-SPS,1.21,1,False,False,,,,,Creek,False,GNIS
-Andy Smatko Peak,,,8916,non-SPS,1.22,2s3,False,False,,,,,Meadows,False,
-Bald Mountain,,,9387,non-SPS,1.23,1,False,False,,,,,Meadows,False,
-Jackass Peak,,,9374,non-SPS,1.24,3,False,False,,,,,Mountain,False,
-Granite Knob,36.153374,-118.224897,9013,non-SPS,1.25,2,False,False,,,,,Mountain,False,GNIS
-Blackrock Mountain,36.179165,-118.277999,9613,non-SPS,1.26,1,False,False,,,,,Meadows,False,GNIS
-Manzanita Knob,36.208634,-118.308105,9128,non-SPS,1.27,1,False,False,,,,,Meadows,False,GNIS
-Doc Peak,36.205891,-118.274324,8766,non-SPS,1.28,1,False,False,,,,,Meadows,False,GNIS
-Deer Mountain,,,9410,non-SPS,1.29,1,False,False,,,,,Mountain,False,
-Round Mountain,,,9892,non-SPS,1.3,1,False,False,,,,,Pass,False,
-Monache Mountain,36.205368,-118.196305,9418,non-SPS,1.31,1,False,False,,,,,Mountain,False,GNIS
-Anderson Point,,,8510,non-SPS,1.32,1,False,False,,,,,Mountain,False,
-Maggie Mountain,36.26362,-118.61882,10146,non-SPS,2.11,2,False,False,,,,,Peak,False,GNIS
-White Chief Peak,36.405323,-118.597728,11181,non-SPS,2.12,2,False,False,,,,,King,False,GNIS
-Hengst Peak,36.410424,-118.621726,11128,non-SPS,2.13,2,False,False,,,,,King,False,GNIS
-Tulare Peak,36.412019,-118.563436,11657,non-SPS,2.14,2,False,False,,,,,King,False,GNIS
-Rainbow Mountain,,,12043,non-SPS,2.15,2,False,False,,,,,King,False,
-Mineral Peak,,,11615,non-SPS,2.16,2,False,False,,,,,King,False,
-Empire Mountain,36.467275,-118.577209,11545,non-SPS,2.17,2,False,False,,,,,King,False,GNIS
-Brown Mountain,,,9967,non-SPS,3.12,2,False,False,,,,,Mountain,False,
-Templeton Mountain,36.314825,-118.206737,9944,non-SPS,3.13,1,False,False,,,,,Mountain,False,GNIS
-Johnson Peak,,,11378,non-SPS,3.14,2,False,False,,,,,Peak,False,
-Trail Peak #,36.427588,-118.190588,11617,non-SPS,3.15,1-2,False,False,,,,,Peak,False,GNIS
-Mount Anna Mills,36.474497,-118.350077,12054,non-SPS,3.16,2,False,False,,,,,Peak,False,GNIS
-The Major General,36.511047,-118.258144,12402,non-SPS,3.17,2,False,False,,,,,Whitney,False,GNIS
-The Miter,36.534999,-118.264724,12770,non-SPS,3.18,3-4,False,False,,,,,Whitney,False,GNIS
-Mount Marsh,36.554764,-118.278444,13517,non-SPS,4.1,3,False,False,,,,,Whitney,False,GNIS
-Discovery Pinnacle #,36.558387,-118.290256,13680,non-SPS,4.11,1sr2,False,False,,,,,Whitney,False,GNIS
-Wotans Throne,36.566776,-118.279716,12756,non-SPS,4.12,3,False,False,,,,,Whitney,False,GNIS
-Pinnacle Ridge,36.574085,-118.281696,13058,non-SPS,4.13,4,False,False,,,,,Whitney,False,GNIS
-Crooks Peak,36.574409,-118.290717,14080,non-SPS,4.14,2,False,False,,,,,Whitney,False,GNIS
-Keeler Needle,36.575405,-118.291276,14240,non-SPS,4.15,2-3,False,False,,,,,Whitney,False,GNIS
-Mount Carl Heller,,,13225,non-SPS,5.1,3,False,False,,,,,Williamson,False,
-Tawny Point,36.628507,-118.376004,12332,non-SPS,5.11,1,False,False,,,,,Williamson,False,GNIS
-Mount Versteeg #,36.647715,-118.325618,13470,non-SPS,5.12,2,False,False,,,,,Williamson,False,GNIS
-Mount Tyndall - Southwest Peak,,,13540,non-SPS,5.13,2,False,False,,,,,Williamson,False,
-Polychrome Peak,,,13018,non-SPS,5.14,2,False,False,,,,,Williamson,False,
-Kaweah Queen,36.554655,-118.508554,13366,non-SPS,6.13,2,False,False,,,,,Peak,False,GNIS
-Lawson Peak,36.560123,-118.514387,13136,non-SPS,6.14,2,False,False,,,,,Peak,False,GNIS
-Panther Peak,36.583341,-118.715748,9054,non-SPS,6.15,2,False,False,,,,,Lodgepole,False,GNIS
-Twin Peaks (SEKI),,,10479,non-SPS,6.18,3,False,False,,,,,Silliman,False,
-Mount Maddox,36.727937,-118.74718,9656,non-SPS,6.19,2-3,False,False,,,,,Silliman,False,GNIS
-Mitchell Peak,,,10378,non-SPS,6.2,1,False,False,,,,,Silliman,False,
-Lookout Peak (Kings Canyon),,,8510,non-SPS,6.21,1,False,False,,,,,Grove,False,
-Centennial Peak,36.627659,-118.490372,13206,non-SPS,7.11,2,False,False,,,,,Brewer,False,GNIS
-Mount Francis Farquhar,,,12893,non-SPS,7.12,3,False,False,,,,,Brewer,False,
-Cross Mountain,,,12160,non-SPS,7.13,2,False,False,,,,,Brewer,False,
-Palmer Mountain,36.747712,-118.569252,11252,non-SPS,7.14,2,False,False,,,,,Lakes,False,GNIS
-Center Basin Crag #5,,,12598,non-SPS,8.13,2,False,False,,,,,Williamson,False,
-Center Basin Crag #1,,,12532,non-SPS,8.14,4,False,False,,,,,Williamson,False,
-East Spur,36.711883,-118.398506,12735,non-SPS,8.15,3,False,False,,,,,Brewer,False,GNIS
-PhD Peak”/Peak 3920m,,,12881,non-SPS,9.13,3,False,False,,,,,Williamson,False,
-Kearsarge Pinnacle #11,,,11716,non-SPS,9.15,2,False,False,,,,,King,False,
-Kearsarge Pinnacle #12,,,11703,non-SPS,9.16,2,False,False,,,,,King,False,
-Falcor Peak”/Peak 3912m,,,12800,non-SPS,9.17,3,False,False,,,,,King,False,
-Glacier Spike,,,12400,non-SPS,9.18,2,False,False,,,,,King,False,
-Charlotte Dome,36.782423,-118.48033,10672,non-SPS,9.19,3,False,False,,,,,King,False,GNIS
-Painted Lady,36.792823,-118.399464,12100,non-SPS,9.2,2,False,False,,,,,King,False,GNIS
-Fin Dome,36.813556,-118.412302,11693,non-SPS,9.21,3-4,False,False,,,,,King,False,GNIS
-Mary Austin,,,13021,non-SPS,9.22,2,False,False,,,,,Peak,False,
-Acrodectes Peak,36.860686,-118.375161,13143,non-SPS,10.11,2,False,False,,,,,King,False,GNIS
-Mount Cedric Wright,36.90405,-118.387661,12372,non-SPS,10.12,2,False,False,,,,,Pinchot,False,GNIS
-Crater Mountain,,,12874,non-SPS,10.13,2,False,False,,,,,Pinchot,False,
-Mount Ickes,36.932974,-118.439168,12950,non-SPS,10.14,2,False,False,,,,,Pinchot,False,GNIS
-Mount Hutchings,36.833244,-118.600738,10785,non-SPS,11.1,2,False,False,,,,,Sphinx,False,GNIS
-Munger Peak,36.874257,-118.579892,12040,non-SPS,11.11,2,False,False,,,,,Sphinx,False,GNIS
-Hogback Peak,36.876568,-118.711582,11086,non-SPS,11.12,2,False,False,,,,,Bluffs,False,GNIS
-Castle Peak (W Mid-Sierra)),,,10657,non-SPS,11.13,1,False,False,,,,,Dome,False,
-Patterson Mountain,36.974763,-119.056381,8170,non-SPS,11.14,1,False,False,,,,,Mountain,False,GNIS
-Eagle Peak,,,10318,non-SPS,11.15,2,False,False,,,,,Mountain,False,
-Nelson Mountain,37.089461,-119.049076,10220,non-SPS,11.16,2,False,False,,,,,Mountain,False,GNIS
-Brown Peak,,,10322,non-SPS,11.17,2,False,False,,,,,Dogtooth,False,
-Dogtooth Peak,37.154076,-119.03959,10302,non-SPS,11.18,2-3,False,False,,,,,Dogtooth,False,GNIS
-Maxon Dome,,,9505,non-SPS,11.19,2,False,False,,,,,Dogtooth,False,
-Vennacher Needle,36.998769,-118.473842,12980,non-SPS,11.2,2,False,False,,,,,Pinchot,False,GNIS
-Twin Peaks” (Palisades),,,13061,non-SPS,12.11,2,False,False,,,,,Mountain,False,
-Ed Lane Peak” / Peak 4138m,,,13576,non-SPS,12.12,3,False,False,,,,,Mountain,False,
-Kid Mountain,37.101839,-118.428327,11817,non-SPS,12.14,2,False,False,,,,,Mountain,False,GNIS
-Woodworth,,,12228,non-SPS,13.13,2,False,False,,,,,Palisade,False,
-Mount Shakspere,37.036667,-118.532572,12182,non-SPS,13.14,2,False,False,,,,,Palisade,False,GNIS
-Rambaud Peak,37.038726,-118.595757,11053,non-SPS,13.15,2,False,False,,,,,Palisade,False,GNIS
-The Citadel,37.065227,-118.611145,11729,non-SPS,13.16,2,False,False,,,,,Palisade,False,GNIS
-Langille,,,12011,non-SPS,13.17,2,False,False,,,,,Palisade,False,
-Mount Solomons,37.106457,-118.67422,13034,non-SPS,13.18,2,False,False,,,,,Goddard,False,GNIS
-Blackcap Mountain,,,11562,non-SPS,13.19,2,False,False,,,,,Mountain,False,
-Mount Jepson,37.08885,-118.495269,13390,non-SPS,14.12,2,False,False,,,,,Mountain,False,GNIS
-Polemonium Peak,37.093351,-118.511771,14095,non-SPS,14.13,4,False,False,,,,,Palisade,False,GNIS
-Columbine Peak,37.089164,-118.541803,12662,non-SPS,14.14,2,False,False,,,,,Palisade,False,GNIS
-Isosceles Peak,37.093809,-118.538633,12339,non-SPS,14.15,3-4,False,False,,,,,Palisade,False,GNIS
-West Isosceles Peak” [1],,,12240,non-SPS,14.16,3-4,False,False,,,,,Palisade,False,
-Buck Mountain,,,12814,non-SPS,14.17,2,False,False,,,,,Palisade,False,
-Trapezoid Peak”/Peak,,,12920,non-SPS,14.18,3,False,False,,,,,Palisade,True,
-Hurd Peak,37.140898,-118.566073,12237,non-SPS,14.2,2-3,False,False,,,,,Thompson,False,GNIS
-Sky Haven,37.144295,-118.505009,12840,non-SPS,14.21,3,False,False,,,,,Thompson,False,GNIS
-Chocolate Peak,,,11682,non-SPS,14.22,2,False,False,,,,,Thompson,False,
-Vagabond Peak,,,13374,non-SPS,14.23,2,False,False,,,,,Thompson,False,
-Quasimodo Peak,,,12362,non-SPS,14.24,2,False,False,,,,,Thompson,False,
-Coyote Ridge,,,12297,non-SPS,14.25,1,False,False,,,,,Thompson,False,
-Table Mountain (N),,,11711,non-SPS,14.26,1,False,False,,,,,Thompson,False,
-Mount Warlow,37.128423,-118.674717,13218,non-SPS,15.14,2,False,False,,,,,Darwin,False,GNIS
-Mount Powell #,37.138674,-118.634023,13364,non-SPS,15.15,3,False,False,,,,,Thompson,False,GNIS
-Conway Peak”(1),,,13154,non-SPS,15.16,3,False,False,,,,,Thompson,False,
-Sunset Peak”/Peak,,,12486,non-SPS,15.17,2,False,False,,,,,Thompson,False,
-Picture Peak,,,13120,non-SPS,15.18,3,False,False,,,,,Darwin,False,
-Mount Spencer,37.155207,-118.681791,12241,non-SPS,15.19,2,False,False,,,,,Darwin,False,GNIS
-Mount Hutton,37.125494,-118.799577,11946,non-SPS,15.2,3,False,False,,,,,Henry,False,GNIS
-Peter Peak,37.145548,-118.745824,12506,non-SPS,15.21,2,False,False,,,,,Darwin,False,GNIS
-Red Mountain (S),,,11965,non-SPS,15.22,1,False,False,,,,,Henry,False,
-Fleming Mountain,37.15867,-118.858054,10794,non-SPS,15.23,2,False,False,,,,,Henry,False,GNIS
-Zingheim Heights,37.18379,-118.856864,11135,non-SPS,15.24,3,False,False,,,,,Henry,False,GNIS
-Muriel Peak,37.217206,-118.6931,12937,non-SPS,16.12,2,False,False,,,,,Darwin,False,GNIS
-Mount Thoreau” / Peak,,,12691,non-SPS,16.13,2,False,False,,,,,Darwin,False,
-Mount Locke,,,12634,non-SPS,16.15,2,False,False,,,,,Tom,False,
-Turret Peak,37.263596,-118.842562,12014,non-SPS,16.16,2,False,False,,,,,Hilgard,False,GNIS
-Mount Ian Campbell,37.261708,-119.020231,10630,non-SPS,16.17,1,False,False,,,,,Givens,False,GNIS
-Mount Givens,37.278713,-119.055231,10378,non-SPS,16.18,1,False,False,,,,,Givens,False,GNIS
-Kaiser Peak,37.29405,-119.18552,10302,non-SPS,16.19,1,False,False,,,,,Givens,False,GNIS
-Feather Peak,37.325679,-118.778441,13212,non-SPS,17.12,2,False,False,,,,,Hilgard,False,GNIS
-Bear Claw Spire” / Peak,,,12563,non-SPS,17.13,2,False,False,,,,,Hilgard,False,
-Spire Peak”/Peak,,,12470,non-SPS,17.14,4,False,False,,,,,Hilgard,False,
-Pip-squeak Spire,,,13268,non-SPS,17.15,3s5,False,False,,,,,Abbot,False,
-Pyramid Peak” (Little Lk Valley),,,12866,non-SPS,17.16,3,False,False,,,,,Hilgard,False,
-Rosy Finch Peak,,,12744,non-SPS,17.17,3,False,False,,,,,Morgan,False,
-Little Lakes Peak,,,12782,non-SPS,17.18,2,False,False,,,,,Morgan,False,
-Twelve Flags Peak,,,13470,non-SPS,17.19,2,False,False,,,,,Morgan,False,
-Lookout”/“Tempest Peak,,,11902,non-SPS,17.21,2,False,False,,,,,Abbot,False,
-Ruby Peak,,,13188,non-SPS,17.22,3s4,False,False,,,,,Abbot,False,
-Mount Starr #,37.429027,-118.765196,12835,non-SPS,17.23,2,False,False,,,,,Abbot,False,GNIS
-Graveyard Peak,37.45131,-118.989879,11443,non-SPS,18.1,3,False,False,,,,,Peak,False,GNIS
-Mount Hopkins,37.463768,-118.813383,12208,non-SPS,18.11,2,False,False,,,,,Abbot,False,GNIS
-Mount Huntington #,37.469634,-118.777226,12355,non-SPS,18.12,3,False,False,,,,,Abbot,False,GNIS
-Pointless Peak,,,12256,non-SPS,18.13,2,False,False,,,,,Abbot,False,
-Patricia Peak,,,11962,non-SPS,18.14,2,False,False,,,,,Abbot,False,
-Mount Crocker #,37.482929,-118.825392,12461,non-SPS,18.15,3,False,False,,,,,Abbot,False,GNIS
-Silver Divide Peak” / Peak,,,12238,non-SPS,18.16,2,False,False,,,,,Abbot,False,
-Red Mountain (N),,,11467,non-SPS,18.17,1,False,False,,,,,Place,False,
-The White Fang,,,12240,non-SPS,18.18,3,False,False,,,,,Lake,False,
-Mount Aggie,37.54578,-118.842679,11561,non-SPS,18.19,2,False,False,,,,,Lake,False,GNIS
-McGee Mountain,37.566595,-118.811226,10871,non-SPS,18.2,1,False,False,,,,,Lake,False,GNIS
-Mono Jim Peak,37.572186,-118.852163,10893,non-SPS,18.21,2,False,False,,,,,Lake,False,GNIS
-Laurel Mountain,,,11824,non-SPS,18.22,2,False,False,,,,,Mountain,False,
-Creag an Turic II.  (1),,,10699,non-SPS,19.1,3,False,False,,,,,Mountain,False,
-Herlihy Peak,,,11728,non-SPS,19.11,3,False,False,,,,,Mountain,False,
-Pumice Butte,37.55198,-119.060284,9544,non-SPS,19.12,2,False,False,,,,,Crag,False,GNIS
-Mammoth Crest / “Blue Crag,,,11489,non-SPS,19.13,2s3,False,False,,,,,Crag,False,
-Madesno Peak” / Peak,,,9718,non-SPS,19.15,1,False,False,,,,,Crag,False,
-Mammoth Mountain #,37.630628,-119.032622,11023,non-SPS,19.16,1,False,False,,,,,Mountain,False,GNIS
-Deadman Dome” / Peak 2580m,,,8465,non-SPS,19.17,2,False,False,,,,,Mountain,False,
-"White Wing Mountain 10,007SW Slope via Traverse of Peak",,,9727,non-SPS,19.18,2,False,False,,,,,Mountain,False,
-Volcanic Ridge,37.671208,-119.160181,11480,non-SPS,19.19,2,False,False,,,,,Ritter,False,GNIS
-Earthquake Dome,37.665877,-118.999718,9371,non-SPS,19.2,1,False,False,,,,,Mountain,False,GNIS
-Two Teats #,37.71202,-119.100023,11387,non-SPS,19.22,3,False,False,,,,,Mountain,False,GNIS
-Carson Peak #,37.747542,-119.124126,10909,non-SPS,19.23,1,False,False,,,,,Mountain,False,GNIS
-Mount Ansel Adams,37.697968,-119.281596,11792,non-SPS,19.24,3,False,False,,,,,Lyell,False,GNIS
-Long Mountain,,,11489,non-SPS,19.25,2,False,False,,,,,Lyell,False,
-Fresno Dome,37.454405,-119.536006,7517,non-SPS,20.8,1,False,False,,,,,Mtn,False,GNIS
-Quartz Mountain,,,9046,non-SPS,20.9,2,False,False,,,,,Peak,False,
-Madera Peak,37.537604,-119.37463,10509,non-SPS,20.1,2,False,False,,,,,Knob,False,GNIS
-Red Top,,,9973,non-SPS,20.11,2,False,False,,,,,Peak,False,
-Sing Peak,37.553912,-119.387499,10520,non-SPS,20.12,2,False,False,,,,,Peak,False,GNIS
-Gale Peak,37.567987,-119.387078,10693,non-SPS,20.13,2,False,False,,,,,Peak,False,GNIS
-Post Peak,37.62813,-119.327971,11009,non-SPS,20.14,2s4,False,False,,,,,Lyell,False,GNIS
-Isberg Peak,37.651172,-119.323796,10996,non-SPS,20.15,2,False,False,,,,,Knob,False,GNIS
-Buena Vista Peak,,,9709,non-SPS,20.16,2,False,False,,,,,Grove,False,
-Triple Divide Peak (Yosemite),,,11611,non-SPS,20.17,2,False,False,,,,,Peak,False,
-Ottoway Peak,37.642133,-119.39335,11840,non-SPS,20.18,3,False,False,,,,,Peak,False,GNIS
-El Capitan,37.742131,-119.635895,7773,non-SPS,20.19,1,False,False,,,,,Capitan,False,GNIS
-Indian Rock (Yosemite),,,8531,non-SPS,20.21,1s2,False,False,,,,,Lake,False,
-Mount Watkins,37.782833,-119.517649,8501,non-SPS,20.22,2,False,False,,,,,Falls,False,GNIS
-Simmons Peak,37.7607,-119.294368,12493,non-SPS,21.9,2,False,False,,,,,Peak,False,GNIS
-Parsons Peak,37.776902,-119.307799,12132,non-SPS,21.1,2,False,False,,,,,Peak,False,GNIS
-Amelia Earhart Peak,37.786393,-119.288225,11978,non-SPS,21.11,2,False,False,,,,,Peak,False,GNIS
-Fletcher Peak,37.791782,-119.33575,11410,non-SPS,21.12,2,False,False,,,,,Peak,False,GNIS
-Reversed Peak,37.804471,-119.099406,9485,non-SPS,21.13,1s2,False,False,,,,,Lake,False,GNIS
-Donohue Peak #,37.774755,-119.233052,12023,non-SPS,21.14,2,False,False,,,,,Lyell,False,GNIS
-Blacktop Peak #,37.793729,-119.19614,12724,non-SPS,21.15,3,False,False,,,,,Peak,False,GNIS
-Mount Wood,37.809244,-119.165947,12652,non-SPS,21.16,2,False,False,,,,,Peak,False,GNIS
-Parker Peak,,,12857,non-SPS,21.17,1,False,False,,,,,Peak,False,
-Mount Lewis #,,,12350,non-SPS,21.18,1,False,False,,,,,Peak,False,
-Kuna Peak #,37.812939,-119.208322,13002,non-SPS,21.19,2,False,False,,,,,Peak,False,GNIS
-Kuna Crest  - South,,,12202,non-SPS,21.2,2,False,False,,,,,Peak,False,
-Kuna Crest North,,,12170,non-SPS,21.21,2,False,False,,,,,Peak,False,
-Mammoth Peak,37.855497,-119.263504,12117,non-SPS,21.22,2,False,False,,,,,Dana,False,GNIS
-Rafferty Peak,37.815155,-119.355483,11106,non-SPS,21.23,1,False,False,,,,,Peak,False,GNIS
-Mount Johnson,37.128459,-118.586358,11060,non-SPS,21.24,2,False,False,,,,,Peak,False,GNIS
-Cockscomb,,,11065,non-SPS,21.25,4,False,False,,,,,Lake,False,
-Unicorn Peak,37.844654,-119.38196,10823,non-SPS,21.26,4,False,False,,,,,Lake,False,GNIS
-Echo Peak #1,,,11120,non-SPS,21.27,1,False,False,,,,,Lake,False,
-Echo Peak #2,,,11080,non-SPS,21.28,1,False,False,,,,,Lake,False,
-Echo Peak #3,,,11160,non-SPS,21.29,3,False,False,,,,,Lake,False,
-Echo Peak #4,,,11040,non-SPS,21.3,3,False,False,,,,,Lake,False,
-Echo Peak #5,,,11120,non-SPS,21.31,3,False,False,,,,,Lake,False,
-Echo Peak #8,,,11080,non-SPS,21.32,3,False,False,,,,,Lake,False,
-Fairview Dome,37.871274,-119.403896,9728,non-SPS,21.33,3,False,False,,,,,Lake,False,GNIS
-Sunrise Mountain,37.796821,-119.448515,9938,non-SPS,21.34,1s3,False,False,,,,,Lake,False,GNIS
-Columbia Finger,37.819744,-119.423202,10360,non-SPS,21.35,3-4,False,False,,,,,Lake,False,GNIS
-Tresidder Peak,37.831095,-119.422728,10600,non-SPS,21.36,4,False,False,,,,,Lake,False,GNIS
-Tenaya Peak,37.828522,-119.443234,10301,non-SPS,21.37,2-3,False,False,,,,,Lake,False,GNIS
-Mount Hoffman,,,10850,non-SPS,22.14,2,False,False,,,,,Falls,False,
-Tuloumne Peak,,,10850,non-SPS,22.16,2,False,False,,,,,Falls,False,
-Falls Ridge (East),37.905214,-119.43423,9138,non-SPS,22.17,2s3,False,False,,,,,Ridge,False,GNIS
-Cold Mountain,37.950211,-119.427522,10292,non-SPS,22.18,2,False,False,,,,,Ridge,False,GNIS
-Ragged Peak,37.932873,-119.353415,10912,non-SPS,22.19,2,False,False,,,,,Pass,False,GNIS
-White Mountain #,,,12047,non-SPS,22.2,2,False,False,,,,,Pass,False,
-False White Mountain,,,12002,non-SPS,22.21,2,False,False,,,,,Pass,False,
-Gaylor Peak #,37.919097,-119.265546,11104,non-SPS,22.22,1,False,False,,,,,Pass,False,GNIS
-Tioga Peak,37.949432,-119.246399,11526,non-SPS,22.23,1,False,False,,,,,Dana,False,GNIS
-Lee Vining Peak,37.972411,-119.198666,11690,non-SPS,22.24,2,False,False,,,,,Dana,False,GNIS
-Gilcrest Peak,38.011029,-119.230141,11562,non-SPS,22.25,2,False,False,,,,,Lundy,False,GNIS
-Tioga Crest,37.99382,-119.269509,11911,non-SPS,22.26,1,False,False,,,,,Pass,False,GNIS
-Sheep Peak,37.982274,-119.340701,11842,non-SPS,22.27,3,False,False,,,,,Pass,False,GNIS
-Shepherd Crest #,38.004623,-119.312752,12015,non-SPS,22.28,2,False,False,,,,,Peak,False,GNIS
-Black Mountain (N),,,11797,non-SPS,22.29,2,False,False,,,,,Peak,False,
-Mount Olsen,38.040775,-119.24557,11050,non-SPS,22.3,2,False,False,,,,,Lundy,False,GNIS
-Epidote Peak,38.059512,-119.304824,10964,non-SPS,22.31,2s3,False,False,,,,,Peak,False,GNIS
-Camiaca Peak #,38.060018,-119.324279,11739,non-SPS,22.32,2,False,False,,,,,Peak,False,GNIS
-Grey Butte,38.05181,-119.348182,11375,non-SPS,22.33,2,False,False,,,,,Peak,False,GNIS
-Mount Stanton,,,11703,non-SPS,22.34,2,False,False,,,,,Peak,False,
-Finger Peaks,38.087197,-119.407272,11498,non-SPS,22.35,3-4,False,False,,,,,Peak,False,GNIS
-The Dragtooth,,,12080,non-SPS,22.36,2s3,False,False,,,,,Peak,False,
-Slide Mountain #,,,11084,non-SPS,22.37,2,False,False,,,,,Peak,False,
-The Juggernaut,,,11040,non-SPS,22.38,2,False,False,,,,,Peak,False,
-Bath Mountain,38.058183,-119.464865,10532,non-SPS,22.39,3,False,False,,,,,Peak,False,GNIS
-Suicide Ridge,38.081657,-119.459587,11014,non-SPS,22.4,2,False,False,,,,,Peak,False,GNIS
-Crown Point #,,,11346,non-SPS,22.41,2-3,False,False,,,,,Peak,False,
-Kettle Peak #,,,11010,non-SPS,22.42,2s3,False,False,,,,,Peak,False,
-Cirque Peak #,36.476936,-118.236977,10714,non-SPS,22.43,1,False,False,,,,,Ridge,False,GNIS
-Regulation Peak,37.987693,-119.488423,10554,non-SPS,22.44,2,False,False,,,,,Ridge,False,GNIS
-Acker Peak,38.108944,-119.509654,10988,non-SPS,22.45,2,False,False,,,,,Mountain,False,GNIS
-Wells Peak,,,11102,non-SPS,22.46,2,False,False,,,,,Mountain,False,
-Center Mountain #,38.144395,-119.489284,11271,non-SPS,22.47,,False,False,,,,,Kerrick,False,GNIS
-Ehrnbeck Peak #,38.137371,-119.515486,11240,non-SPS,22.48,3,False,False,,,,,Peak,False,GNIS
-Hawksbeak Peak #,38.152539,-119.508087,11341,non-SPS,22.49,2-3,False,False,,,,,Peak,False,GNIS
-Grouse Mountain,,,10775,non-SPS,22.5,1,False,False,,,,,Ridge,False,
-Snow Peak,38.115594,-119.571375,10928,non-SPS,22.51,2,False,False,,,,,Mountain,False,GNIS
-Craig Peak,38.129239,-119.559194,11086,non-SPS,22.52,3,False,False,,,,,Mountain,False,GNIS
-Keyes Peak,38.139525,-119.591612,10607,non-SPS,22.53,2,False,False,,,,,Peak,False,GNIS
-Forsyth Peak #,38.157513,-119.580929,11177,non-SPS,22.54,3,False,False,,,,,Peak,False,GNIS
-Grizzly Peak #,,,10359,non-SPS,22.55,2-3,False,False,,,,,Peak,False,
-Hunewill Peak,38.158878,-119.443465,11697,non-SPS,22.56,2,False,False,,,,,Ridge,False,GNIS
-Victoria Peak,38.16797,-119.423486,11706,non-SPS,22.57,2,False,False,,,,,Ridge,False,GNIS
-Robinson Peak,38.165949,-119.386483,10793,non-SPS,22.58,1,False,False,,,,,Ridge,False,GNIS
-Eagle Peak  (N),,,11847,non-SPS,22.59,2,False,False,,,,,Ridge,False,
-Walker Mountain,38.236015,-119.472645,11572,non-SPS,23.12,2,False,False,,,,,Ridge,False,GNIS
-Hanging Valley Ridge,38.234885,-119.459772,11371,non-SPS,23.13,2,False,False,,,,,Ridge,False,GNIS
-Mount Emma,38.277066,-119.476264,10535,non-SPS,23.14,2,False,False,,,,,Springs,False,GNIS
-Molo Mountain,38.234531,-119.656928,10875,non-SPS,23.15,2,False,False,,,,,Lake,False,GNIS
-Sonora Peak,38.353881,-119.635374,11459,non-SPS,23.16,2,False,False,,,,,Pass,False,GNIS
-White Mountain (Sonora Pass),,,11388,non-SPS,23.17,1,False,False,,,,,Peak,False,
-Iceberg Peak,38.450368,-119.822646,9777,non-SPS,23.18,2,False,False,,,,,Cone,False,GNIS
-Airola Peak,38.457515,-119.815425,9932,non-SPS,23.19,2,False,False,,,,,Cone,False,GNIS
-Arnot Peak,38.472825,-119.759631,10033,non-SPS,23.2,2,False,False,,,,,Peak,False,GNIS
-Hiram Peak,38.477876,-119.803416,9800,non-SPS,23.21,2,False,False,,,,,Pass,False,GNIS
-Folger Peak,38.49567,-119.816238,9705,non-SPS,23.22,1,False,False,,,,,Pass,False,GNIS
-Peep Sight Peak,38.497127,-119.851793,9705,non-SPS,23.23,2,False,False,,,,,Pass,False,GNIS
-Lookout Peak (Ebbetts Pass) @,,,9577,non-SPS,23.24,2,False,False,,,,,Pass,False,
-Henry Peak,38.48648,-119.880018,9334,non-SPS,23.25,1,False,False,,,,,Meadows,False,GNIS
-Bull Run Peak,,,9498,non-SPS,23.26,2,False,False,,,,,Meadows,False,
-Ebbetts Peak,38.547681,-119.814333,9160,non-SPS,23.27,1,False,False,,,,,Pass,False,GNIS
-Silver Peak  (Ebbetts Pass) @,,,10798,non-SPS,23.28,2,False,False,,,,,Pass,False,
-Reynolds Peak @,38.580639,-119.838568,9666,non-SPS,23.29,4,False,False,,,,,Pass,False,GNIS
-Raymond Peak @,38.603724,-119.833222,10023,non-SPS,23.3,2s3,False,False,,,,,Pass,False,GNIS
-The Nipple @,,,9338,non-SPS,23.31,1,False,False,,,,,Top,False,
-Markleeville Peak @,38.661334,-119.898117,9410,non-SPS,23.32,1,False,False,,,,,Top,False,GNIS
-Mount Hawkins @,,,10024,non-SPS,23.33,2,False,False,,,,,Markleeville,False,
-Pickett Peak,38.755985,-119.903179,9118,non-SPS,23.34,2,False,False,,,,,Markleeville,False,GNIS
-Cary Peak,38.779211,-119.848393,8724,non-SPS,23.35,2,False,False,,,,,Markleeville,False,GNIS
-Wade Peak/Benchmark” @ (1),,,9367,non-SPS,23.36,2,False,False,,,,,Woodfords,False,
-The Sisters,38.662413,-120.008077,10153,non-SPS,23.37,1,False,False,,,,,Lake,False,GNIS
-Black Butte,,,9010,non-SPS,23.38,3,False,False,,,,,Lake,False,
-Fourth of July Peak,38.658734,-120.02324,9541,non-SPS,23.39,1,False,False,,,,,Lake,False,GNIS
-Melissa Coray Peak,38.651764,-120.039465,9767,non-SPS,23.4,2,False,False,,,,,Lake,False,GNIS
-Covered Wagon Peak,38.657008,-120.047522,9573,non-SPS,23.41,2s3,False,False,,,,,lake,False,GNIS
-Thimble Peak,,,9804,non-SPS,23.42,2s4,False,False,,,,,Lake,False,
-Thunder Mountain,,,9408,non-SPS,23.43,2,False,False,,,,,Lake,False,
-Martin Point,38.688792,-120.092396,9256,non-SPS,23.44,2,False,False,,,,,lake,False,GNIS
-Elephants Back,38.678413,-119.983118,9585,non-SPS,23.45,1,False,False,,,,,Pass,False,GNIS
-Red Lake Peak @,38.713918,-119.98737,10063,non-SPS,23.46,2-3,False,False,,,,,Pass,False,GNIS
-Little Round Top,38.740046,-120.05156,9590,non-SPS,23.47,1,False,False,,,,,Lake,False,GNIS
-Stevens Peak @,38.733529,-119.982648,10054,non-SPS,23.48,2,False,False,,,,,Pass,False,GNIS
-Waterhouse Peak @,38.776146,-119.96491,9497,non-SPS,23.49,2,False,False,,,,,Peak,False,GNIS
-Jobs Peak @,38.857873,-119.861383,10638,non-SPS,23.5,1,False,False,,,,,Freel,False,GNIS
-Jobs Sister @,38.862285,-119.884396,10823,non-SPS,23.51,1,False,False,,,,,Peak,False,GNIS
-Monument Peak,38.92283,-119.897623,10060,non-SPS,23.52,1,False,False,,,,,Tahoe,False,GNIS
-East Peak,38.942519,-119.907409,9508,non-SPS,23.53,1,False,False,,,,,Peak,False,GNIS
-Genoa Peak @,39.042959,-119.881279,9141,non-SPS,23.54,1,False,False,,,,,Peak,False,GNIS
-Duane Bliss Peak  @,39.080592,-119.877998,8659,non-SPS,23.55,2,False,False,,,,,Glenbrook,False,GNIS
-South Camp Peak,39.060581,-119.886735,8866,non-SPS,23.56,1s2,False,False,,,,,Glenbrook,False,GNIS
-Snow Valley Peak @,39.154236,-119.883235,9213,non-SPS,23.57,1,False,False,,,,,Peak,False,GNIS
-Talking Mountain,38.83263,-120.069425,8824,non-SPS,23.58,2,False,False,,,,,Lake,False,GNIS
-Ralston Peak @,38.832918,-120.101733,9235,non-SPS,23.59,1,False,False,,,,,Lake,False,GNIS
-Flagpole Peak,38.84603,-120.056903,8363,non-SPS,23.6,3,False,False,,,,,Lake,False,GNIS
-Echo Peak,38.856402,-120.073357,8895,non-SPS,23.61,2,False,False,,,,,Lake,False,GNIS
-Tahoe Mountain,38.910214,-120.035812,7249,non-SPS,23.62,1,False,False,,,,,S-1.0,False,GNIS
-Indian Rock (Tahoe),,,8570,non-SPS,23.63,3,False,False,,,,,Lake,False,
-Angora Peak,38.867058,-120.073037,8573,non-SPS,23.64,3,False,False,,,,,Lake,False,GNIS
-Keith’s Dome,,,8646,non-SPS,23.65,1,False,False,,,,,Lake,False,
-Cracked Crag,38.869069,-120.129919,8767,non-SPS,23.66,2,False,False,,,,,Peak,False,GNIS
-Mount Agassiz” (Tahoe),37.111877,-118.530755,9967,non-SPS,23.67,2,False,False,,,,,Peak,False,GNIS
-Mount Price @,38.863869,-120.174728,9975,non-SPS,23.68,2,False,False,,,,,Peak,False,GNIS
-Jacks Peak @,38.890308,-120.153978,9840,non-SPS,23.69,3,False,False,,,,,Valley,False,GNIS
-Maggies Peaks (Tahoe),38.931452,-120.113698,8699,non-SPS,23.7,2,False,False,,,,,Bay,False,GNIS
-Red Peak @,,,9311,non-SPS,23.71,2-3,False,False,,,,,Valley,False,
-Silver Peak (Crystal Range) @,,,8937,non-SPS,23.72,3,False,False,,,,,Valley,False,
-McConnell Peak @,38.946444,-120.242033,9095,non-SPS,23.73,3,False,False,,,,,Valley,False,GNIS
-Tells Peak @,38.959835,-120.254409,8855,non-SPS,23.74,1,False,False,,,,,Lake,False,GNIS
-Middle Mountain,,,8330,non-SPS,23.75,2,False,False,,,,,Bay,False,
-Phipps Peak @,38.954391,-120.149682,9180,non-SPS,23.76,1s2,False,False,,,,,Valley,False,GNIS
-Jakes Pea7,,,9128,non-SPS,23.77,1s5,False,False,,,,,Bay,False,
-Rubicon Peak @,38.98848,-120.133444,9138,non-SPS,23.78,2-3,False,False,,,,,Valley,False,GNIS
-Lost Corner Mountain,39.01333,-120.20413,8245,non-SPS,23.79,1,False,False,,,,,Homewood,False,GNIS
-Sourdough Hill,39.025702,-120.219753,7976,non-SPS,23.8,1,False,False,,,,,Homewood,False,GNIS
-Ellis Peak @,39.068618,-120.198087,8727,non-SPS,23.81,1,False,False,,,,,Homewood,False,GNIS
-Barker Peak,39.079479,-120.238919,8153,non-SPS,24.1,2,False,False,,,,,Homewood,False,GNIS
-Twin Peaks (Tahoe) @,,,8872,non-SPS,24.11,1sr3,False,False,,,,,City,False,
-Stanford Rock Highpoint,,,8326,non-SPS,24.12,1,False,False,,,,,City,False,
-Mount Mildred @,39.145812,-120.330207,8376,non-SPS,24.13,2,False,False,,,,,Chief,False,GNIS
-Needle Peak @,,,8871,non-SPS,24.14,2,False,False,,,,,Chief,False,
-Lyon Peak @,,,8901,non-SPS,24.15,2,False,False,,,,,Chief,False,
-Silver Peak (Squaw Valley),,,8424,non-SPS,24.16,2,False,False,,,,,City,False,
-Anderson Peak @,39.259034,-120.297174,8683,non-SPS,24.17,1,False,False,,,,,Norden,False,GNIS
-Mount Lincoln,39.287761,-120.328459,8369,non-SPS,24.18,1,False,False,,,,,Norden,False,GNIS
-Mount Judah,39.298528,-120.315572,8243,non-SPS,24.19,1,False,False,,,,,Norden,False,GNIS
-Donner Peak,39.308739,-120.312475,8019,non-SPS,24.2,1,False,False,,,,,Norden,False,GNIS
-Snow Mountain @,39.241055,-120.463673,7999,non-SPS,24.21,2,False,False,,,,,Norden,False,GNIS
-Devil’s Peak @,,,7704,non-SPS,24.22,2,False,False,,,,,Springs,False,
-Andesite Peak,39.351027,-120.3666,8219,non-SPS,24.23,1,False,False,,,,,Norden,False,GNIS
-Basin Peak,39.382287,-120.364122,9017,non-SPS,24.24,2,False,False,,,,,Lake,False,GNIS
-Martis Peak,39.291386,-120.032938,8742,non-SPS,24.25,1,False,False,,,,,Peak,False,GNIS
-Mount Baldy (Tahoe),39.27843,-120.000114,9262,non-SPS,24.26,1,False,False,,,,,(Nev),False,GNIS
-Riﬂe Peak,,,9459,non-SPS,24.27,1-2,False,False,,,,,(Nev),False,
-Rose Knob,39.290003,-119.981498,9600,non-SPS,24.28,1,False,False,,,,,(Nev),False,GNIS
-Rose Knob Peak,39.293503,-119.957795,9699,non-SPS,24.29,2,False,False,,,,,(Nev),False,GNIS
-Relay Peak,39.31531,-119.946859,10335,non-SPS,24.3,1,False,False,,,,,(Nev),False,GNIS
-Mount Houghton,39.334069,-119.939366,10490,non-SPS,24.31,2,False,False,,,,,(Nev),False,GNIS
-Church Peak,39.352058,-119.923306,10601,non-SPS,24.32,1,False,False,,,,,(Nev),False,GNIS
-Chocolate Peak (Tahoe),,,9407,non-SPS,24.33,1,False,False,,,,,(Nev),False,
-Snowﬂower Mountain,,,10240,non-SPS,24.34,2,False,False,,,,,(Nev),False,
-Signal Peak @,,,7845,non-SPS,24.35,1,False,False,,,,,Grove,False,
-Old Man Mountain @,39.37027,-120.522248,7789,non-SPS,24.36,2,False,False,,,,,Grove,False,GNIS
-Black Buttes @,,,7999,non-SPS,24.37,2s3,False,False,,,,,Mountain,False,
-Haskell Peak @,39.662329,-120.552618,8098,non-SPS,24.38,1,False,False,,,,,Clio,False,GNIS
-Mount Fillmore @,39.730184,-120.852843,7717,non-SPS,24.39,2,False,False,,,,,Fillmore,False,GNIS
-Eureka Peak,,,7447,non-SPS,24.4,1,False,False,,,,,Lake,False,
+name,latitude,longitude,elevation_ft,list,section,class,emblem,mountaineers,mileage_rt,gain_ft,loss_ft,trailhead,quad,elev_estimated,coord_source,benchmark,benchmark_rating
+Smith Mountain,36.127229,-118.224235,9533,SPS,1.1,2,False,False,1.4,995.0,,SNF 21S36,Monache Mtn.,False,GNIS,False,
+English Mountain,39.446352,-120.551138,8373,SPS,24.6,2,False,False,1.9,1300.0,,Tollhouse Lake,English Mtn.,False,GNIS,False,
+Lamont Peak,35.792046,-118.043567,7429,SPS,1.4,2,False,False,1.9,2560.0,330.0,Lamont Peak Trail,Lamont Peak,False,GNIS,False,
+Independence Peak,36.76096,-118.331834,11742,SPS,9.2,3,False,False,2.0,2595.0,45.0,Robertson Lake Trail,Kearsarge Peak,False,GNIS,False,
+Taylor Dome,35.85635,-118.30342,8802,SPS,1.7,2s3,False,False,2.3,1155.0,185.0,Big Meadows Trail,Cannell Peak,False,peakbagger,False,
+Dunderberg Peak,38.064445,-119.274289,12374,SPS,22.5,2,False,False,2.3,2745.0,180.0,Virginia Lakes Trail,Dunderberg Peak,False,GNIS,False,
+Cathedral Peak,37.847829,-119.405621,10911,SPS,21.1,3s4,False,True,2.9,2440.0,100.0,Tuolumne Meadows,Tenaya Lake,False,GNIS,True,S-4.0
+Adams Peak,39.910584,-120.100105,8197,SPS,24.9,2,False,False,3.0,1885.0,,Forest service road,Constantia,False,GNIS,False,
+Round Top,38.663553,-120.00127,10381,SPS,23.7,3,False,False,3.1,2320.0,150.0,Wood Lake Trail,Carson Pass,False,GNIS,True,S-3.0
+Mount Dana,37.899686,-119.221249,13057,SPS,21.8,1,False,False,3.1,3440.0,325.0,Tioga Pass,Mount Dana,False,GNIS,True,S-1.1
+Sierra Buttes,39.593538,-120.647045,8591,SPS,24.7,1,False,False,3.2,2485.0,125.0,Forest Route 93,Sierra City,False,GNIS,False,
+Kearsarge Peak,36.789474,-118.3472,12618,SPS,9.3,1,False,False,3.2,3855.0,190.0,Old mining trail,Kearsarge Peak,False,GNIS,False,
+Sirretta Peak,35.924301,-118.333185,9977,SPS,1.8,1,False,False,3.3,2215.0,70.0,Cannell Meadows Trail 33E22,Sirretta Peak,False,GNIS,False,
+Mount Conness,37.967053,-119.321395,12590,SPS,22.2,2,False,False,3.3,2860.0,370.0,Saddlebag Lake,Tioga Pass,False,GNIS,False,
+Mount Elwell,39.708193,-120.689142,7818,SPS,24.8,1,False,False,3.4,2080.0,820.0,Lake Basin campground,Gold Lake,False,GNIS,False,
+Mount Gibbs,37.877094,-119.211836,12773,SPS,21.7,1,False,False,3.5,3195.0,110.0,Mono Pass Trail,Mount Dana,False,GNIS,True,S-1.2
+Owens Peak,35.738123,-117.996877,8453,SPS,1.2,2,False,False,3.5,3200.0,145.0,Indian Wells Canyon,Owens Peak,False,GNIS,False,
+Dragon Peak,36.789847,-118.375894,12927,SPS,9.1,3s4,False,False,3.5,4020.0,280.0,Golden Trout Lakes Trail,Kearsarge Peak,True,GNIS,False,
+Mount Warren,37.989934,-119.223357,12327,SPS,22.1,1,False,False,3.5,4515.0,,Lundy Lake,Mount Dana,False,GNIS,False,
+Moses Mountain,36.278722,-118.68081,9331,SPS,2.5,3,False,False,3.7,3510.0,100.0,Long Meadow Trail,Moses Mountain,False,GNIS,False,
+Pilot Knob (S),35.728662,-118.212246,6200,SPS,1.1,2,False,False,3.7,3610.0,120.0,Dirt road,Onyx,True,GNIS,False,
+University Peak,36.748079,-118.36187,13589,SPS,9.1,2,False,True,3.9,4540.0,150.0,Kearsarge Pass Trail,Mount Williamson,False,GNIS,False,
+Mount Morrison,37.561387,-118.858277,12277,SPS,18.8,2,False,True,4.0,4870.0,240.0,Convict Lake,Convict Lake,False,GNIS,True,S-2.2
+Sawtooth Peak (S),35.823138,-117.998651,8000,SPS,1.5,2,False,False,4.1,2445.0,,Pacific Crest Trail,Nine Mile Canyon,True,GNIS,False,
+Castle Peak,39.366152,-120.35174,9103,SPS,24.3,1s3,False,False,4.2,2235.0,360.0,Boreal Ridge Parking,Nordon,False,GNIS,False,
+North Peak,37.982191,-119.315072,12242,SPS,22.3,2,False,False,4.2,2630.0,490.0,Saddlebag Lake,Tioga Pass,False,GNIS,False,
+Stanislaus Peak,38.383989,-119.667084,11233,SPS,23.3,1,False,False,4.2,2570.0,755.0,St. Mary's Pass Trail,Disaster Peak,False,GNIS,False,
+Mount Carillion,36.592421,-118.277909,13517,SPS,5.4,2,False,False,4.2,5465.0,250.0,Mount Whitney Trail,Mount Whitney,True,GNIS,False,
+North Maggie Mountain,36.276772,-118.637698,10234,SPS,2.4,1,False,False,4.3,4315.0,,Shakes Camp,Moses Mountain,False,peakbagger,False,
+Mount Russell,36.590671,-118.289036,14088,SPS,5.3,3,False,True,4.5,6100.0,310.0,Mount Whitney Trail,Mount Whitney,False,GNIS,False,
+Mount Tallac,38.905897,-120.098848,9735,SPS,23.11,1,False,False,4.6,3295.0,65.0,Mount Tallac Trail,Emerald Bay,False,GNIS,False,
+Excelsior Mountain,38.024581,-119.305392,12446,SPS,22.4,1,False,False,4.6,2995.0,360.0,Virginia Lakes Trail,Dunderberg Peak,False,GNIS,False,
+Mount Lola,39.432988,-120.364895,9148,SPS,24.5,1,False,False,4.8,1405.0,255.0,Mt Lola Trail,Indepence Lk.,False,GNIS,False,
+Thor Peak,36.576855,-118.26574,12306,SPS,4.8,2,False,False,4.8,4005.0,,Mount Whitney Trail,Mount Whitney,False,GNIS,False,
+Lone Pine Peak,36.561734,-118.2257,12943,SPS,4.9,2,False,False,4.8,5085.0,,Meysan Lakes Trail,Mount Langley,False,GNIS,False,
+Mount Johnson,37.128459,-118.586358,12871,SPS,14.1,2,False,False,5.0,3360.0,300.0,Bishop Pass Trail,Mount Thompson,False,GNIS,False,
+Mount Emerson,37.2447,-118.659728,13204,SPS,16.2,2,False,False,5.0,3955.0,,Piute Pass Trail,Mount Darwin,False,GNIS,False,
+Cloudripper,37.142753,-118.530469,13525,SPS,14.9,2,False,False,5.0,4295.0,50.0,North Fork Trail,Mount Thompson,False,GNIS,False,
+Tunnabora Peak,36.605128,-118.282185,13563,SPS,5.5,2,False,False,5.0,5365.0,300.0,Mount Whitney Trail,Mount Whitney,False,GNIS,False,
+Cartago Peak,36.32457,-118.10213,10480,SPS,3.2,2s3,False,False,5.0,6710.0,,West side of aquaduct,Olancha,True,peakbagger,False,
+Mount Mills,37.393853,-118.789998,13451,SPS,17.1,3,False,False,5.1,3320.0,100.0,Mono Pass Trail,Mount Abbot,False,GNIS,False,
+Mount Rose,39.343776,-119.917938,10776,SPS,24.4,1,False,False,5.2,1955.0,,Mount  Rose Highway,Mount Rose,False,GNIS,True,S-1.0
+Mount Dade,37.381913,-118.779489,13600,SPS,17.8,2,False,False,5.3,3470.0,100.0,Mono Pass Trail,Mount Abbot,True,GNIS,False,
+MOUNT ABBOT,37.386353,-118.784831,13704,SPS,17.9,3,True,False,5.3,3575.0,100.0,Mono Pass Trail,MOUNT ABBOT,False,GNIS,False,
+Mount Morgan (S),37.405177,-118.732947,13748,SPS,17.11,2,False,False,5.3,4340.0,300.0,Tamarack Lakes Trail,Mount Morgan,False,GNIS,False,
+Freel Peak,38.857429,-119.900123,10881,SPS,23.8,1,False,False,5.4,3050.0,,Fountain Place,Freel Peak,False,GNIS,False,
+Mount Gilbert,37.136369,-118.598223,13106,SPS,14.11,2,False,False,5.5,3675.0,380.0,Bishop Pass Trail,Mount Thompson,False,GNIS,False,
+Temple Crag,37.109718,-118.491327,12976,SPS,14.1,3,False,False,5.5,5475.0,300.0,South Fork Trail,Split Mountain,False,GNIS,False,
+Mount Lamarck,37.19487,-118.670615,13417,SPS,15.9,1,False,False,5.6,4155.0,,Lamark Lakes Trail,Mount Darwin,False,GNIS,True,S-2.0
+Bloody Mountain,37.560555,-118.906759,12552,SPS,18.9,2,False,False,5.6,5250.0,,Laurel Creek Trail,Bloody Mountain,False,GNIS,False,
+Rockhouse Peak,35.90099,-118.22839,8360,SPS,1.6,2,False,False,5.7,3035.0,520.0,Rockhouse Basin Trail,Rockhouse Basin,True,peakbagger,False,
+Granite Chief,39.198184,-120.287087,9006,SPS,24.1,1,False,False,5.7,3380.0,620.0,Squaw Valley Fire Station,Granite Chief,False,GNIS,False,
+Mount Bradley,36.728643,-118.338717,13264,SPS,8.1,2,False,False,5.7,7825.0,480.0,Pinyon Creek Trail,Mount Williamson,False,GNIS,False,
+Leavitt Peak,38.286112,-119.651229,11569,SPS,23.2,1,False,False,5.8,2400.0,450.0,Pacific Crest Trail,Sonora Pass,False,GNIS,True,S-1.2
+Bear Creek Spire,37.368053,-118.767608,13720,SPS,17.7,3s4,False,True,5.8,3590.0,100.0,Mono Pass Trail,Mount Hilgard,True,GNIS,True,S-4.2
+San Joaquin Mountain,37.719094,-119.1062,11598,SPS,19.9,1,False,False,5.9,2340.0,,Minaret Vista Parking,Mammoth Mountain,False,GNIS,False,
+Pyramid Peak (N),38.844869,-120.157782,9983,SPS,23.9,2,False,False,6.0,3285.0,,Lyon Creek Trail,Pyramid Peak,False,GNIS,False,
+Mount Gould,36.779776,-118.377876,13005,SPS,9.4,1s3,False,False,6.0,4150.0,335.0,Kearsarge Pass Trail,Mt. Clarence King,False,GNIS,False,
+Highland Peak,38.543624,-119.755548,10935,SPS,23.5,2,False,False,6.1,2935.0,640.0,Pacific Crest Trail,Ebbetts Pass,False,GNIS,False,
+Mount Muah,36.400691,-118.12514,11016,SPS,3.3,2,False,False,6.2,1980.0,880.0,Mulkey Stock Horseshoe Meadow Road,Bartlett,False,GNIS,False,
+Mount Goode,37.123027,-118.568106,13085,SPS,14.8,2,False,False,6.2,3375.0,100.0,Bishop Pass Trail,North Palisade,False,GNIS,False,
+MATTERHORN PEAK,38.09297,-119.38179,12279,SPS,22.9,2,True,False,6.2,5180.0,,Horse Creek Trail,MATTERHORN PEAK,False,GNIS,True,S-2.1
+Alta Peak,36.590493,-118.663418,11240,SPS,6.1,1,False,False,6.3,4060.0,80.0,Alta Peak Trail,Lodgepole,True,GNIS,False,
+Crag Peak,36.11176,-118.153446,9480,SPS,1.9,3,False,False,6.4,1885.0,800.0,SNF 21S36,Crag Peak,True,GNIS,False,
+Dicks Peak,38.900458,-120.1509,9974,SPS,23.1,2,False,False,6.5,3740.0,325.0,12N16 Parking,Rockbound Vly.,False,GNIS,False,
+Sawtooth Peak (N),36.455161,-118.555499,12343,SPS,2.9,2,False,False,6.5,5085.0,550.0,Sawtooth Pass Trail,Mineral King,False,GNIS,False,
+Spanish Needle,35.77155,-118.0012,7841,SPS,1.3,3,False,False,6.6,2520.0,,Pacific Crest Trail,Lamont Peak,False,peakbagger,False,
+Disaster Peak,38.448743,-119.733666,10047,SPS,23.4,2,False,False,6.7,4165.0,550.0,Disaster Creek Trail,Disaster Peak,False,GNIS,False,
+Middle Palisade,37.07029,-118.469138,14012,SPS,12.8,3,False,True,6.7,6410.0,200.0,South Fork Trail,Split Mountain,False,GNIS,True,S-3.2
+Clouds Rest,37.767825,-119.489196,9926,SPS,20.7,1,False,False,6.8,2460.0,700.0,Sunrise Lakes Trail,Tenaya Lake,False,GNIS,False,
+Palisade Crest,37.081447,-118.48958,13553,SPS,12.1,4,False,False,6.8,5955.0,200.0,South Fork Trail,Split Mountain,False,GNIS,False,
+Norman Clyde Peak,37.074485,-118.474422,13855,SPS,12.9,4,False,True,6.8,6255.0,200.0,South Fork Trail,Split Mountain,False,GNIS,True,S-4.2
+Disappointment Peak,37.067903,-118.467557,13917,SPS,12.7,4,False,False,6.8,6315.0,200.0,South Fork Trail,Split Mountain,False,GNIS,False,
+Vandever Mountain,36.398358,-118.581235,11947,SPS,2.7,1,False,False,6.9,4085.0,,Farewell Gap Trail,Mineral King,False,GNIS,False,
+Mount McAdie,36.551753,-118.276336,13799,SPS,4.5,3,False,True,6.9,5500.0,,Mount Whitney Trail,Mount Whitney,False,GNIS,False,
+Mount Irvine,36.55591,-118.263539,13780,SPS,4.4,2,False,False,7.0,5580.0,100.0,Meysan Lake Trail,Mount Whitney,True,GNIS,False,
+Mount Mallory,36.549086,-118.262276,13845,SPS,4.3,2,False,False,7.0,5985.0,,Meysan Lake Trail,Mount Whitney,False,GNIS,False,
+Three Sisters,37.141226,-119.060785,10612,SPS,11.9,1,False,False,7.1,2440.0,280.0,Cliff Lake Trail,Dogtooth Peak,False,GNIS,False,
+Basin Mountain,37.296143,-118.660409,13181,SPS,16.4,2,False,False,7.1,5500.0,100.0,Horton Lakes Trail,Mount Tom,False,GNIS,False,
+Tinker Knob,39.244635,-120.28493,8949,SPS,24.2,1,False,False,7.2,1890.0,,Pacific Crest Trail,Granite Chief,False,GNIS,False,
+Cirque Peak,36.476936,-118.236977,12900,SPS,3.4,1,False,False,7.2,3060.0,100.0,Cottonwood Pass Trail,Cirque Peak,False,GNIS,False,
+Mount Agassiz,37.111877,-118.530755,13893,SPS,14.7,2,False,False,7.2,4185.0,100.0,Bishop Pass Trail,North Palisade,False,GNIS,False,
+Mount Starr King,37.702793,-119.517592,9092,SPS,20.5,5,False,True,7.2,3475.0,1415.0,Mono Meadows Trail,Half Dome,False,GNIS,False,
+Mount Morgan (N),37.511317,-118.779836,13002,SPS,18.6,2,False,False,7.3,4100.0,940.0,Davis Lake Trail,Convict Lake,False,GNIS,False,
+Homers Nose,36.384673,-118.738877,9023,SPS,2.6,1,False,False,7.3,6260.0,925.0,Cahoon Trail,Silver City,False,GNIS,False,
+Mount Baldwin,37.532061,-118.851269,12615,SPS,18.7,2,False,False,7.5,5385.0,400.0,Convict Creek Trail,Convict Lake,False,GNIS,False,
+Mount Mendel,37.174841,-118.682236,13710,SPS,15.8,3,False,False,7.5,5830.0,380.0,Lamark Lakes Trail,Mount Darwin,False,GNIS,False,
+Mount Stanford (N),37.489339,-118.796287,12836,SPS,18.5,2,False,False,7.6,3355.0,360.0,Davis Lake Trail,Mount Abbot,False,GNIS,False,
+Iron Mountain,37.611423,-119.164761,11148,SPS,19.1,1,False,False,7.7,4560.0,540.0,West campground parking,Cattle Mountain,False,GNIS,False,
+Needham Mountain,36.454322,-118.537352,12520,SPS,2.1,2s3,False,False,7.8,6060.0,1350.0,Sawtooth Pass Trail,Mineral King,True,GNIS,False,
+Mount Corcoran,36.538552,-118.250484,13714,SPS,4.1,2,False,False,8.0,7155.0,,Granite View Drive,Mount Langley,True,GNIS,False,
+MOUNT DARWIN,37.167022,-118.672388,13831,SPS,15.7,3s4,True,False,8.0,5950.0,1380.0,Lamark Lakes Trail,MOUNT DARWIN,False,GNIS,False,
+Florence Peak,36.406221,-118.55087,12432,SPS,2.8,2,False,False,8.0,6520.0,1940.0,Farewell Gap Trail,Mineral King,False,GNIS,False,
+Mount LeConte,36.541617,-118.252225,13830,SPS,4.2,3,False,True,8.1,7270.0,,Granite View Drive,Mount Whitney,False,GNIS,True,S-4.0
+Mokelumne Peak,38.538045,-120.094341,9334,SPS,23.6,2,False,False,8.2,4135.0,1200.0,Tanglefoot Trail,Mokelumne Pk.,False,GNIS,False,
+Mount Tom,37.338556,-118.656936,13652,SPS,16.6,2,False,False,8.2,5980.0,100.0,Horton Lakes Trail,Mount Tom,False,GNIS,True,S-2.2
+Half Dome,37.744402,-119.534053,8840,SPS,20.6,2,False,False,8.2,5975.0,1160.0,John Muir Trail,Half Dome,True,GNIS,False,
+Four Gables,37.302473,-118.699931,12720,SPS,16.5,1,False,False,8.3,5050.0,100.0,Horton Lakes Trail,Mount Tom,True,GNIS,False,
+Mount Rixford,36.784856,-118.398887,12887,SPS,9.5,2,False,False,8.3,4560.0,865.0,Kearsarge Pass Trail,Mount Clarence King,False,GNIS,True,S-2.0
+Birch Mountain,37.062492,-118.419066,13602,SPS,12.5,2,False,False,8.3,7780.0,150.0,McMurray Meadows Road,Split Mountain,False,GNIS,False,
+Red and White Mountain,37.479892,-118.857269,12816,SPS,18.4,2,False,False,8.4,5080.0,400.0,McGee Creek Trail,Mount Abbot,False,GNIS,False,
+Whorl Mountain,38.074121,-119.383428,12033,SPS,22.8,3,False,True,8.5,6095.0,1160.0,Horse Creek Trail,Matterhorn Peak,False,GNIS,False,
+Thunderbolt Peak,37.097488,-118.517293,14003,SPS,14.5,4s5,False,True,8.6,4395.0,200.0,Bishop Pass Trail,North Palisade,False,GNIS,False,
+The Thumb,37.07148,-118.445977,13356,SPS,12.6,2,False,False,8.9,7535.0,150.0,McMurray Meadows Road,Split Mountain,False,GNIS,False,
+Mount Perkins,36.927166,-118.381436,12566,SPS,10.3,2,False,False,9.0,6830.0,,Armstong Canyon,Mount Pinchot,False,GNIS,False,
+Clyde Minaret,37.66028,-119.1739,12264,SPS,19.2,4,False,True,9.1,3935.0,,River Trail,Mount Ritter,False,peakbagger,False,
+Vogelsang Peak,37.777365,-119.349521,11493,SPS,21.2,2,False,False,9.1,3485.0,710.0,John Muir Trail,Vogelsang Peak,False,GNIS,False,
+Mount Thompson,37.142882,-118.613612,13494,SPS,15.1,2,False,False,9.1,5620.0,1200.0,Sabrina Basin Trail,Mount Thompson,False,GNIS,False,
+Mount Muir,36.564739,-118.291329,14012,SPS,4.6,3,False,False,9.2,5910.0,200.0,Mount Whitney Trail,Mount Whitney,False,GNIS,True,S-3.0
+Mount Powell,37.138674,-118.634023,13360,SPS,15.2,2,False,False,9.2,5785.0,1500.0,Sabrina Basin Trail,Mount Thompson,True,GNIS,False,
+Virginia Peak,38.065851,-119.357893,12001,SPS,22.6,2,False,False,9.3,3990.0,1800.0,Virginia Lakes Trail,Dunderberg Peak,False,GNIS,False,
+Twin Peaks,38.080489,-119.357527,12323,SPS,22.7,2,False,False,9.3,4895.0,2300.0,Virginia Lakes Trail,Dunderberg Peak,False,GNIS,False,
+Mount Tinemaha,37.036314,-118.396367,12520,SPS,12.2,2,False,False,9.3,7785.0,80.0,Red Lake Trail,Split Mountain,False,GNIS,False,
+Merriam Peak,37.309126,-118.765212,13103,SPS,17.1,2,False,False,9.4,5855.0,150.0,Pine Creek Pass Trail,Mount Hilgard,False,GNIS,False,
+Silver Peak,37.469703,-119.0212,11878,SPS,18.1,2,False,False,9.5,4220.0,,Devils Bathtub Trail,Sharktooth Peak,False,GNIS,False,
+Mount Gayley,37.103001,-118.499807,13510,SPS,14.2,3,False,False,9.5,5810.0,100.0,North Fork Trail,Split Mountain,False,GNIS,False,
+Mount Goethe,37.206148,-118.702298,13264,SPS,16.1,1,False,False,9.6,6025.0,2020.0,Lamark Lakes Trail,Mount Darwin,False,GNIS,False,
+Mount Bolton-Brown,37.046129,-118.441029,13491,SPS,12.4,2,False,False,9.6,8220.0,700.0,McMurray Meadows Road,Split Mountain,False,GNIS,False,
+Koip Peak,37.813721,-119.201544,12962,SPS,21.6,1,False,False,9.7,3005.0,400.0,Mono Pass Trail,Koip Peak,False,GNIS,False,
+Mount Haeckel,37.150992,-118.661007,13418,SPS,15.4,3,False,False,9.7,4495.0,150.0,Sabrina Basin Trail,Mount Darwin,False,GNIS,False,
+Mount Bago,36.769994,-118.438088,11870,SPS,9.6,1,False,False,9.7,4110.0,1430.0,Kearsarge Pass Trail,Mount Clarence King,False,GNIS,False,
+Mount Winchell,37.104596,-118.526166,13775,SPS,14.6,3,False,False,9.7,6065.0,100.0,North Fork Trail,North Palisade,False,GNIS,False,
+Royce Peak,37.318174,-118.770896,13280,SPS,17.2,2,False,False,9.7,6030.0,150.0,Pine Creek Pass Trail,Mount Hilgard,True,GNIS,False,
+Mount Keith,36.700069,-118.343416,13976,SPS,8.9,2,False,False,9.7,8315.0,650.0,Shepherd Pass Trail,Mount Williamson,False,GNIS,False,
+Cardinal Mountain,36.999405,-118.412737,13396,SPS,10.1,2,False,False,9.8,7980.0,40.0,Taboose Pass Trail,Mount Pinchot,False,GNIS,False,
+Black Mountain,36.809148,-118.378012,13291,SPS,9.11,2,False,False,10.0,7640.0,275.0,Baxter Pass Trail,Mount Clarence King,False,GNIS,False,
+Mount Wynne,36.938011,-118.402918,13179,SPS,10.4,2,False,False,10.0,7995.0,550.0,Scotty Spring,Mount Pinchot,False,GNIS,False,
+Goat Mountain,36.869469,-118.574211,12207,SPS,11.4,2,False,False,10.1,7410.0,240.0,Granite Pass Trail,The Sphinx,False,GNIS,False,
+Mount Pinchot,36.947328,-118.4052,13494,SPS,10.5,2,False,False,10.1,8010.0,250.0,Scotty Spring,Mount Pinchot,False,GNIS,False,
+Mount Wallace,37.146807,-118.656798,13377,SPS,15.3,2s3,False,False,10.2,4450.0,150.0,Sabrina Basin Trail,Mount Darwin,False,GNIS,False,
+MOUNT HUMPHREYS,37.269972,-118.671653,13986,SPS,16.3,4,True,False,10.2,5045.0,400.0,Piute Pass Trail,MOUNT TOM,False,GNIS,True,S-4.1
+Angora Mountain,36.264326,-118.446047,10198,SPS,2.2,2,False,False,10.2,5880.0,1500.0,Jerky Meadows Trail,Kern Lake,False,GNIS,False,
+Mount Huxley,37.136036,-118.682739,13086,SPS,15.6,3,False,False,10.2,5875.0,1850.0,Sabrina Basin Trail,Mount Darwin,False,GNIS,False,
+Mount Hitchcock,36.554866,-118.311852,13186,SPS,3.11,1,False,False,10.3,5300.0,475.0,Mount Whitney Trail,Mount Whitney,False,GNIS,False,
+Mount Julius Ceasar,37.356733,-118.781666,13200,SPS,17.3,2,False,False,10.3,6100.0,300.0,Pine Creek Pass Trail,Mount Hilgard,True,GNIS,False,
+Spanish Mountain,36.909209,-118.891391,10051,SPS,11.8,1,False,False,10.4,3610.0,280.0,Crown Valley Trail,Rough Spur,False,GNIS,False,
+Pilot Knob (N),37.273405,-118.757111,12245,SPS,16.7,2,False,False,10.5,3795.0,800.0,North Lake Trail,Mount Hilgard,False,GNIS,False,
+NORTH PALISADE,37.094243,-118.514437,14242,SPS,14.4,4,True,False,10.5,6530.0,100.0,North Fork Trail,NORTH PALISADE,False,GNIS,True,S-4.1
+SPLIT MOUNTAIN,37.02096,-118.422536,14042,SPS,12.1,1,True,False,10.5,9305.0,80.0,Red Lake Trail,SPLIT MOUNTAIN,True,GNIS,False,
+Giraud Peak,37.077297,-118.564477,12608,SPS,13.2,2,False,False,10.6,5045.0,1350.0,Bishop Pass Trail,North Palisade,False,GNIS,False,
+Mount Baxter,36.861438,-118.36222,13136,SPS,10.1,2,False,False,10.6,8355.0,1200.0,Baxter Pass Trail,Kearsarge Peak,False,GNIS,False,
+Mount Hale,36.588037,-118.314654,13494,SPS,5.2,1,False,False,10.7,6945.0,1750.0,Mount Whitney Trail,Mount Whitney,False,GNIS,False,
+Mount Young,36.581042,-118.327623,13176,SPS,5.1,1,False,False,10.8,6625.0,1750.0,Mount Whitney Trail,Mount Whitney,False,GNIS,False,
+Red Slate Mountain,37.507448,-118.86915,13123,SPS,18.4,1,False,True,10.9,4990.0,,McGee Creek Trail,Convict Lake,True,GNIS,False,
+MOUNT WHITNEY,36.57857,-118.292422,14491,SPS,4.7,1,True,False,10.9,6390.0,200.0,Mount Whitney Trail,MOUNT WHITNEY,False,GNIS,True,S-1.0
+Mount Silliman,36.643245,-118.696764,11188,SPS,6.2,1,False,False,11.0,4770.0,330.0,Silliman Pass Trail,Mount Silliman,False,GNIS,False,
+OLANCHA PEAK,36.265368,-118.118152,12123,SPS,3.1,2,True,False,11.0,6435.0,100.0,Olancha Pass Trail,OLANCHA,False,GNIS,True,S-2.1
+Goodale Mountain,36.972169,-118.385438,12772,SPS,10.9,2s3,False,False,11.0,7395.0,40.0,Taboose Pass Trail,Mount Pinchot,False,GNIS,False,
+Mount Langley,36.523367,-118.239416,14026,SPS,3.5,1,False,False,11.1,4795.0,400.0,Cottonwood Lakes Trail,Mount Langley,False,GNIS,True,S-1.1
+Mount Tyndall,36.655744,-118.337273,14019,SPS,5.8,2,False,False,11.1,8360.0,650.0,Shepherd Pass Trail,Mount Williamson,False,GNIS,False,
+Mount Prater,37.036793,-118.434705,13471,SPS,12.3,1,False,False,11.3,8735.0,80.0,Red Lake Trail,Split Mountain,False,GNIS,False,
+Black Hawk Mountain,38.20597,-119.708986,10348,SPS,23.1,2,False,False,11.4,4190.0,200.0,Huckleberry Trail,Emigrant Lake,False,GNIS,False,
+Mount Davis,37.714989,-119.219382,12303,SPS,19.5,2,False,False,11.4,5100.0,1120.0,Pacific Crest Trail,Mount Ritter,False,GNIS,False,
+Banner Peak,37.696442,-119.194743,12936,SPS,19.4,2,False,False,11.4,5730.0,1120.0,Pacific Crest Trail,Mount Ritter,False,GNIS,False,
+Striped Mountain,36.965621,-118.403766,13179,SPS,10.8,1,False,False,11.4,7810.0,40.0,Taboose Pass Trail,Mount Pinchot,False,GNIS,False,
+Mount Fiske,37.136569,-118.667835,13503,SPS,15.5,2,False,False,11.5,5630.0,1200.0,Sabrina Basin Trail,Mount Darwin,False,GNIS,False,
+Diamond Peak,36.826359,-118.390272,13127,SPS,9.12,2,False,False,11.6,8860.0,1765.0,Baxter Pass Trail,Mount Clarence King,False,GNIS,False,
+Mount Sill,37.095985,-118.503396,14153,SPS,14.3,2,False,True,11.9,7685.0,1340.0,North Fork Trail,North Palisade,False,GNIS,False,
+North Guard,36.716527,-118.490038,13327,SPS,7.1,3s4,False,False,12.0,5715.0,200.0,Roads end to Bubbs Creek Trail,Mount Brewer,False,GNIS,False,
+MOUNT RITTER,37.688965,-119.199575,13143,SPS,19.3,2,True,False,12.2,6070.0,1250.0,Pacific Crest Trail,MOUNT RITTER,False,GNIS,True,S-3.2
+Kennedy Mountain,36.879116,-118.668186,11433,SPS,11.5,1,False,False,12.2,7685.0,800.0,Jerky Meadows Trail,Slide Bluffs,False,GNIS,False,
+Mount Harrington,36.870005,-118.733645,11009,SPS,11.6,3,False,False,12.4,7210.0,750.0,Kennedy Pass Trail,Cedar Grove,False,GNIS,False,
+Junction Peak,36.690962,-118.366282,13845,SPS,8.8,3,False,True,12.4,8185.0,650.0,Shepherd Pass Trail,Mount Williamson,True,GNIS,False,
+Mount Clark,37.696373,-119.428613,11522,SPS,20.4,3s4,False,True,12.5,5190.0,900.0,Mono Meadows Trail,Merced Peak,False,GNIS,False,
+East Vidette,36.743814,-118.400555,12356,SPS,8.6,2s3,False,True,12.5,5515.0,1350.0,Kearsarge Pass Trail,Mount Brewer,False,GNIS,False,
+The Hermit,37.162897,-118.718487,12328,SPS,15.1,2s5,False,True,12.5,6195.0,3125.0,Lamark Lakes Trail,Mount Darwin,False,GNIS,False,
+Mount Izaak Walton,37.469966,-118.889922,12077,SPS,18.2,2,False,False,12.6,5215.0,800.0,Mono Creek Trail,Graveyard Peak,False,GNIS,False,
+Trojan Peak,36.642322,-118.315286,13947,SPS,5.7,2,False,False,12.6,8565.0,920.0,Shepherd Pass Trail,Mount Williamson,False,GNIS,False,
+West Vidette,36.733905,-118.419727,12533,SPS,8.7,2,False,False,12.7,5695.0,2350.0,Kearsarge Pass Trail,Mount Brewer,True,GNIS,False,
+Recess Peak,37.38242,-118.855452,12813,SPS,17.5,2,False,False,12.9,6385.0,1150.0,Bear Ridge Trail,Mount Abbot,False,GNIS,False,
+MOUNT WILLIAMSON,36.655954,-118.311085,14370,SPS,5.9,2,True,False,12.9,8990.0,920.0,Shepherd Pass Trail,MOUNT WILLIAMSON,True,GNIS,True,S-3.1
+Colosseum Mountain,36.90719,-118.367004,12473,SPS,10.2,1,False,False,13.0,8405.0,520.0,Sawmill Pass Trail,Aberdeen,False,GNIS,False,
+Mount Florence,37.739772,-119.316033,12561,SPS,21.3,2,False,False,13.2,5050.0,100.0,John Muir Trail,Mount Lyell,False,GNIS,False,
+MOUNT BREWER,36.708319,-118.485233,13570,SPS,7.9,2,True,False,13.5,6310.0,550.0,Roads end to Bubbs Creek Trail,MOUNT BREWER,False,GNIS,False,
+Black Giant,37.102239,-118.648707,13330,SPS,13.6,1,False,False,13.5,5655.0,1400.0,Sabrina Basin Trail,Mount Goddard,False,GNIS,False,
+Tehipite Dome,36.918839,-118.780689,7708,SPS,11.7,2s3,False,True,13.5,5680.0,2800.0,Rancheria Trail,Tehipite Dome,False,GNIS,False,
+Rogers Peak,36.217999,-117.08498,12978,SPS,19.6,2,False,False,13.5,7490.0,1750.0,Rush Creek Trail,Mount Lyell,False,GNIS,False,
+Electra Peak,37.705208,-119.260172,12442,SPS,19.7,2,False,False,13.5,7800.0,2600.0,Rush Creek Trail,Mount Lyell,False,GNIS,False,
+Mount Hilgard,37.360312,-118.826932,13361,SPS,17.4,2,False,False,13.7,7760.0,1800.0,Pine Creek Pass Trail,Mount Hilgard,False,GNIS,False,
+Mount MacClure,37.74357,-119.280355,12880,SPS,21.4,3,False,False,13.8,4280.0,120.0,John Muir Trail,Mount Lyell,True,GNIS,False,
+MOUNT LYELL,37.739412,-119.271888,13144,SPS,21.5,3,True,False,13.8,4545.0,120.0,John Muir Trail,MOUNT LYELL,False,GNIS,False,
+Mount Gabb,37.376631,-118.802736,13680,SPS,17.6,2,False,False,13.8,7905.0,1625.0,Pine Creek Pass Trail,Mount Abbot,True,GNIS,False,
+Mount Barnard,36.628403,-118.321599,13990,SPS,5.6,2,False,False,13.9,9330.0,1650.0,Shepherd Pass Trail,Mount Williamson,False,GNIS,False,
+Charybdis,37.086854,-118.668169,13096,SPS,13.7,3,False,True,14.0,5820.0,1800.0,Sabrina Basin Trail,Mount Goddard,False,GNIS,False,
+Pyramid Peak (S),36.906413,-118.462111,12779,SPS,10.6,2,False,False,14.0,7980.0,250.0,Sawmill Pass Trail,Mount Pinchot,False,GNIS,False,
+Deerhorn Mountain,36.712963,-118.41045,13281,SPS,8.5,3,False,True,14.0,6440.0,2350.0,Kearsarge Pass Trail,Mount Brewer,False,GNIS,False,
+Mount Gardiner,36.8061,-118.459192,12907,SPS,9.7,4,False,True,14.2,5535.0,1820.0,Kearsarge Pass Trail,Mount Clarence King,False,GNIS,False,
+Coyote Peaks,36.312087,-118.447367,10892,SPS,2.3,2,False,False,14.3,7170.0,2100.0,Jerky Meadows Trail,Kern Lake,False,GNIS,False,
+Seven Gables,37.310878,-118.833523,13080,SPS,16.9,2,False,True,14.7,6580.0,1150.0,Bear Ridge Trail,Mount Hilgard,True,GNIS,False,
+South Guard,36.693459,-118.483874,13232,SPS,7.8,2,False,False,15.0,6620.0,1200.0,Roads end to Bubbs Creek Trail,Mount Brewer,False,GNIS,False,
+Arrow Peak,36.928521,-118.490881,12959,SPS,10.7,2,False,True,15.0,8160.0,250.0,Roads end to Bubbs Creek Trail,Mount Pinchot,False,GNIS,False,
+Center Peak,36.721928,-118.36264,12730,SPS,8.11,2s4,False,False,15.7,5815.0,2275.0,Kearsarge Pass Trail,Mount Williamson,True,GNIS,False,
+Gemini,37.296552,-118.816987,12880,SPS,16.8,2,False,False,16.0,6380.0,1150.0,Bear Ridge Trail,Mount Hilgard,True,GNIS,False,
+Mount Senger,37.277702,-118.858395,12286,SPS,16.1,2,False,False,16.2,5725.0,800.0,Blayney Meadows Trail,Mount Hilgard,False,GNIS,False,
+Scylla,37.080129,-118.689668,12956,SPS,13.8,2,False,False,16.2,6195.0,2400.0,Sabrina Basin Trail,Mount Goddard,False,GNIS,False,
+Mount Cotter,36.818794,-118.44186,12713,SPS,9.8,2,False,False,16.2,6255.0,2730.0,Kearsarge Pass Trail,Mount Clarence King,False,GNIS,False,
+Mount Eisen,36.498281,-118.568505,12160,SPS,6.3,2,False,False,16.5,6750.0,2400.0,Sawtooth Pass Trail,Mineral King,True,GNIS,False,
+Joe Devel Peak,36.515326,-118.296379,13327,SPS,3.7,2,False,False,17.0,5285.0,1900.0,Cottonwood Pass Trail,Mount Whitney,False,GNIS,False,
+Mount McDuffie,37.073525,-118.643919,13282,SPS,13.5,2,False,True,17.0,8870.0,3400.0,Bishop Pass Trail,Mount Goddard,False,GNIS,False,
+Kern Peak,36.308403,-118.287853,11510,SPS,2.1,1,False,False,17.2,4920.0,3350.0,Cottonwood Pass Trail,Kern Peak,False,GNIS,False,
+MOUNT CLARENCE KING,36.833753,-118.446185,12907,SPS,9.9,4s5,True,False,17.2,6445.0,2730.0,Kearsarge Pass Trail,MT CLARENCE KING,False,GNIS,False,
+Mount Ericsson,36.697153,-118.414464,13583,SPS,8.3,2,False,True,17.5,8150.0,200.0,Roads end to Bubbs Creek Trail,Mount Brewer,True,GNIS,False,
+Tower Peak,38.144463,-119.54772,11755,SPS,22.13,3,False,True,17.7,5325.0,800.0,Leavitt Meadows Trail,Tower Peak,False,GNIS,False,
+Mount Guyot,36.509234,-118.362641,12300,SPS,3.6,1,False,False,18.1,4760.0,2400.0,Cottonwood Pass Trail,Mount Whitney,False,GNIS,False,
+Mount Hooper,37.292179,-118.895106,12349,SPS,16.11,2s4,False,False,18.2,5790.0,800.0,Blayney Meadows Trail,Florence Lake,False,GNIS,False,
+Mount Pickering,36.527273,-118.290889,13474,SPS,3.8,2,False,False,18.5,5900.0,2365.0,Cottonwood Pass Trail,Mount Whitney,False,GNIS,False,
+Merced Peak,37.634866,-119.394556,11726,SPS,20.1,2,False,False,18.5,6900.0,2405.0,Mono Meadows TH,Merced Peak,False,GNIS,False,
+Mount Stanford (S),36.703965,-118.395703,13973,SPS,8.4,3,False,False,18.5,9140.0,200.0,Roads end to Bubbs Creek Trail,Mount Brewer,False,GNIS,False,
+Devils Crag #1,37.038056,-118.612461,12400,SPS,13.3,4,False,True,18.5,6410.0,3820.0,Bishop Pass Trail,North Palisade,True,GNIS,False,
+Lion Rock,36.582348,-118.541987,12360,SPS,6.7,2,False,False,18.5,7650.0,2550.0,Alta Peak Trail,Triple Divide Peak,True,GNIS,False,
+Mount McGee,37.138821,-118.738153,12944,SPS,15.11,3,False,False,18.5,7140.0,3450.0,Lamark Lakes Trail,Mount Darwin,False,GNIS,False,
+Mount Ruskin,36.978467,-118.473353,12920,SPS,11.1,3,False,True,18.5,9705.0,2200.0,Taboose Pass Trail,Mount Pinchot,False,GNIS,False,
+Piute Mountain,38.033526,-119.548096,10541,SPS,22.12,2,False,False,18.7,4640.0,1200.0,Barney Lake Trail,Piute Mountain,False,GNIS,False,
+State Peak,36.931979,-118.545429,12620,SPS,11.3,2,False,False,18.7,8305.0,720.0,Granite Pass Trail,Marion Peak,False,GNIS,False,
+Wheel Mountain,37.046727,-118.629452,12774,SPS,13.4,3,False,False,18.7,6815.0,3850.0,Bishop Pass Trail,Mount Goddard,False,GNIS,False,
+Mount Chamberlin,36.533542,-118.310654,13169,SPS,3.9,1,False,False,18.8,5130.0,1900.0,Cottonwood Pass Trail,Mount Whitney,False,GNIS,False,
+MOUNT GODDARD,37.102915,-118.719884,13568,SPS,13.9,2,True,False,18.8,7960.0,2200.0,Bishop Pass Trail,MOUNT GODDARD,False,GNIS,False,
+Caltech Peak,36.688415,-118.390488,13832,SPS,8.12,2,False,False,18.9,9275.0,1775.0,Shepherd Pass Trail,Mount Brewer,False,GNIS,False,
+Mount Newcomb,36.540068,-118.293411,13422,SPS,3.1,2,False,False,19.0,5380.0,1900.0,Cottonwood Pass Trail,Mount Whitney,False,GNIS,False,
+Triple Divide Peak,36.592884,-118.530756,12634,SPS,7.1,2,False,True,19.2,7325.0,2450.0,Alta Peak Trail,Triple Divide Peak,False,GNIS,False,
+Red Peak,37.653725,-119.409495,11699,SPS,20.2,2,False,False,19.5,5470.0,1000.0,Mono Meadows Trail,Merced Peak,False,GNIS,False,
+Forester Peak,37.690021,-119.290751,12057,SPS,19.8,2,False,False,19.8,6385.0,1300.0,Iceberg Pass Trail,Mount Lyell,False,GNIS,False,
+Table Mountain,36.659904,-118.473704,13632,SPS,7.6,3,False,True,19.9,9920.0,2600.0,Shepherd Pass Trail,Mount Brewer,False,GNIS,False,
+Mount Henry,37.183191,-118.827236,12196,SPS,15.13,2,False,False,20.0,4715.0,700.0,Blackcap Basin Trail,Mount Henry,False,GNIS,False,
+Thunder Mountain,36.668952,-118.475777,13517,SPS,7.7,3s4,False,True,20.0,9625.0,2420.0,Shepherd Pass Trail,Mount Brewer,True,GNIS,False,
+Marion Peak,36.956863,-118.522297,12719,SPS,11.2,2,False,False,20.0,10655.0,3350.0,Taboose Pass Trail,Marion Peak,False,GNIS,False,
+Milestone Mountain,36.634474,-118.484532,13638,SPS,7.4,3,False,True,20.1,9930.0,2600.0,Shepherd Pass Trail,Mount Brewer,False,GNIS,False,
+Midway Mountain,36.643325,-118.48371,13665,SPS,7.5,2,False,False,20.2,9955.0,2600.0,Shepherd Pass Trail,Mount Brewer,False,GNIS,False,
+Mount Genevra,36.683307,-118.434325,13054,SPS,8.2,2,False,False,20.3,9620.0,1600.0,Roads end to Bubbs Creek Trail,Mount Brewer,False,GNIS,False,
+Observation Peak,37.023215,-118.523665,12362,SPS,13.1,2,False,False,20.7,7550.0,4000.0,Bishop Pass Trail,North Palisade,False,GNIS,False,
+Mount Jordan,36.682248,-118.449785,13320,SPS,8.1,3s4,False,False,20.8,9885.0,1600.0,Granite Pass Trail,Mount Brewer,True,GNIS,False,
+Emerald Peak,37.165368,-118.763821,12546,SPS,15.12,2,False,False,21.5,6035.0,850.0,Blayney Meadows Trail,Mount Henry,False,GNIS,False,
+Gray Peak,37.673668,-119.418746,11573,SPS,20.3,2,False,False,22.0,6045.0,1700.0,Mono Meadows Trail,Merced Peak,False,GNIS,False,
+Mount Lippincott,36.521169,-118.563106,12265,SPS,6.4,2,False,False,22.0,8405.0,3950.0,Sawtooth Pass Trail,Triple Divide Peak,False,GNIS,False,
+Eagle Scout Peak,36.545714,-118.561578,12000,SPS,6.5,2,False,False,22.2,8290.0,3350.0,Alta Peak Trail,Triple Divide Peak,True,GNIS,False,
+Mount Stewart,36.569665,-118.554655,12200,SPS,6.6,2,False,False,22.7,7940.0,3000.0,Alta Peak Trail,Triple Divide Peak,True,GNIS,False,
+Black Kaweah,36.545384,-118.51583,13720,SPS,6.1,3,False,True,22.7,10010.0,4100.0,Sawtooth Pass Trail,Triple Divide Peak,True,GNIS,False,
+Red Kaweah,36.54,-118.505625,13720,SPS,6.9,2,False,False,23.0,10010.0,4100.0,Sawtooth Pass Trail,Triple Divide Peak,True,GNIS,False,
+Picket Guard Peak,36.576609,-118.47221,12303,SPS,6.11,2,False,False,23.2,10595.0,4600.0,Shepherd Pass Trail,Mount Kaweah,False,GNIS,False,
+Kern Point,36.596685,-118.444891,12730,SPS,6.12,2,False,False,23.5,11020.0,4600.0,Shepherd Pass Trail,Mount Kaweah,True,GNIS,False,
+Tunemah Peak,36.995323,-118.688309,11894,SPS,13.12,2,False,False,24.0,7625.0,2450.0,Crown Valley Trail,Slide Bluffs,False,GNIS,False,
+Whaleback,36.63028,-118.531162,11717,SPS,7.3,3,False,False,24.0,6225.0,2850.0,Marvin Pass Trail,Sphinx Lake,False,GNIS,False,
+Pettit Peak,37.985194,-119.480153,10788,SPS,22.1,2,False,False,25.0,6390.0,2700.0,Barney Lake Trail,Falls Ridge,False,GNIS,False,
+Glacier Ridge,36.617446,-118.558827,12360,SPS,7.2,2s4,False,False,25.0,6870.0,2850.0,Marvin Pass Trail,Triple Divide Peak,True,GNIS,False,
+MOUNT KAWEAH,36.52601,-118.478553,13802,SPS,6.8,1,True,False,25.0,10390.0,4400.0,Sawtooth Pass Trail,MOUNT KAWEAH,False,GNIS,False,
+Finger Peak,37.029844,-118.730253,12404,SPS,13.11,2,False,False,28.0,7485.0,1800.0,Crown Valley Trail,Mount Goddard,False,GNIS,False,
+Mount Reinstein,37.07942,-118.738353,12586,SPS,13.1,2,False,False,29.5,5385.0,1000.0,Maxson Trail,Mount Goddard,False,GNIS,False,
+Lamont Point/Benchmark,,,7621,non-SPS,1.11,2,False,False,,,,,Peak,False,,False,
+Chimney Peak,,,7999,non-SPS,1.12,1s2,False,False,,,,,Peak,False,,False,
+Kennedy Peak,,,7202,non-SPS,1.13,2,False,False,,,,,Canyon,False,,False,
+Ball Mountain,,,9258,non-SPS,1.14,2,False,False,,,,,Canyon,False,,False,
+Pine Mountain,,,8150,non-SPS,1.15,1s2,False,False,,,,,Peak,False,,False,
+Cannell Peak,35.864996,-118.361218,9380,non-SPS,1.16,2,False,False,,,,,Peak,False,GNIS,False,
+Cherry Hill,,,8833,non-SPS,1.17,1,False,False,,,,,Fairview,False,,False,
+Bass Peak,,,9945,non-SPS,1.18,2,False,False,,,,,Creek,False,,False,
+Sherman Peak,,,9843,non-SPS,1.19,1,False,False,,,,,Creek,False,,False,
+Lookout Mountain,,,9738,non-SPS,1.2,1s2,False,False,,,,,Creek,False,,False,
+Schaeffer Mountain,36.071381,-118.39578,9328,non-SPS,1.21,1,False,False,,,,,Creek,False,GNIS,False,
+Andy Smatko Peak,,,8916,non-SPS,1.22,2s3,False,False,,,,,Meadows,False,,False,
+Bald Mountain,,,9387,non-SPS,1.23,1,False,False,,,,,Meadows,False,,False,
+Jackass Peak,,,9374,non-SPS,1.24,3,False,False,,,,,Mountain,False,,False,
+Granite Knob,36.153374,-118.224897,9013,non-SPS,1.25,2,False,False,,,,,Mountain,False,GNIS,False,
+Blackrock Mountain,36.179165,-118.277999,9613,non-SPS,1.26,1,False,False,,,,,Meadows,False,GNIS,False,
+Manzanita Knob,36.208634,-118.308105,9128,non-SPS,1.27,1,False,False,,,,,Meadows,False,GNIS,False,
+Doc Peak,36.205891,-118.274324,8766,non-SPS,1.28,1,False,False,,,,,Meadows,False,GNIS,False,
+Deer Mountain,,,9410,non-SPS,1.29,1,False,False,,,,,Mountain,False,,False,
+Round Mountain,,,9892,non-SPS,1.3,1,False,False,,,,,Pass,False,,False,
+Monache Mountain,36.205368,-118.196305,9418,non-SPS,1.31,1,False,False,,,,,Mountain,False,GNIS,False,
+Anderson Point,,,8510,non-SPS,1.32,1,False,False,,,,,Mountain,False,,False,
+Maggie Mountain,36.26362,-118.61882,10146,non-SPS,2.11,2,False,False,,,,,Peak,False,GNIS,False,
+White Chief Peak,36.405323,-118.597728,11181,non-SPS,2.12,2,False,False,,,,,King,False,GNIS,False,
+Hengst Peak,36.410424,-118.621726,11128,non-SPS,2.13,2,False,False,,,,,King,False,GNIS,False,
+Tulare Peak,36.412019,-118.563436,11657,non-SPS,2.14,2,False,False,,,,,King,False,GNIS,False,
+Rainbow Mountain,,,12043,non-SPS,2.15,2,False,False,,,,,King,False,,False,
+Mineral Peak,,,11615,non-SPS,2.16,2,False,False,,,,,King,False,,False,
+Empire Mountain,36.467275,-118.577209,11545,non-SPS,2.17,2,False,False,,,,,King,False,GNIS,False,
+Brown Mountain,,,9967,non-SPS,3.12,2,False,False,,,,,Mountain,False,,False,
+Templeton Mountain,36.314825,-118.206737,9944,non-SPS,3.13,1,False,False,,,,,Mountain,False,GNIS,False,
+Johnson Peak,,,11378,non-SPS,3.14,2,False,False,,,,,Peak,False,,False,
+Trail Peak #,36.427588,-118.190588,11617,non-SPS,3.15,1-2,False,False,,,,,Peak,False,GNIS,False,
+Mount Anna Mills,36.474497,-118.350077,12054,non-SPS,3.16,2,False,False,,,,,Peak,False,GNIS,False,
+The Major General,36.511047,-118.258144,12402,non-SPS,3.17,2,False,False,,,,,Whitney,False,GNIS,False,
+The Miter,36.534999,-118.264724,12770,non-SPS,3.18,3-4,False,False,,,,,Whitney,False,GNIS,False,
+Mount Marsh,36.554764,-118.278444,13517,non-SPS,4.1,3,False,False,,,,,Whitney,False,GNIS,False,
+Discovery Pinnacle #,36.558387,-118.290256,13680,non-SPS,4.11,1sr2,False,False,,,,,Whitney,False,GNIS,False,
+Wotans Throne,36.566776,-118.279716,12756,non-SPS,4.12,3,False,False,,,,,Whitney,False,GNIS,False,
+Pinnacle Ridge,36.574085,-118.281696,13058,non-SPS,4.13,4,False,False,,,,,Whitney,False,GNIS,False,
+Crooks Peak,36.574409,-118.290717,14080,non-SPS,4.14,2,False,False,,,,,Whitney,False,GNIS,False,
+Keeler Needle,36.575405,-118.291276,14240,non-SPS,4.15,2-3,False,False,,,,,Whitney,False,GNIS,False,
+Mount Carl Heller,,,13225,non-SPS,5.1,3,False,False,,,,,Williamson,False,,False,
+Tawny Point,36.628507,-118.376004,12332,non-SPS,5.11,1,False,False,,,,,Williamson,False,GNIS,False,
+Mount Versteeg #,36.647715,-118.325618,13470,non-SPS,5.12,2,False,False,,,,,Williamson,False,GNIS,False,
+Mount Tyndall - Southwest Peak,,,13540,non-SPS,5.13,2,False,False,,,,,Williamson,False,,False,
+Polychrome Peak,,,13018,non-SPS,5.14,2,False,False,,,,,Williamson,False,,False,
+Kaweah Queen,36.554655,-118.508554,13366,non-SPS,6.13,2,False,False,,,,,Peak,False,GNIS,False,
+Lawson Peak,36.560123,-118.514387,13136,non-SPS,6.14,2,False,False,,,,,Peak,False,GNIS,False,
+Panther Peak,36.583341,-118.715748,9054,non-SPS,6.15,2,False,False,,,,,Lodgepole,False,GNIS,False,
+Twin Peaks (SEKI),,,10479,non-SPS,6.18,3,False,False,,,,,Silliman,False,,False,
+Mount Maddox,36.727937,-118.74718,9656,non-SPS,6.19,2-3,False,False,,,,,Silliman,False,GNIS,False,
+Mitchell Peak,,,10378,non-SPS,6.2,1,False,False,,,,,Silliman,False,,False,
+Lookout Peak (Kings Canyon),,,8510,non-SPS,6.21,1,False,False,,,,,Grove,False,,False,
+Centennial Peak,36.627659,-118.490372,13206,non-SPS,7.11,2,False,False,,,,,Brewer,False,GNIS,False,
+Mount Francis Farquhar,,,12893,non-SPS,7.12,3,False,False,,,,,Brewer,False,,False,
+Cross Mountain,,,12160,non-SPS,7.13,2,False,False,,,,,Brewer,False,,False,
+Palmer Mountain,36.747712,-118.569252,11252,non-SPS,7.14,2,False,False,,,,,Lakes,False,GNIS,False,
+Center Basin Crag #5,,,12598,non-SPS,8.13,2,False,False,,,,,Williamson,False,,False,
+Center Basin Crag #1,,,12532,non-SPS,8.14,4,False,False,,,,,Williamson,False,,False,
+East Spur,36.711883,-118.398506,12735,non-SPS,8.15,3,False,False,,,,,Brewer,False,GNIS,False,
+PhD Peak”/Peak 3920m,,,12881,non-SPS,9.13,3,False,False,,,,,Williamson,False,,False,
+Kearsarge Pinnacle #11,,,11716,non-SPS,9.15,2,False,False,,,,,King,False,,False,
+Kearsarge Pinnacle #12,,,11703,non-SPS,9.16,2,False,False,,,,,King,False,,False,
+Falcor Peak”/Peak 3912m,,,12800,non-SPS,9.17,3,False,False,,,,,King,False,,False,
+Glacier Spike,,,12400,non-SPS,9.18,2,False,False,,,,,King,False,,False,
+Charlotte Dome,36.782423,-118.48033,10672,non-SPS,9.19,3,False,False,,,,,King,False,GNIS,False,
+Painted Lady,36.792823,-118.399464,12100,non-SPS,9.2,2,False,False,,,,,King,False,GNIS,False,
+Fin Dome,36.813556,-118.412302,11693,non-SPS,9.21,3-4,False,False,,,,,King,False,GNIS,False,
+Mary Austin,,,13021,non-SPS,9.22,2,False,False,,,,,Peak,False,,False,
+Acrodectes Peak,36.860686,-118.375161,13143,non-SPS,10.11,2,False,False,,,,,King,False,GNIS,False,
+Mount Cedric Wright,36.90405,-118.387661,12372,non-SPS,10.12,2,False,False,,,,,Pinchot,False,GNIS,False,
+Crater Mountain,,,12874,non-SPS,10.13,2,False,False,,,,,Pinchot,False,,False,
+Mount Ickes,36.932974,-118.439168,12950,non-SPS,10.14,2,False,False,,,,,Pinchot,False,GNIS,False,
+Mount Hutchings,36.833244,-118.600738,10785,non-SPS,11.1,2,False,False,,,,,Sphinx,False,GNIS,False,
+Munger Peak,36.874257,-118.579892,12040,non-SPS,11.11,2,False,False,,,,,Sphinx,False,GNIS,False,
+Hogback Peak,36.876568,-118.711582,11086,non-SPS,11.12,2,False,False,,,,,Bluffs,False,GNIS,False,
+Castle Peak (W Mid-Sierra)),,,10657,non-SPS,11.13,1,False,False,,,,,Dome,False,,False,
+Patterson Mountain,36.974763,-119.056381,8170,non-SPS,11.14,1,False,False,,,,,Mountain,False,GNIS,False,
+Eagle Peak,,,10318,non-SPS,11.15,2,False,False,,,,,Mountain,False,,False,
+Nelson Mountain,37.089461,-119.049076,10220,non-SPS,11.16,2,False,False,,,,,Mountain,False,GNIS,False,
+Brown Peak,,,10322,non-SPS,11.17,2,False,False,,,,,Dogtooth,False,,False,
+Dogtooth Peak,37.154076,-119.03959,10302,non-SPS,11.18,2-3,False,False,,,,,Dogtooth,False,GNIS,False,
+Maxon Dome,,,9505,non-SPS,11.19,2,False,False,,,,,Dogtooth,False,,False,
+Vennacher Needle,36.998769,-118.473842,12980,non-SPS,11.2,2,False,False,,,,,Pinchot,False,GNIS,False,
+Twin Peaks” (Palisades),,,13061,non-SPS,12.11,2,False,False,,,,,Mountain,False,,False,
+Ed Lane Peak” / Peak 4138m,,,13576,non-SPS,12.12,3,False,False,,,,,Mountain,False,,False,
+Kid Mountain,37.101839,-118.428327,11817,non-SPS,12.14,2,False,False,,,,,Mountain,False,GNIS,False,
+Woodworth,,,12228,non-SPS,13.13,2,False,False,,,,,Palisade,False,,False,
+Mount Shakspere,37.036667,-118.532572,12182,non-SPS,13.14,2,False,False,,,,,Palisade,False,GNIS,False,
+Rambaud Peak,37.038726,-118.595757,11053,non-SPS,13.15,2,False,False,,,,,Palisade,False,GNIS,False,
+The Citadel,37.065227,-118.611145,11729,non-SPS,13.16,2,False,False,,,,,Palisade,False,GNIS,False,
+Langille,,,12011,non-SPS,13.17,2,False,False,,,,,Palisade,False,,False,
+Mount Solomons,37.106457,-118.67422,13034,non-SPS,13.18,2,False,False,,,,,Goddard,False,GNIS,False,
+Blackcap Mountain,,,11562,non-SPS,13.19,2,False,False,,,,,Mountain,False,,False,
+Mount Jepson,37.08885,-118.495269,13390,non-SPS,14.12,2,False,False,,,,,Mountain,False,GNIS,False,
+Polemonium Peak,37.093351,-118.511771,14095,non-SPS,14.13,4,False,False,,,,,Palisade,False,GNIS,False,
+Columbine Peak,37.089164,-118.541803,12662,non-SPS,14.14,2,False,False,,,,,Palisade,False,GNIS,False,
+Isosceles Peak,37.093809,-118.538633,12339,non-SPS,14.15,3-4,False,False,,,,,Palisade,False,GNIS,False,
+West Isosceles Peak” [1],,,12240,non-SPS,14.16,3-4,False,False,,,,,Palisade,False,,False,
+Buck Mountain,,,12814,non-SPS,14.17,2,False,False,,,,,Palisade,False,,False,
+Trapezoid Peak”/Peak,,,12920,non-SPS,14.18,3,False,False,,,,,Palisade,True,,False,
+Hurd Peak,37.140898,-118.566073,12237,non-SPS,14.2,2-3,False,False,,,,,Thompson,False,GNIS,False,
+Sky Haven,37.144295,-118.505009,12840,non-SPS,14.21,3,False,False,,,,,Thompson,False,GNIS,False,
+Chocolate Peak,,,11682,non-SPS,14.22,2,False,False,,,,,Thompson,False,,False,
+Vagabond Peak,,,13374,non-SPS,14.23,2,False,False,,,,,Thompson,False,,False,
+Quasimodo Peak,,,12362,non-SPS,14.24,2,False,False,,,,,Thompson,False,,False,
+Coyote Ridge,,,12297,non-SPS,14.25,1,False,False,,,,,Thompson,False,,False,
+Table Mountain (N),,,11711,non-SPS,14.26,1,False,False,,,,,Thompson,False,,False,
+Mount Warlow,37.128423,-118.674717,13218,non-SPS,15.14,2,False,False,,,,,Darwin,False,GNIS,False,
+Mount Powell #,37.138674,-118.634023,13364,non-SPS,15.15,3,False,False,,,,,Thompson,False,GNIS,False,
+Conway Peak”(1),,,13154,non-SPS,15.16,3,False,False,,,,,Thompson,False,,False,
+Sunset Peak”/Peak,,,12486,non-SPS,15.17,2,False,False,,,,,Thompson,False,,False,
+Picture Peak,,,13120,non-SPS,15.18,3,False,False,,,,,Darwin,False,,False,
+Mount Spencer,37.155207,-118.681791,12241,non-SPS,15.19,2,False,False,,,,,Darwin,False,GNIS,False,
+Mount Hutton,37.125494,-118.799577,11946,non-SPS,15.2,3,False,False,,,,,Henry,False,GNIS,False,
+Peter Peak,37.145548,-118.745824,12506,non-SPS,15.21,2,False,False,,,,,Darwin,False,GNIS,False,
+Red Mountain (S),,,11965,non-SPS,15.22,1,False,False,,,,,Henry,False,,False,
+Fleming Mountain,37.15867,-118.858054,10794,non-SPS,15.23,2,False,False,,,,,Henry,False,GNIS,False,
+Zingheim Heights,37.18379,-118.856864,11135,non-SPS,15.24,3,False,False,,,,,Henry,False,GNIS,False,
+Muriel Peak,37.217206,-118.6931,12937,non-SPS,16.12,2,False,False,,,,,Darwin,False,GNIS,False,
+Mount Thoreau” / Peak,,,12691,non-SPS,16.13,2,False,False,,,,,Darwin,False,,False,
+Mount Locke,,,12634,non-SPS,16.15,2,False,False,,,,,Tom,False,,False,
+Turret Peak,37.263596,-118.842562,12014,non-SPS,16.16,2,False,False,,,,,Hilgard,False,GNIS,False,
+Mount Ian Campbell,37.261708,-119.020231,10630,non-SPS,16.17,1,False,False,,,,,Givens,False,GNIS,False,
+Mount Givens,37.278713,-119.055231,10378,non-SPS,16.18,1,False,False,,,,,Givens,False,GNIS,False,
+Kaiser Peak,37.29405,-119.18552,10302,non-SPS,16.19,1,False,False,,,,,Givens,False,GNIS,False,
+Feather Peak,37.325679,-118.778441,13212,non-SPS,17.12,2,False,False,,,,,Hilgard,False,GNIS,False,
+Bear Claw Spire” / Peak,,,12563,non-SPS,17.13,2,False,False,,,,,Hilgard,False,,False,
+Spire Peak”/Peak,,,12470,non-SPS,17.14,4,False,False,,,,,Hilgard,False,,False,
+Pip-squeak Spire,,,13268,non-SPS,17.15,3s5,False,False,,,,,Abbot,False,,False,
+Pyramid Peak” (Little Lk Valley),,,12866,non-SPS,17.16,3,False,False,,,,,Hilgard,False,,False,
+Rosy Finch Peak,,,12744,non-SPS,17.17,3,False,False,,,,,Morgan,False,,False,
+Little Lakes Peak,,,12782,non-SPS,17.18,2,False,False,,,,,Morgan,False,,False,
+Twelve Flags Peak,,,13470,non-SPS,17.19,2,False,False,,,,,Morgan,False,,False,
+Lookout”/“Tempest Peak,,,11902,non-SPS,17.21,2,False,False,,,,,Abbot,False,,False,
+Ruby Peak,,,13188,non-SPS,17.22,3s4,False,False,,,,,Abbot,False,,False,
+Mount Starr #,37.429027,-118.765196,12835,non-SPS,17.23,2,False,False,,,,,Abbot,False,GNIS,False,
+Graveyard Peak,37.45131,-118.989879,11443,non-SPS,18.1,3,False,False,,,,,Peak,False,GNIS,False,
+Mount Hopkins,37.463768,-118.813383,12208,non-SPS,18.11,2,False,False,,,,,Abbot,False,GNIS,False,
+Mount Huntington #,37.469634,-118.777226,12355,non-SPS,18.12,3,False,False,,,,,Abbot,False,GNIS,False,
+Pointless Peak,,,12256,non-SPS,18.13,2,False,False,,,,,Abbot,False,,False,
+Patricia Peak,,,11962,non-SPS,18.14,2,False,False,,,,,Abbot,False,,False,
+Mount Crocker #,37.482929,-118.825392,12461,non-SPS,18.15,3,False,False,,,,,Abbot,False,GNIS,False,
+Silver Divide Peak” / Peak,,,12238,non-SPS,18.16,2,False,False,,,,,Abbot,False,,False,
+Red Mountain (N),,,11467,non-SPS,18.17,1,False,False,,,,,Place,False,,False,
+The White Fang,,,12240,non-SPS,18.18,3,False,False,,,,,Lake,False,,False,
+Mount Aggie,37.54578,-118.842679,11561,non-SPS,18.19,2,False,False,,,,,Lake,False,GNIS,False,
+McGee Mountain,37.566595,-118.811226,10871,non-SPS,18.2,1,False,False,,,,,Lake,False,GNIS,False,
+Mono Jim Peak,37.572186,-118.852163,10893,non-SPS,18.21,2,False,False,,,,,Lake,False,GNIS,False,
+Laurel Mountain,,,11824,non-SPS,18.22,2,False,False,,,,,Mountain,False,,False,
+Creag an Turic II.  (1),,,10699,non-SPS,19.1,3,False,False,,,,,Mountain,False,,False,
+Herlihy Peak,,,11728,non-SPS,19.11,3,False,False,,,,,Mountain,False,,False,
+Pumice Butte,37.55198,-119.060284,9544,non-SPS,19.12,2,False,False,,,,,Crag,False,GNIS,False,
+Mammoth Crest / “Blue Crag,,,11489,non-SPS,19.13,2s3,False,False,,,,,Crag,False,,False,
+Madesno Peak” / Peak,,,9718,non-SPS,19.15,1,False,False,,,,,Crag,False,,False,
+Mammoth Mountain #,37.630628,-119.032622,11023,non-SPS,19.16,1,False,False,,,,,Mountain,False,GNIS,False,
+Deadman Dome” / Peak 2580m,,,8465,non-SPS,19.17,2,False,False,,,,,Mountain,False,,False,
+"White Wing Mountain 10,007SW Slope via Traverse of Peak",,,9727,non-SPS,19.18,2,False,False,,,,,Mountain,False,,False,
+Volcanic Ridge,37.671208,-119.160181,11480,non-SPS,19.19,2,False,False,,,,,Ritter,False,GNIS,False,
+Earthquake Dome,37.665877,-118.999718,9371,non-SPS,19.2,1,False,False,,,,,Mountain,False,GNIS,False,
+Two Teats #,37.71202,-119.100023,11387,non-SPS,19.22,3,False,False,,,,,Mountain,False,GNIS,False,
+Carson Peak #,37.747542,-119.124126,10909,non-SPS,19.23,1,False,False,,,,,Mountain,False,GNIS,False,
+Mount Ansel Adams,37.697968,-119.281596,11792,non-SPS,19.24,3,False,False,,,,,Lyell,False,GNIS,False,
+Long Mountain,,,11489,non-SPS,19.25,2,False,False,,,,,Lyell,False,,False,
+Fresno Dome,37.454405,-119.536006,7517,non-SPS,20.8,1,False,False,,,,,Mtn,False,GNIS,False,
+Quartz Mountain,,,9046,non-SPS,20.9,2,False,False,,,,,Peak,False,,False,
+Madera Peak,37.537604,-119.37463,10509,non-SPS,20.1,2,False,False,,,,,Knob,False,GNIS,False,
+Red Top,,,9973,non-SPS,20.11,2,False,False,,,,,Peak,False,,False,
+Sing Peak,37.553912,-119.387499,10520,non-SPS,20.12,2,False,False,,,,,Peak,False,GNIS,False,
+Gale Peak,37.567987,-119.387078,10693,non-SPS,20.13,2,False,False,,,,,Peak,False,GNIS,False,
+Post Peak,37.62813,-119.327971,11009,non-SPS,20.14,2s4,False,False,,,,,Lyell,False,GNIS,False,
+Isberg Peak,37.651172,-119.323796,10996,non-SPS,20.15,2,False,False,,,,,Knob,False,GNIS,False,
+Buena Vista Peak,,,9709,non-SPS,20.16,2,False,False,,,,,Grove,False,,False,
+Triple Divide Peak (Yosemite),,,11611,non-SPS,20.17,2,False,False,,,,,Peak,False,,False,
+Ottoway Peak,37.642133,-119.39335,11840,non-SPS,20.18,3,False,False,,,,,Peak,False,GNIS,False,
+El Capitan,37.742131,-119.635895,7773,non-SPS,20.19,1,False,False,,,,,Capitan,False,GNIS,False,
+Indian Rock (Yosemite),,,8531,non-SPS,20.21,1s2,False,False,,,,,Lake,False,,False,
+Mount Watkins,37.782833,-119.517649,8501,non-SPS,20.22,2,False,False,,,,,Falls,False,GNIS,False,
+Simmons Peak,37.7607,-119.294368,12493,non-SPS,21.9,2,False,False,,,,,Peak,False,GNIS,False,
+Parsons Peak,37.776902,-119.307799,12132,non-SPS,21.1,2,False,False,,,,,Peak,False,GNIS,False,
+Amelia Earhart Peak,37.786393,-119.288225,11978,non-SPS,21.11,2,False,False,,,,,Peak,False,GNIS,False,
+Fletcher Peak,37.791782,-119.33575,11410,non-SPS,21.12,2,False,False,,,,,Peak,False,GNIS,False,
+Reversed Peak,37.804471,-119.099406,9485,non-SPS,21.13,1s2,False,False,,,,,Lake,False,GNIS,False,
+Donohue Peak #,37.774755,-119.233052,12023,non-SPS,21.14,2,False,False,,,,,Lyell,False,GNIS,False,
+Blacktop Peak #,37.793729,-119.19614,12724,non-SPS,21.15,3,False,False,,,,,Peak,False,GNIS,False,
+Mount Wood,37.809244,-119.165947,12652,non-SPS,21.16,2,False,False,,,,,Peak,False,GNIS,False,
+Parker Peak,,,12857,non-SPS,21.17,1,False,False,,,,,Peak,False,,False,
+Mount Lewis #,,,12350,non-SPS,21.18,1,False,False,,,,,Peak,False,,False,
+Kuna Peak #,37.812939,-119.208322,13002,non-SPS,21.19,2,False,False,,,,,Peak,False,GNIS,False,
+Kuna Crest  - South,,,12202,non-SPS,21.2,2,False,False,,,,,Peak,False,,False,
+Kuna Crest North,,,12170,non-SPS,21.21,2,False,False,,,,,Peak,False,,False,
+Mammoth Peak,37.855497,-119.263504,12117,non-SPS,21.22,2,False,False,,,,,Dana,False,GNIS,False,
+Rafferty Peak,37.815155,-119.355483,11106,non-SPS,21.23,1,False,False,,,,,Peak,False,GNIS,False,
+Mount Johnson,37.128459,-118.586358,11060,non-SPS,21.24,2,False,False,,,,,Peak,False,GNIS,False,
+Cockscomb,,,11065,non-SPS,21.25,4,False,False,,,,,Lake,False,,False,
+Unicorn Peak,37.844654,-119.38196,10823,non-SPS,21.26,4,False,False,,,,,Lake,False,GNIS,False,
+Echo Peak #1,,,11120,non-SPS,21.27,1,False,False,,,,,Lake,False,,False,
+Echo Peak #2,,,11080,non-SPS,21.28,1,False,False,,,,,Lake,False,,False,
+Echo Peak #3,,,11160,non-SPS,21.29,3,False,False,,,,,Lake,False,,False,
+Echo Peak #4,,,11040,non-SPS,21.3,3,False,False,,,,,Lake,False,,False,
+Echo Peak #5,,,11120,non-SPS,21.31,3,False,False,,,,,Lake,False,,False,
+Echo Peak #8,,,11080,non-SPS,21.32,3,False,False,,,,,Lake,False,,False,
+Fairview Dome,37.871274,-119.403896,9728,non-SPS,21.33,3,False,False,,,,,Lake,False,GNIS,False,
+Sunrise Mountain,37.796821,-119.448515,9938,non-SPS,21.34,1s3,False,False,,,,,Lake,False,GNIS,False,
+Columbia Finger,37.819744,-119.423202,10360,non-SPS,21.35,3-4,False,False,,,,,Lake,False,GNIS,False,
+Tresidder Peak,37.831095,-119.422728,10600,non-SPS,21.36,4,False,False,,,,,Lake,False,GNIS,False,
+Tenaya Peak,37.828522,-119.443234,10301,non-SPS,21.37,2-3,False,False,,,,,Lake,False,GNIS,False,
+Mount Hoffman,,,10850,non-SPS,22.14,2,False,False,,,,,Falls,False,,False,
+Tuloumne Peak,,,10850,non-SPS,22.16,2,False,False,,,,,Falls,False,,False,
+Falls Ridge (East),37.905214,-119.43423,9138,non-SPS,22.17,2s3,False,False,,,,,Ridge,False,GNIS,False,
+Cold Mountain,37.950211,-119.427522,10292,non-SPS,22.18,2,False,False,,,,,Ridge,False,GNIS,False,
+Ragged Peak,37.932873,-119.353415,10912,non-SPS,22.19,2,False,False,,,,,Pass,False,GNIS,False,
+White Mountain #,,,12047,non-SPS,22.2,2,False,False,,,,,Pass,False,,False,
+False White Mountain,,,12002,non-SPS,22.21,2,False,False,,,,,Pass,False,,False,
+Gaylor Peak #,37.919097,-119.265546,11104,non-SPS,22.22,1,False,False,,,,,Pass,False,GNIS,False,
+Tioga Peak,37.949432,-119.246399,11526,non-SPS,22.23,1,False,False,,,,,Dana,False,GNIS,False,
+Lee Vining Peak,37.972411,-119.198666,11690,non-SPS,22.24,2,False,False,,,,,Dana,False,GNIS,False,
+Gilcrest Peak,38.011029,-119.230141,11562,non-SPS,22.25,2,False,False,,,,,Lundy,False,GNIS,False,
+Tioga Crest,37.99382,-119.269509,11911,non-SPS,22.26,1,False,False,,,,,Pass,False,GNIS,False,
+Sheep Peak,37.982274,-119.340701,11842,non-SPS,22.27,3,False,False,,,,,Pass,False,GNIS,False,
+Shepherd Crest #,38.004623,-119.312752,12015,non-SPS,22.28,2,False,False,,,,,Peak,False,GNIS,False,
+Black Mountain (N),,,11797,non-SPS,22.29,2,False,False,,,,,Peak,False,,False,
+Mount Olsen,38.040775,-119.24557,11050,non-SPS,22.3,2,False,False,,,,,Lundy,False,GNIS,False,
+Epidote Peak,38.059512,-119.304824,10964,non-SPS,22.31,2s3,False,False,,,,,Peak,False,GNIS,False,
+Camiaca Peak #,38.060018,-119.324279,11739,non-SPS,22.32,2,False,False,,,,,Peak,False,GNIS,False,
+Grey Butte,38.05181,-119.348182,11375,non-SPS,22.33,2,False,False,,,,,Peak,False,GNIS,False,
+Mount Stanton,,,11703,non-SPS,22.34,2,False,False,,,,,Peak,False,,False,
+Finger Peaks,38.087197,-119.407272,11498,non-SPS,22.35,3-4,False,False,,,,,Peak,False,GNIS,False,
+The Dragtooth,,,12080,non-SPS,22.36,2s3,False,False,,,,,Peak,False,,False,
+Slide Mountain #,,,11084,non-SPS,22.37,2,False,False,,,,,Peak,False,,False,
+The Juggernaut,,,11040,non-SPS,22.38,2,False,False,,,,,Peak,False,,False,
+Bath Mountain,38.058183,-119.464865,10532,non-SPS,22.39,3,False,False,,,,,Peak,False,GNIS,False,
+Suicide Ridge,38.081657,-119.459587,11014,non-SPS,22.4,2,False,False,,,,,Peak,False,GNIS,False,
+Crown Point #,,,11346,non-SPS,22.41,2-3,False,False,,,,,Peak,False,,False,
+Kettle Peak #,,,11010,non-SPS,22.42,2s3,False,False,,,,,Peak,False,,False,
+Cirque Peak #,36.476936,-118.236977,10714,non-SPS,22.43,1,False,False,,,,,Ridge,False,GNIS,False,
+Regulation Peak,37.987693,-119.488423,10554,non-SPS,22.44,2,False,False,,,,,Ridge,False,GNIS,False,
+Acker Peak,38.108944,-119.509654,10988,non-SPS,22.45,2,False,False,,,,,Mountain,False,GNIS,False,
+Wells Peak,,,11102,non-SPS,22.46,2,False,False,,,,,Mountain,False,,False,
+Center Mountain #,38.144395,-119.489284,11271,non-SPS,22.47,,False,False,,,,,Kerrick,False,GNIS,False,
+Ehrnbeck Peak #,38.137371,-119.515486,11240,non-SPS,22.48,3,False,False,,,,,Peak,False,GNIS,False,
+Hawksbeak Peak #,38.152539,-119.508087,11341,non-SPS,22.49,2-3,False,False,,,,,Peak,False,GNIS,False,
+Grouse Mountain,,,10775,non-SPS,22.5,1,False,False,,,,,Ridge,False,,False,
+Snow Peak,38.115594,-119.571375,10928,non-SPS,22.51,2,False,False,,,,,Mountain,False,GNIS,False,
+Craig Peak,38.129239,-119.559194,11086,non-SPS,22.52,3,False,False,,,,,Mountain,False,GNIS,False,
+Keyes Peak,38.139525,-119.591612,10607,non-SPS,22.53,2,False,False,,,,,Peak,False,GNIS,False,
+Forsyth Peak #,38.157513,-119.580929,11177,non-SPS,22.54,3,False,False,,,,,Peak,False,GNIS,False,
+Grizzly Peak #,,,10359,non-SPS,22.55,2-3,False,False,,,,,Peak,False,,False,
+Hunewill Peak,38.158878,-119.443465,11697,non-SPS,22.56,2,False,False,,,,,Ridge,False,GNIS,False,
+Victoria Peak,38.16797,-119.423486,11706,non-SPS,22.57,2,False,False,,,,,Ridge,False,GNIS,False,
+Robinson Peak,38.165949,-119.386483,10793,non-SPS,22.58,1,False,False,,,,,Ridge,False,GNIS,False,
+Eagle Peak  (N),,,11847,non-SPS,22.59,2,False,False,,,,,Ridge,False,,False,
+Walker Mountain,38.236015,-119.472645,11572,non-SPS,23.12,2,False,False,,,,,Ridge,False,GNIS,False,
+Hanging Valley Ridge,38.234885,-119.459772,11371,non-SPS,23.13,2,False,False,,,,,Ridge,False,GNIS,False,
+Mount Emma,38.277066,-119.476264,10535,non-SPS,23.14,2,False,False,,,,,Springs,False,GNIS,False,
+Molo Mountain,38.234531,-119.656928,10875,non-SPS,23.15,2,False,False,,,,,Lake,False,GNIS,False,
+Sonora Peak,38.353881,-119.635374,11459,non-SPS,23.16,2,False,False,,,,,Pass,False,GNIS,False,
+White Mountain (Sonora Pass),,,11388,non-SPS,23.17,1,False,False,,,,,Peak,False,,False,
+Iceberg Peak,38.450368,-119.822646,9777,non-SPS,23.18,2,False,False,,,,,Cone,False,GNIS,False,
+Airola Peak,38.457515,-119.815425,9932,non-SPS,23.19,2,False,False,,,,,Cone,False,GNIS,False,
+Arnot Peak,38.472825,-119.759631,10033,non-SPS,23.2,2,False,False,,,,,Peak,False,GNIS,False,
+Hiram Peak,38.477876,-119.803416,9800,non-SPS,23.21,2,False,False,,,,,Pass,False,GNIS,False,
+Folger Peak,38.49567,-119.816238,9705,non-SPS,23.22,1,False,False,,,,,Pass,False,GNIS,False,
+Peep Sight Peak,38.497127,-119.851793,9705,non-SPS,23.23,2,False,False,,,,,Pass,False,GNIS,False,
+Lookout Peak (Ebbetts Pass) @,,,9577,non-SPS,23.24,2,False,False,,,,,Pass,False,,False,
+Henry Peak,38.48648,-119.880018,9334,non-SPS,23.25,1,False,False,,,,,Meadows,False,GNIS,False,
+Bull Run Peak,,,9498,non-SPS,23.26,2,False,False,,,,,Meadows,False,,False,
+Ebbetts Peak,38.547681,-119.814333,9160,non-SPS,23.27,1,False,False,,,,,Pass,False,GNIS,False,
+Silver Peak  (Ebbetts Pass) @,,,10798,non-SPS,23.28,2,False,False,,,,,Pass,False,,False,
+Reynolds Peak @,38.580639,-119.838568,9666,non-SPS,23.29,4,False,False,,,,,Pass,False,GNIS,False,
+Raymond Peak @,38.603724,-119.833222,10023,non-SPS,23.3,2s3,False,False,,,,,Pass,False,GNIS,False,
+The Nipple @,,,9338,non-SPS,23.31,1,False,False,,,,,Top,False,,False,
+Markleeville Peak @,38.661334,-119.898117,9410,non-SPS,23.32,1,False,False,,,,,Top,False,GNIS,False,
+Mount Hawkins @,,,10024,non-SPS,23.33,2,False,False,,,,,Markleeville,False,,False,
+Pickett Peak,38.755985,-119.903179,9118,non-SPS,23.34,2,False,False,,,,,Markleeville,False,GNIS,False,
+Cary Peak,38.779211,-119.848393,8724,non-SPS,23.35,2,False,False,,,,,Markleeville,False,GNIS,False,
+Wade Peak/Benchmark” @ (1),,,9367,non-SPS,23.36,2,False,False,,,,,Woodfords,False,,False,
+The Sisters,38.662413,-120.008077,10153,non-SPS,23.37,1,False,False,,,,,Lake,False,GNIS,False,
+Black Butte,,,9010,non-SPS,23.38,3,False,False,,,,,Lake,False,,False,
+Fourth of July Peak,38.658734,-120.02324,9541,non-SPS,23.39,1,False,False,,,,,Lake,False,GNIS,False,
+Melissa Coray Peak,38.651764,-120.039465,9767,non-SPS,23.4,2,False,False,,,,,Lake,False,GNIS,False,
+Covered Wagon Peak,38.657008,-120.047522,9573,non-SPS,23.41,2s3,False,False,,,,,lake,False,GNIS,False,
+Thimble Peak,,,9804,non-SPS,23.42,2s4,False,False,,,,,Lake,False,,False,
+Thunder Mountain,,,9408,non-SPS,23.43,2,False,False,,,,,Lake,False,,False,
+Martin Point,38.688792,-120.092396,9256,non-SPS,23.44,2,False,False,,,,,lake,False,GNIS,False,
+Elephants Back,38.678413,-119.983118,9585,non-SPS,23.45,1,False,False,,,,,Pass,False,GNIS,False,
+Red Lake Peak @,38.713918,-119.98737,10063,non-SPS,23.46,2-3,False,False,,,,,Pass,False,GNIS,False,
+Little Round Top,38.740046,-120.05156,9590,non-SPS,23.47,1,False,False,,,,,Lake,False,GNIS,False,
+Stevens Peak @,38.733529,-119.982648,10054,non-SPS,23.48,2,False,False,,,,,Pass,False,GNIS,False,
+Waterhouse Peak @,38.776146,-119.96491,9497,non-SPS,23.49,2,False,False,,,,,Peak,False,GNIS,False,
+Jobs Peak @,38.857873,-119.861383,10638,non-SPS,23.5,1,False,False,,,,,Freel,False,GNIS,False,
+Jobs Sister @,38.862285,-119.884396,10823,non-SPS,23.51,1,False,False,,,,,Peak,False,GNIS,False,
+Monument Peak,38.92283,-119.897623,10060,non-SPS,23.52,1,False,False,,,,,Tahoe,False,GNIS,False,
+East Peak,38.942519,-119.907409,9508,non-SPS,23.53,1,False,False,,,,,Peak,False,GNIS,False,
+Genoa Peak @,39.042959,-119.881279,9141,non-SPS,23.54,1,False,False,,,,,Peak,False,GNIS,False,
+Duane Bliss Peak  @,39.080592,-119.877998,8659,non-SPS,23.55,2,False,False,,,,,Glenbrook,False,GNIS,False,
+South Camp Peak,39.060581,-119.886735,8866,non-SPS,23.56,1s2,False,False,,,,,Glenbrook,False,GNIS,False,
+Snow Valley Peak @,39.154236,-119.883235,9213,non-SPS,23.57,1,False,False,,,,,Peak,False,GNIS,False,
+Talking Mountain,38.83263,-120.069425,8824,non-SPS,23.58,2,False,False,,,,,Lake,False,GNIS,False,
+Ralston Peak @,38.832918,-120.101733,9235,non-SPS,23.59,1,False,False,,,,,Lake,False,GNIS,False,
+Flagpole Peak,38.84603,-120.056903,8363,non-SPS,23.6,3,False,False,,,,,Lake,False,GNIS,False,
+Echo Peak,38.856402,-120.073357,8895,non-SPS,23.61,2,False,False,,,,,Lake,False,GNIS,False,
+Tahoe Mountain,38.910214,-120.035812,7249,non-SPS,23.62,1,False,False,,,,,S-1.0,False,GNIS,False,
+Indian Rock (Tahoe),,,8570,non-SPS,23.63,3,False,False,,,,,Lake,False,,False,
+Angora Peak,38.867058,-120.073037,8573,non-SPS,23.64,3,False,False,,,,,Lake,False,GNIS,False,
+Keith’s Dome,,,8646,non-SPS,23.65,1,False,False,,,,,Lake,False,,False,
+Cracked Crag,38.869069,-120.129919,8767,non-SPS,23.66,2,False,False,,,,,Peak,False,GNIS,False,
+Mount Agassiz” (Tahoe),37.111877,-118.530755,9967,non-SPS,23.67,2,False,False,,,,,Peak,False,GNIS,False,
+Mount Price @,38.863869,-120.174728,9975,non-SPS,23.68,2,False,False,,,,,Peak,False,GNIS,False,
+Jacks Peak @,38.890308,-120.153978,9840,non-SPS,23.69,3,False,False,,,,,Valley,False,GNIS,False,
+Maggies Peaks (Tahoe),38.931452,-120.113698,8699,non-SPS,23.7,2,False,False,,,,,Bay,False,GNIS,False,
+Red Peak @,,,9311,non-SPS,23.71,2-3,False,False,,,,,Valley,False,,False,
+Silver Peak (Crystal Range) @,,,8937,non-SPS,23.72,3,False,False,,,,,Valley,False,,False,
+McConnell Peak @,38.946444,-120.242033,9095,non-SPS,23.73,3,False,False,,,,,Valley,False,GNIS,False,
+Tells Peak @,38.959835,-120.254409,8855,non-SPS,23.74,1,False,False,,,,,Lake,False,GNIS,False,
+Middle Mountain,,,8330,non-SPS,23.75,2,False,False,,,,,Bay,False,,False,
+Phipps Peak @,38.954391,-120.149682,9180,non-SPS,23.76,1s2,False,False,,,,,Valley,False,GNIS,False,
+Jakes Pea7,,,9128,non-SPS,23.77,1s5,False,False,,,,,Bay,False,,False,
+Rubicon Peak @,38.98848,-120.133444,9138,non-SPS,23.78,2-3,False,False,,,,,Valley,False,GNIS,False,
+Lost Corner Mountain,39.01333,-120.20413,8245,non-SPS,23.79,1,False,False,,,,,Homewood,False,GNIS,False,
+Sourdough Hill,39.025702,-120.219753,7976,non-SPS,23.8,1,False,False,,,,,Homewood,False,GNIS,False,
+Ellis Peak @,39.068618,-120.198087,8727,non-SPS,23.81,1,False,False,,,,,Homewood,False,GNIS,False,
+Barker Peak,39.079479,-120.238919,8153,non-SPS,24.1,2,False,False,,,,,Homewood,False,GNIS,False,
+Twin Peaks (Tahoe) @,,,8872,non-SPS,24.11,1sr3,False,False,,,,,City,False,,False,
+Stanford Rock Highpoint,,,8326,non-SPS,24.12,1,False,False,,,,,City,False,,False,
+Mount Mildred @,39.145812,-120.330207,8376,non-SPS,24.13,2,False,False,,,,,Chief,False,GNIS,False,
+Needle Peak @,,,8871,non-SPS,24.14,2,False,False,,,,,Chief,False,,False,
+Lyon Peak @,,,8901,non-SPS,24.15,2,False,False,,,,,Chief,False,,False,
+Silver Peak (Squaw Valley),,,8424,non-SPS,24.16,2,False,False,,,,,City,False,,False,
+Anderson Peak @,39.259034,-120.297174,8683,non-SPS,24.17,1,False,False,,,,,Norden,False,GNIS,False,
+Mount Lincoln,39.287761,-120.328459,8369,non-SPS,24.18,1,False,False,,,,,Norden,False,GNIS,False,
+Mount Judah,39.298528,-120.315572,8243,non-SPS,24.19,1,False,False,,,,,Norden,False,GNIS,False,
+Donner Peak,39.308739,-120.312475,8019,non-SPS,24.2,1,False,False,,,,,Norden,False,GNIS,False,
+Snow Mountain @,39.241055,-120.463673,7999,non-SPS,24.21,2,False,False,,,,,Norden,False,GNIS,False,
+Devil’s Peak @,,,7704,non-SPS,24.22,2,False,False,,,,,Springs,False,,False,
+Andesite Peak,39.351027,-120.3666,8219,non-SPS,24.23,1,False,False,,,,,Norden,False,GNIS,False,
+Basin Peak,39.382287,-120.364122,9017,non-SPS,24.24,2,False,False,,,,,Lake,False,GNIS,False,
+Martis Peak,39.291386,-120.032938,8742,non-SPS,24.25,1,False,False,,,,,Peak,False,GNIS,False,
+Mount Baldy (Tahoe),39.27843,-120.000114,9262,non-SPS,24.26,1,False,False,,,,,(Nev),False,GNIS,False,
+Riﬂe Peak,,,9459,non-SPS,24.27,1-2,False,False,,,,,(Nev),False,,False,
+Rose Knob,39.290003,-119.981498,9600,non-SPS,24.28,1,False,False,,,,,(Nev),False,GNIS,False,
+Rose Knob Peak,39.293503,-119.957795,9699,non-SPS,24.29,2,False,False,,,,,(Nev),False,GNIS,False,
+Relay Peak,39.31531,-119.946859,10335,non-SPS,24.3,1,False,False,,,,,(Nev),False,GNIS,False,
+Mount Houghton,39.334069,-119.939366,10490,non-SPS,24.31,2,False,False,,,,,(Nev),False,GNIS,False,
+Church Peak,39.352058,-119.923306,10601,non-SPS,24.32,1,False,False,,,,,(Nev),False,GNIS,False,
+Chocolate Peak (Tahoe),,,9407,non-SPS,24.33,1,False,False,,,,,(Nev),False,,False,
+Snowﬂower Mountain,,,10240,non-SPS,24.34,2,False,False,,,,,(Nev),False,,False,
+Signal Peak @,,,7845,non-SPS,24.35,1,False,False,,,,,Grove,False,,False,
+Old Man Mountain @,39.37027,-120.522248,7789,non-SPS,24.36,2,False,False,,,,,Grove,False,GNIS,False,
+Black Buttes @,,,7999,non-SPS,24.37,2s3,False,False,,,,,Mountain,False,,False,
+Haskell Peak @,39.662329,-120.552618,8098,non-SPS,24.38,1,False,False,,,,,Clio,False,GNIS,False,
+Mount Fillmore @,39.730184,-120.852843,7717,non-SPS,24.39,2,False,False,,,,,Fillmore,False,GNIS,False,
+Eureka Peak,,,7447,non-SPS,24.4,1,False,False,,,,,Lake,False,,False,

@@ -1,0 +1,25 @@
+route_id,scrambler_rating,ydc_class,peak,route,emblem,mountaineering,vagmarken,sps_name,latitude,longitude,elevation_ft,section
+1,S-1.0,1,Mount Rose,Trail from Rte 431 summit,False,False,False,Mount Rose,39.343776,-119.917938,10776,24.4
+2,S-1.0,1,Mount Whitney,Trail from East or West Side,True,False,True,MOUNT WHITNEY,36.57857,-118.292422,14491,4.7
+3,S-1.1,1,Mount Dana,Use Trail from Tioga Pass,False,False,True,Mount Dana,37.899686,-119.221249,13057,21.8
+4,S-1.1,1,Mount Langley,South Slope via New Army Pass,False,False,True,Mount Langley,36.523367,-118.239416,14026,3.5
+5,S-1.2,1,Leavitt Peak,East Slope from PCT,False,False,True,Leavitt Peak,38.286112,-119.651229,11569,23.2
+6,S-1.2,1,Mount Gibbs,West & South Slopes from Mono Pass Trail,False,False,False,Mount Gibbs,37.877094,-119.211836,12773,21.7
+7,S-2.0,2,Mount Lamarck,Southeast Slope,False,False,False,Mount Lamarck,37.19487,-118.670615,13417,15.9
+8,S-2.0,2,Mount Rixford,South Slope,False,False,False,Mount Rixford,36.784856,-118.398887,12887,9.5
+9,S-2.1,2,Matterhorn Peak,Southwest Side,True,False,True,MATTERHORN PEAK,38.09297,-119.38179,12279,22.9
+10,S-2.1,2,Olancha Peak,Southwest Slope,True,False,True,OLANCHA PEAK,36.265368,-118.118152,12123,3.1
+11,S-2.2,2,Mount Morrison,East Slope from Hanging Valley,False,False,False,Mount Morrison,37.561387,-118.858277,12277,18.8
+12,S-2.2,2,Mount Tom,West Chute from Hanging Valley,False,False,False,Mount Tom,37.338556,-118.656936,13652,16.6
+13,S-3.0,3,Mount Muir,West Face from JMT,False,False,True,Mount Muir,36.564739,-118.291329,14012,4.6
+14,S-3.0,3,Round Top,West Ridge,False,False,False,Round Top,38.663553,-120.00127,10381,23.7
+15,S-3.1,3,Mount Whitney,Mountaineer’s Route,True,False,True,MOUNT WHITNEY,36.57857,-118.292422,14491,4.7
+16,S-3.1,3,Mount Williamson,West Face via Chute & Chimney,True,False,False,MOUNT WILLIAMSON,36.655954,-118.311085,14370,5.9
+17,S-3.2,3,Middle Palisade,Northeast Face,False,True,False,Middle Palisade,37.07029,-118.469138,14012,12.8
+18,S-3.2,3,Mount Ritter,North Face via Ritter-Banner Saddle,True,False,False,MOUNT RITTER,37.688965,-119.199575,13143,19.3
+19,S-4.0,4,Cathedral Peak,West Face via North Slope from JMT,False,True,False,Cathedral Peak,37.847829,-119.405621,10911,21.1
+20,S-4.0,4,Mount LeConte,Northwest Chute / Waterfall Route,False,True,True,Mount LeConte,36.541617,-118.252225,13830,4.2
+21,S-4.1,4,Mount Humphreys,Southwest Slope & Northeast Face,True,False,False,MOUNT HUMPHREYS,37.269972,-118.671653,13986,16.3
+22,S-4.1,4,North Palisade,LeConte Route,True,False,False,NORTH PALISADE,37.094243,-118.514437,14242,14.4
+23,S-4.2,4,Bear Creek Spire,Northeast Buttress,False,True,True,Bear Creek Spire,37.368053,-118.767608,13720,17.7
+24,S-4.2,4,Norman Clyde Peak,North-Northeast Ridge,False,False,False,Norman Clyde Peak,37.074485,-118.474422,13855,12.9
