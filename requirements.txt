@@ -6,3 +6,5 @@ networkx>=3.0
 geopy>=2.3
 # Optional, only needed for `--viz`:
 matplotlib>=3.7
+# Optional, only needed for scripts/map_clusters.py (interactive topo map):
+folium>=0.16

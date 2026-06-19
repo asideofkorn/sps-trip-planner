@@ -41,6 +41,22 @@ climbs. Useful for picking starter objectives and building up by difficulty.
 | `benchmark_progression_ladder_2026-06-19.png` | All 24 benchmark routes laid out easiest→hardest (one peak can appear at several ratings, e.g. Mount Whitney at S-1.0 and S-3.1). |
 | `benchmark_peaks_map_2026-06-19.png` | The 23 benchmark peaks plotted geographically, coloured by YDS class, labelled with each peak's easiest benchmark rating. |
 
+## Interactive topo maps (HTML)
+
+`scripts/map_clusters.py` renders trips onto a pan/zoom Leaflet map with
+switchable open basemaps. The default **OpenTopoMap** layer is OpenStreetMap
+data and shows the **hiking-trail network** (JMT, PCT, use-trails) plus
+contours, so you can see each trip against real trails and terrain. Also
+includes OpenStreetMap and Esri satellite layers, and toggleable overlays for
+trip routes, peaks (coloured by trip), benchmark peaks (★), and trailheads (⌂).
+
+Open the `.html` in any browser — tiles load client-side, so no setup is needed.
+
+| File | Clustering |
+|------|------------|
+| `sps_map_balanced_6mi_2026-06-19.html` | spatial, `--eps-mi 6` (53 trips) |
+| `sps_map_nearest-trailhead_2026-06-19.html` | `--by-trailhead --trailhead-field nearest_trailhead --trailhead-max-mi 15` (35 trips) |
+
 ## Regenerate
 
 ```bash
@@ -52,4 +68,8 @@ python cli.py -i data/sps_peaks.csv \
 # Benchmark data + charts
 python scripts/parse_benchmarks.py        # -> data/benchmark_routes.csv
 python scripts/plot_benchmarks.py         # -> charts/benchmark_*_<date>.png
+
+# Interactive topo map (trails + contours via OpenTopoMap)
+python scripts/map_clusters.py -i data/sps_peaks.csv -o charts/sps_map.html \
+  --by-trailhead --trailhead-field nearest_trailhead --trailhead-max-mi 15
 ```
