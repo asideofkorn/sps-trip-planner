@@ -22,7 +22,7 @@ import numpy as np
 from sklearn.cluster import DBSCAN, AgglomerativeClustering
 
 from .model import Peak
-from .distances import build_distance_matrix
+from .distances import build_distance_matrix, haversine_miles
 from .tsp import solve_tsp, route_metrics
 
 
@@ -38,6 +38,8 @@ class ClusterConfig:
     exclude: List[str] = field(default_factory=list)
     force_together: List[List[str]] = field(default_factory=list)
     by_trailhead: bool = False    # keep peaks sharing a trailhead in one trip
+    trailhead_field: str = "trailhead"      # meta key to group on when by_trailhead
+    trailhead_max_mi: Optional[float] = None  # cap: only link same-TH peaks within this
 
     @property
     def max_effective_mi(self) -> float:
@@ -99,21 +101,61 @@ def _build_units(
     return list(buckets.values())
 
 
-def _trailhead_groups(peaks: Sequence[Peak]) -> List[List[str]]:
-    """Group peak names by their ``trailhead`` metadata.
+def _split_by_proximity(unit: Sequence[Peak], max_mi: float) -> List[List[Peak]]:
+    """Connected components of ``unit`` where edges join peaks within ``max_mi``.
+
+    Used to keep trailhead grouping from lumping together peaks that merely share
+    a (sometimes very long) trail name, e.g. the PCT.
+    """
+    n = len(unit)
+    parent = list(range(n))
+
+    def find(x: int) -> int:
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    for i in range(n):
+        for j in range(i + 1, n):
+            if haversine_miles(unit[i].latitude, unit[i].longitude,
+                               unit[j].latitude, unit[j].longitude) <= max_mi:
+                parent[find(i)] = find(j)
+
+    comps: Dict[int, List[Peak]] = {}
+    for i, p in enumerate(unit):
+        comps.setdefault(find(i), []).append(p)
+    return list(comps.values())
+
+
+def _trailhead_groups(
+    peaks: Sequence[Peak], field_name: str = "trailhead",
+    max_mi: Optional[float] = None,
+) -> List[List[str]]:
+    """Group peak names by their trailhead metadata.
 
     Peaks reached from the same trailhead form a must-link group, so they end up
-    in the same trip. Peaks with no trailhead are left ungrouped.
+    in the same trip. Peaks with no trailhead are left ungrouped. When ``max_mi``
+    is given, a trailhead's peaks are further split so only peaks within that
+    straight-line distance of each other are linked.
     """
-    buckets: Dict[str, List[str]] = {}
+    buckets: Dict[str, List[Peak]] = {}
     for p in peaks:
-        th = p.meta.get("trailhead")
+        th = p.meta.get(field_name)
         if th is None:
             continue
         key = str(th).strip()
         if key:
-            buckets.setdefault(key, []).append(p.name)
-    return [names for names in buckets.values() if len(names) > 1]
+            buckets.setdefault(key, []).append(p)
+
+    groups: List[List[str]] = []
+    for members in buckets.values():
+        subunits = ([members] if max_mi is None
+                    else _split_by_proximity(members, max_mi))
+        for su in subunits:
+            if len(su) > 1:
+                groups.append([p.name for p in su])
+    return groups
 
 
 def _unit_centroid(unit: Sequence[Peak]) -> Tuple[float, float]:
@@ -171,7 +213,9 @@ def cluster_peaks(
 
     link_groups = list(config.force_together)
     if config.by_trailhead:
-        link_groups += _trailhead_groups(active)
+        link_groups += _trailhead_groups(
+            active, config.trailhead_field, config.trailhead_max_mi
+        )
     units = _build_units(active, link_groups)
 
     # Stage 1: spatial grouping over unit centroids.

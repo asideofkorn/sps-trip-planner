@@ -140,6 +140,41 @@ def test_by_trailhead_keeps_shared_trailhead_together():
     assert "C" not in a_trip.peak_names
 
 
+def test_trailhead_max_mi_splits_distant_shared_trailhead():
+    # Three peaks share a trailhead name but A,B are close and C is far away.
+    a = Peak("A", 37.00, -118.50, 13000, meta={"trailhead": "Long Trail"})
+    b = Peak("B", 37.03, -118.52, 13000, meta={"trailhead": "Long Trail"})
+    c = Peak("C", 37.60, -118.90, 13000, meta={"trailhead": "Long Trail"})
+    peaks = [a, b, c]
+
+    # No cap: all three are forced into one trip.
+    uncapped = plan_trips(peaks, ClusterConfig(by_trailhead=True, max_days=10))
+    a_trip = next(t for t in uncapped if "A" in t.peak_names)
+    assert {"A", "B", "C"} <= set(a_trip.peak_names)
+
+    # 10-mile cap: A+B stay together, distant C breaks off.
+    capped = plan_trips(
+        peaks, ClusterConfig(by_trailhead=True, trailhead_max_mi=10.0,
+                             eps_mi=2.0, max_days=10)
+    )
+    a_trip = next(t for t in capped if "A" in t.peak_names)
+    assert "B" in a_trip.peak_names
+    assert "C" not in a_trip.peak_names
+
+
+def test_trailhead_field_selects_metadata_column():
+    # Group on a custom field rather than the default "trailhead".
+    a = Peak("A", 36.50, -118.30, 13000, meta={"nearest_trailhead": "TH1"})
+    b = Peak("B", 37.10, -118.55, 13000, meta={"nearest_trailhead": "TH1"})
+    peaks = [a, b]
+    grouped = plan_trips(
+        peaks, ClusterConfig(by_trailhead=True, trailhead_field="nearest_trailhead",
+                             eps_mi=6.0, max_days=10)
+    )
+    a_trip = next(t for t in grouped if "A" in t.peak_names)
+    assert "B" in a_trip.peak_names
+
+
 def test_manual_merge_and_split_roundtrip():
     peaks = load_peaks(DATA)
     config = ClusterConfig()

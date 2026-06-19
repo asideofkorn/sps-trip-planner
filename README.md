@@ -47,14 +47,31 @@ python scripts/merge_gnis.py
 peakbagger coordinates; `data/source/gnis_sierra_summits.txt` is a trimmed
 Sierra-box GNIS subset committed for reproducibility.
 
+### Trailheads
+
+`data/trailheads.csv` is a curated list of ~40 major east-, west-, and
+crest-side Sierra trailheads with lat/long (coordinates to ~0.001° and
+spot-checked against public sources such as the PCTA and NPS). Run
+
+```bash
+python scripts/assign_trailheads.py
+```
+
+to add `nearest_trailhead`, `nearest_trailhead_side`, and
+`nearest_trailhead_mi` (straight-line) columns to `data/sps_peaks.csv`. The
+nearest-trailhead is a cleaner access signal than the raw `trailhead` text and
+can be used directly for clustering (`--trailhead-field nearest_trailhead`).
+
 ### Input schema
 
 Minimum required columns are `name`, `latitude`, `longitude`, `elevation_ft`
 (common aliases like `lat`/`lon`/`elevation` are accepted). The full dataset
 also carries `list`, `class`, `section`, `emblem`, `mountaineers`,
-`mileage_rt`, `gain_ft`, `loss_ft`, `trailhead`, `quad`, `coord_source`, which
-flow through to the JSON export as per-peak `attributes`. JSON input is also
-supported (a list of objects, or `{"peaks": [...]}`).
+`mileage_rt`, `gain_ft`, `loss_ft`, `trailhead`, `quad`, `coord_source`,
+`benchmark`/`benchmark_rating` (see `scripts/parse_benchmarks.py`) and
+`nearest_trailhead*` (see `scripts/assign_trailheads.py`), which flow through to
+the JSON export as per-peak `attributes`. JSON input is also supported (a list
+of objects, or `{"peaks": [...]}`).
 
 ---
 

@@ -13,12 +13,22 @@ Naming convention: `sps_clusters_<profile>_<eps>mi-<miles-per-day>mpd_<YYYY-MM-D
 | `sps_clusters_backpack_9mi-18mpd_2026-06-19.png` | Multi-day backpacks | `--eps-mi 9 --miles-per-day 18 --max-days 3` | 44 | 56 |
 | `sps_clusters_by-trailhead_6mi-15mpd_2026-06-19.png` | Grouped by access trailhead | `--eps-mi 6 --by-trailhead` | 68 | 87 |
 
+| `sps_clusters_by-nearest-trailhead_6mi-cap15_2026-06-19.png` | Grouped by nearest curated trailhead | `--by-trailhead --trailhead-field nearest_trailhead --trailhead-max-mi 15` | 35 | 64 |
+
 `--by-trailhead` keeps every peak sharing a trailhead in one trip (then eps still
 merges nearby trailheads), producing natural "basecamp at one trailhead, bag
 everything reachable" expeditions (e.g. Mount Whitney Trail = 16 peaks, Shepherd
-Pass = 13). Caveat: a few `trailhead` values are long *trails* rather than point
-trailheads — notably **Pacific Crest Trail** (8 peaks spanning ~240 mi) — which
-lump distant peaks together; those show up as long lines on the map.
+Pass = 13).
+
+Two refinements address the messy raw `trailhead` text (which mixes point
+trailheads with long trail names like **Pacific Crest Trail** — 8 peaks spanning
+~240 mi):
+
+* `--trailhead-max-mi N` only links same-trailhead peaks within N straight-line
+  miles, so long trails break into sensible chunks.
+* `--trailhead-field nearest_trailhead` groups on the geographically nearest
+  curated trailhead (see `data/trailheads.csv`) instead, giving the cleanest
+  map — 35 tidy per-trailhead expeditions, no cross-range lines.
 
 ## Benchmark progression charts
 

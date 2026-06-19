@@ -58,6 +58,13 @@ def _parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--by-trailhead", action="store_true",
                    help="Keep peaks that share a trailhead in the same trip "
                         "(then eps still merges nearby trailheads)")
+    p.add_argument("--trailhead-field", default="trailhead",
+                   help="Metadata column to group on with --by-trailhead "
+                        "(e.g. 'nearest_trailhead'; default 'trailhead')")
+    p.add_argument("--trailhead-max-mi", type=float, default=None,
+                   help="With --by-trailhead, only link same-trailhead peaks "
+                        "within this straight-line distance (splits long trails "
+                        "like the PCT)")
     p.add_argument("--merge", action="append", default=[],
                    help="Comma-separated cluster IDs to merge after the first pass "
                         "(repeatable)")
@@ -109,6 +116,8 @@ def main(argv=None) -> int:
         exclude=_split_csv(args.exclude),
         force_together=[_split_csv(g) for g in args.force_together],
         by_trailhead=args.by_trailhead,
+        trailhead_field=args.trailhead_field,
+        trailhead_max_mi=args.trailhead_max_mi,
     )
 
     list_filter = None if args.list.lower() == "all" else args.list
