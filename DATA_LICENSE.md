@@ -9,32 +9,25 @@ Read this before redistributing or relying on the bundled data.
 | File(s) | Source | Terms |
 |---------|--------|-------|
 | `data/source/gnis_sierra_summits.txt` | USGS Geographic Names Information System (GNIS) | **Public domain** (U.S. Government work) |
-| `data/source/sps_list_29th_ed_2025.pdf`, `sps_list_with_mileage.xls`, `scrambler_ratings_non_sps_2025.pdf`, `benchmark_routes.pdf` | Sierra Club — Angeles Chapter, Sierra Peaks Section (SPS) | **© Sierra Club. All rights reserved.** Redistribution likely requires permission — see warning below. |
+| Sierra Club SPS PDFs/XLS (`sps_list_29th_ed_2025.pdf`, `sps_list_with_mileage.xls`, `scrambler_ratings_non_sps_2025.pdf`, `benchmark_routes.pdf`) | Sierra Club — Angeles Chapter, Sierra Peaks Section (SPS) | **© Sierra Club. NOT redistributed in this repo** (removed from the tree and git history). Download from the SPS site to rebuild — see below. |
 | `data/sps_peaks.csv`, `data/benchmark_routes.csv` | Derived: factual data (names, elevations, coordinates, class, mileage) extracted from the sources above | Facts are not copyrightable; the *compilation* draws on the SPS list. Attribute the Sierra Club SPS and USGS GNIS. |
 | `data/trailheads.csv` | Curated by this project from public sources (PCTA, NPS, USFS, Wikipedia); coordinates are facts | Provided under the project license; verify before navigational use |
 | `charts/*` (basemap tiles, when rendered) | © OpenStreetMap contributors; OpenTopoMap (CC-BY-SA); Esri | Tiles are fetched client-side; attribution is shown on the map |
 
-## ⚠️ Important: the Sierra Club source documents
+## The Sierra Club source documents (removed)
 
-`data/source/` includes **Sierra Club Sierra Peaks Section publications** (the
-official peak list, scrambler ratings, and benchmark routes). These are
-copyrighted works. Hosting them in a **public** repository may infringe the
-Sierra Club's copyright even though the underlying facts (peak names,
-elevations, classes) are freely usable.
+The **Sierra Club Sierra Peaks Section publications** (the official peak list,
+scrambler ratings, and benchmark routes) are copyrighted. To avoid infringing
+that copyright in a public repository, they have been **removed from the working
+tree and purged from git history**. Only the underlying *facts* (peak names,
+elevations, classes, coordinates) live on, in the derived datasets
+`data/sps_peaks.csv` and `data/benchmark_routes.csv`, which are not copyrightable
+and remain with attribution.
 
-Recommended options before making this repository public:
-
-1. **Remove the source documents** from the repo and instead document where to
-   obtain them (the SPS publishes the list via
-   <https://angeles.sierraclub.org/sierra_peaks>). The derived CSVs in `data/`
-   are sufficient to run the tool; only the rebuild scripts
-   (`scripts/build_dataset.py`, `scripts/parse_benchmarks.py`) need the
-   originals. This is the default recommendation.
-2. **Obtain written permission** from the Sierra Club SPS to redistribute.
-3. **Keep the repository private.**
-
-The factual datasets derived from these documents (`data/sps_peaks.csv`,
-`data/benchmark_routes.csv`) can remain regardless, with attribution.
+To rebuild the datasets from scratch, download the originals from the SPS site
+(<https://angeles.sierraclub.org/sierra_peaks>) and place them under
+`data/source/` (git-ignored). The rebuild scripts print a download reminder if a
+file is missing.
 
 ## Attribution
 

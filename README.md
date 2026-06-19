@@ -19,13 +19,16 @@ Divide, the Sawtooth/Matterhorn cluster, and so on.
 ## Data
 
 The bundled dataset (`data/sps_peaks.csv`) is built from the **official Sierra
-Club sources** and joined to authoritative **USGS GNIS** coordinates:
+Club sources** and joined to authoritative **USGS GNIS** coordinates. The
+processed CSV is committed and ready to use; the copyrighted Sierra Club source
+documents themselves are **not redistributed here** (download them yourself to
+rebuild — see [`DATA_LICENSE.md`](DATA_LICENSE.md) and `data/source/README.md`):
 
-| Source | Used for |
-|--------|----------|
-| `sps_list_with_mileage.xls` (29th ed., 2025) | 247 SPS peaks: elevation, class, section, round-trip mileage, gain/loss, trailhead, USGS quad, emblem/mountaineers flags |
-| `scrambler_ratings_non_sps_2025.pdf` | 354 non-SPS High Sierra peaks (labeled `non-SPS`, out of scope for clustering but tracked) |
-| USGS GNIS California + Nevada state files | decimal lat/long for every peak, matched on **name + USGS quad** |
+| Source | Used for | Bundled? |
+|--------|----------|----------|
+| `sps_list_with_mileage.xls` (29th ed., 2025) | 247 SPS peaks: elevation, class, section, round-trip mileage, gain/loss, trailhead, USGS quad, emblem/mountaineers flags | No (© Sierra Club) |
+| `scrambler_ratings_non_sps_2025.pdf` | 354 non-SPS High Sierra peaks (labeled `non-SPS`, out of scope for clustering but tracked) | No (© Sierra Club) |
+| USGS GNIS California + Nevada state files | decimal lat/long for every peak, matched on **name + USGS quad** | Yes (public domain) |
 
 All 247 SPS peaks have coordinates: **241 from GNIS** (incl. 14 spelling/wording
 aliases like *Foerster*↔*Forester*, *Maclure*↔*MacClure*) and **6 unofficially
@@ -34,6 +37,10 @@ Maggie Mountain, Clyde Minaret) from peakbagger.com. Each row records its
 `coord_source`.
 
 ### Rebuilding the dataset
+
+Only needed to rebuild from scratch; requires the Sierra Club source documents
+in `data/source/` (not bundled — the scripts print a download reminder if
+missing).
 
 ```bash
 # 1. Parse the Sierra Club sources -> data/sps_peaks.csv (coords blank)

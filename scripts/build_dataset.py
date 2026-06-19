@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """Build the authoritative peak dataset from the official Sierra Club sources.
 
-Inputs (place under ``data/source/``):
+Inputs (place under ``data/source/`` yourself — these copyrighted Sierra Club
+documents are NOT redistributed in this repo; see DATA_LICENSE.md):
   * sps_list_with_mileage.xls          - SPS list + per-peak mileage/gain/TH
   * scrambler_ratings_non_sps_2025.pdf - non-SPS High Sierra peaks
+
+Download them from https://angeles.sierraclub.org/sierra_peaks. The committed
+data/sps_peaks.csv already contains the built result, so you only need these to
+rebuild from scratch.
 
 Output:
   * data/sps_peaks.csv  - one row per peak with rich attributes. Latitude and
@@ -139,6 +144,16 @@ def parse_non_sps(pdf_path: Path) -> list[dict]:
 
 
 def main() -> None:
+    for f in ("sps_list_with_mileage.xls", "scrambler_ratings_non_sps_2025.pdf"):
+        if not (SRC / f).exists():
+            raise SystemExit(
+                f"Source document not found: data/source/{f}\n"
+                "The Sierra Club source documents are not redistributed in this "
+                "repo (see DATA_LICENSE.md). Download them from "
+                "https://angeles.sierraclub.org/sierra_peaks and place them under "
+                "data/source/. The committed data/sps_peaks.csv already contains "
+                "the built result."
+            )
     sps = parse_sps(SRC / "sps_list_with_mileage.xls")
     non_sps = parse_non_sps(SRC / "scrambler_ratings_non_sps_2025.pdf")
     rows = sps + non_sps

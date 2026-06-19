@@ -5,3 +5,9 @@ __pycache__/
 !examples/*.png
 !charts/*.png
 out.json
+
+# Copyrighted Sierra Club source documents — not redistributed (see DATA_LICENSE.md).
+# Download from https://angeles.sierraclub.org/sierra_peaks to rebuild datasets.
+data/source/*.pdf
+data/source/*.xls
+data/source/*.xlsx

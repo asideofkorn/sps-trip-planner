@@ -38,6 +38,15 @@ SKIP = ("= Emblem", "= Mountaineering", "= Vagmarken",
 
 
 def extract_lines() -> list[str]:
+    if not PDF.exists():
+        raise SystemExit(
+            f"Source document not found: {PDF.relative_to(ROOT)}\n"
+            "The Sierra Club source PDFs are not redistributed in this repo "
+            "(see DATA_LICENSE.md). Download the SPS 'Benchmark Routes' sheet "
+            "from https://angeles.sierraclub.org/sierra_peaks and place it at "
+            f"{PDF.relative_to(ROOT)} to regenerate. The committed "
+            "data/benchmark_routes.csv already contains the parsed result."
+        )
     reader = PdfReader(str(PDF))
     lines: list[str] = []
     for page in reader.pages:

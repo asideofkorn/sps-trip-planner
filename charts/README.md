@@ -32,7 +32,8 @@ trailheads with long trail names like **Pacific Crest Trail** — 8 peaks spanni
 
 ## Benchmark progression charts
 
-Derived from the SPS **Benchmark Routes** sheet (`data/source/benchmark_routes.pdf`),
+Derived from the SPS **Benchmark Routes** sheet (`data/source/benchmark_routes.pdf`,
+not bundled — see `DATA_LICENSE.md`; the parsed `data/benchmark_routes.csv` is committed),
 which anchors each Scrambler Rating category (S-1.0 … S-4.2) with reference
 climbs. Useful for picking starter objectives and building up by difficulty.
 
