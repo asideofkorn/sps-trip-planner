@@ -3,4 +3,5 @@ __pycache__/
 .venv/
 *.png
 !examples/*.png
+!charts/*.png
 out.json
