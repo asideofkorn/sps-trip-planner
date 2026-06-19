@@ -273,7 +273,7 @@ sierra-peaks-clustering/
 │   ├── export.py                # JSON export
 │   └── visualize.py             # optional matplotlib map
 └── tests/
-    └── test_pipeline.py         # 13 unit/integration tests
+    └── test_pipeline.py         # 16 unit/integration tests
 ```
 
 Run the tests: `python tests/test_pipeline.py` (or `python -m pytest tests/`).
@@ -294,3 +294,22 @@ Run the tests: `python tests/test_pipeline.py` (or `python -m pytest tests/`).
   route — a lower bound that ignores intermediate ups-and-downs.
 - **Permits** are intentionally out of scope.
 ```
+
+---
+
+## License & data
+
+The **source code** is licensed under the [MIT License](LICENSE).
+
+The **data** has separate provenance and terms — see
+[`DATA_LICENSE.md`](DATA_LICENSE.md). In particular, the Sierra Club source
+documents in `data/source/` are copyrighted; review `DATA_LICENSE.md` before
+making a public copy of this repository. Peak data derives from the Sierra Club
+SPS list and **USGS GNIS** (public domain); map tiles are © OpenStreetMap
+contributors / OpenTopoMap (CC-BY-SA) / Esri.
+
+## Contributing
+
+Contributions welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md) and our
+[`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). Please run the tests and cite
+sources for any data corrections.

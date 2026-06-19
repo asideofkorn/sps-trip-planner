@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sierra-peaks-clustering"
+version = "0.1.0"
+description = "Cluster the Sierra Peaks Section (SPS) list into efficient 1-3 day peak-bagging trips."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Chris Kornblatt" }]
+keywords = ["sierra", "mountaineering", "clustering", "tsp", "hiking", "peak-bagging"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Intended Audience :: Science/Research",
+]
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "scikit-learn>=1.3",
+    "scipy>=1.10",
+    "networkx>=3.0",
+    "geopy>=2.3",
+]
+
+[project.optional-dependencies]
+viz = ["matplotlib>=3.7", "folium>=0.16"]
+dev = ["pytest>=7.0"]
+
+[project.urls]
+Homepage = "https://github.com/asideofkorn/sps-trip-planner"
+Repository = "https://github.com/asideofkorn/sps-trip-planner"
+Issues = "https://github.com/asideofkorn/sps-trip-planner/issues"
+
+[project.scripts]
+sps-cluster = "cli:main"
+
+[tool.setuptools]
+packages = ["sierra_peaks"]
+py-modules = ["cli"]
