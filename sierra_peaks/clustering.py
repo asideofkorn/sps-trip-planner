@@ -40,6 +40,8 @@ class ClusterConfig:
     by_trailhead: bool = False    # keep peaks sharing a trailhead in one trip
     trailhead_field: str = "trailhead"      # meta key to group on when by_trailhead
     trailhead_max_mi: Optional[float] = None  # cap: only link same-TH peaks within this
+    include_approach: bool = False  # model the trailhead <-> first/last-peak approach
+    sinuosity: float = 1.25       # trail-distance inflation for geometric approach legs
 
     @property
     def max_effective_mi(self) -> float:
