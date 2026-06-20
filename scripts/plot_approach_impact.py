@@ -54,6 +54,6 @@ axB.set_xlabel("longitude"); axB.set_ylabel("latitude")
 axB.grid(alpha=0.3)
 
 plt.tight_layout()
-plt.savefig("examples/approach_impact.png", dpi=150)
+plt.savefig("examples/approach_impact.png", dpi=300)
 print("entry:", ordered[0].name, "| exit:", ordered[-1].name, "| TH:", th.name)
 print("saved examples/approach_impact.png")
