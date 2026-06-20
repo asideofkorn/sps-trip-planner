@@ -8,7 +8,7 @@ from typing import List
 
 import pandas as pd
 
-from .model import Peak
+from .model import Peak, Trailhead
 
 # Accepted column aliases -> canonical field name.
 _COLUMN_ALIASES = {
@@ -136,3 +136,38 @@ def load_peaks(
     if not peaks:
         raise ValueError("No valid peaks found in input file.")
     return peaks
+
+
+def load_trailheads(path: str | Path) -> List[Trailhead]:
+    """Load road-accessible trailheads from a CSV (see ``data/trailheads.csv``).
+
+    Expected columns: ``name``, ``latitude``, ``longitude``, and optionally
+    ``elevation_ft``, ``side``, ``notes``.
+    """
+    path = Path(path)
+    if not path.exists():
+        raise FileNotFoundError(f"Trailhead file not found: {path}")
+    df = pd.read_csv(path)
+    df = _normalize_columns(df)  # reuse lat/lon/elevation aliasing
+
+    trailheads: List[Trailhead] = []
+    for _, row in df.iterrows():
+        name = str(row["name"]).strip()
+        if not name or name.lower() == "nan":
+            continue
+        if pd.isna(row["latitude"]) or pd.isna(row["longitude"]):
+            continue
+        elev = row.get("elevation_ft")
+        trailheads.append(
+            Trailhead(
+                name=name,
+                latitude=float(row["latitude"]),
+                longitude=float(row["longitude"]),
+                elevation_ft=float(elev) if elev is not None and not pd.isna(elev) else 0.0,
+                side=str(row.get("side", "") or "").strip(),
+                notes=str(row.get("notes", "") or "").strip(),
+            )
+        )
+    if not trailheads:
+        raise ValueError("No valid trailheads found in input file.")
+    return trailheads

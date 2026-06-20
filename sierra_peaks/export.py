@@ -37,6 +37,7 @@ def clusters_to_payload(
             "method": config.method,
             "exclude": config.exclude,
             "force_together": config.force_together,
+            "include_approach": config.include_approach,
         }
     return payload
 

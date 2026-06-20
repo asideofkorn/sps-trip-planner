@@ -11,20 +11,22 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from sierra_peaks.model import Peak
-from sierra_peaks.data_loader import load_peaks
+from sierra_peaks.model import Peak, Trailhead
+from sierra_peaks.data_loader import load_peaks, load_trailheads
 from sierra_peaks.distances import (
     haversine_miles,
     naismith_effective_miles,
     leg_metrics,
     build_distance_matrix,
 )
-from sierra_peaks.tsp import solve_tsp, route_metrics
+from sierra_peaks.tsp import solve_tsp, solve_tsp_cycle, route_metrics
 from sierra_peaks.clustering import ClusterConfig, cluster_peaks
 from sierra_peaks.pipeline import build_itineraries, rank_clusters, plan_trips
+from sierra_peaks.approach import choose_trailhead, approach_metrics
 from sierra_peaks import manual
 
 DATA = os.path.join(os.path.dirname(__file__), "..", "data", "sps_sample.csv")
+TRAILHEADS = os.path.join(os.path.dirname(__file__), "..", "data", "trailheads.csv")
 
 
 def test_haversine_known_distance():
@@ -191,6 +193,78 @@ def test_manual_merge_and_split_roundtrip():
         groups = manual.split_cluster(merged, biggest.cluster_id, 2)
         split = rank_clusters(build_itineraries(groups, config))
         assert len(split) == len(merged) + 1
+
+
+def test_solve_tsp_cycle_orders_collinear_peaks():
+    # Anchor (index 0) at the west end; cheapest closed tour runs out and back.
+    peaks = [Peak(f"p{i}", 37.0, -118.0 + 0.1 * i, 12000) for i in range(5)]
+    cost = build_distance_matrix(peaks, metric="haversine")
+    tour = solve_tsp_cycle(cost, start=0)
+    assert sorted(tour) == [0, 1, 2, 3, 4]
+    assert tour[0] == 0
+
+
+def test_load_trailheads():
+    ths = load_trailheads(TRAILHEADS)
+    assert len(ths) > 30
+    assert all(th.name and th.side for th in ths)
+    assert any(th.name.startswith("Whitney Portal") for th in ths)
+
+
+def test_choose_trailhead_modal():
+    ths = [
+        Trailhead("A", 37.0, -118.0, 8000),
+        Trailhead("B", 37.5, -118.5, 9000),
+    ]
+    peaks = [
+        Peak("p1", 37.0, -118.0, 13000, meta={"nearest_trailhead": "A"}),
+        Peak("p2", 37.0, -118.0, 13000, meta={"nearest_trailhead": "A"}),
+        Peak("p3", 37.5, -118.5, 13000, meta={"nearest_trailhead": "B"}),
+    ]
+    assert choose_trailhead(peaks, ths).name == "A"
+
+
+def test_choose_trailhead_centroid_fallback():
+    # No usable nearest_trailhead names -> nearest trailhead to the centroid.
+    ths = [Trailhead("Far", 40.0, -120.0, 7000), Trailhead("Near", 37.0, -118.0, 8000)]
+    peaks = [Peak("p", 37.01, -118.01, 13000)]
+    assert choose_trailhead(peaks, ths).name == "Near"
+
+
+def test_approach_single_peak_equals_round_trip():
+    # In + out for one peak reduces to the official round trip plus one-way gain.
+    th = Trailhead("TH", 37.0, -118.0, 8000)
+    p = Peak("P", 37.05, -118.05, 13000,
+             meta={"mileage_rt": 10.0, "gain_ft": 5000, "nearest_trailhead": "TH"})
+    m = approach_metrics(th, p, p)
+    assert math.isclose(m["horizontal_mi"], 10.0)
+    assert math.isclose(m["effective_mi"], 10.0 + naismith_effective_miles(0, 5000))
+    assert m["elevation_gain_ft"] == 5000
+
+
+def test_include_approach_increases_effort_and_sets_trailhead():
+    peaks = load_peaks(DATA)
+    trailheads = load_trailheads(TRAILHEADS)
+    base = plan_trips(peaks, ClusterConfig(max_days=3))
+    withth = plan_trips(peaks, ClusterConfig(max_days=3, include_approach=True),
+                        trailheads=trailheads)
+    base_eff = sum(c.total_effective_mi for c in base)
+    appr_eff = sum(c.total_effective_mi for c in withth)
+    assert appr_eff > base_eff  # approach only adds effort
+    for c in withth:
+        assert c.trailhead  # every trip gets an anchor
+        assert c.approach_effective_mi > 0
+        d = c.to_dict()
+        assert "trailhead" in d and "approach_effective_mi" in d
+
+
+def test_approach_off_by_default_leaves_output_unchanged():
+    peaks = load_peaks(DATA)
+    clusters = plan_trips(peaks)  # no trailheads, default config
+    for c in clusters:
+        assert c.trailhead == ""
+        assert c.approach_effective_mi == 0.0
+        assert "trailhead" not in c.to_dict()
 
 
 def test_load_peaks_json(tmp_path):

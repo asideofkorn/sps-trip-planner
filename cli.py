@@ -26,7 +26,7 @@ import argparse
 import sys
 from typing import List
 
-from sierra_peaks.data_loader import load_peaks
+from sierra_peaks.data_loader import load_peaks, load_trailheads
 from sierra_peaks.clustering import ClusterConfig, cluster_peaks
 from sierra_peaks.pipeline import build_itineraries, rank_clusters
 from sierra_peaks import manual
@@ -71,6 +71,13 @@ def _parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--split", action="append", default=[],
                    help="Split a cluster: ID:K (e.g. 2:3). Applied after merges. "
                         "(repeatable)")
+    p.add_argument("--include-approach", action="store_true",
+                   help="Model the trailhead approach (walk in to the first peak "
+                        "and out from the last), folding it into distance, effort, "
+                        "days and score")
+    p.add_argument("--trailheads", default="data/trailheads.csv",
+                   help="Trailhead CSV used with --include-approach "
+                        "(default data/trailheads.csv)")
     p.add_argument("--list", default="SPS",
                    help="If the data has a 'list' column, keep only this list "
                         "(default SPS; use 'all' to keep everything)")
@@ -91,15 +98,19 @@ def _print_summary(clusters) -> None:
         f"{s['total_distance_mi']} horiz mi | "
         f"{int(s['total_elevation_gain_ft'])} ft gain\n"
     )
-    header = f"{'#':>2}  {'pk':>2}  {'days':>4}  {'horiz_mi':>8}  {'eff_mi':>7}  {'gain_ft':>8}  {'score':>6}  route"
+    show_th = any(c.trailhead for c in clusters)
+    th_head = f"  {'trailhead':>24}" if show_th else ""
+    header = (f"{'#':>2}  {'pk':>2}  {'days':>4}  {'horiz_mi':>8}  {'eff_mi':>7}  "
+              f"{'gain_ft':>8}  {'score':>6}{th_head}  route")
     print(header)
     print("-" * len(header))
     for c in clusters:
         route = " -> ".join(c.order)
+        th = f"  {c.trailhead[:24]:>24}" if show_th else ""
         print(
             f"{c.cluster_id:>2}  {c.num_peaks:>2}  {c.estimated_days:>4}  "
             f"{c.total_distance_mi:>8.1f}  {c.total_effective_mi:>7.1f}  "
-            f"{c.total_elevation_gain_ft:>8.0f}  {c.score:>6.2f}  {route}"
+            f"{c.total_elevation_gain_ft:>8.0f}  {c.score:>6.2f}{th}  {route}"
         )
     print()
 
@@ -118,6 +129,7 @@ def main(argv=None) -> int:
         by_trailhead=args.by_trailhead,
         trailhead_field=args.trailhead_field,
         trailhead_max_mi=args.trailhead_max_mi,
+        include_approach=args.include_approach,
     )
 
     list_filter = None if args.list.lower() == "all" else args.list
@@ -125,14 +137,20 @@ def main(argv=None) -> int:
     print(f"Loaded {len(peaks)} peaks from {args.input}"
           + (f" (list={args.list})" if list_filter else ""))
 
+    trailheads = None
+    if args.include_approach:
+        trailheads = load_trailheads(args.trailheads)
+        print(f"Loaded {len(trailheads)} trailheads from {args.trailheads} "
+              f"(modeling approach)")
+
     groups = cluster_peaks(peaks, config)
-    clusters = rank_clusters(build_itineraries(groups, config))
+    clusters = rank_clusters(build_itineraries(groups, config, trailheads))
 
     # Manual merges (applied to the first-pass cluster IDs).
     for spec in args.merge:
         ids = [int(x) for x in _split_csv(spec)]
         groups = manual.merge_clusters(clusters, ids)
-        clusters = rank_clusters(build_itineraries(groups, config))
+        clusters = rank_clusters(build_itineraries(groups, config, trailheads))
         print(f"Merged clusters {ids} -> re-planned into {len(clusters)} trips")
 
     # Manual splits (applied to current cluster IDs, after merges).
@@ -140,7 +158,7 @@ def main(argv=None) -> int:
         cid_str, _, k_str = spec.partition(":")
         cid, k = int(cid_str), int(k_str or 2)
         groups = manual.split_cluster(clusters, cid, k)
-        clusters = rank_clusters(build_itineraries(groups, config))
+        clusters = rank_clusters(build_itineraries(groups, config, trailheads))
         print(f"Split cluster {cid} into {k} -> re-planned into {len(clusters)} trips")
 
     _print_summary(clusters)
