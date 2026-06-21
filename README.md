@@ -157,9 +157,42 @@ approach is counted.
 python cli.py -i data/sps_peaks.csv --include-approach --max-days 2 -o weekend.json
 ```
 
-> **Scope note.** Approach affects each trip's *metrics*, not the *clustering*:
-> capacity splitting still uses the inter-peak budget, so with approach enabled a
-> trip's true effort can exceed `max_days × miles_per_day` (a planning signal).
+> **Approach-aware capacity splitting.** With `--include-approach`, the trip
+> budget is enforced *including* the approach: capacity splitting starts from the
+> inter-peak floor (the fewest trips the bare traverse allows) and tightens only
+> if a modest extra split actually makes the trips fit once the walk-in is
+> counted. Because the approach is largely a fixed per-trip cost, the splitter
+> will **not** fragment a trip when splitting can't help (an approach-dominated
+> cluster stays whole rather than paying the approach several times over). Net
+> effect: trip counts respect the *real* day budget while still using the fewest
+> feasible trips.
+
+### Approach-amortization report (`--approach-report`)
+
+The approach is a fixed cost paid once per trip, so when several trips share one
+trailhead that cost is paid several times over. This report (which implies
+`--include-approach`) ranks the trailheads serving more than one trip by how much
+approach effort could be recovered by repacking their trips within the day
+budget:
+
+```bash
+python cli.py -i data/sps_peaks.csv --approach-report --max-days 3
+```
+
+```
+trailhead                    side  trips peaks  appr_mi per_trip min_trips  save_mi
+Mineral King                 west      6    22    139.1     23.2         5     23.2
+Carson Pass                  west      4     6     41.2     10.3         2     20.6
+Sage Flat (Olancha)          east      3     6     48.2     16.1         2     16.1
+...
+16 trailheads serve multiple trips; ~133.5 effective approach-mi potentially
+recoverable by repacking within the day budget.
+```
+
+`min_trips` is the fewest trips the trailhead's combined effort could occupy at
+the budget; `save_mi` is the approach freed by reaching it. The report is a
+*signal*, bounded by the day budget, not a promise. Raising `--max-days` unlocks
+more amortization (~133 mi recoverable at 3 days vs ~80 at 2).
 
 ---
 
@@ -202,6 +235,7 @@ python cli.py --input data/sps_peaks.csv --output out.json --viz clusters.png
 | `--miles-per-day` | `15.0` | effective hiking miles per day |
 | `--max-days` | `3` | maximum days per trip |
 | `--include-approach` | off | model the trailhead approach (walk in/out) and fold it into distance, effort, days & score |
+| `--approach-report` | off | print an approach-amortization report (implies `--include-approach`) |
 | `--trailheads` | `data/trailheads.csv` | trailhead file used with `--include-approach` |
 | `--method` | `dbscan` | grouping method: `dbscan` or `agglomerative` |
 | `--exclude` | – | comma-separated peak names to drop |

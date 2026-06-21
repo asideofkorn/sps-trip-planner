@@ -23,6 +23,7 @@ from sierra_peaks.tsp import solve_tsp, solve_tsp_cycle, route_metrics
 from sierra_peaks.clustering import ClusterConfig, cluster_peaks
 from sierra_peaks.pipeline import build_itineraries, rank_clusters, plan_trips
 from sierra_peaks.approach import choose_trailhead, approach_metrics
+from sierra_peaks.diagnostics import approach_amortization, format_approach_report
 from sierra_peaks import manual
 
 DATA = os.path.join(os.path.dirname(__file__), "..", "data", "sps_sample.csv")
@@ -265,6 +266,67 @@ def test_approach_off_by_default_leaves_output_unchanged():
         assert c.trailhead == ""
         assert c.approach_effective_mi == 0.0
         assert "trailhead" not in c.to_dict()
+
+
+def test_approach_amortization_flags_shared_trailheads():
+    peaks = load_peaks(DATA)
+    trailheads = load_trailheads(TRAILHEADS)
+    config = ClusterConfig(max_days=2, include_approach=True)
+    clusters = plan_trips(peaks, config, trailheads=trailheads)
+    rows = approach_amortization(clusters, config)
+    # Only trailheads serving >1 trip are reported.
+    for r in rows:
+        assert r.num_trips >= 2
+        assert r.recoverable_mi >= 0
+        assert r.min_trips_by_budget <= r.num_trips
+    # Sorted by recoverable effort (then approach paid), descending.
+    keys = [(r.recoverable_mi, r.approach_paid_mi) for r in rows]
+    assert keys == sorted(keys, reverse=True)
+    assert isinstance(format_approach_report(rows), str)
+
+
+def test_approach_amortization_empty_when_no_shared_trailhead():
+    # Two peaks at distinct trailheads -> no trailhead serves multiple trips.
+    a = Peak("A", 36.50, -118.30, 13000,
+             meta={"nearest_trailhead": "Whitney Portal", "mileage_rt": 6, "gain_ft": 3000})
+    b = Peak("B", 39.30, -120.30, 9000,
+             meta={"nearest_trailhead": "Castle Peak (Donner)", "mileage_rt": 5, "gain_ft": 2000})
+    trailheads = load_trailheads(TRAILHEADS)
+    config = ClusterConfig(include_approach=True)
+    clusters = plan_trips([a, b], config, trailheads=trailheads)
+    assert approach_amortization(clusters, config) == []
+    assert "No trailhead" in format_approach_report([])
+
+
+def test_approach_aware_split_adds_trips_when_over_budget():
+    # Six peaks spread along a line, sharing a trailhead whose approach is
+    # significant. The bare traverse fits in two trips, but once the walk-in is
+    # counted each trip is over budget, so approach-aware splitting must use more.
+    ths = [Trailhead("TH", 37.0, -118.30, 8000)]
+    peaks = [Peak(f"s{i}", 37.0, -118.0 - 0.06 * i, 13000,
+                  meta={"nearest_trailhead": "TH", "mileage_rt": 6.0, "gain_ft": 2000})
+             for i in range(6)]
+    common = dict(eps_mi=50, miles_per_day=12, max_days=1)
+    off = plan_trips(peaks, ClusterConfig(include_approach=False, **common))
+    on = plan_trips(peaks, ClusterConfig(include_approach=True, **common), trailheads=ths)
+    assert len(on) > len(off)
+
+
+def test_approach_aware_split_does_not_oversplit_when_approach_dominates():
+    # Four peaks within a fraction of a mile of each other (near-zero traverse),
+    # but a long approach that alone exceeds the budget. Splitting can't make any
+    # trip fit -- it would only pay the approach more times -- so the planner must
+    # keep the single inter-peak group rather than fragmenting.
+    farth = [Trailhead("FarTH", 36.6, -118.0, 6000)]
+    peaks = [Peak(f"t{i}", 37.0 + 0.003 * i, -118.0, 13000,
+                  meta={"nearest_trailhead": "FarTH", "mileage_rt": 40.0, "gain_ft": 6000})
+             for i in range(4)]
+    common = dict(eps_mi=50, miles_per_day=15, max_days=2)
+    off = plan_trips(peaks, ClusterConfig(include_approach=False, **common))
+    on = plan_trips(peaks, ClusterConfig(include_approach=True, **common), trailheads=farth)
+    assert len(on) == len(off) == 1
+    # Sanity: the approach alone really does exceed the trip budget here.
+    assert on[0].approach_effective_mi > common["miles_per_day"] * common["max_days"]
 
 
 def test_load_peaks_json(tmp_path):
