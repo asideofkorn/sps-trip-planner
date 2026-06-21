@@ -1,23 +1,23 @@
-name,latitude,longitude,elevation_ft,quad,coord_source,notes
-Walker Pass,35.6642,-118.0314,5246,Walker Pass,seed,Hwy 178 / PCT; far southern Sierra crossing
-Cottonwood Pass,36.4469,-118.2456,11160,Cirque Peak,seed,PCT; Horseshoe Meadows approach
-New Army Pass,36.4719,-118.2864,12340,Cirque Peak,seed,Cottonwood Lakes approach to Langley
-Army Pass,36.4828,-118.2925,12450,Cirque Peak,seed,Old Army Pass (eroded/often avoided)
-Shepherd Pass,36.6797,-118.3478,12000,Mount Williamson,seed,Approach to Tyndall and Williamson
-Forester Pass,36.6936,-118.3736,13120,Mount Brewer,seed,Highest point on the PCT
-Kearsarge Pass,36.7719,-118.3828,11760,Kearsarge Peak,seed,Onion Valley approach; major SPS gateway
-Glen Pass,36.7872,-118.4047,11978,Mount Clarence King,seed,JMT between Rae Lakes and Vidette
-Sawmill Pass,36.8892,-118.3925,11347,Mount Pinchot,seed,Steep east-side approach
-Pinchot Pass,36.9317,-118.4056,12130,Mount Pinchot,seed,JMT
-Taboose Pass,37.0017,-118.4108,11360,Mount Pinchot,seed,Steep east-side approach (~6000 ft gain)
-Mather Pass,37.0761,-118.4347,12100,Split Mtn.,seed,JMT; Upper Basin
-Bishop Pass,37.0931,-118.5569,11972,Mount Thompson,seed,South Lake approach to Dusy Basin
-Muir Pass,37.0989,-118.6714,11955,Mount Goddard,seed,JMT; Muir Hut
-Piute Pass,37.2617,-118.675,11423,Mount Darwin,seed,North Lake approach to Humphreys Basin
-Donohue Pass,37.7656,-119.2575,11056,Koip Peak,seed,JMT; Yosemite / Ansel Adams boundary
-Tioga Pass,37.9106,-119.2581,9943,Tioga Pass,seed,Hwy 120 east entrance to Yosemite
-Sonora Pass,38.3278,-119.6361,9624,Sonora Pass,seed,Hwy 108
-Ebbetts Pass,38.5447,-119.8083,8736,Ebbetts Pass,seed,Hwy 4
-Carson Pass,38.6944,-119.9889,8574,Carson Pass,seed,Hwy 88
-Echo Summit,38.8119,-120.0317,7377,Echo Lake,seed,Hwy 50
-Donner Pass,39.3122,-120.3297,7056,Norden,seed,Old Hwy 40 / I-80 corridor
+name,latitude,longitude,elevation_ft,quad,coord_source,tier,kind,notes
+Walker Pass,35.6642,-118.0314,5246,Walker Pass,seed,1,pass,Hwy 178 / PCT; far southern Sierra crossing
+Cottonwood Pass,36.4469,-118.2456,11160,Cirque Peak,seed,1,pass,PCT; Horseshoe Meadows approach
+New Army Pass,36.4719,-118.2864,12340,Cirque Peak,seed,1,pass,Cottonwood Lakes approach to Langley
+Army Pass,36.4828,-118.2925,12450,Cirque Peak,seed,1,pass,Old Army Pass (eroded/often avoided)
+Shepherd Pass,36.6797,-118.3478,12000,Mount Williamson,seed,1,pass,Approach to Tyndall and Williamson
+Forester Pass,36.6936,-118.3736,13120,Mount Brewer,seed,1,pass,Highest point on the PCT
+Kearsarge Pass,36.7719,-118.3828,11760,Kearsarge Peak,seed,1,pass,Onion Valley approach; major SPS gateway
+Glen Pass,36.7872,-118.4047,11978,Mount Clarence King,seed,1,pass,JMT between Rae Lakes and Vidette
+Sawmill Pass,36.8892,-118.3925,11347,Mount Pinchot,seed,1,pass,Steep east-side approach
+Pinchot Pass,36.9317,-118.4056,12130,Mount Pinchot,seed,1,pass,JMT
+Taboose Pass,37.0017,-118.4108,11360,Mount Pinchot,seed,1,pass,Steep east-side approach (~6000 ft gain)
+Mather Pass,37.0761,-118.4347,12100,Split Mtn.,seed,1,pass,JMT; Upper Basin
+Bishop Pass,37.0931,-118.5569,11972,Mount Thompson,seed,1,pass,South Lake approach to Dusy Basin
+Muir Pass,37.0989,-118.6714,11955,Mount Goddard,seed,1,pass,JMT; Muir Hut
+Piute Pass,37.2617,-118.675,11423,Mount Darwin,seed,1,pass,North Lake approach to Humphreys Basin
+Donohue Pass,37.7656,-119.2575,11056,Koip Peak,seed,1,pass,JMT; Yosemite / Ansel Adams boundary
+Tioga Pass,37.9106,-119.2581,9943,Tioga Pass,seed,1,pass,Hwy 120 east entrance to Yosemite
+Sonora Pass,38.3278,-119.6361,9624,Sonora Pass,seed,1,pass,Hwy 108
+Ebbetts Pass,38.5447,-119.8083,8736,Ebbetts Pass,seed,1,pass,Hwy 4
+Carson Pass,38.6944,-119.9889,8574,Carson Pass,seed,1,pass,Hwy 88
+Echo Summit,38.8119,-120.0317,7377,Echo Lake,seed,1,pass,Hwy 50
+Donner Pass,39.3122,-120.3297,7056,Norden,seed,1,pass,Old Hwy 40 / I-80 corridor

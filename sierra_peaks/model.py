@@ -64,6 +64,7 @@ class Cluster:
     total_elevation_gain_ft: float = 0.0
     estimated_days: int = 0
     score: float = 0.0
+    passes: List[str] = field(default_factory=list)  # crest passes crossed on the route
 
     @property
     def peak_names(self) -> List[str]:
@@ -86,6 +87,11 @@ class Cluster:
             "estimated_days": self.estimated_days,
             "efficiency_score": round(self.score, 4),
         }
+        if self.passes:
+            # Ordered, de-duplicated list of crest passes the route crosses.
+            seen: dict = {}
+            d["passes_crossed"] = [seen.setdefault(p, p) for p in self.passes
+                                   if p not in seen]
         emblem = sum(1 for p in self.peaks if p.meta.get("emblem"))
         mountaineers = sum(1 for p in self.peaks if p.meta.get("mountaineers"))
         if emblem or mountaineers:

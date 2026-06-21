@@ -35,12 +35,16 @@ from __future__ import annotations
 import argparse
 import csv
 import re
+import sys
 from collections import defaultdict
 from pathlib import Path
 
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+from sierra_peaks.passes import classify
 DEFAULT_GNIS = ROOT / "data" / "source" / "gnis_sierra_gaps.txt"
 PASSES = ROOT / "data" / "passes.csv"
 
@@ -166,9 +170,11 @@ def main(argv=None) -> int:
             if norm(gname) in have:
                 continue
             have.add(norm(gname))
+            tier, kind = classify(gname, "GNIS")
             new_rows.append({
                 "name": gname, "latitude": round(lat, 6), "longitude": round(lon, 6),
-                "elevation_ft": "", "quad": gquad, "coord_source": "GNIS", "notes": "",
+                "elevation_ft": "", "quad": gquad, "coord_source": "GNIS",
+                "tier": tier, "kind": kind, "notes": "",
             })
             added += 1
         if new_rows:

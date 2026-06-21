@@ -193,6 +193,78 @@ def test_manual_merge_and_split_roundtrip():
         assert len(split) == len(merged) + 1
 
 
+def test_pass_classify_tiers_and_kinds():
+    from sierra_peaks.passes import classify
+    assert classify("Forester Pass") == (1, "pass")
+    assert classify("Lamarck Col") == (1, "col")
+    assert classify("Echo Summit") == (1, "pass")        # road summit
+    assert classify("Some Saddle") == (2, "saddle")
+    assert classify("Random Notch") == (2, "notch")
+    # Curated seed rows are tier 1 regardless of trailing noun.
+    assert classify("Weird Saddle", coord_source="seed") == (1, "saddle")
+
+
+def _synthetic_passes():
+    from sierra_peaks.passes import Pass
+    # A north-south crest near longitude -118.4.
+    return [
+        Pass("South Pass", 36.7, -118.40, 11000, tier=1, kind="pass"),
+        Pass("Mid Pass", 37.0, -118.42, 11500, tier=1, kind="pass"),
+        Pass("North Pass", 37.3, -118.45, 11200, tier=1, kind="pass"),
+    ]
+
+
+def test_crest_model_assigns_sides():
+    from sierra_peaks.passes import CrestModel
+    crest = CrestModel(_synthetic_passes(), crest_tier=1)
+    assert crest.usable
+    # East of the crest (less-negative longitude) vs west of it.
+    assert crest.side(37.0, -118.0) == "east"
+    assert crest.side(37.0, -118.9) == "west"
+
+
+def test_router_same_side_is_direct():
+    from sierra_peaks.passes import PassRouter
+    router = PassRouter(_synthetic_passes(), candidate_tier=1)
+    a = Peak("a", 37.0, -118.0, 12000)
+    b = Peak("b", 37.1, -118.1, 12000)   # both east of the crest
+    leg = router.leg(a, b)
+    assert leg.via_pass is None
+    assert math.isclose(leg.horizontal_mi,
+                        haversine_miles(37.0, -118.0, 37.1, -118.1), rel_tol=1e-9)
+
+
+def test_router_cross_crest_routes_through_pass():
+    from sierra_peaks.passes import PassRouter
+    router = PassRouter(_synthetic_passes(), candidate_tier=1)
+    east = Peak("east", 37.0, -118.0, 12000)
+    west = Peak("west", 37.0, -118.9, 12000)
+    leg = router.leg(east, west)
+    assert leg.via_pass is not None                    # forced over a pass
+    direct = haversine_miles(37.0, -118.0, 37.0, -118.9)
+    assert leg.horizontal_mi >= direct - 1e-9          # detour is never shorter
+
+
+def test_build_router_from_dataset():
+    from sierra_peaks.passes import build_router
+    passes_csv = os.path.join(os.path.dirname(__file__), "..", "data", "passes.csv")
+    router = build_router(passes_csv, candidate_tier=1)
+    assert router.crest.usable
+    assert len(router.waypoints) >= 10
+
+
+def test_pipeline_with_router_partitions_and_budgets():
+    from sierra_peaks.passes import PassRouter
+    peaks = load_peaks(DATA)
+    router = PassRouter(_synthetic_passes(), candidate_tier=1)
+    config = ClusterConfig(eps_mi=6.0, miles_per_day=15.0, max_days=3, router=router)
+    clusters = plan_trips(peaks, config)
+    names = [n for c in clusters for n in c.peak_names]
+    assert sorted(names) == sorted(p.name for p in peaks)
+    for c in clusters:
+        assert c.total_effective_mi <= config.max_effective_mi + 1e-6
+
+
 def test_load_peaks_json(tmp_path):
     import json
     peaks = load_peaks(DATA)[:3]

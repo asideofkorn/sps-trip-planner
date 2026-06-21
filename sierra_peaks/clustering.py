@@ -40,13 +40,14 @@ class ClusterConfig:
     by_trailhead: bool = False    # keep peaks sharing a trailhead in one trip
     trailhead_field: str = "trailhead"      # meta key to group on when by_trailhead
     trailhead_max_mi: Optional[float] = None  # cap: only link same-TH peaks within this
+    router: object = None         # optional PassRouter: route cross-crest legs via passes
 
     @property
     def max_effective_mi(self) -> float:
         return self.miles_per_day * self.max_days
 
 
-def _route_effective_mi(peaks: Sequence[Peak]) -> float:
+def _route_effective_mi(peaks: Sequence[Peak], router=None) -> float:
     """Nearest-neighbor estimate of the open-path effective length, in miles.
 
     Used only for capacity-feasibility checks during splitting. Nearest-neighbor
@@ -57,7 +58,7 @@ def _route_effective_mi(peaks: Sequence[Peak]) -> float:
     n = len(peaks)
     if n <= 1:
         return 0.0
-    cost = build_distance_matrix(peaks, metric="effective")
+    cost = build_distance_matrix(peaks, metric="effective", router=router)
     visited = [False] * n
     visited[0] = True
     cur, total = 0, 0.0
@@ -166,21 +167,21 @@ def _unit_centroid(unit: Sequence[Peak]) -> Tuple[float, float]:
 
 
 def _split_to_budget(
-    units: List[List[Peak]], max_effective_mi: float
+    units: List[List[Peak]], max_effective_mi: float, router=None
 ) -> List[List[List[Peak]]]:
     """Split a list of units into sub-groups that each fit the trip budget.
 
     Returns a list of sub-groups, where each sub-group is itself a list of units.
     """
     flat_peaks = [p for u in units for p in u]
-    if len(units) <= 1 or _route_effective_mi(flat_peaks) <= max_effective_mi:
+    if len(units) <= 1 or _route_effective_mi(flat_peaks, router) <= max_effective_mi:
         return [units]
 
     centroids = np.array([_unit_centroid(u) for u in units])
     n = len(units)
     # Start near the obvious lower bound (total effort / budget) instead of 2,
     # so we don't waste time on small k that cannot possibly fit a big cluster.
-    k0 = max(2, int(_route_effective_mi(flat_peaks) // max_effective_mi) + 1)
+    k0 = max(2, int(_route_effective_mi(flat_peaks, router) // max_effective_mi) + 1)
     for k in range(min(k0, n), n + 1):
         labels = AgglomerativeClustering(n_clusters=k).fit_predict(centroids)
         subgroups: List[List[List[Peak]]] = [[] for _ in range(k)]
@@ -188,7 +189,7 @@ def _split_to_budget(
             subgroups[int(lbl)].append(unit)
         subgroups = [sg for sg in subgroups if sg]
         if all(
-            _route_effective_mi([p for u in sg for p in u]) <= max_effective_mi
+            _route_effective_mi([p for u in sg for p in u], router) <= max_effective_mi
             for sg in subgroups
         ):
             return subgroups
@@ -226,7 +227,7 @@ def cluster_peaks(
             Peak(name=f"u{i}", latitude=c[0], longitude=c[1], elevation_ft=0.0)
             for i, c in enumerate(_unit_centroid(u) for u in units)
         ]
-        dist = build_distance_matrix(centroids, metric="haversine")
+        dist = build_distance_matrix(centroids, metric="haversine", router=config.router)
         if config.method == "agglomerative":
             # Distance-threshold agglomerative grouping (no fixed k).
             labels = AgglomerativeClustering(
@@ -255,7 +256,7 @@ def cluster_peaks(
     # Stage 2: enforce trip budget.
     final: List[List[Peak]] = []
     for group in groups:
-        for subgroup in _split_to_budget(group, config.max_effective_mi):
+        for subgroup in _split_to_budget(group, config.max_effective_mi, config.router):
             final.append([p for u in subgroup for p in u])
 
     # Stable ordering: north-to-south by mean latitude.

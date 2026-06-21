@@ -30,16 +30,18 @@ def _efficiency_score(num_peaks: int, effective_mi: float) -> float:
 def build_itinerary(cluster_id: int, peaks: Sequence[Peak], config: ClusterConfig) -> Cluster:
     """Solve the TSP for one cluster and populate its metrics."""
     peaks = list(peaks)
+    router = config.router
     if len(peaks) == 1:
         order = [peaks[0].name]
-        metrics = {"horizontal_mi": 0.0, "effective_mi": 0.0, "elevation_gain_ft": 0.0}
+        metrics = {"horizontal_mi": 0.0, "effective_mi": 0.0,
+                   "elevation_gain_ft": 0.0, "passes": []}
         ordered = peaks
     else:
-        cost = build_distance_matrix(peaks, metric="effective")
+        cost = build_distance_matrix(peaks, metric="effective", router=router)
         idx_order = solve_tsp(cost)
         ordered = [peaks[i] for i in idx_order]
         order = [p.name for p in ordered]
-        metrics = route_metrics(ordered)
+        metrics = route_metrics(ordered, router=router)
 
     days = _estimate_days(
         metrics["effective_mi"], config.miles_per_day, config.max_days
@@ -52,6 +54,7 @@ def build_itinerary(cluster_id: int, peaks: Sequence[Peak], config: ClusterConfi
         total_effective_mi=metrics["effective_mi"],
         total_elevation_gain_ft=metrics["elevation_gain_ft"],
         estimated_days=days,
+        passes=list(metrics.get("passes", [])),
     )
     cluster.score = _efficiency_score(cluster.num_peaks, metrics["effective_mi"])
     return cluster
