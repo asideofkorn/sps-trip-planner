@@ -7,7 +7,34 @@ these to run the tool — the built results (`data/sps_peaks.csv`,
 ## Bundled here
 
 - `gnis_sierra_summits.txt` — trimmed Sierra subset of the USGS Geographic
-  Names Information System (GNIS). **Public domain.**
+  Names Information System (GNIS), `feature_class = Summit`. **Public domain.**
+
+## Rebuilding the passes dataset (`data/passes.csv`)
+
+Mountain passes, saddles, and notches live in GNIS under
+`feature_class = Gap` — the same gazetteer the summits come from. The committed
+`gnis_sierra_summits.txt` holds only `Summit` rows, so to authoritatively fill
+pass coordinates you first need a Gap-bearing extract.
+
+1. Download the full California names file from the USGS GNIS "Domestic Names"
+   download page (<https://www.usgs.gov/us-board-on-geographic-names/download-gnis-data>),
+   then trim it to the columns/box this repo uses (pipe-delimited, header
+   `feature_name|feature_class|state_name|map_name|prim_lat_dec|prim_long_dec`),
+   keeping only `feature_class = Gap`. Save it here as `gnis_sierra_gaps.txt`.
+
+2. Replace the seed coordinates in `data/passes.csv` with the GNIS values:
+
+       python scripts/merge_passes.py --gnis data/source/gnis_sierra_gaps.txt
+       # add --add-all to also append every named Sierra Gap
+
+3. Backfill elevation from a DEM (GNIS pass elevations are unreliable):
+
+       python scripts/fill_pass_elevation.py            # USGS 3DEP, feet
+       python scripts/fill_pass_elevation.py --only-seed # refresh seed rows
+
+`data/passes.csv` is committed pre-populated with a hand-curated seed of the
+major Sierra crest/road passes (`coord_source = seed`) so the data is usable
+without the rebuild; the steps above upgrade those rows to `coord_source = GNIS`.
 
 ## NOT bundled (copyrighted — download yourself)
 
