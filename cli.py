@@ -149,7 +149,7 @@ def main(argv=None) -> int:
         print(f"Loaded {len(trailheads)} trailheads from {args.trailheads} "
               f"(modeling approach)")
 
-    groups = cluster_peaks(peaks, config)
+    groups = cluster_peaks(peaks, config, trailheads)
     clusters = rank_clusters(build_itineraries(groups, config, trailheads))
 
     # Manual merges (applied to the first-pass cluster IDs).

@@ -298,6 +298,37 @@ def test_approach_amortization_empty_when_no_shared_trailhead():
     assert "No trailhead" in format_approach_report([])
 
 
+def test_approach_aware_split_adds_trips_when_over_budget():
+    # Six peaks spread along a line, sharing a trailhead whose approach is
+    # significant. The bare traverse fits in two trips, but once the walk-in is
+    # counted each trip is over budget, so approach-aware splitting must use more.
+    ths = [Trailhead("TH", 37.0, -118.30, 8000)]
+    peaks = [Peak(f"s{i}", 37.0, -118.0 - 0.06 * i, 13000,
+                  meta={"nearest_trailhead": "TH", "mileage_rt": 6.0, "gain_ft": 2000})
+             for i in range(6)]
+    common = dict(eps_mi=50, miles_per_day=12, max_days=1)
+    off = plan_trips(peaks, ClusterConfig(include_approach=False, **common))
+    on = plan_trips(peaks, ClusterConfig(include_approach=True, **common), trailheads=ths)
+    assert len(on) > len(off)
+
+
+def test_approach_aware_split_does_not_oversplit_when_approach_dominates():
+    # Four peaks within a fraction of a mile of each other (near-zero traverse),
+    # but a long approach that alone exceeds the budget. Splitting can't make any
+    # trip fit -- it would only pay the approach more times -- so the planner must
+    # keep the single inter-peak group rather than fragmenting.
+    farth = [Trailhead("FarTH", 36.6, -118.0, 6000)]
+    peaks = [Peak(f"t{i}", 37.0 + 0.003 * i, -118.0, 13000,
+                  meta={"nearest_trailhead": "FarTH", "mileage_rt": 40.0, "gain_ft": 6000})
+             for i in range(4)]
+    common = dict(eps_mi=50, miles_per_day=15, max_days=2)
+    off = plan_trips(peaks, ClusterConfig(include_approach=False, **common))
+    on = plan_trips(peaks, ClusterConfig(include_approach=True, **common), trailheads=farth)
+    assert len(on) == len(off) == 1
+    # Sanity: the approach alone really does exceed the trip budget here.
+    assert on[0].approach_effective_mi > common["miles_per_day"] * common["max_days"]
+
+
 def test_load_peaks_json(tmp_path):
     import json
     peaks = load_peaks(DATA)[:3]

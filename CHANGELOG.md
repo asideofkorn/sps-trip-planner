@@ -6,6 +6,12 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- Approach-aware capacity splitting: with `--include-approach`, the trip budget
+  is enforced including the trailhead approach. Splitting starts from the
+  inter-peak floor and tightens only when an extra split actually makes trips fit
+  once the walk-in is counted; approach-dominated clusters are kept whole rather
+  than fragmented (which would only re-pay the approach). `cluster_peaks` and
+  `plan_trips` now accept `trailheads`.
 - `--approach-report`: approach-amortization diagnostic ranking trailheads that
   serve multiple trips by recoverable approach effort (implies
   `--include-approach`). New `sierra_peaks/diagnostics.py`

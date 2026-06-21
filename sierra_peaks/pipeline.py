@@ -135,6 +135,6 @@ def plan_trips(
 ) -> List[Cluster]:
     """Full pipeline: cluster the peaks, order each trip, rank by efficiency."""
     config = config or ClusterConfig()
-    groups = cluster_peaks(peaks, config)
+    groups = cluster_peaks(peaks, config, trailheads)
     clusters = build_itineraries(groups, config, trailheads)
     return rank_clusters(clusters)

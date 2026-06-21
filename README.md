@@ -157,9 +157,15 @@ approach is counted.
 python cli.py -i data/sps_peaks.csv --include-approach --max-days 2 -o weekend.json
 ```
 
-> **Scope note.** Approach affects each trip's *metrics*, not the *clustering*:
-> capacity splitting still uses the inter-peak budget, so with approach enabled a
-> trip's true effort can exceed `max_days × miles_per_day` (a planning signal).
+> **Approach-aware capacity splitting.** With `--include-approach`, the trip
+> budget is enforced *including* the approach: capacity splitting starts from the
+> inter-peak floor (the fewest trips the bare traverse allows) and tightens only
+> if a modest extra split actually makes the trips fit once the walk-in is
+> counted. Because the approach is largely a fixed per-trip cost, the splitter
+> will **not** fragment a trip when splitting can't help (an approach-dominated
+> cluster stays whole rather than paying the approach several times over). Net
+> effect: trip counts respect the *real* day budget while still using the fewest
+> feasible trips.
 
 ### Approach-amortization report (`--approach-report`)
 
@@ -175,19 +181,18 @@ python cli.py -i data/sps_peaks.csv --approach-report --max-days 3
 
 ```
 trailhead                    side  trips peaks  appr_mi per_trip min_trips  save_mi
+Mineral King                 west      6    22    139.1     23.2         5     23.2
 Carson Pass                  west      4     6     41.2     10.3         2     20.6
-Mineral King                 west      5    22     94.9     19.0         4     19.0
+Sage Flat (Olancha)          east      3     6     48.2     16.1         2     16.1
 ...
-14 trailheads serve multiple trips; ~98.7 effective approach-mi potentially
+16 trailheads serve multiple trips; ~133.5 effective approach-mi potentially
 recoverable by repacking within the day budget.
 ```
 
 `min_trips` is the fewest trips the trailhead's combined effort could occupy at
-the budget; `save_mi` is the approach freed by reaching it. A trailhead whose
-peaks genuinely need every trip (e.g. Mineral King at `--max-days 2`) honestly
-shows `save_mi = 0` — the report is a *signal*, bounded by the day budget, not a
-promise. Raising `--max-days` unlocks more amortization (the example above
-recovers ~99 mi at 3 days vs ~64 at 2).
+the budget; `save_mi` is the approach freed by reaching it. The report is a
+*signal*, bounded by the day budget, not a promise. Raising `--max-days` unlocks
+more amortization (~133 mi recoverable at 3 days vs ~80 at 2).
 
 ---
 
