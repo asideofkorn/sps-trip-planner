@@ -1,0 +1,306 @@
+feature_name|feature_class|state_name|map_name|prim_lat_dec|prim_long_dec
+Adams Gap|Gap|California|Auckland|36.5410597|-119.0617733
+Adin Pass|Gap|California|Adin Pass|41.3465572|-120.9213565
+Agassiz Col|Gap|California|North Palisade|37.1068781|-118.5298282
+Agnew Pass|Gap|California|Mount Ritter|37.7338208|-119.1434774
+Allen Gap|Gap|California|Rocky Hill|36.3632827|-119.0356589
+Alpine Col|Gap|California|Mount Darwin|37.2148379|-118.6947257
+Arc Pass|Gap|California|Mount Whitney|36.5515687|-118.2709466
+Armstrong Pass|Gap|California|Freel Peak|38.8324066|-119.9124023
+Army Pass|Gap|California|Cirque Peak|36.4966023|-118.2389766
+Avalanche Pass|Gap|California|Sphinx Lakes|36.7485497|-118.5600981
+Avenal Gap|Gap|California|Avenal Gap|35.8399582|-119.9473568
+Badger Gap|Gap|California|Democrat Hot Springs|35.5460661|-118.6928667
+Badger Pass|Gap|California|El Capitan|37.6657628|-119.6546087
+Bagley Pass|Gap|California|Grizzly Valley|39.9471213|-120.5282738
+Bakeoven Pass|Gap|California|Crag Peak|36.0091117|-118.2150813
+Barker Pass|Gap|California|Homewood|39.0762958|-120.2338034
+Basket Pass|Gap|California|Glennville|35.6566198|-118.6286991
+Battalion Pass|Gap|California|Wawona|37.5066040|-119.6984921
+Baxter Pass|Gap|California|Mount Clarence King|36.8353173|-118.3758010
+Bear Trap Gap|Gap|California|Salt Spring Valley|38.0774222|-120.6877084
+Beckwourth Pass|Gap|California|Beckwourth Pass|39.7915723|-120.1088140
+Benson Pass|Gap|California|Matterhorn Peak|38.0151985|-119.4609983
+Bird Spring Pass|Gap|California|Cane Canyon|35.5527331|-118.1342411
+Bishop Pass|Gap|California|North Palisade|37.1146560|-118.5448288
+Black Mountain Saddle|Gap|California|Alta Sierra|35.7438401|-118.5378652
+Black Rock Pass|Gap|California|Mineral King|36.4860510|-118.5517595
+Boggys Pass|Gap|California|Casa Vieja Meadows|36.1796630|-118.2667510
+Boles Gap|Gap|California|Sly Park|38.6676827|-120.6218729
+Bond Pass|Gap|California|Tower Peak|38.1735277|-119.6104486
+Bonta Saddle|Gap|California|Sattley|39.5207362|-120.4315976
+Brockway Summit|Gap|California|Martis Peak|39.2610178|-120.0713040
+Brown Bear Pass|Gap|California|Emigrant Lake|38.2126930|-119.6640616
+Buckeye Pass|Gap|California|Buckeye Ridge|38.1299187|-119.4793326
+Buena Vista Pass|Gap|California|Mariposa Grove|37.6007663|-119.5095955
+Bull Run Pass|Gap|California|Tobias Peak|35.8393947|-118.5761987
+Burro Pass|Gap|California|Matterhorn Peak|38.0899204|-119.3934952
+Burton Pass|Gap|California|Wren Peak|36.7538339|-118.8512153
+Byers Pass|Gap|California|Standish|40.3387872|-120.4852221
+Cahoon Gap|Gap|California|Mount Silliman|36.6438328|-118.7373211
+Cain Spring Gap|Gap|California|California Hot Springs|35.9188391|-118.7414780
+Capinero Saddle|Gap|California|Posey|35.8577282|-118.6320325
+Carman Saddle|Gap|California|Portola|39.7646236|-120.4696584
+Carol Col|Gap|California|Mount Tom|37.2782682|-118.7228935
+Carson Pass|Gap|California|Carson Pass|38.6937964|-119.9885161
+Cartridge Pass|Gap|California|Mount Pinchot|36.9754912|-118.4881561
+Castle Pass|Gap|California|Norden|39.3582378|-120.3652032
+Cathedral Pass|Gap|California|Tenaya Lake|37.8346473|-119.4148803
+Cathewood Saddle|Gap|California|El Portal|37.6427084|-119.7690588
+Chapman Saddle|Gap|California|Clio|39.6574010|-120.5227139
+Chepo Saddle|Gap|California|Bass Lake|37.3488323|-119.5901453
+Cherry Gap|Gap|California|Hume|36.7777240|-118.9603860
+Cherry Gap|Gap|California|Breckenridge Mountain|35.4991220|-118.6228655
+Chiquito Pass|Gap|California|Sing Peak|37.5416040|-119.4395865
+Chuck Pass|Gap|California|Blackcap Mountain|37.0088312|-118.8589970
+Cinnamon Gap|Gap|California|Case Mountain|36.4071688|-118.8278755
+Colby Pass|Gap|California|Triple Divide Peak|36.6185489|-118.5012057
+Cold Springs Saddle|Gap|California|California Hot Springs|35.9349495|-118.6484215
+Contact Pass|Gap|California|Split Mountain|37.1079886|-118.4876054
+Conway Summit|Gap|California|Lundy|38.0879777|-119.1818186
+Copper Mine Pass|Gap|California|Triple Divide Peak|36.5979948|-118.5523173
+Cottonwood Pass|Gap|California|Tent Hills|35.7802417|-120.2070888
+Cottonwood Pass|Gap|California|Cirque Peak|36.4529917|-118.2150870
+Coyote Pass|Gap|California|Tehipite Dome|36.9807738|-118.7634379
+Coyote Pass|Gap|California|Kern Lake|36.3346628|-118.4859229
+Crabtree Pass|Gap|California|Mount Whitney|36.5488242|-118.2814789
+Crown Pass|Gap|California|Blackcap Mountain|37.0413308|-118.8567755
+Cuesta Pass|Gap|California|San Luis Obispo|35.3488628|-120.6310027
+Dagany Gap|Gap|California|Pyramid Hills|35.7816274|-120.0090264
+Dead Mule Saddle|Gap|California|California Hot Springs|35.9171720|-118.6548105
+Deadman Gap|Gap|California|Pyramid Hills|35.8346818|-120.0468046
+Deadman Pass|Gap|California|Mammoth Mountain|37.6874339|-119.0695838
+Deer Creek Saddle|Gap|California|Cedar Grove|36.8254975|-118.7228792
+Devils Gap|Gap|California|Atascadero|35.4605867|-120.7397045
+Devils Gate|Gap|California|Sweetwater Creek|38.4140833|-119.1707072
+Devils Gate|Gap|California|Jackson|38.3068595|-120.8743826
+Devils Gate|Gap|California|Fales Hot Springs|38.3496383|-119.3776615
+Devils Gate|Gap|California|Sherman Peak|36.1827378|-120.6218325
+Devils Gate|Gap|California|Curry Mountain|36.0219039|-120.4184853
+Dicks Pass|Gap|California|Rockbound Valley|38.9051855|-120.1351868
+Donner Pass|Gap|California|Norden|39.3190718|-120.3285346
+Donohue Pass|Gap|California|Koip Peak|37.7602082|-119.2484803
+Dore Pass|Gap|California|Tioga Pass|37.9852016|-119.2618215
+Dorothy Lake Pass|Gap|California|Tower Peak|38.1807501|-119.5818365
+Dotta Saddle|Gap|California|Reconnaissance Peak|39.8712909|-120.3482663
+Dry Valley Gap|Gap|California|Grasshopper Valley|40.8426735|-120.6271763
+Eagle Pass|Gap|California|Cooper Peak|38.2488028|-119.8271227
+Ebbetts Pass|Gap|California|Ebbetts Pass|38.5443529|-119.8118455
+Echo Summit|Gap|California|Echo Lake|38.8129628|-120.0301833
+El Campo|Gap|California|Kettleman Plain|35.9852317|-120.0073565
+El Paso|Gap|California|Kettleman Plain|35.9499551|-120.0037458
+El Portillo|Gap|California|Los Viejos|35.9199556|-119.9412446
+Elizabeth Pass|Gap|California|Triple Divide Peak|36.5988288|-118.5762066
+Emigrant Gap|Gap|California|Blue Canyon|39.3004562|-120.6682676
+Emigrant Pass|Gap|California|Emigrant Pass|36.3352247|-117.1408925
+Emigrant Pass|Gap|California|Emigrant Lake|38.2001936|-119.6315605
+Euer Saddle|Gap|California|Norden|39.3429604|-120.3399244
+Farewell Gap|Gap|California|Mineral King|36.3993859|-118.5714810
+Fernandez Pass|Gap|California|Sing Peak|37.5863248|-119.3854194
+Fir Camp Saddle|Gap|California|Tobias Peak|35.8296727|-118.5903655
+First Divide|Gap|California|Downieville|39.5851741|-120.8096677
+Fordyce Summit|Gap|California|Cisco Grove|39.3454583|-120.5088182
+Forester Pass|Gap|California|Mount Williamson|36.6943603|-118.3733640
+Forgotten Pass|Gap|California|New York Butte|36.6918771|-117.9575850
+Fortynine Gap|Gap|California|Penon Blanco Peak|37.6265999|-120.3079678
+Franklin Pass|Gap|California|Mineral King|36.4119855|-118.5466180
+Fredonyer Pass|Gap|California|Fredonyer Pass|40.3596137|-120.8674565
+Gabbot Pass|Gap|California|Mount Abbot|37.3796577|-118.7917872
+Gardiner Pass|Gap|California|Mount Clarence King|36.7985475|-118.4823202
+Gem Pass|Gap|California|Koip Peak|37.7760415|-119.1607018
+Giant Gap|Gap|California|Dutch Flat|39.1682320|-120.8060478
+Gilbert Pass|Gap|California|Chocolate Mountain|37.4310428|-117.9387050
+Glacier Pass|Gap|California|Mineral King|36.4644300|-118.5680600
+Glen Pass|Gap|California|Mount Clarence King|36.7895637|-118.4115918
+Goat Saddle|Gap|California|Verplank Ridge|36.8007805|-119.0890022
+Goodale Pass|Gap|California|Graveyard Peak|37.4638278|-118.9404003
+Granite Creek Saddle|Gap|California|Buckingham Mountain|37.5571568|-119.7634989
+Granite Pass|Gap|California|Marion Peak|36.8779943|-118.6112118
+Grapevine Canyon Pass|Gap|California|Scottys Castle|37.0002124|-117.3675706
+Greenhorn Summit|Gap|California|Alta Sierra|35.7382847|-118.5573098
+Greenville Saddle|Gap|California|Greenville|40.2015568|-120.9335676
+Grizzly Pass|Gap|California|Sing Peak|37.5054939|-119.4931991
+Haiwee Pass|Gap|California|Haiwee Pass|36.1346638|-118.0723035
+Hamp Williams Pass|Gap|California|Emerald Mountain|35.3363487|-118.2859123
+Happy Gap|Gap|California|Wren Peak|36.8507755|-118.7520467
+Happy Gap|Gap|California|General Grant Grove|36.7238359|-118.9912195
+Harrison Pass|Gap|California|Mount Brewer|36.6995987|-118.4038042
+Heavens Gate|Gap|California|Granite Chief|39.1493501|-120.3313085
+Hell for Sure Pass|Gap|California|Mount Henry|37.1457722|-118.7970555
+Henness Pass|Gap|California|Sattley|39.5026807|-120.4393752
+Hoffman Summit|Gap|California|Cross Mountain|35.3732926|-118.1639641
+Hole-in-the Ground|Gap|California|Hockett Peak|36.2488297|-118.4039761
+Hopkins Pass|Gap|California|Mount Abbot|37.4807689|-118.8423467
+Hot Springs Pass|Gap|California|Ward Mountain|37.1982776|-118.9951144
+Isberg Pass|Gap|California|Mount Lyell|37.6438231|-119.3262534
+Island Pass|Gap|California|Mount Ritter|37.7360427|-119.1948671
+Italy Pass|Gap|California|Mount Hilgard|37.3524356|-118.7837306
+J.O. Pass|Gap|California|Mount Silliman|36.6757772|-118.7439884
+Jawbone Pass|Gap|California|Cherry Lake North|38.0365869|-119.9410148
+Jigsaw Pass|Gap|California|North Palisade|37.1202112|-118.5342733
+Johnson Pass|Gap|California|Echo Lake|38.8240740|-120.0310166
+Junction Pass|Gap|California|Mount Williamson|36.6945176|-118.3566651
+Kaiser Pass|Gap|California|Mount Givens|37.2913329|-119.1028969
+Kanawyer Gap|Gap|California|Mount Silliman|36.7275517|-118.7165057
+Kaweah Gap|Gap|California|Triple Divide Peak|36.5563283|-118.5512053
+Kearsarge Pass|Gap|California|Mount Clarence King|36.7726017|-118.3762477
+Kennedy Pass|Gap|California|Slide Bluffs|36.8760509|-118.6606569
+Keystone Gap|Gap|California|Sierra City|39.5373993|-120.6652169
+Knapsack Pass|Gap|California|North Palisade|37.0833904|-118.5436580
+Koip Peak Pass|Gap|California|Koip Peak|37.7982629|-119.1940362
+La Brecha|Gap|California|Los Viejos|35.8938456|-119.9779126
+La Panza Summit|Gap|California|Pozo Summit|35.3552498|-120.2518192
+La Portería|Gap|California|Los Viejos|35.8977340|-119.9195776
+La Salida|Gap|California|Los Viejos|35.9318996|-119.9384666
+Lamarck Col|Gap|California|Mount Darwin|37.1904905|-118.6673335
+Layton Pass|Gap|California|Layton Spring|35.6824582|-117.1561596
+Lee Summit|Gap|California|Spring Garden|39.8798943|-120.7632813
+Lily Gap|Gap|California|Devils Nose|38.4299115|-120.4502010
+Little Baldy Saddle|Gap|California|Giant Forest|36.6193895|-118.8095449
+Little Shuteye Pass|Gap|California|Little Shuteye Peak|37.3785539|-119.4362469
+Little Truckee Summit|Gap|California|Sierraville|39.5049050|-120.2818709
+Live Oak Pass|Gap|California|Shadequarter Mountain|36.5693918|-118.9520480
+Longley Pass|Gap|California|Mount Brewer|36.6891037|-118.4800960
+Lost Burro Gap|Gap|California|Ubehebe Peak|36.7446600|-117.5147907
+Lucys Foot Pass|Gap|California|Mount Brewer|36.6966393|-118.4230881
+Lundy Pass|Gap|California|Tioga Pass|37.9918677|-119.2873786
+Luther Pass|Gap|California|Freel Peak|38.7868509|-119.9468476
+Magonigal Summit|Gap|California|Soda Springs|39.3571255|-120.4610393
+Mammoth Pass|Gap|California|Crystal Crag|37.6093811|-119.0340213
+Manly Pass|Gap|California|Trona East|35.8707856|-117.2711665
+Marvin Pass|Gap|California|Mount Silliman|36.7302212|-118.7351002
+Mather Pass|Gap|California|Split Mountain|37.0318790|-118.4601019
+McGee Pass|Gap|California|Convict Lake|37.5010470|-118.8609583
+McGovern Gap|Gap|California|Orchard Peak|35.6894095|-120.1431993
+Mengel Pass|Gap|California|Manly Peak|35.9005088|-117.0819950
+Merced Pass|Gap|California|Sing Peak|37.6160444|-119.4434811
+Metcalf Gap|Gap|California|Stumpfield Mountain|37.4049409|-119.7668263
+Millys Foot Pass|Gap|California|Mount Brewer|36.6858493|-118.4300293
+Mohawk Gap|Gap|California|Clio|39.6871217|-120.5963278
+Monitor Pass|Gap|California|Topaz Lake|38.6754627|-119.6204491
+Mono Pass|Gap|California|Mount Abbot|37.4249342|-118.7726228
+Mono Pass|Gap|California|Koip Peak|37.8552057|-119.2134826
+Moody Gap|Gap|California|Crandall Peak|38.2449178|-120.2332482
+Moonlight Pass|Gap|California|Moonlight Peak|40.2402778|-120.8727778
+Morgan Pass|Gap|California|Mount Abbot|37.3913229|-118.7512326
+Mosquito Narrows|Gap|California|Michigan Bluff|39.0521241|-120.6385386
+Mosquito Pass|Gap|California|Rockbound Valley|38.8774077|-120.1607433
+Mosquito Pass|Gap|California|Mount Henry|37.1857733|-118.8528907
+Mud Spring Gap|Gap|California|Ivanhoe|36.4713384|-119.1453866
+Muir Pass|Gap|California|Mount Goddard|37.1116032|-118.6706636
+Mule Pass|Gap|California|Matterhorn Peak|38.0965864|-119.4418308
+Mulkey Pass|Gap|California|Cirque Peak|36.4296584|-118.1650863
+New Army Pass|Gap|California|Cirque Peak|36.4902135|-118.2398098
+North Pass|Gap|California|Waucoba Spring|37.0341610|-117.9747260
+Nutmeg Saddle|Gap|California|Sacate Ridge|36.9941140|-119.1737301
+Oak Creek Pass|Gap|California|Tehachapi South|35.0605243|-118.3881380
+Olancha Pass|Gap|California|Haiwee Pass|36.2113287|-118.1053607
+Pacific Grade Summit|Gap|California|Pacific Valley|38.5165764|-119.9093488
+Packer Lake Saddle|Gap|California|Sierra City|39.6193431|-120.6671625
+Palo Prieto Pass|Gap|California|Orchard Peak|35.6310782|-120.1937580
+Panamint Pass|Gap|California|Panamint|36.1071720|-117.0697764
+Panther Gap|Gap|California|Lodgepole|36.5849433|-118.7039863
+Parker Pass|Gap|California|Koip Peak|37.8385395|-119.2054263
+Parker Pass|Gap|California|California Hot Springs|35.9571713|-118.6309214
+Penman Saddle|Gap|California|Blairsden|39.8332316|-120.6038304
+Peoria Pass|Gap|California|New Melones Dam|37.8954821|-120.5040869
+Phipps Pass|Gap|California|Rockbound Valley|38.9601855|-120.1418535
+Pinchot Pass|Gap|California|Mount Pinchot|36.9363599|-118.4124128
+Pine Creek Pass|Gap|California|Mount Tom|37.3174347|-118.7362289
+Piute Pass|Gap|California|Tower Peak|38.2410277|-119.5107230
+Piute Pass|Gap|California|Mount Darwin|37.2391011|-118.6840025
+Polonio Pass|Gap|California|Orchard Peak|35.7235763|-120.1932005
+Polvadero Gap|Gap|California|Avenal|36.1232879|-120.1995864
+Poop Out Pass|Gap|California|Muir Grove|36.6888333|-118.7814897
+Porthole Gap|Gap|California|Bear River Reservoir|38.6243540|-120.1324108
+Portuguese Pass|Gap|California|Tobias Peak|35.8002286|-118.5817543
+Post Peak Pass|Gap|California|Mount Lyell|37.6304904|-119.3287524
+Potluck Pass|Gap|California|North Palisade|37.0796560|-118.5084379
+Potter Pass|Gap|California|Kaiser Peak|37.2871664|-119.1406757
+Pozo Summit|Gap|California|Pozo Summit|35.3471945|-120.2948768
+Raven Pass|Gap|California|Sawtooth Ridge|35.6330206|-120.0709755
+Red Pass|Gap|California|Thimble Peak|36.8288338|-117.0342297
+Red Peak Pass|Gap|California|Merced Peak|37.6504879|-119.4043143
+Redwood Saddle|Gap|California|General Grant Grove|36.7071684|-118.9206612
+Right Stringer Pass|Gap|California|Kern Peak|36.3235502|-118.3492540
+Rock Island Pass|Gap|California|Matterhorn Peak|38.0988083|-119.4643319
+Rockbound Pass|Gap|California|Rockbound Valley|38.9021299|-120.2010225
+Roundtree Saddle|Gap|California|Buckingham Mountain|37.5093813|-119.7640523
+Royal Gorge|Gap|California|Crooked Creek|37.4277087|-118.0673198
+Saddle Camp Pass|Gap|California|Kern Peak|36.3004952|-118.3625873
+Saint Marys Pass|Gap|California|Sonora Pass|38.3479682|-119.6548950
+Sawmill Pass|Gap|California|Aberdeen|36.8829975|-118.3643659
+Sawtooth Pass|Gap|California|Mineral King|36.4593100|-118.5617100
+Scepter Pass|Gap|California|Blackcap Mountain|37.0471634|-118.8342751
+Schoettgen Pass|Gap|California|Crandall Peak|38.1699191|-120.1713005
+Seavey Pass|Gap|California|Piute Mountain|38.0460308|-119.5223900
+Second Divide|Gap|California|Downieville|39.5937853|-120.7980005
+Selden Pass|Gap|California|Mount Hilgard|37.2896615|-118.8723387
+Sheep Gap|Gap|California|Catheys Valley|37.4029958|-120.0298955
+Sheep Pass (historical)|Gap|California|Mount Whitney|36.6166015|-118.3009257
+Shepherd Pass|Gap|California|Mount Williamson|36.6724349|-118.3445389
+Shepherd Saddle|Gap|California|Giant Forest|36.5030022|-118.8692666
+Sherman Pass|Gap|California|Sirretta Peak|35.9905023|-118.3659172
+Sherwin Summit|Gap|California|Toms Place|37.5143760|-118.6279010
+Shotgun Pass|Gap|California|Mineral King|36.3899646|-118.5369703
+Shuteye Pass|Gap|California|Shuteye Peak|37.3399439|-119.4126334
+Siberian Pass|Gap|California|Johnson Peak|36.4691029|-118.2717545
+Silliman Pass|Gap|California|Mount Silliman|36.6621652|-118.7067653
+Silver Pass|Gap|California|Graveyard Peak|37.4677161|-118.9231784
+Sinnamon Cut|Gap|California|Lundy|38.0957552|-119.1440392
+Sirretta Pass|Gap|California|Sirretta Peak|35.9268920|-118.3250828
+Skunk Spring Saddle|Gap|California|California Hot Springs|35.9343943|-118.7173111
+Slate Range Crossing|Gap|California|Slate Range Crossing|35.9602272|-117.3350578
+Soaproot Saddle|Gap|California|Shaver Lake|37.0282810|-119.2548447
+Soldier Pass|Gap|California|Soldier Pass|37.3468756|-117.9750932
+Sonora Pass|Gap|California|Sonora Pass|38.3276910|-119.6368387
+South Pass|Gap|California|Jackass Canyon|36.5269400|-117.5469320
+Southfork Pass|Gap|California|Split Mountain|37.0676997|-118.4527212
+Stag Saddle|Gap|California|Oiler Peak|35.2871820|-118.5359217
+Styx Pass|Gap|California|Kibbie Lake|38.0924177|-119.8087888
+Sugar Pine Gap|Gap|California|Crandall Peak|38.2479735|-120.2501933
+Sycamore Gap|Gap|California|California Hot Springs|35.8932838|-118.7220333
+Syncline Divide|Gap|California|Hernandez Reservoir|36.4821793|-120.7904550
+Taboose Pass|Gap|California|Mount Pinchot|36.9847864|-118.4139678
+Tar Gap|Gap|California|Silver City|36.4235540|-118.6434272
+Teaford Saddle|Gap|California|Bass Lake|37.2877234|-119.5831983
+Tehachapi Pass|Gap|California|Monolith|35.1021897|-118.2836901
+Ten Lakes Pass|Gap|California|Ten Lakes|37.9027000|-119.5368326
+The Beartrap|Gap|California|Graniteville|39.3954551|-120.7096602
+The Gateway|Gap|California|El Capitan|37.7165937|-119.7176707
+The Keyhole|Gap|California|Mount Darwin|37.2143793|-118.6870570
+The Narrows|Gap|California|Waucoba Mountain|37.0738194|-118.0273129
+The Narrows|Gap|California|Garlock|35.4499597|-117.7625639
+The Niche|Gap|California|Timber Knob|37.5729943|-119.2665213
+Third Divide|Gap|California|Downieville|39.6118416|-120.7521653
+Thompson Pass|Gap|California|Ward Mountain|37.1966095|-118.9465029
+Three Corners|Gap|California|Rock Spring Peak|36.4588496|-120.9043499
+Timber Gap|Gap|California|Mineral King|36.4682746|-118.5992602
+Tioga Pass|Gap|California|Tioga Pass|37.9110371|-119.2579300
+Towne Pass|Gap|California|Panamint Butte|36.4016110|-117.2803407
+Trail Crest|Gap|California|Mount Whitney|36.5591020|-118.2912015
+Trail Pass|Gap|California|Cirque Peak|36.4271585|-118.1759196
+Triple Divide Pass|Gap|California|Triple Divide Peak|36.5960794|-118.5250469
+Tunemah Pass|Gap|California|Slide Bluffs|36.9832720|-118.6703809
+Tuolumne Pass|Gap|California|Vogelsang Peak|37.8046495|-119.3401533
+Two Dog Pass|Gap|California|Tuolumne|37.9815903|-120.1574090
+Vacation Pass|Gap|California|Mount Whitney|36.6135459|-118.3012034
+Verplank Saddle|Gap|California|Verplank Ridge|36.8355024|-119.0373339
+Virginia Pass|Gap|California|Dunderberg Peak|38.0665882|-119.3365481
+Vogelsang Pass|Gap|California|Vogelsang Peak|37.7796501|-119.3407081
+Walker Pass|Gap|California|Walker Pass|35.6624527|-118.0267399
+West Stringer Saddle|Gap|California|Kern Peak|36.3129945|-118.3217535
+Westgard Pass|Gap|California|Westgard Pass|37.3002072|-118.1539874
+White Deer Saddle|Gap|California|Luckett Mountain|36.8432808|-119.1495605
+Whitney Pass|Gap|California|Mount Whitney|36.5557685|-118.2812013
+Whitney Portal|Gap|California|Mount Langley|36.5888232|-118.2259237
+Willmont Saddle|Gap|California|Westville|39.2187900|-120.6649323
+Windy Gap|Gap|California|Horsecamp Mountain|37.3479987|-119.7698800
+Windy Gap|Gap|California|Sentinel Peak|36.0441142|-118.5870325
+Windy Gap|Gap|California|Crandall Peak|38.2493620|-120.2257480
+Windy Gap|Gap|California|Quinn Peak|36.3299430|-118.6025918
+Windy Gap|Gap|California|Dogtooth Peak|37.2135556|-119.0084481
+Wingate Pass|Gap|California|Wingate Pass|35.7374575|-117.0597688
+Wolf Creek Pass|Gap|California|Dardanelles Cone|38.4987978|-119.7699002
+Yuba Gap|Gap|California|Cisco Grove|39.3151791|-120.6188217
+Yuba Pass|Gap|California|Sattley|39.6174017|-120.4899343
