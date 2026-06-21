@@ -15,6 +15,7 @@ from .distances import (
 from .clustering import cluster_peaks, ClusterConfig
 from .tsp import solve_tsp, solve_tsp_cycle, route_metrics
 from .approach import choose_trailhead, approach_leg, approach_metrics
+from .diagnostics import approach_amortization, format_approach_report
 from .pipeline import build_itineraries, rank_clusters, plan_trips
 
 __all__ = [
@@ -35,6 +36,8 @@ __all__ = [
     "choose_trailhead",
     "approach_leg",
     "approach_metrics",
+    "approach_amortization",
+    "format_approach_report",
     "build_itineraries",
     "rank_clusters",
     "plan_trips",

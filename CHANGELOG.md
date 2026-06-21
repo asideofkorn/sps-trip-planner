@@ -6,6 +6,10 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- `--approach-report`: approach-amortization diagnostic ranking trailheads that
+  serve multiple trips by recoverable approach effort (implies
+  `--include-approach`). New `sierra_peaks/diagnostics.py`
+  (`approach_amortization`, `format_approach_report`).
 - `--include-approach`: model the trailhead approach (walk in to the first
   summit and out from the last) using `data/trailheads.csv`. Anchors each trip
   to its best-serving trailhead, re-routes it as a closed tour

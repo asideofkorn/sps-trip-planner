@@ -161,6 +161,34 @@ python cli.py -i data/sps_peaks.csv --include-approach --max-days 2 -o weekend.j
 > capacity splitting still uses the inter-peak budget, so with approach enabled a
 > trip's true effort can exceed `max_days × miles_per_day` (a planning signal).
 
+### Approach-amortization report (`--approach-report`)
+
+The approach is a fixed cost paid once per trip, so when several trips share one
+trailhead that cost is paid several times over. This report (which implies
+`--include-approach`) ranks the trailheads serving more than one trip by how much
+approach effort could be recovered by repacking their trips within the day
+budget:
+
+```bash
+python cli.py -i data/sps_peaks.csv --approach-report --max-days 3
+```
+
+```
+trailhead                    side  trips peaks  appr_mi per_trip min_trips  save_mi
+Carson Pass                  west      4     6     41.2     10.3         2     20.6
+Mineral King                 west      5    22     94.9     19.0         4     19.0
+...
+14 trailheads serve multiple trips; ~98.7 effective approach-mi potentially
+recoverable by repacking within the day budget.
+```
+
+`min_trips` is the fewest trips the trailhead's combined effort could occupy at
+the budget; `save_mi` is the approach freed by reaching it. A trailhead whose
+peaks genuinely need every trip (e.g. Mineral King at `--max-days 2`) honestly
+shows `save_mi = 0` — the report is a *signal*, bounded by the day budget, not a
+promise. Raising `--max-days` unlocks more amortization (the example above
+recovers ~99 mi at 3 days vs ~64 at 2).
+
 ---
 
 ## Installation
@@ -202,6 +230,7 @@ python cli.py --input data/sps_peaks.csv --output out.json --viz clusters.png
 | `--miles-per-day` | `15.0` | effective hiking miles per day |
 | `--max-days` | `3` | maximum days per trip |
 | `--include-approach` | off | model the trailhead approach (walk in/out) and fold it into distance, effort, days & score |
+| `--approach-report` | off | print an approach-amortization report (implies `--include-approach`) |
 | `--trailheads` | `data/trailheads.csv` | trailhead file used with `--include-approach` |
 | `--method` | `dbscan` | grouping method: `dbscan` or `agglomerative` |
 | `--exclude` | – | comma-separated peak names to drop |

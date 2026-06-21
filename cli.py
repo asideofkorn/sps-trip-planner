@@ -75,6 +75,10 @@ def _parse_args(argv=None) -> argparse.Namespace:
                    help="Model the trailhead approach (walk in to the first peak "
                         "and out from the last), folding it into distance, effort, "
                         "days and score")
+    p.add_argument("--approach-report", action="store_true",
+                   help="Print an approach-amortization report (trailheads serving "
+                        "multiple trips, ranked by recoverable approach effort). "
+                        "Implies --include-approach.")
     p.add_argument("--trailheads", default="data/trailheads.csv",
                    help="Trailhead CSV used with --include-approach "
                         "(default data/trailheads.csv)")
@@ -118,6 +122,8 @@ def _print_summary(clusters) -> None:
 def main(argv=None) -> int:
     args = _parse_args(argv)
 
+    include_approach = args.include_approach or args.approach_report
+
     config = ClusterConfig(
         eps_mi=args.eps_mi,
         min_samples=args.min_samples,
@@ -129,7 +135,7 @@ def main(argv=None) -> int:
         by_trailhead=args.by_trailhead,
         trailhead_field=args.trailhead_field,
         trailhead_max_mi=args.trailhead_max_mi,
-        include_approach=args.include_approach,
+        include_approach=include_approach,
     )
 
     list_filter = None if args.list.lower() == "all" else args.list
@@ -138,7 +144,7 @@ def main(argv=None) -> int:
           + (f" (list={args.list})" if list_filter else ""))
 
     trailheads = None
-    if args.include_approach:
+    if include_approach:
         trailheads = load_trailheads(args.trailheads)
         print(f"Loaded {len(trailheads)} trailheads from {args.trailheads} "
               f"(modeling approach)")
@@ -162,6 +168,16 @@ def main(argv=None) -> int:
         print(f"Split cluster {cid} into {k} -> re-planned into {len(clusters)} trips")
 
     _print_summary(clusters)
+
+    if args.approach_report:
+        from sierra_peaks.diagnostics import (
+            approach_amortization, format_approach_report,
+        )
+        rows = approach_amortization(clusters, config)
+        print("Approach-amortization report")
+        print("=" * 28)
+        print(format_approach_report(rows))
+        print()
 
     if args.output:
         save_json(clusters, args.output, config)

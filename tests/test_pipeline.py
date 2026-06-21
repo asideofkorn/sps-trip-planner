@@ -23,6 +23,7 @@ from sierra_peaks.tsp import solve_tsp, solve_tsp_cycle, route_metrics
 from sierra_peaks.clustering import ClusterConfig, cluster_peaks
 from sierra_peaks.pipeline import build_itineraries, rank_clusters, plan_trips
 from sierra_peaks.approach import choose_trailhead, approach_metrics
+from sierra_peaks.diagnostics import approach_amortization, format_approach_report
 from sierra_peaks import manual
 
 DATA = os.path.join(os.path.dirname(__file__), "..", "data", "sps_sample.csv")
@@ -265,6 +266,36 @@ def test_approach_off_by_default_leaves_output_unchanged():
         assert c.trailhead == ""
         assert c.approach_effective_mi == 0.0
         assert "trailhead" not in c.to_dict()
+
+
+def test_approach_amortization_flags_shared_trailheads():
+    peaks = load_peaks(DATA)
+    trailheads = load_trailheads(TRAILHEADS)
+    config = ClusterConfig(max_days=2, include_approach=True)
+    clusters = plan_trips(peaks, config, trailheads=trailheads)
+    rows = approach_amortization(clusters, config)
+    # Only trailheads serving >1 trip are reported.
+    for r in rows:
+        assert r.num_trips >= 2
+        assert r.recoverable_mi >= 0
+        assert r.min_trips_by_budget <= r.num_trips
+    # Sorted by recoverable effort (then approach paid), descending.
+    keys = [(r.recoverable_mi, r.approach_paid_mi) for r in rows]
+    assert keys == sorted(keys, reverse=True)
+    assert isinstance(format_approach_report(rows), str)
+
+
+def test_approach_amortization_empty_when_no_shared_trailhead():
+    # Two peaks at distinct trailheads -> no trailhead serves multiple trips.
+    a = Peak("A", 36.50, -118.30, 13000,
+             meta={"nearest_trailhead": "Whitney Portal", "mileage_rt": 6, "gain_ft": 3000})
+    b = Peak("B", 39.30, -120.30, 9000,
+             meta={"nearest_trailhead": "Castle Peak (Donner)", "mileage_rt": 5, "gain_ft": 2000})
+    trailheads = load_trailheads(TRAILHEADS)
+    config = ClusterConfig(include_approach=True)
+    clusters = plan_trips([a, b], config, trailheads=trailheads)
+    assert approach_amortization(clusters, config) == []
+    assert "No trailhead" in format_approach_report([])
 
 
 def test_load_peaks_json(tmp_path):
