@@ -40,14 +40,20 @@ def naismith_effective_miles(horizontal_mi: float, ascent_ft: float) -> float:
     return horizontal_mi + max(0.0, ascent_ft) * NAISMITH_MILES_PER_FT
 
 
-def leg_metrics(a: Peak, b: Peak) -> Tuple[float, float, float]:
-    """Metrics for travelling directly from peak ``a`` to peak ``b``.
+def leg_metrics(a: Peak, b: Peak, router=None) -> Tuple[float, float, float]:
+    """Metrics for travelling from peak ``a`` to peak ``b``.
 
     Returns ``(horizontal_mi, ascent_ft, effective_mi)``.
 
     Ascent is the positive elevation difference; descending to a lower peak
     contributes no Naismith penalty (the standard, simple form of the rule).
+    When a ``router`` (``sierra_peaks.passes.PassRouter``) is supplied, a leg that
+    crosses the Sierra crest is routed through the cheapest pass instead of
+    tunnelling straight through the ridge.
     """
+    if router is not None:
+        r = router.leg(a, b, by="effective")
+        return r.horizontal_mi, r.ascent_ft, r.effective_mi
     horizontal = haversine_miles(a.latitude, a.longitude, b.latitude, b.longitude)
     ascent = max(0.0, b.elevation_ft - a.elevation_ft)
     effective = naismith_effective_miles(horizontal, ascent)
@@ -55,7 +61,7 @@ def leg_metrics(a: Peak, b: Peak) -> Tuple[float, float, float]:
 
 
 def build_distance_matrix(
-    peaks: Sequence[Peak], metric: str = "haversine"
+    peaks: Sequence[Peak], metric: str = "haversine", router=None
 ) -> np.ndarray:
     """Symmetric pairwise distance matrix over ``peaks``.
 
@@ -65,11 +71,27 @@ def build_distance_matrix(
         ``"haversine"`` gives plain horizontal miles (symmetric).
         ``"effective"`` gives Naismith effort miles, symmetrized as the mean of
         the two directional legs so it can be used by distance-based clustering.
+    router : PassRouter, optional
+        If given, cross-crest legs are routed through the cheapest pass (see
+        :mod:`sierra_peaks.passes`). When ``None`` the original straight-line
+        behaviour is used.
     """
     n = len(peaks)
     mat = np.zeros((n, n), dtype=float)
     for i in range(n):
         for j in range(i + 1, n):
+            if router is not None:
+                if metric == "haversine":
+                    d = router.horizontal(peaks[i], peaks[j])
+                elif metric == "effective":
+                    d = 0.5 * (
+                        router.effective_directional(peaks[i], peaks[j])
+                        + router.effective_directional(peaks[j], peaks[i])
+                    )
+                else:
+                    raise ValueError(f"Unknown metric: {metric!r}")
+                mat[i, j] = mat[j, i] = d
+                continue
             horiz = haversine_miles(
                 peaks[i].latitude,
                 peaks[i].longitude,

@@ -69,6 +69,31 @@ to add `nearest_trailhead`, `nearest_trailhead_side`, and
 nearest-trailhead is a cleaner access signal than the raw `trailhead` text and
 can be used directly for clustering (`--trailhead-field nearest_trailhead`).
 
+### Mountain passes (crest-aware routing)
+
+`data/passes.csv` is the Sierra pass dataset (sourced from USGS GNIS feature
+class `Gap`; see [`data/source/README.md`](data/source/README.md) to rebuild and
+backfill elevations). Each pass carries a **tier**: tier 1 = named passes/cols
+(default crossing set, and the points that define the crest line); tier 2 =
+minor gaps/saddles.
+
+Pass routing is **opt-in**. By default all distances are straight-line. With
+`--use-passes`, a leg between two points on opposite sides of the Sierra crest
+is routed over the cheapest pass instead of tunnelling through the ridge; a leg
+that stays on one side is still direct (you don't always cross a pass to reach a
+peak). This affects clustering, the TSP order, the reported mileage/gain, and
+adds a `passes_crossed` list per trip in the JSON.
+
+```bash
+python cli.py -i data/sps_peaks.csv --use-passes            # named passes only
+python cli.py -i data/sps_peaks.csv --use-passes --pass-tier 2   # also minor gaps
+python scripts/assign_trailheads.py --use-passes            # crest-aware approach
+```
+
+The crest is approximated by a monotone longitude/latitude line fit over the
+tier-1 passes, so peaks sitting almost *on* the crest can be assigned a side
+coarsely; denser pass data (`merge_passes.py --add-all`) sharpens it.
+
 ### Input schema
 
 Minimum required columns are `name`, `latitude`, `longitude`, `elevation_ft`

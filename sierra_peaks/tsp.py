@@ -148,23 +148,38 @@ def solve_tsp_cycle(cost: np.ndarray, start: int = 0) -> List[int]:
     return _two_opt_cycle(_nearest_neighbor(cost, start), cost)
 
 
-def route_metrics(ordered_peaks: Sequence[Peak]) -> Dict[str, float]:
+def route_metrics(ordered_peaks: Sequence[Peak], router=None) -> Dict[str, float]:
     """Compute travel totals for a fixed sequence of peaks.
 
     Returns horizontal miles, Naismith effective miles, and cumulative ascent
-    (positive elevation gain summed leg-by-leg along the route).
+    (positive elevation gain summed leg-by-leg along the route). When a
+    ``router`` (``sierra_peaks.passes.PassRouter``) is given, cross-crest legs
+    are routed through the cheapest pass and the ordered list of passes the
+    route crosses is returned under ``"passes"``.
     """
     horizontal = 0.0
     ascent = 0.0
     effective = 0.0
+    crossed: List[str] = []
     for a, b in zip(ordered_peaks, ordered_peaks[1:]):
+        if router is not None:
+            r = router.leg(a, b, by="effective")
+            horizontal += r.horizontal_mi
+            ascent += r.ascent_ft
+            effective += r.effective_mi
+            if r.via_pass:
+                crossed.append(r.via_pass)
+            continue
         h = haversine_miles(a.latitude, a.longitude, b.latitude, b.longitude)
         asc = max(0.0, b.elevation_ft - a.elevation_ft)
         horizontal += h
         ascent += asc
         effective += naismith_effective_miles(h, asc)
-    return {
+    metrics = {
         "horizontal_mi": horizontal,
         "effective_mi": effective,
         "elevation_gain_ft": ascent,
     }
+    if router is not None:
+        metrics["passes"] = crossed
+    return metrics

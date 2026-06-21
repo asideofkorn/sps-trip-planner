@@ -45,7 +45,7 @@ def _order_peaks(peaks: List[Peak], trailhead: Optional[Trailhead],
     """
     if len(peaks) == 1:
         return peaks
-    cost = build_distance_matrix(peaks, metric="effective")
+    cost = build_distance_matrix(peaks, metric="effective", router=config.router)
     if trailhead is None:
         return [peaks[i] for i in solve_tsp(cost)]
 
@@ -69,6 +69,7 @@ def build_itinerary(
 ) -> Cluster:
     """Solve the TSP for one cluster and populate its metrics."""
     peaks = list(peaks)
+    router = config.router
 
     trailhead = None
     if config.include_approach and trailheads:
@@ -77,9 +78,10 @@ def build_itinerary(
     ordered = _order_peaks(peaks, trailhead, config)
     order = [p.name for p in ordered]
     if len(ordered) == 1:
-        metrics = {"horizontal_mi": 0.0, "effective_mi": 0.0, "elevation_gain_ft": 0.0}
+        metrics = {"horizontal_mi": 0.0, "effective_mi": 0.0,
+                   "elevation_gain_ft": 0.0, "passes": []}
     else:
-        metrics = route_metrics(ordered)
+        metrics = route_metrics(ordered, router=router)
 
     cluster = Cluster(
         cluster_id=cluster_id,
@@ -88,6 +90,7 @@ def build_itinerary(
         total_distance_mi=metrics["horizontal_mi"],
         total_effective_mi=metrics["effective_mi"],
         total_elevation_gain_ft=metrics["elevation_gain_ft"],
+        passes=list(metrics.get("passes", [])),
     )
 
     if trailhead is not None:

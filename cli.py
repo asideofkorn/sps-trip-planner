@@ -85,6 +85,14 @@ def _parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--list", default="SPS",
                    help="If the data has a 'list' column, keep only this list "
                         "(default SPS; use 'all' to keep everything)")
+    p.add_argument("--use-passes", action="store_true",
+                   help="Route cross-crest legs through mountain passes instead of "
+                        "straight lines (uses data/passes.csv)")
+    p.add_argument("--passes-file", default="data/passes.csv",
+                   help="Passes dataset for --use-passes (default data/passes.csv)")
+    p.add_argument("--pass-tier", type=int, default=1, choices=[1, 2],
+                   help="Which passes may be used as crossings: 1 = named passes "
+                        "only (default), 2 = also minor gaps/saddles")
     p.add_argument("--viz", help="Write a matplotlib PNG of clusters/routes here")
     return p.parse_args(argv)
 
@@ -137,6 +145,15 @@ def main(argv=None) -> int:
         trailhead_max_mi=args.trailhead_max_mi,
         include_approach=include_approach,
     )
+
+    if args.use_passes:
+        from sierra_peaks.passes import build_router
+        config.router = build_router(args.passes_file, candidate_tier=args.pass_tier)
+        n_wp = len(config.router.waypoints)
+        print(f"Pass routing ON: {n_wp} crossing passes (tier<={args.pass_tier}) "
+              f"from {args.passes_file}"
+              + ("" if config.router.crest.usable else "  [crest model UNUSABLE — "
+                 "need >=2 tier-1 passes; falling back to straight-line]"))
 
     list_filter = None if args.list.lower() == "all" else args.list
     peaks = load_peaks(args.input, list_filter=list_filter)
