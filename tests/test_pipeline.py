@@ -11,20 +11,23 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from sierra_peaks.model import Peak
-from sierra_peaks.data_loader import load_peaks
+from sierra_peaks.model import Peak, Trailhead
+from sierra_peaks.data_loader import load_peaks, load_trailheads
 from sierra_peaks.distances import (
     haversine_miles,
     naismith_effective_miles,
     leg_metrics,
     build_distance_matrix,
 )
-from sierra_peaks.tsp import solve_tsp, route_metrics
+from sierra_peaks.tsp import solve_tsp, solve_tsp_cycle, route_metrics
 from sierra_peaks.clustering import ClusterConfig, cluster_peaks
 from sierra_peaks.pipeline import build_itineraries, rank_clusters, plan_trips
+from sierra_peaks.approach import choose_trailhead, approach_metrics
+from sierra_peaks.diagnostics import approach_amortization, format_approach_report
 from sierra_peaks import manual
 
 DATA = os.path.join(os.path.dirname(__file__), "..", "data", "sps_sample.csv")
+TRAILHEADS = os.path.join(os.path.dirname(__file__), "..", "data", "trailheads.csv")
 
 
 def test_haversine_known_distance():
@@ -263,6 +266,139 @@ def test_pipeline_with_router_partitions_and_budgets():
     assert sorted(names) == sorted(p.name for p in peaks)
     for c in clusters:
         assert c.total_effective_mi <= config.max_effective_mi + 1e-6
+
+
+def test_solve_tsp_cycle_orders_collinear_peaks():
+    # Anchor (index 0) at the west end; cheapest closed tour runs out and back.
+    peaks = [Peak(f"p{i}", 37.0, -118.0 + 0.1 * i, 12000) for i in range(5)]
+    cost = build_distance_matrix(peaks, metric="haversine")
+    tour = solve_tsp_cycle(cost, start=0)
+    assert sorted(tour) == [0, 1, 2, 3, 4]
+    assert tour[0] == 0
+
+
+def test_load_trailheads():
+    ths = load_trailheads(TRAILHEADS)
+    assert len(ths) > 30
+    assert all(th.name and th.side for th in ths)
+    assert any(th.name.startswith("Whitney Portal") for th in ths)
+
+
+def test_choose_trailhead_modal():
+    ths = [
+        Trailhead("A", 37.0, -118.0, 8000),
+        Trailhead("B", 37.5, -118.5, 9000),
+    ]
+    peaks = [
+        Peak("p1", 37.0, -118.0, 13000, meta={"nearest_trailhead": "A"}),
+        Peak("p2", 37.0, -118.0, 13000, meta={"nearest_trailhead": "A"}),
+        Peak("p3", 37.5, -118.5, 13000, meta={"nearest_trailhead": "B"}),
+    ]
+    assert choose_trailhead(peaks, ths).name == "A"
+
+
+def test_choose_trailhead_centroid_fallback():
+    # No usable nearest_trailhead names -> nearest trailhead to the centroid.
+    ths = [Trailhead("Far", 40.0, -120.0, 7000), Trailhead("Near", 37.0, -118.0, 8000)]
+    peaks = [Peak("p", 37.01, -118.01, 13000)]
+    assert choose_trailhead(peaks, ths).name == "Near"
+
+
+def test_approach_single_peak_equals_round_trip():
+    # In + out for one peak reduces to the official round trip plus one-way gain.
+    th = Trailhead("TH", 37.0, -118.0, 8000)
+    p = Peak("P", 37.05, -118.05, 13000,
+             meta={"mileage_rt": 10.0, "gain_ft": 5000, "nearest_trailhead": "TH"})
+    m = approach_metrics(th, p, p)
+    assert math.isclose(m["horizontal_mi"], 10.0)
+    assert math.isclose(m["effective_mi"], 10.0 + naismith_effective_miles(0, 5000))
+    assert m["elevation_gain_ft"] == 5000
+
+
+def test_include_approach_increases_effort_and_sets_trailhead():
+    peaks = load_peaks(DATA)
+    trailheads = load_trailheads(TRAILHEADS)
+    base = plan_trips(peaks, ClusterConfig(max_days=3))
+    withth = plan_trips(peaks, ClusterConfig(max_days=3, include_approach=True),
+                        trailheads=trailheads)
+    base_eff = sum(c.total_effective_mi for c in base)
+    appr_eff = sum(c.total_effective_mi for c in withth)
+    assert appr_eff > base_eff  # approach only adds effort
+    for c in withth:
+        assert c.trailhead  # every trip gets an anchor
+        assert c.approach_effective_mi > 0
+        d = c.to_dict()
+        assert "trailhead" in d and "approach_effective_mi" in d
+
+
+def test_approach_off_by_default_leaves_output_unchanged():
+    peaks = load_peaks(DATA)
+    clusters = plan_trips(peaks)  # no trailheads, default config
+    for c in clusters:
+        assert c.trailhead == ""
+        assert c.approach_effective_mi == 0.0
+        assert "trailhead" not in c.to_dict()
+
+
+def test_approach_amortization_flags_shared_trailheads():
+    peaks = load_peaks(DATA)
+    trailheads = load_trailheads(TRAILHEADS)
+    config = ClusterConfig(max_days=2, include_approach=True)
+    clusters = plan_trips(peaks, config, trailheads=trailheads)
+    rows = approach_amortization(clusters, config)
+    # Only trailheads serving >1 trip are reported.
+    for r in rows:
+        assert r.num_trips >= 2
+        assert r.recoverable_mi >= 0
+        assert r.min_trips_by_budget <= r.num_trips
+    # Sorted by recoverable effort (then approach paid), descending.
+    keys = [(r.recoverable_mi, r.approach_paid_mi) for r in rows]
+    assert keys == sorted(keys, reverse=True)
+    assert isinstance(format_approach_report(rows), str)
+
+
+def test_approach_amortization_empty_when_no_shared_trailhead():
+    # Two peaks at distinct trailheads -> no trailhead serves multiple trips.
+    a = Peak("A", 36.50, -118.30, 13000,
+             meta={"nearest_trailhead": "Whitney Portal", "mileage_rt": 6, "gain_ft": 3000})
+    b = Peak("B", 39.30, -120.30, 9000,
+             meta={"nearest_trailhead": "Castle Peak (Donner)", "mileage_rt": 5, "gain_ft": 2000})
+    trailheads = load_trailheads(TRAILHEADS)
+    config = ClusterConfig(include_approach=True)
+    clusters = plan_trips([a, b], config, trailheads=trailheads)
+    assert approach_amortization(clusters, config) == []
+    assert "No trailhead" in format_approach_report([])
+
+
+def test_approach_aware_split_adds_trips_when_over_budget():
+    # Six peaks spread along a line, sharing a trailhead whose approach is
+    # significant. The bare traverse fits in two trips, but once the walk-in is
+    # counted each trip is over budget, so approach-aware splitting must use more.
+    ths = [Trailhead("TH", 37.0, -118.30, 8000)]
+    peaks = [Peak(f"s{i}", 37.0, -118.0 - 0.06 * i, 13000,
+                  meta={"nearest_trailhead": "TH", "mileage_rt": 6.0, "gain_ft": 2000})
+             for i in range(6)]
+    common = dict(eps_mi=50, miles_per_day=12, max_days=1)
+    off = plan_trips(peaks, ClusterConfig(include_approach=False, **common))
+    on = plan_trips(peaks, ClusterConfig(include_approach=True, **common), trailheads=ths)
+    assert len(on) > len(off)
+
+
+def test_approach_aware_split_does_not_oversplit_when_approach_dominates():
+    # Four peaks within a fraction of a mile of each other (near-zero traverse),
+    # but a long approach that alone exceeds the budget. Splitting can't make any
+    # trip fit -- it would only pay the approach more times -- so the planner must
+    # keep the single inter-peak group rather than fragmenting.
+    farth = [Trailhead("FarTH", 36.6, -118.0, 6000)]
+    peaks = [Peak(f"t{i}", 37.0 + 0.003 * i, -118.0, 13000,
+                  meta={"nearest_trailhead": "FarTH", "mileage_rt": 40.0, "gain_ft": 6000})
+             for i in range(4)]
+    common = dict(eps_mi=50, miles_per_day=15, max_days=2)
+    off = plan_trips(peaks, ClusterConfig(include_approach=False, **common))
+    on = plan_trips(peaks, ClusterConfig(include_approach=True, **common), trailheads=farth)
+    assert len(on) == len(off) == 1
+    # Sanity: the approach alone really does exceed the trip budget here.
+    assert on[0].approach_effective_mi > common["miles_per_day"] * common["max_days"]
 
 
 def test_load_peaks_json(tmp_path):

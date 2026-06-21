@@ -48,12 +48,33 @@ class Peak:
 
 
 @dataclass
+class Trailhead:
+    """A road-accessible trip start/end point.
+
+    Loaded from ``data/trailheads.csv``. Used to model the approach hike from
+    the car to the first summit (and the descent from the last summit back).
+    """
+
+    name: str
+    latitude: float
+    longitude: float
+    elevation_ft: float = 0.0
+    side: str = ""          # "east", "west", or "crest"
+    notes: str = ""
+
+
+@dataclass
 class Cluster:
     """A proposed peak-bagging trip: a set of peaks plus a computed itinerary.
 
     The geometry fields (order, distances, gain, days) are filled in by the
     pipeline once a TSP route has been solved. ``score`` is assigned during
     ranking; higher is more efficient.
+
+    The ``approach_*`` / ``trailhead*`` fields are populated only when approach
+    modeling is enabled (see :class:`~sierra_peaks.clustering.ClusterConfig`).
+    They cover the walk from the trailhead to the first summit and back from the
+    last; the ``total_*`` figures then include that approach.
     """
 
     cluster_id: int
@@ -65,6 +86,12 @@ class Cluster:
     estimated_days: int = 0
     score: float = 0.0
     passes: List[str] = field(default_factory=list)  # crest passes crossed on the route
+    # Approach (trailhead <-> route endpoints); zero/empty when not modeled.
+    trailhead: str = ""
+    trailhead_side: str = ""
+    approach_distance_mi: float = 0.0
+    approach_effective_mi: float = 0.0
+    approach_gain_ft: float = 0.0
 
     @property
     def peak_names(self) -> List[str]:
@@ -92,6 +119,12 @@ class Cluster:
             seen: dict = {}
             d["passes_crossed"] = [seen.setdefault(p, p) for p in self.passes
                                    if p not in seen]
+        if self.trailhead:
+            d["trailhead"] = self.trailhead
+            d["trailhead_side"] = self.trailhead_side
+            d["approach_distance_mi"] = round(self.approach_distance_mi, 2)
+            d["approach_effective_mi"] = round(self.approach_effective_mi, 2)
+            d["approach_gain_ft"] = round(self.approach_gain_ft, 0)
         emblem = sum(1 for p in self.peaks if p.meta.get("emblem"))
         mountaineers = sum(1 for p in self.peaks if p.meta.get("mountaineers"))
         if emblem or mountaineers:

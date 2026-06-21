@@ -101,6 +101,53 @@ def solve_tsp(cost: np.ndarray) -> List[int]:
     return best_order
 
 
+def _cycle_cost(order: Sequence[int], cost: np.ndarray) -> float:
+    n = len(order)
+    return float(sum(cost[order[i], order[(i + 1) % n]] for i in range(n)))
+
+
+def _two_opt_cycle(order: List[int], cost: np.ndarray) -> List[int]:
+    """2-opt refinement for a closed tour (the first node stays fixed)."""
+    best = order[:]
+    best_cost = _cycle_cost(best, cost)
+    improved = True
+    while improved:
+        improved = False
+        n = len(best)
+        # Keep index 0 (the anchor) fixed; reverse interior segments.
+        for i in range(1, n - 1):
+            for k in range(i + 1, n):
+                candidate = best[:i] + best[i : k + 1][::-1] + best[k + 1 :]
+                c = _cycle_cost(candidate, cost)
+                if c + 1e-9 < best_cost:
+                    best, best_cost = candidate, c
+                    improved = True
+    return best
+
+
+def solve_tsp_cycle(cost: np.ndarray, start: int = 0) -> List[int]:
+    """Return a min-cost closed tour visiting every node, beginning at ``start``.
+
+    The returned order lists each node once (the return edge to ``start`` is
+    implied). Used to route a trip that leaves a trailhead, tags every summit,
+    and returns to the same trailhead.
+    """
+    n = cost.shape[0]
+    if n <= 2:
+        return [start] + [i for i in range(n) if i != start]
+    others = [i for i in range(n) if i != start]
+    if n <= BRUTE_FORCE_MAX + 1:
+        best_order, best = None, float("inf")
+        for perm in itertools.permutations(others):
+            order = [start, *perm]
+            c = _cycle_cost(order, cost)
+            if c < best:
+                best, best_order = c, order
+        return list(best_order)
+    # Heuristic: nearest-neighbor from the anchor, refined with cycle 2-opt.
+    return _two_opt_cycle(_nearest_neighbor(cost, start), cost)
+
+
 def route_metrics(ordered_peaks: Sequence[Peak], router=None) -> Dict[str, float]:
     """Compute travel totals for a fixed sequence of peaks.
 

@@ -148,6 +148,77 @@ peaks (CSV/JSON)
   `15 × 3 = 45`). Estimated days = `ceil(effective_mi / miles_per_day)`, capped
   at `max_days`.
 
+### Approach modeling (`--include-approach`)
+
+By default the route covers only **summit-to-summit** travel. With
+`--include-approach` the tool also models the **trailhead approach** — the walk
+from the car to the first summit and the descent from the last back — using
+`data/trailheads.csv`:
+
+1. **Trailhead choice.** Each trip is anchored to the single trailhead that best
+   serves it: the most common `nearest_trailhead` among its peaks (ties broken by
+   proximity to the cluster centroid), falling back to the trailhead nearest the
+   centroid.
+2. **Re-anchored routing.** The trailhead is added as a fixed start/end node and
+   the trip is solved as a **closed tour** (`solve_tsp_cycle`), so the entry and
+   exit summits are chosen to minimize the whole loop — not just inter-peak
+   travel.
+3. **Approach cost (hybrid).** Each in/out leg is priced from the data we already
+   have: when the chosen trailhead is that peak's standard `nearest_trailhead`, we
+   use its authoritative `mileage_rt / 2` and one-way `gain_ft`; otherwise we fall
+   back to great-circle distance × a sinuosity factor (default `1.25`) with the
+   trailhead→summit elevation delta. The inbound leg ascends (Naismith penalty);
+   the outbound leg descends (no penalty). A single-peak trip reduces exactly to
+   the official round trip.
+
+The approach is folded into `total_distance_mi`, `total_effective_mi`,
+`total_elevation_gain_ft`, `estimated_days` and `efficiency_score`, and reported
+separately as `approach_*` plus `trailhead` / `trailhead_side`. The effect is
+realistic: the Palisades traverse, a "1-day / 11 effective-mi" trip on the bare
+inter-peak model, becomes **~28 effective mi over 2 days** once the Glacier Lodge
+approach is counted.
+
+```bash
+python cli.py -i data/sps_peaks.csv --include-approach --max-days 2 -o weekend.json
+```
+
+> **Approach-aware capacity splitting.** With `--include-approach`, the trip
+> budget is enforced *including* the approach: capacity splitting starts from the
+> inter-peak floor (the fewest trips the bare traverse allows) and tightens only
+> if a modest extra split actually makes the trips fit once the walk-in is
+> counted. Because the approach is largely a fixed per-trip cost, the splitter
+> will **not** fragment a trip when splitting can't help (an approach-dominated
+> cluster stays whole rather than paying the approach several times over). Net
+> effect: trip counts respect the *real* day budget while still using the fewest
+> feasible trips.
+
+### Approach-amortization report (`--approach-report`)
+
+The approach is a fixed cost paid once per trip, so when several trips share one
+trailhead that cost is paid several times over. This report (which implies
+`--include-approach`) ranks the trailheads serving more than one trip by how much
+approach effort could be recovered by repacking their trips within the day
+budget:
+
+```bash
+python cli.py -i data/sps_peaks.csv --approach-report --max-days 3
+```
+
+```
+trailhead                    side  trips peaks  appr_mi per_trip min_trips  save_mi
+Mineral King                 west      6    22    139.1     23.2         5     23.2
+Carson Pass                  west      4     6     41.2     10.3         2     20.6
+Sage Flat (Olancha)          east      3     6     48.2     16.1         2     16.1
+...
+16 trailheads serve multiple trips; ~133.5 effective approach-mi potentially
+recoverable by repacking within the day budget.
+```
+
+`min_trips` is the fewest trips the trailhead's combined effort could occupy at
+the budget; `save_mi` is the approach freed by reaching it. The report is a
+*signal*, bounded by the day budget, not a promise. Raising `--max-days` unlocks
+more amortization (~133 mi recoverable at 3 days vs ~80 at 2).
+
 ---
 
 ## Installation
@@ -188,6 +259,9 @@ python cli.py --input data/sps_peaks.csv --output out.json --viz clusters.png
 | `--eps-mi` | `6.0` | spatial grouping radius (horizontal miles) |
 | `--miles-per-day` | `15.0` | effective hiking miles per day |
 | `--max-days` | `3` | maximum days per trip |
+| `--include-approach` | off | model the trailhead approach (walk in/out) and fold it into distance, effort, days & score |
+| `--approach-report` | off | print an approach-amortization report (implies `--include-approach`) |
+| `--trailheads` | `data/trailheads.csv` | trailhead file used with `--include-approach` |
 | `--method` | `dbscan` | grouping method: `dbscan` or `agglomerative` |
 | `--exclude` | – | comma-separated peak names to drop |
 | `--force-together` | – | comma-separated peaks to keep in one trip (repeatable) |
@@ -248,6 +322,10 @@ save_json(clusters, "out.json")
   ]
 }
 ```
+
+With `--include-approach`, each cluster also carries `trailhead`,
+`trailhead_side`, `approach_distance_mi`, `approach_effective_mi` and
+`approach_gain_ft`, and the `total_*` figures include that approach.
 
 `total_distance_mi`/`total_effective_mi`/`total_elevation_gain_ft` are the
 **inter-peak** route totals the optimizer computes; each peak's `attributes`
@@ -316,8 +394,9 @@ Run the tests: `python tests/test_pipeline.py` (or `python -m pytest tests/`).
 
 - **Off-trail assumption.** Inter-peak travel is straight-line great-circle
   distance, appropriate for class 1–2 ridge/basin travel. It does not model
-  cliffs, technical terrain, or the approach from the trailhead to the first
-  peak (the official per-peak `mileage_rt`/`gain_ft` are carried for that).
+  cliffs or technical terrain. The trailhead approach is off by default but can
+  be modeled with `--include-approach` (see above), which uses the official
+  per-peak `mileage_rt`/`gain_ft` and the curated `data/trailheads.csv`.
 - **Trail-network distances (optional).** The distance layer is isolated in
   `distances.py`; swap `build_distance_matrix` for shortest paths over a
   `networkx` graph built from USFS/NPS trail shapefiles, and everything

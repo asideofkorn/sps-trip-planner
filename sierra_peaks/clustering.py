@@ -16,13 +16,14 @@ as a single atomic unit that is never separated during grouping or splitting.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Sequence, Set, Tuple
+from typing import Callable, Dict, List, Optional, Sequence, Set, Tuple
 
 import numpy as np
 from sklearn.cluster import DBSCAN, AgglomerativeClustering
 
-from .model import Peak
-from .distances import build_distance_matrix, haversine_miles
+from .model import Peak, Trailhead
+from .distances import build_distance_matrix, haversine_miles, naismith_effective_miles
+from .approach import choose_trailhead, approach_leg
 from .tsp import solve_tsp, route_metrics
 
 
@@ -41,6 +42,8 @@ class ClusterConfig:
     trailhead_field: str = "trailhead"      # meta key to group on when by_trailhead
     trailhead_max_mi: Optional[float] = None  # cap: only link same-TH peaks within this
     router: object = None         # optional PassRouter: route cross-crest legs via passes
+    include_approach: bool = False  # model the trailhead <-> first/last-peak approach
+    sinuosity: float = 1.25       # trail-distance inflation for geometric approach legs
 
     @property
     def max_effective_mi(self) -> float:
@@ -166,10 +169,28 @@ def _unit_centroid(unit: Sequence[Peak]) -> Tuple[float, float]:
     )
 
 
-def _split_to_budget(
+def _approach_estimate(
+    peaks: Sequence[Peak], trailheads: Sequence[Trailhead], sinuosity: float
+) -> float:
+    """Cheap estimate of a trip's approach effort, in effective miles.
+
+    Anchors to the trailhead the itinerary would choose, then takes the cheapest
+    inbound (ascending) and cheapest outbound (descending) legs -- a fast proxy
+    for the entry/exit summits the closed-tour solver settles on.
+    """
+    th = choose_trailhead(peaks, trailheads)
+    if th is None:
+        return 0.0
+    legs = [approach_leg(th, p, sinuosity) for p in peaks]
+    in_eff = min(naismith_effective_miles(d, g) for d, g in legs)
+    out_eff = min(d for d, _ in legs)
+    return in_eff + out_eff
+
+
+def _interpeak_split(
     units: List[List[Peak]], max_effective_mi: float, router=None
 ) -> List[List[List[Peak]]]:
-    """Split a list of units into sub-groups that each fit the trip budget.
+    """Split units into sub-groups each fitting the *inter-peak* trip budget.
 
     Returns a list of sub-groups, where each sub-group is itself a list of units.
     """
@@ -197,15 +218,73 @@ def _split_to_budget(
     return [[u] for u in units]
 
 
+def _split_to_budget(
+    units: List[List[Peak]],
+    max_effective_mi: float,
+    total_effort: Optional[Callable[[Sequence[Peak]], float]] = None,
+    router=None,
+) -> List[List[List[Peak]]]:
+    """Split units into sub-groups that each fit the trip budget.
+
+    The inter-peak split is always the *floor* (the fewest trips the bare
+    traverse allows). When ``total_effort`` is given (approach modeling on), the
+    budget is measured including the trailhead approach, and the split is
+    tightened beyond the floor -- but only if a modest extra split actually makes
+    the trips fit. Because the approach is largely a fixed per-trip cost,
+    splitting further when it cannot help would only multiply that cost, so in
+    the approach-dominated case we keep the inter-peak floor instead of
+    over-splitting.
+    """
+    floor = _interpeak_split(units, max_effective_mi, router)
+    if total_effort is None:
+        return floor
+
+    def _fits(subgroups: List[List[List[Peak]]]) -> bool:
+        return all(
+            total_effort([p for u in sg for p in u]) <= max_effective_mi
+            for sg in subgroups
+        )
+
+    if _fits(floor):
+        return floor
+
+    # Approach pushed at least one trip over budget: try more sub-groups, but
+    # never fewer than the inter-peak floor already requires.
+    n = len(units)
+    centroids = np.array([_unit_centroid(u) for u in units])
+    for k in range(len(floor) + 1, n + 1):
+        labels = AgglomerativeClustering(n_clusters=k).fit_predict(centroids)
+        subgroups: List[List[List[Peak]]] = [[] for _ in range(k)]
+        for unit, lbl in zip(units, labels):
+            subgroups[int(lbl)].append(unit)
+        subgroups = [sg for sg in subgroups if sg]
+        if _fits(subgroups):
+            return subgroups
+    # No split fits once approach is counted (approach-dominated): keep the
+    # inter-peak floor rather than fragmenting and paying the approach N times.
+    return floor
+
+
 def cluster_peaks(
-    peaks: Sequence[Peak], config: Optional[ClusterConfig] = None
+    peaks: Sequence[Peak],
+    config: Optional[ClusterConfig] = None,
+    trailheads: Optional[Sequence[Trailhead]] = None,
 ) -> List[List[Peak]]:
     """Cluster peaks into budget-respecting trips.
 
     Returns a list of clusters, each a list of :class:`Peak`. Ordering and
-    metrics are computed later by the pipeline.
+    metrics are computed later by the pipeline. When ``config.include_approach``
+    is set and ``trailheads`` are supplied, the trip budget is enforced including
+    the trailhead approach (see :func:`_split_to_budget`).
     """
     config = config or ClusterConfig()
+
+    total_effort = None
+    if config.include_approach and trailheads:
+        def total_effort(pk: Sequence[Peak]) -> float:
+            return _route_effective_mi(pk) + _approach_estimate(
+                pk, trailheads, config.sinuosity
+            )
 
     excluded = {name for name in config.exclude}
     active = [p for p in peaks if p.name not in excluded]
@@ -256,7 +335,8 @@ def cluster_peaks(
     # Stage 2: enforce trip budget.
     final: List[List[Peak]] = []
     for group in groups:
-        for subgroup in _split_to_budget(group, config.max_effective_mi, config.router):
+        for subgroup in _split_to_budget(group, config.max_effective_mi,
+                                          total_effort, config.router):
             final.append([p for u in subgroup for p in u])
 
     # Stable ordering: north-to-south by mean latitude.
