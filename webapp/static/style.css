@@ -1,0 +1,180 @@
+:root {
+  --bg: #1c2230;
+  --panel: #252c3d;
+  --panel-2: #2d3548;
+  --text: #e8ecf4;
+  --muted: #9aa6c0;
+  --accent: #5b9cff;
+  --border: #3a435c;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+#sidebar {
+  width: 340px;
+  min-width: 340px;
+  height: 100%;
+  overflow-y: auto;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  padding: 18px 18px 40px;
+}
+
+#sidebar header h1 {
+  font-size: 19px;
+  margin: 0 0 6px;
+}
+
+#sidebar .sub {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin: 0 0 18px;
+  line-height: 1.45;
+}
+
+#map { flex: 1; height: 100%; }
+
+section { margin-bottom: 20px; }
+
+.controls label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.controls label > span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--muted);
+}
+
+.controls label b { color: var(--text); }
+
+.controls input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+label.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+label.check input { margin-top: 2px; accent-color: var(--accent); }
+label.check span { color: var(--text); }
+
+button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover { filter: brightness(1.08); }
+
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .05em;
+     color: var(--muted); margin: 0 0 10px; }
+
+.summary {
+  background: var(--panel-2);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+}
+
+.summary .stat { display: flex; justify-content: space-between; padding: 3px 0; }
+.summary .stat b { font-variant-numeric: tabular-nums; }
+.spinner { color: var(--muted); }
+
+.hint { font-size: 11.5px; color: var(--muted); line-height: 1.4; margin: 8px 0 0; }
+
+.triplist .trip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12.5px;
+}
+
+.triplist .trip:hover { background: var(--panel-2); }
+.triplist .trip.active { background: var(--panel-2); outline: 1px solid var(--accent); }
+
+.triplist .swatch {
+  width: 13px; height: 13px; border-radius: 3px; flex: none;
+  border: 1px solid rgba(255,255,255,.3);
+}
+
+.triplist .trip .meta { color: var(--muted); }
+
+footer p { font-size: 10.5px; color: var(--muted); line-height: 1.4; }
+
+/* Leaflet popups */
+.leaflet-popup-content { font-size: 13px; line-height: 1.5; }
+.leaflet-popup-content b { font-size: 14px; }
+.peak-popup .coords { color: #555; font-size: 11.5px; font-family: monospace; }
+.wx-btn {
+  margin-top: 8px; background: var(--accent); color: #fff; border: none;
+  border-radius: 5px; padding: 5px 9px; font-size: 12px; cursor: pointer;
+}
+.wx-out { margin-top: 8px; font-size: 12px; }
+.wx-out .period { padding: 3px 0; border-top: 1px solid #e2e2e2; }
+.wx-out .period:first-child { border-top: none; }
+.wx-out .pname { font-weight: 600; }
+
+/* Elevation profile panel */
+#profile-panel {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  width: 440px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px 12px;
+  z-index: 1000;
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+
+#profile-panel.hidden { display: none; }
+
+.profile-head {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; margin-bottom: 6px; color: var(--muted);
+}
+
+#profile-close {
+  width: auto; background: none; color: var(--muted); font-size: 18px;
+  padding: 0 4px; line-height: 1;
+}
+
+#profile-canvas { width: 100%; height: 180px; display: block; }
+
+@media (max-width: 720px) {
+  #app { flex-direction: column; }
+  #sidebar { width: 100%; min-width: 0; height: 45%; }
+  #map { height: 55%; }
+  #profile-panel { width: calc(100% - 32px); }
+}

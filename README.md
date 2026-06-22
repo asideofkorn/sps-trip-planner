@@ -296,6 +296,40 @@ clusters = plan_trips(peaks, ClusterConfig(eps_mi=6, miles_per_day=15, max_days=
 save_json(clusters, "out.json")
 ```
 
+### Interactive web app
+
+`webapp/` is a small Flask + Leaflet single-page planner. Unlike the static
+`scripts/map_clusters.py` export (which bakes one plan into an `.html` file), the
+web app **replans live** as you move the controls.
+
+```bash
+pip install -r requirements.txt   # core deps
+pip install flask                 # or: pip install -e ".[web]"
+python webapp/app.py              # then open http://127.0.0.1:5000
+```
+
+Features:
+
+- **Live parameter controls** — sliders for max days per trip, hiking miles per
+  day, and the DBSCAN grouping radius (`eps`); toggles for trailhead-approach
+  modeling, crest-pass routing, and "keep peaks sharing a trailhead together".
+  Every change re-runs the planner server-side and redraws the map.
+- **Topo / trails / satellite basemaps** — OpenTopoMap (contours + the hiking
+  trail network), OpenStreetMap, and Esri World Imagery, switchable in the
+  layer control.
+- **Map overlays** — trip routes coloured per trip, peak markers, and a
+  toggleable trailhead layer. Clicking a peak or trailhead shows its
+  **elevation, latitude/longitude**, class/emblem flags, and nearest trailhead.
+- **Elevation profile** — selecting a trip in the sidebar draws a cumulative
+  distance-vs-elevation profile along that trip's ordered route.
+- **Weather forecast** — each peak/trailhead popup has a *Weather forecast*
+  button that pulls the US National Weather Service point forecast
+  (`api.weather.gov`, no API key) via a server-side proxy. Degrades gracefully
+  when offline.
+
+The planner itself is unchanged — the app calls the same `plan_trips` pipeline
+behind a JSON API (`GET /api/plan`, `GET /api/meta`, `GET /api/weather`).
+
 ---
 
 ## Output schema (`examples/sps_full_output.json`)
@@ -382,6 +416,9 @@ sierra-peaks-clustering/
 │   ├── manual.py                # merge / split / exclude / force-together
 │   ├── export.py                # JSON export
 │   └── visualize.py             # optional matplotlib map
+├── webapp/                      # interactive Flask + Leaflet planner
+│   ├── app.py                   # JSON API (/api/plan, /api/meta, /api/weather)
+│   └── static/                  # index.html, app.js, style.css
 └── tests/
     └── test_pipeline.py         # 16 unit/integration tests
 ```

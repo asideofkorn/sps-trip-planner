@@ -29,6 +29,7 @@ dependencies = [
 
 [project.optional-dependencies]
 viz = ["matplotlib>=3.7", "folium>=0.16"]
+web = ["flask>=3.0"]
 dev = ["pytest>=7.0"]
 
 [project.urls]

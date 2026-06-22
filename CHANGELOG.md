@@ -6,6 +6,13 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- Interactive web app (`webapp/`): a Flask + Leaflet single-page planner. Sliders
+  for max days / miles-per-day / grouping radius and toggles for approach
+  modeling, pass routing, and trailhead grouping re-run the planner live and
+  redraw trips on a switchable topo/satellite map. Peaks and trailheads show
+  elevation and coordinates, expose an on-demand US NWS weather forecast, and a
+  per-trip elevation profile is drawn along the route. Run with
+  `python webapp/app.py`. Flask added as a `web` optional dependency.
 - Approach-aware capacity splitting: with `--include-approach`, the trip budget
   is enforced including the trailhead approach. Splitting starts from the
   inter-peak floor and tightens only when an extra split actually makes trips fit
