@@ -302,13 +302,39 @@ save_json(clusters, "out.json")
 `scripts/map_clusters.py` export (which bakes one plan into an `.html` file), the
 web app **replans live** as you move the controls.
 
+#### Quick start
+
+The only prerequisite is **Python 3.10+**. No Node, build step, database, or API
+keys.
+
 ```bash
-pip install -r requirements.txt   # core deps
-pip install flask                 # or: pip install -e ".[web]"
-python webapp/app.py              # then open http://127.0.0.1:5000
+# 1. Get the code
+git clone https://github.com/asideofkorn/sps-trip-planner.git
+cd sps-trip-planner
+
+# 2. (Recommended) isolate dependencies in a virtualenv
+python3 -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+
+# 3. Install dependencies
+pip install -r requirements.txt    # core planner deps
+pip install flask                  # the web server (or: pip install -e ".[web]")
+
+# 4. Run it, then open the URL it prints (http://127.0.0.1:5000)
+python webapp/app.py
 ```
 
-Features:
+Useful flags: `--port 5001` (if 5000 is taken), `--debug` (auto-reload while
+editing `webapp/static/`), `--host 0.0.0.0` (expose on your LAN).
+
+**What needs internet:** the planning itself is 100% local and works offline.
+The Leaflet library and **map tiles** load from public CDNs, so you need a normal
+connection to *see* the map. The **weather** button calls the US National Weather
+Service (`api.weather.gov`); it works without a key and fails gracefully when
+offline. This is Flask's built-in dev server — fine for personal use; front it
+with gunicorn/waitress if you ever host it for others.
+
+#### Features
 
 - **Live parameter controls** — sliders for max days per trip, hiking miles per
   day, and the DBSCAN grouping radius (`eps`); toggles for trailhead-approach
