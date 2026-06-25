@@ -16,6 +16,9 @@ let map;
 let routeLayer, peakLayer, thLayer;
 let lastPlan = null;
 let activeTrip = null;
+let planSeq = 0;            // monotonic id; guards against out-of-order responses
+let inflight = null;       // AbortController for the current /api/plan request
+let firstFit = true;       // only auto-zoom to fit on the very first plan
 
 function initMap() {
   map = L.map("map", { zoomControl: true }).setView([37.4, -118.7], 8);
@@ -126,7 +129,7 @@ function thPopupHTML(t) {
 }
 
 /* ---- drawing ------------------------------------------------------------ */
-function drawPlan(plan) {
+function drawPlan(plan, { fit = false } = {}) {
   routeLayer.clearLayers();
   peakLayer.clearLayers();
   lastPlan = plan;
@@ -166,12 +169,36 @@ function drawPlan(plan) {
     });
   });
 
-  if (allPts.length) {
+  // Only auto-fit on first load or an explicit request — adjusting a slider
+  // should not yank the map back from wherever the user has panned/zoomed.
+  if (fit && allPts.length) {
     map.fitBounds(L.latLngBounds(allPts).pad(0.08));
+  }
+
+  // The previously selected trip belonged to the old plan; its peaks/metrics no
+  // longer match, so refresh the profile to the new trip of the same id (if any)
+  // or close the panel.
+  if (activeTrip) {
+    const same = plan.clusters.find((c) => c.cluster_id === activeTrip.cluster_id);
+    if (same) {
+      activeTrip = same;
+      drawProfile(same);
+    } else {
+      activeTrip = null;
+      document.getElementById("profile-panel").classList.add("hidden");
+    }
   }
 
   renderSummary(plan);
   renderTripList(plan);
+}
+
+function fitAllTrips() {
+  if (!lastPlan) return;
+  const pts = lastPlan.clusters.flatMap((c) =>
+    c.peaks_ordered.map((p) => [p.latitude, p.longitude])
+  );
+  if (pts.length) map.fitBounds(L.latLngBounds(pts).pad(0.08));
 }
 
 function renderSummary(plan) {
@@ -188,8 +215,13 @@ function renderTripList(plan) {
   const el = document.getElementById("triplist");
   el.innerHTML = "<h2>Trips (best first)</h2>";
   plan.clusters.forEach((c) => {
-    const row = document.createElement("div");
+    // A real <button> is focusable and fires on Enter/Space for free.
+    const row = document.createElement("button");
+    row.type = "button";
     row.className = "trip";
+    if (activeTrip && activeTrip.cluster_id === c.cluster_id) {
+      row.classList.add("active");
+    }
     row.innerHTML = `
       <span class="swatch" style="background:${tripColor(c.cluster_id)}"></span>
       <span>#${c.cluster_id + 1} &middot; ${c.num_peaks} pk
@@ -317,11 +349,33 @@ function currentParams() {
 }
 
 async function replan() {
-  document.getElementById("summary").innerHTML =
-    '<div class="spinner">Planning…</div>';
-  const r = await fetch("/api/plan?" + currentParams().toString());
-  const plan = await r.json();
-  drawPlan(plan);
+  const seq = ++planSeq;
+  // Cancel any request still in flight so its (older) response can't land last
+  // and clobber this newer plan.
+  if (inflight) inflight.abort();
+  inflight = new AbortController();
+
+  const summary = document.getElementById("summary");
+  summary.classList.remove("error");
+  summary.innerHTML = '<div class="spinner">Planning…</div>';
+
+  try {
+    const r = await fetch("/api/plan?" + currentParams().toString(), {
+      signal: inflight.signal,
+    });
+    if (!r.ok) throw new Error(`server returned ${r.status}`);
+    const plan = await r.json();
+    if (seq !== planSeq) return; // a newer replan superseded us
+    drawPlan(plan, { fit: firstFit });
+    firstFit = false;
+  } catch (e) {
+    if (e.name === "AbortError" || seq !== planSeq) return;
+    summary.classList.add("error");
+    summary.innerHTML =
+      `<div>⚠ Couldn't reach the planner (${e.message}).</div>` +
+      `<button type="button" id="retry">Retry</button>`;
+    document.getElementById("retry").addEventListener("click", replan);
+  }
 }
 
 function wireControls() {
@@ -340,7 +394,7 @@ function wireControls() {
   ["approach", "passes", "byTrailhead"].forEach((id) =>
     document.getElementById(id).addEventListener("change", replan)
   );
-  document.getElementById("replan").addEventListener("click", replan);
+  document.getElementById("fitAll").addEventListener("click", fitAllTrips);
 
   document.getElementById("layerTh").addEventListener("change", (e) => {
     if (e.target.checked) thLayer.addTo(map);

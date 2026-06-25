@@ -113,14 +113,29 @@ h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .05em;
   display: flex;
   align-items: center;
   gap: 9px;
+  width: 100%;
   padding: 7px 8px;
+  border: none;
   border-radius: 6px;
-  cursor: pointer;
+  background: none;
+  color: var(--text);
+  font: inherit;
   font-size: 12.5px;
+  text-align: left;
+  cursor: pointer;
 }
 
 .triplist .trip:hover { background: var(--panel-2); }
 .triplist .trip.active { background: var(--panel-2); outline: 1px solid var(--accent); }
+
+/* Visible keyboard focus for all interactive elements. */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.summary.error { color: #ffb4b4; }
+.summary.error button {
+  width: auto; margin-top: 8px; padding: 5px 10px; font-size: 12px;
+  background: var(--panel-2); color: var(--text);
+}
 
 .triplist .swatch {
   width: 13px; height: 13px; border-radius: 3px; flex: none;
