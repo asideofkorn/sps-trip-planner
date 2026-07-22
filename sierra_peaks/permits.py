@@ -41,6 +41,9 @@ from .model import Cluster, Trailhead
 
 # Special-cased because it's a lottery, not a rolling reservation window.
 _WHITNEY_ZONE = "whitney_zone"
+# Special-cased because its off-season isn't self-issue -- it's in-person/email
+# only, unlike the generic "free/self-issue off-season" assumption below.
+_CPMA = "cpma"
 
 
 @dataclass
@@ -158,6 +161,12 @@ def permit_status(
         start, end = rule.quota_season_start, rule.quota_season_end
         season = (f"{date(2001, *start):%b %-d} - {date(2001, *end):%b %-d}"
                    if start and end else "the quota season")
+        if rule.permit_group == _CPMA:
+            return (f"Trip date is outside the {season} quota season -- the Carson "
+                    f"Pass Information Station is closed. Permit is still required "
+                    f"but is NOT self-issue: get it in person at the Amador Ranger "
+                    f"District office or by emailing SM.FS.mowilderness@usda.gov "
+                    f"the week of your trip (see notes).")
         return (f"Trip date is outside the {season} quota season -- permit still "
                 f"required but should be free/self-issue, no reservation (confirm "
                 f"with the agency for current off-season rules).")

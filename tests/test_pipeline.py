@@ -282,6 +282,13 @@ def test_load_trailheads():
     assert len(ths) > 30
     assert all(th.name and th.side for th in ths)
     assert any(th.name.startswith("Whitney Portal") for th in ths)
+    # Blank wilderness_area/land_agency cells (e.g. non-wilderness northern
+    # Sierra trailheads) must load as "", not the literal string "nan" --
+    # pandas NaN is truthy, so a naive `x or ""` check silently fails this.
+    sierra_buttes = next(th for th in ths if th.name == "Sierra Buttes")
+    assert sierra_buttes.wilderness_area == ""
+    assert sierra_buttes.land_agency == "Tahoe NF"
+    assert "nan" not in sierra_buttes.wilderness_area.lower()
 
 
 def test_choose_trailhead_modal():

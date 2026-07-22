@@ -88,6 +88,18 @@ def test_cpma_is_day_of_only():
     assert "first-come" in permit_status(rule, trip).lower()
 
 
+def test_cpma_off_season_is_not_self_issue():
+    # Unlike the generic free/self-issue off-season assumption, CPMA's winter
+    # permits require contacting the Amador Ranger District directly.
+    permits = load_permits(PERMITS)
+    rule = permits["cpma"]
+    trip = date(2027, 12, 15)
+    assert not rule.in_quota_season(trip)
+    status = permit_status(rule, trip).lower()
+    assert "should be free/self-issue" not in status  # generic fallback phrasing
+    assert "amador" in status
+
+
 def test_clusters_permit_info_needs_trailhead():
     permits = load_permits(PERMITS)
     trailheads = load_trailheads(TRAILHEADS)

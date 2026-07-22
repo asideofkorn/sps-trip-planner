@@ -151,6 +151,14 @@ def load_trailheads(path: str | Path) -> List[Trailhead]:
     df = pd.read_csv(path)
     df = _normalize_columns(df)  # reuse lat/lon/elevation aliasing
 
+    def _field(row, col: str) -> str:
+        # NaN is truthy in Python, so `row.get(col, "") or ""` silently turns a
+        # blank CSV cell into the literal string "nan" -- check pd.isna instead.
+        val = row.get(col)
+        if val is None or pd.isna(val):
+            return ""
+        return str(val).strip()
+
     trailheads: List[Trailhead] = []
     for _, row in df.iterrows():
         name = str(row["name"]).strip()
@@ -165,11 +173,11 @@ def load_trailheads(path: str | Path) -> List[Trailhead]:
                 latitude=float(row["latitude"]),
                 longitude=float(row["longitude"]),
                 elevation_ft=float(elev) if elev is not None and not pd.isna(elev) else 0.0,
-                side=str(row.get("side", "") or "").strip(),
-                notes=str(row.get("notes", "") or "").strip(),
-                wilderness_area=str(row.get("wilderness_area", "") or "").strip(),
-                land_agency=str(row.get("land_agency", "") or "").strip(),
-                permit_group=str(row.get("permit_group", "") or "").strip(),
+                side=_field(row, "side"),
+                notes=_field(row, "notes"),
+                wilderness_area=_field(row, "wilderness_area"),
+                land_agency=_field(row, "land_agency"),
+                permit_group=_field(row, "permit_group"),
             )
         )
     if not trailheads:
