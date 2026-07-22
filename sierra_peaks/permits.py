@@ -7,6 +7,21 @@ trailhead to its permit rule and, given a candidate trip start date, works out
 whether that date falls in the quota season and when the reservation window
 opens.
 
+A permit's issuing agency is the trailhead's agency, not necessarily the
+agency governing every peak reached from it: Sierra Nevada wilderness permits
+are interagency -- a permit issued for the trailhead you start at is honored
+for the whole continuous trip, even where the route crosses into a
+neighboring wilderness or national park (e.g. a Sierra NF permit picked up at
+the Isberg/Clover Meadow trailhead covers the leg into Yosemite over Isberg
+Pass; an Emigrant Wilderness self-issue permit covers a route that crosses
+into Yosemite at Bond Pass). You do *not* need a second permit from the
+agency whose land you pass through, as long as the trip both starts and ends
+at the trailhead the permit was issued for. Each :class:`PermitRule` carries
+an ``interagency_note`` documenting this where it applies; a handful of
+boundary crossings have their own procedural wrinkle (e.g. Kibbie Lake / Lake
+Eleanor out of Stanislaus NF requires calling Yosemite's Groveland Ranger
+District a day ahead) -- see the note before assuming blanket reciprocity.
+
 Rules and dates shift year to year (recreation.gov release times, lottery
 windows, exact quota-season start/end). Treat this as a planning aid, not a
 booking guarantee -- always confirm against the ``apply_url`` before relying
@@ -43,6 +58,7 @@ class PermitRule:
     fee_notes: str = ""
     apply_url: str = ""
     notes: str = ""
+    interagency_note: str = ""
 
     def in_quota_season(self, trip_date: date) -> bool:
         if not self.quota_required or not self.quota_season_start:
@@ -88,6 +104,7 @@ def load_permits(path: str | Path = "data/permits.csv") -> Dict[str, PermitRule]
             fee_notes=_str_field(row, "fee_notes"),
             apply_url=_str_field(row, "apply_url"),
             notes=_str_field(row, "notes"),
+            interagency_note=_str_field(row, "interagency_note"),
         )
     return rules
 
@@ -163,6 +180,7 @@ class ClusterPermitInfo:
     trip_date: date
     status: str
     notes: str = ""
+    interagency_note: str = ""
 
 
 def clusters_permit_info(
@@ -200,6 +218,7 @@ def clusters_permit_info(
                 trip_date=trip_date,
                 status=permit_status(rule, trip_date, today),
                 notes=rule.notes,
+                interagency_note=rule.interagency_note,
             )
         )
     return rows
@@ -224,9 +243,14 @@ def format_permit_report(rows: Sequence[ClusterPermitInfo]) -> str:
             lines.append(f"  Apply: {r.apply_url}")
         if r.notes:
             lines.append(f"  Note: {r.notes}")
+        if r.interagency_note:
+            lines.append(f"  Crosses into other land: {r.interagency_note}")
         lines.append("")
     lines.append(
         "Permit rules and dates change year to year -- verify against the "
-        "linked official source before relying on any date above."
+        "linked official source before relying on any date above. Interagency "
+        "reciprocity assumes one continuous trip that starts and ends at the "
+        "listed trailhead -- a fresh trip starting inside the neighboring "
+        "wilderness/park still needs its own permit."
     )
     return "\n".join(lines)

@@ -102,5 +102,22 @@ def test_clusters_permit_info_needs_trailhead():
     assert format_permit_report(rows)
 
 
+def test_interagency_reciprocity_surfaces_for_boundary_trailheads():
+    permits = load_permits(PERMITS)
+    trailheads = load_trailheads(TRAILHEADS)
+    th_by_name = {t.name: t for t in trailheads}
+
+    # Sierra NF permit at Isberg/Clover Meadow covers the Yosemite-side leg.
+    isberg = th_by_name["Isberg (Clover Meadow)"]
+    rule = permits[isberg.permit_group]
+    assert "yosemite" in rule.interagency_note.lower()
+
+    c = Cluster(cluster_id=0, peaks=[Peak("Foerster Peak", 37.63, -119.34, 12058)],
+                trailhead="Isberg (Clover Meadow)")
+    rows = clusters_permit_info([c], trailheads, permits, date(2027, 7, 1))
+    assert "yosemite" in rows[0].interagency_note.lower()
+    assert "crosses into other land" in format_permit_report(rows).lower()
+
+
 def test_format_permit_report_empty():
     assert "no permit info" in format_permit_report([]).lower()

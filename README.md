@@ -253,6 +253,26 @@ Run it once per candidate month across your 12-month planning window (or loop
 lottery entry, a 6-month rolling reservation, a day-of walk-up, or nothing at
 all.
 
+**Which agency issues the permit — and interagency reciprocity.** The permit
+you need is determined by the *trailhead you start from*, not by which
+wilderness or park each individual peak in the trip happens to sit in. Sierra
+Nevada wilderness permits are interagency: a permit issued for your starting
+trailhead is honored for the whole continuous trip even where the route
+crosses into a neighboring wilderness or national park, so you do **not**
+need a second permit from whoever's land you pass through — as long as the
+trip both starts and ends at the trailhead the permit was issued for. For
+example, a free self-issue Emigrant Wilderness permit picked up for a
+Stanislaus NF trailhead covers a route that crosses into Yosemite at Bond
+Pass; a Sierra NF permit from Clover Meadow covers the leg over Isberg Pass
+into Yosemite to reach Foerster Peak; a Hoover Wilderness permit from Twin
+Lakes covers the crossing into Yosemite's Kerrick Canyon for Tower Peak. When
+a trip's trailhead permit has this kind of cross-boundary reach, the report
+prints a `Crosses into other land:` line explaining it — but a few boundary
+crossings have their own procedural wrinkle (e.g. the Kibbie Lake/Lake
+Eleanor corridor out of Stanislaus NF requires calling Yosemite's Groveland
+Ranger District a day ahead), so read that line rather than assuming blanket
+reciprocity everywhere.
+
 > **This is a planning aid, not a booking guarantee.** Quota-season dates,
 > reservation windows, and lottery timing shift year to year and by trailhead.
 > `data/permits.csv` was curated from official NPS/USFS/recreation.gov sources
