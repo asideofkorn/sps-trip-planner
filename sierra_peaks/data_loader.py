@@ -142,7 +142,8 @@ def load_trailheads(path: str | Path) -> List[Trailhead]:
     """Load road-accessible trailheads from a CSV (see ``data/trailheads.csv``).
 
     Expected columns: ``name``, ``latitude``, ``longitude``, and optionally
-    ``elevation_ft``, ``side``, ``notes``.
+    ``elevation_ft``, ``side``, ``notes``, ``wilderness_area``, ``land_agency``,
+    ``permit_group`` (the last three feed :mod:`sierra_peaks.permits`).
     """
     path = Path(path)
     if not path.exists():
@@ -166,6 +167,9 @@ def load_trailheads(path: str | Path) -> List[Trailhead]:
                 elevation_ft=float(elev) if elev is not None and not pd.isna(elev) else 0.0,
                 side=str(row.get("side", "") or "").strip(),
                 notes=str(row.get("notes", "") or "").strip(),
+                wilderness_area=str(row.get("wilderness_area", "") or "").strip(),
+                land_agency=str(row.get("land_agency", "") or "").strip(),
+                permit_group=str(row.get("permit_group", "") or "").strip(),
             )
         )
     if not trailheads:

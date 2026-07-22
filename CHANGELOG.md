@@ -6,6 +6,17 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- `--permits`: per-trip permit report (implies `--include-approach`). Every
+  trailhead in `data/trailheads.csv` is tagged with a `wilderness_area`,
+  `land_agency`, and `permit_group`; the new `data/permits.csv` maps each
+  `permit_group` to its permit type, quota season, reservation window/method,
+  fees, and official apply URL (Inyo NF, Sierra NF, Sequoia NF, Stanislaus NF,
+  Eldorado NF/LTBMU, Humboldt-Toiyabe NF, Yosemite NP, and Sequoia & Kings
+  Canyon NP, including the separate Mt. Whitney Zone lottery). Given
+  `--trip-date`, it reports whether that date falls in the quota season and
+  when the reservation window opens. New `sierra_peaks/permits.py`
+  (`load_permits`, `permit_status`, `clusters_permit_info`,
+  `format_permit_report`) and `tests/test_permits.py`.
 - Approach-aware capacity splitting: with `--include-approach`, the trip budget
   is enforced including the trailhead approach. Splitting starts from the
   inter-peak floor and tightens only when an extra split actually makes trips fit

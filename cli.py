@@ -82,6 +82,15 @@ def _parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--trailheads", default="data/trailheads.csv",
                    help="Trailhead CSV used with --include-approach "
                         "(default data/trailheads.csv)")
+    p.add_argument("--permits", action="store_true",
+                   help="Print a per-trip permit report (agency, permit type, "
+                        "quota season, and when to apply for --trip-date). "
+                        "Implies --include-approach.")
+    p.add_argument("--trip-date", default=None,
+                   help="Planned trip start date (YYYY-MM-DD) for --permits "
+                        "(default: today)")
+    p.add_argument("--permits-file", default="data/permits.csv",
+                   help="Permit rules dataset for --permits (default data/permits.csv)")
     p.add_argument("--list", default="SPS",
                    help="If the data has a 'list' column, keep only this list "
                         "(default SPS; use 'all' to keep everything)")
@@ -130,7 +139,7 @@ def _print_summary(clusters) -> None:
 def main(argv=None) -> int:
     args = _parse_args(argv)
 
-    include_approach = args.include_approach or args.approach_report
+    include_approach = args.include_approach or args.approach_report or args.permits
 
     config = ClusterConfig(
         eps_mi=args.eps_mi,
@@ -194,6 +203,20 @@ def main(argv=None) -> int:
         print("Approach-amortization report")
         print("=" * 28)
         print(format_approach_report(rows))
+        print()
+
+    if args.permits:
+        import datetime
+        from sierra_peaks.permits import (
+            load_permits, clusters_permit_info, format_permit_report,
+        )
+        trip_date = (datetime.date.fromisoformat(args.trip_date) if args.trip_date
+                     else datetime.date.today())
+        permit_rules = load_permits(args.permits_file)
+        rows = clusters_permit_info(clusters, trailheads, permit_rules, trip_date)
+        print(f"Permit report (trip date {trip_date.isoformat()})")
+        print("=" * 28)
+        print(format_permit_report(rows))
         print()
 
     if args.output:

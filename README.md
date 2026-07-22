@@ -7,8 +7,10 @@ and exports the itineraries as JSON.
 
 It models off-trail, class 1–2 travel between summits using **great-circle
 distance** for the horizontal component and **Naismith's Rule** to convert
-vertical ascent into equivalent effort. Permit logistics are out of scope — this
-focuses on the geographic/physical optimization.
+vertical ascent into equivalent effort. A curated permit dataset (`--permits`,
+see below) can tell you which agency issues the permit for each trip's
+trailhead, whether it's quota season, and when to apply — but the core focus
+stays the geographic/physical optimization.
 
 Running it on the real SPS list produces mountaineering-sound groupings: the
 Palisades traverse, the Evolution group, the Whitney/Williamson group, the Mono
@@ -219,6 +221,44 @@ the budget; `save_mi` is the approach freed by reaching it. The report is a
 *signal*, bounded by the day budget, not a promise. Raising `--max-days` unlocks
 more amortization (~133 mi recoverable at 3 days vs ~80 at 2).
 
+### Permit report (`--permits`)
+
+Every trailhead in `data/trailheads.csv` is tagged with a wilderness area,
+issuing agency, and a `permit_group` key into `data/permits.csv` — a curated
+table of permit type, quota season, reservation window/method, fees, and the
+official apply URL for each agency covering the SPS range (Inyo NF, Sierra NF,
+Sequoia NF, Stanislaus NF, Eldorado NF/LTBMU, Humboldt-Toiyabe NF, Yosemite NP,
+and Sequoia & Kings Canyon NP, including the separate Mt. Whitney Zone lottery).
+
+`--permits` (which implies `--include-approach`, since it needs each trip's
+chosen trailhead) prints, per trip, the permit type, whether `--trip-date`
+falls in that area's quota season, and — if so — when the reservation window
+opens relative to today:
+
+```bash
+python cli.py -i data/sps_peaks.csv --permits --trip-date 2027-07-15 --max-days 3
+```
+
+```
+Cluster #2 -- Whitney Portal  (trip date 2027-07-15)
+  Wilderness: Mount Whitney Zone (John Muir Wilderness)  |  Agency: Inyo National Forest
+  Permit: Mount Whitney Zone Permit
+  Status: Lottery for 2027 opens Feb 1; apply by Mar 1.
+  Fee: $15/person plus $6 processing fee
+  Apply: https://www.recreation.gov/permits/445860
+```
+
+Run it once per candidate month across your 12-month planning window (or loop
+`--trip-date` over several dates) to see, trip by trip, which ones need a
+lottery entry, a 6-month rolling reservation, a day-of walk-up, or nothing at
+all.
+
+> **This is a planning aid, not a booking guarantee.** Quota-season dates,
+> reservation windows, and lottery timing shift year to year and by trailhead.
+> `data/permits.csv` was curated from official NPS/USFS/recreation.gov sources
+> in July 2026 — always confirm against the linked `apply_url` before relying
+> on a date.
+
 ---
 
 ## Installation
@@ -262,6 +302,9 @@ python cli.py --input data/sps_peaks.csv --output out.json --viz clusters.png
 | `--include-approach` | off | model the trailhead approach (walk in/out) and fold it into distance, effort, days & score |
 | `--approach-report` | off | print an approach-amortization report (implies `--include-approach`) |
 | `--trailheads` | `data/trailheads.csv` | trailhead file used with `--include-approach` |
+| `--permits` | off | print a permit report per trip (implies `--include-approach`) |
+| `--trip-date` | today | planned trip start date (`YYYY-MM-DD`) used by `--permits` |
+| `--permits-file` | `data/permits.csv` | permit rules dataset used by `--permits` |
 | `--method` | `dbscan` | grouping method: `dbscan` or `agglomerative` |
 | `--exclude` | – | comma-separated peak names to drop |
 | `--force-together` | – | comma-separated peaks to keep in one trip (repeatable) |
@@ -363,6 +406,8 @@ sierra-peaks-clustering/
 ├── data/
 │   ├── sps_peaks.csv            # authoritative 247 SPS + 354 non-SPS peaks
 │   ├── sps_sample.csv           # 30-peak demo subset
+│   ├── trailheads.csv           # trailheads incl. wilderness area / agency / permit_group
+│   ├── permits.csv              # permit rules per permit_group (quota season, apply URL...)
 │   └── source/                  # official Sierra Club files + trimmed GNIS subset
 ├── scripts/
 │   ├── build_dataset.py         # XLS + non-SPS PDF -> sps_peaks.csv
@@ -381,12 +426,14 @@ sierra-peaks-clustering/
 │   ├── pipeline.py              # cluster → order → score → rank
 │   ├── manual.py                # merge / split / exclude / force-together
 │   ├── export.py                # JSON export
+│   ├── permits.py               # permit lookup + date-aware quota/reservation status
 │   └── visualize.py             # optional matplotlib map
 └── tests/
-    └── test_pipeline.py         # 16 unit/integration tests
+    ├── test_pipeline.py         # clustering/routing/approach unit & integration tests
+    └── test_permits.py          # permit-lookup unit tests
 ```
 
-Run the tests: `python tests/test_pipeline.py` (or `python -m pytest tests/`).
+Run the tests: `python -m pytest tests/` (or `python tests/test_pipeline.py`).
 
 ---
 
@@ -403,7 +450,11 @@ Run the tests: `python tests/test_pipeline.py` (or `python -m pytest tests/`).
   downstream is unchanged.
 - **Elevation gain** is the sum of positive summit-to-summit deltas along the
   route — a lower bound that ignores intermediate ups-and-downs.
-- **Permits** are intentionally out of scope.
+- **Permits** (`--permits`, see above) are a planning aid, not a booking
+  system: `data/permits.csv` is a manually curated snapshot of quota seasons,
+  reservation windows and lottery timing, which agencies change from year to
+  year. It doesn't call recreation.gov or check live availability. Always
+  confirm against the linked `apply_url` before relying on a date.
 ```
 
 ---
