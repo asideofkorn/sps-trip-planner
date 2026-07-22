@@ -102,6 +102,18 @@ def test_clusters_permit_info_needs_trailhead():
     assert format_permit_report(rows)
 
 
+def test_sierra_nf_quota_is_year_round():
+    # fs.usda.gov/r05/sierra: quotas apply year-round, no off-season exemption.
+    permits = load_permits(PERMITS)
+    rule = permits["sierra_nf"]
+    assert rule.quota_season_start is None
+    assert rule.in_quota_season(date(2027, 1, 15))   # winter
+    assert rule.in_quota_season(date(2027, 7, 15))   # summer
+    winter_status = permit_status(rule, date(2027, 1, 15), today=date(2026, 7, 22))
+    assert "outside" not in winter_status.lower()
+    assert "open" in winter_status.lower()
+
+
 def test_interagency_reciprocity_surfaces_for_boundary_trailheads():
     permits = load_permits(PERMITS)
     trailheads = load_trailheads(TRAILHEADS)

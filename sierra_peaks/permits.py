@@ -61,8 +61,15 @@ class PermitRule:
     interagency_note: str = ""
 
     def in_quota_season(self, trip_date: date) -> bool:
-        if not self.quota_required or not self.quota_season_start:
+        """Whether ``trip_date`` falls in this rule's quota season.
+
+        A quota-required rule with no season bounds (e.g. Sierra NF, whose
+        quotas apply year-round per fs.usda.gov) is always in season.
+        """
+        if not self.quota_required:
             return False
+        if not self.quota_season_start:
+            return True
         start, end = self.quota_season_start, self.quota_season_end
         return (start[0], start[1]) <= (trip_date.month, trip_date.day) <= (end[0], end[1])
 
