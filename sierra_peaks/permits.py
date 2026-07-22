@@ -10,17 +10,23 @@ opens.
 A permit's issuing agency is the trailhead's agency, not necessarily the
 agency governing every peak reached from it: Sierra Nevada wilderness permits
 are interagency -- a permit issued for the trailhead you start at is honored
-for the whole continuous trip, even where the route crosses into a
-neighboring wilderness or national park (e.g. a Sierra NF permit picked up at
-the Isberg/Clover Meadow trailhead covers the leg into Yosemite over Isberg
-Pass; an Emigrant Wilderness self-issue permit covers a route that crosses
-into Yosemite at Bond Pass). You do *not* need a second permit from the
-agency whose land you pass through, as long as the trip both starts and ends
-at the trailhead the permit was issued for. Each :class:`PermitRule` carries
-an ``interagency_note`` documenting this where it applies; a handful of
-boundary crossings have their own procedural wrinkle (e.g. Kibbie Lake / Lake
-Eleanor out of Stanislaus NF requires calling Yosemite's Groveland Ranger
-District a day ahead) -- see the note before assuming blanket reciprocity.
+for the rest of the trip, even where the route crosses into a neighboring
+wilderness or national park (e.g. a Sierra NF permit picked up at the
+Isberg/Clover Meadow trailhead covers the leg into Yosemite over Isberg Pass;
+an Emigrant Wilderness self-issue permit covers a route that crosses into
+Yosemite at Bond Pass). You do *not* need a second permit from the agency
+whose land you pass through.
+
+Per Inyo NF's own wording, this reciprocity requires *continuous* wilderness
+travel: exiting the wilderness and re-entering elsewhere voids the permit and
+requires a new one from the agency where that next section begins, EXCEPT a
+reasonable resupply break for long-distance through-hikers. For the single-
+trailhead loop trips this tool plans, that condition is always satisfied.
+Each :class:`PermitRule` carries an ``interagency_note`` documenting where
+reciprocity applies; a handful of boundary crossings have their own
+procedural wrinkle on top of it (e.g. Kibbie Lake / Lake Eleanor out of
+Stanislaus NF requires calling Yosemite's Groveland Ranger District a day
+ahead) -- see the note before assuming blanket reciprocity.
 
 Rules and dates shift year to year (recreation.gov release times, lottery
 windows, exact quota-season start/end). Treat this as a planning aid, not a
