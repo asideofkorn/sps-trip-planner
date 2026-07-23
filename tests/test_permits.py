@@ -225,3 +225,33 @@ def test_override_skipped_when_peak_absent_or_matches_default():
 
 def test_load_permit_overrides_missing_file_returns_empty():
     assert load_permit_overrides("data/does_not_exist.csv") == {}
+
+
+def test_provenance_fields_load_and_flag_dated_sources():
+    permits = load_permits(PERMITS)
+    # inyo_hoover_nonquota and inyo_gtw trace to a 2021 PDF -- should be
+    # loadable and clearly distinguishable from a freshly-checked row.
+    dated = permits["inyo_hoover_nonquota"]
+    assert dated.source_last_updated == "2021-06-13"
+    assert dated.verified_date == "2026-07-23"
+    # Rows never independently verified (web-search only) have no verified_date.
+    unverified = permits["yosemite"]
+    assert unverified.verified_date == ""
+
+
+def test_report_shows_provenance_and_flags_unverified_rows():
+    permits = load_permits(PERMITS)
+    trailheads = load_trailheads(TRAILHEADS)
+
+    verified = Cluster(cluster_id=0, peaks=[Peak("P", 36.45, -118.17, 12000)],
+                        trailhead="Horseshoe Meadows (Cottonwood)")
+    rows = clusters_permit_info([verified], trailheads, permits, date(2027, 7, 1))
+    report = format_permit_report(rows)
+    assert "source last updated 2021-06-13" in report
+    assert "we last checked this against the source on 2026-07-23" in report
+
+    unverified = Cluster(cluster_id=1, peaks=[Peak("Q", 37.87, -119.34, 12000)],
+                          trailhead="Tuolumne Meadows")
+    rows = clusters_permit_info([unverified], trailheads, permits, date(2027, 7, 1))
+    report = format_permit_report(rows)
+    assert "not independently verified" in report.lower()

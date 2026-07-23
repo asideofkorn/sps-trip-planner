@@ -293,6 +293,23 @@ Irvine, Mount McAdie, Mount Mallory, Mount LeConte, and Mount Corcoran**
 includes any of these, verify the actual permit with Inyo NF rather than
 trusting the default Whitney Zone entry the tool shows for that trailhead.
 
+**Provenance: two dates, not one.** Every row in `data/permits.csv` carries
+two separate dates, both printed as a `Provenance:` line in the report:
+`source_last_updated` is the date the *source itself* says it was last
+updated (e.g. an fs.usda.gov page's own "Last updated" footer, or a PDF's
+filename date) — this is a fact about the source, not about this repo.
+`verified_date` is the date *this dataset* was last checked against that
+source. The two commonly disagree: a source can say "last updated 2021" and
+still be the newest information we have, checked yesterday — or a source can
+say "last updated this month" but not have been independently checked here
+at all yet, in which case `verified_date` is blank and the report prints
+`NOT independently verified against a primary source (web-search synthesis
+only)` instead. Treat any row with an old `source_last_updated` (the Inyo NF
+trailhead/quota PDF this project used is dated 2021-06-13) or a blank
+`verified_date` as lower-confidence than one checked recently against a
+freshly-updated source, and re-verify before relying on it for an actual
+booking deadline.
+
 > **This is a planning aid, not a booking guarantee.** Quota-season dates,
 > reservation windows, and lottery timing shift year to year and by trailhead.
 > `data/permits.csv` was curated from official NPS/USFS/recreation.gov sources

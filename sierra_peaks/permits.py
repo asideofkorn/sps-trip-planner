@@ -83,6 +83,8 @@ class PermitRule:
     apply_url: str = ""
     notes: str = ""
     interagency_note: str = ""
+    source_last_updated: str = ""  # the source page/doc's own "last updated" date, if shown
+    verified_date: str = ""        # date this row was last checked against that source
 
     def in_quota_season(self, trip_date: date) -> bool:
         """Whether ``trip_date`` falls in this rule's quota season.
@@ -136,6 +138,8 @@ def load_permits(path: str | Path = "data/permits.csv") -> Dict[str, PermitRule]
             apply_url=_str_field(row, "apply_url"),
             notes=_str_field(row, "notes"),
             interagency_note=_str_field(row, "interagency_note"),
+            source_last_updated=_str_field(row, "source_last_updated"),
+            verified_date=_str_field(row, "verified_date"),
         )
     return rules
 
@@ -238,6 +242,8 @@ class ClusterPermitInfo:
     notes: str = ""
     interagency_note: str = ""
     peak_note: str = ""  # e.g. "for Mount Russell only" when this overrides the default
+    source_last_updated: str = ""
+    verified_date: str = ""
 
 
 def _permit_entry(
@@ -257,6 +263,8 @@ def _permit_entry(
         notes=rule.notes,
         interagency_note=rule.interagency_note,
         peak_note=peak_note,
+        source_last_updated=rule.source_last_updated,
+        verified_date=rule.verified_date,
     )
 
 
@@ -334,6 +342,13 @@ def format_permit_report(rows: Sequence[ClusterPermitInfo]) -> str:
             lines.append(f"  Note: {r.notes}")
         if r.interagency_note:
             lines.append(f"  Crosses into other land: {r.interagency_note}")
+        if r.verified_date:
+            src = f"source last updated {r.source_last_updated}" if r.source_last_updated else "source's own update date not shown"
+            lines.append(f"  Provenance: {src}; we last checked this against the "
+                          f"source on {r.verified_date}.")
+        else:
+            lines.append("  Provenance: NOT independently verified against a primary "
+                          "source (web-search synthesis only) -- treat with extra caution.")
         lines.append("")
     lines.append(
         "Permit rules and dates change year to year -- verify against the "

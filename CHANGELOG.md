@@ -6,6 +6,18 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- Provenance tracking for `data/permits.csv`: two new columns,
+  `source_last_updated` (the source page/document's own "last updated" date,
+  e.g. an fs.usda.gov footer or a PDF's filename date) and `verified_date`
+  (when this repo last checked that row against the source). The two are
+  independent -- a row can trace to an old source that's still the best
+  available data, or to a fresh-looking page that was never independently
+  checked here. `--permits` now prints a `Provenance:` line per trip showing
+  both, or flags rows with no `verified_date` as web-search-only /
+  not independently verified. Surfaced that the Inyo NF trailhead/quota PDF
+  used for the `inyo_gtw` and `inyo_hoover_nonquota` groups is dated
+  2021-06-13 -- the agency/quota-status facts are unlikely to have changed,
+  but the exact quota numbers should be re-verified before relying on them.
 - `--permits`: per-trip permit report (implies `--include-approach`). Every
   trailhead in `data/trailheads.csv` is tagged with a `wilderness_area`,
   `land_agency`, and `permit_group`; the new `data/permits.csv` maps each
