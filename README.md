@@ -273,6 +273,26 @@ Eleanor corridor out of Stanislaus NF requires calling Yosemite's Groveland
 Ranger District a day ahead), so read that line rather than assuming blanket
 reciprocity everywhere.
 
+**Per-peak permit overrides.** A trailhead's `permit_group` is a default, not
+a guarantee for every peak reached from it — some trailheads serve more than
+one permitted trail with different rules. Whitney Portal is the clearest
+example: the classic Mt. Whitney Trail (Mount Whitney, Mount Muir) is covered
+by the Whitney Zone lottery, but Mount Russell is reached via the
+Mountaineers Route / North Fork of Lone Pine Creek trail, which Inyo NF
+explicitly excludes from that lottery and instead permits under its regular
+John Muir Wilderness system. `data/permit_overrides.csv` (peak name →
+permit_group) captures known cases like this; `--permits` prints an extra
+entry tagged `[for <peak> only]` alongside the trailhead's default when a
+cluster mixes peaks that need different permits. This file is deliberately
+conservative — only peaks with a directly-named source are listed. Other
+Whitney-Portal-served peaks likely need the same treatment but aren't listed
+because their exact approach trail isn't confirmed yet: **Thor Peak, Mount
+Irvine, Mount McAdie, Mount Mallory, Mount LeConte, and Mount Corcoran**
+(commonly reached via the separate Meysan Lakes Trail) and **Mount Carillon**
+(adjacent to Mount Russell on the Mountaineers Route side). If your trip
+includes any of these, verify the actual permit with Inyo NF rather than
+trusting the default Whitney Zone entry the tool shows for that trailhead.
+
 > **This is a planning aid, not a booking guarantee.** Quota-season dates,
 > reservation windows, and lottery timing shift year to year and by trailhead.
 > `data/permits.csv` was curated from official NPS/USFS/recreation.gov sources
@@ -325,6 +345,7 @@ python cli.py --input data/sps_peaks.csv --output out.json --viz clusters.png
 | `--permits` | off | print a permit report per trip (implies `--include-approach`) |
 | `--trip-date` | today | planned trip start date (`YYYY-MM-DD`) used by `--permits` |
 | `--permits-file` | `data/permits.csv` | permit rules dataset used by `--permits` |
+| `--permit-overrides-file` | `data/permit_overrides.csv` | peak-level permit_group overrides used by `--permits` |
 | `--method` | `dbscan` | grouping method: `dbscan` or `agglomerative` |
 | `--exclude` | – | comma-separated peak names to drop |
 | `--force-together` | – | comma-separated peaks to keep in one trip (repeatable) |
@@ -428,6 +449,7 @@ sierra-peaks-clustering/
 │   ├── sps_sample.csv           # 30-peak demo subset
 │   ├── trailheads.csv           # trailheads incl. wilderness area / agency / permit_group
 │   ├── permits.csv              # permit rules per permit_group (quota season, apply URL...)
+│   ├── permit_overrides.csv     # peak-level permit_group overrides (see Permit report)
 │   └── source/                  # official Sierra Club files + trimmed GNIS subset
 ├── scripts/
 │   ├── build_dataset.py         # XLS + non-SPS PDF -> sps_peaks.csv

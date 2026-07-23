@@ -17,6 +17,26 @@ All notable changes to this project are documented here. The format is based on
   when the reservation window opens. New `sierra_peaks/permits.py`
   (`load_permits`, `permit_status`, `clusters_permit_info`,
   `format_permit_report`) and `tests/test_permits.py`.
+- Peak-level permit overrides (`data/permit_overrides.csv`,
+  `load_permit_overrides`, `--permit-overrides-file`): some trailheads serve
+  more than one permitted trail with different rules -- e.g. Whitney Portal's
+  classic Mt. Whitney Trail is lottery-only, but Mount Russell (Mountaineers
+  Route / North Fork of Lone Pine Creek) is explicitly excluded from that
+  lottery and uses the regular Inyo NF John Muir Wilderness permit instead.
+  `clusters_permit_info` now emits an extra `[for <peak> only]` entry when a
+  cluster mixes peaks needing different permits. Populated conservatively --
+  only peaks with a directly-named source, e.g. Mount Russell; other likely
+  candidates (Thor Peak, Mount Irvine, Mount McAdie, Mount Mallory, Mount
+  LeConte, Mount Corcoran, Mount Carillon) are flagged in the README rather
+  than guessed at.
+- Two new Inyo NF permit groups, `inyo_gtw` and `inyo_hoover_nonquota`,
+  correcting two trailheads that were tagged to the wrong permit_group:
+  `Horseshoe Meadows (Cottonwood)` (Golden Trout Wilderness entries have a
+  shorter quota season -- late June to Sep 15 -- than Inyo's general John
+  Muir/Ansel Adams May 1 - Nov 1 season) and `Lundy Canyon` / `Saddlebag
+  Lake` (both actually Inyo NF-administered and non-quota, not
+  Humboldt-Toiyabe NF's quota'd Hoover Wilderness system as previously
+  tagged). All confirmed against Inyo NF's official trail/quota table.
 - Approach-aware capacity splitting: with `--include-approach`, the trip budget
   is enforced including the trailhead approach. Splitting starts from the
   inter-peak floor and tightens only when an extra split actually makes trips fit

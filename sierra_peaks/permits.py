@@ -32,6 +32,21 @@ Rules and dates shift year to year (recreation.gov release times, lottery
 windows, exact quota-season start/end). Treat this as a planning aid, not a
 booking guarantee -- always confirm against the ``apply_url`` before relying
 on a date.
+
+A trailhead's permit_group is a default, not a guarantee for every peak
+reached from it: some trailheads serve more than one permitted trail with
+different rules (e.g. Whitney Portal serves the lottery-only classic Mt.
+Whitney Trail, but also the separately-permitted Mountaineers Route /
+North Fork of Lone Pine Creek trail for Mount Russell, and the Meysan Lakes
+Trail for several other peaks). ``data/permit_overrides.csv`` lists specific
+peaks whose actual required permit differs from their trailhead's default;
+:func:`clusters_permit_info` emits an extra, peak-specific entry for those.
+This file is deliberately conservative -- only peaks with a directly-named
+source are listed. Known-likely-but-unconfirmed cases (e.g. the Meysan Lakes
+Trail peaks, or Mount Carillon) are intentionally left off rather than
+guessed at; treat any peak sharing a trailhead with a lottery/special
+permit as worth double-checking if its standard route isn't the trailhead's
+main trail.
 """
 
 from __future__ import annotations
@@ -125,6 +140,25 @@ def load_permits(path: str | Path = "data/permits.csv") -> Dict[str, PermitRule]
     return rules
 
 
+def load_permit_overrides(
+    path: str | Path = "data/permit_overrides.csv",
+) -> Dict[str, str]:
+    """Load peak-name -> permit_group overrides (see module docstring).
+
+    Returns an empty dict if the file doesn't exist -- overrides are opt-in
+    extra precision, not a required input.
+    """
+    path = Path(path)
+    if not path.exists():
+        return {}
+    df = pd.read_csv(path)
+    return {
+        _str_field(row, "peak_name"): _str_field(row, "permit_group_override")
+        for _, row in df.iterrows()
+        if _str_field(row, "peak_name") and _str_field(row, "permit_group_override")
+    }
+
+
 def _whitney_lottery_status(trip_date: date, today: date) -> str:
     year = trip_date.year
     apply_start = date(year, 2, 1)
@@ -203,6 +237,27 @@ class ClusterPermitInfo:
     status: str
     notes: str = ""
     interagency_note: str = ""
+    peak_note: str = ""  # e.g. "for Mount Russell only" when this overrides the default
+
+
+def _permit_entry(
+    cluster_id: int, trailhead: str, wilderness_area: str, rule: PermitRule,
+    trip_date: date, today: Optional[date], peak_note: str = "",
+) -> ClusterPermitInfo:
+    return ClusterPermitInfo(
+        cluster_id=cluster_id,
+        trailhead=trailhead,
+        wilderness_area=wilderness_area,
+        agency=rule.agency,
+        permit_type=rule.permit_type,
+        fee_notes=rule.fee_notes,
+        apply_url=rule.apply_url,
+        trip_date=trip_date,
+        status=permit_status(rule, trip_date, today),
+        notes=rule.notes,
+        interagency_note=rule.interagency_note,
+        peak_note=peak_note,
+    )
 
 
 def clusters_permit_info(
@@ -211,13 +266,20 @@ def clusters_permit_info(
     permits: Dict[str, PermitRule],
     trip_date: date,
     today: Optional[date] = None,
+    overrides: Optional[Dict[str, str]] = None,
 ) -> List[ClusterPermitInfo]:
     """Resolve permit guidance for every cluster that has a chosen trailhead.
 
     Clusters without a trailhead (approach modeling was off) are skipped --
-    there is nothing to key the permit lookup on.
+    there is nothing to key the permit lookup on. When ``overrides`` names a
+    peak in the cluster whose actual permit_group differs from the
+    trailhead's default (see :func:`load_permit_overrides`), an additional
+    peak-specific entry is emitted alongside the trailhead's default one, so
+    a mixed trip (e.g. Mount Whitney + Mount Russell from Whitney Portal)
+    surfaces both permits it actually needs.
     """
     th_by_name = {t.name: t for t in trailheads}
+    overrides = overrides or {}
     rows: List[ClusterPermitInfo] = []
     for c in clusters:
         if not c.trailhead:
@@ -228,21 +290,24 @@ def clusters_permit_info(
         rule = permits.get(th.permit_group)
         if rule is None:
             continue
-        rows.append(
-            ClusterPermitInfo(
-                cluster_id=c.cluster_id,
-                trailhead=c.trailhead,
-                wilderness_area=th.wilderness_area,
-                agency=rule.agency,
-                permit_type=rule.permit_type,
-                fee_notes=rule.fee_notes,
-                apply_url=rule.apply_url,
-                trip_date=trip_date,
-                status=permit_status(rule, trip_date, today),
-                notes=rule.notes,
-                interagency_note=rule.interagency_note,
-            )
-        )
+        rows.append(_permit_entry(c.cluster_id, c.trailhead, th.wilderness_area,
+                                   rule, trip_date, today))
+
+        seen_override_groups = set()
+        for peak in c.peaks:
+            override_group = overrides.get(peak.name)
+            if not override_group or override_group == th.permit_group:
+                continue
+            if override_group in seen_override_groups:
+                continue  # avoid duplicate entries when >1 peak shares an override
+            override_rule = permits.get(override_group)
+            if override_rule is None:
+                continue
+            seen_override_groups.add(override_group)
+            rows.append(_permit_entry(
+                c.cluster_id, c.trailhead, th.wilderness_area, override_rule,
+                trip_date, today, peak_note=f"for {peak.name} only -- see notes",
+            ))
     return rows
 
 
@@ -254,7 +319,9 @@ def format_permit_report(rows: Sequence[ClusterPermitInfo]) -> str:
 
     lines = []
     for r in rows:
-        lines.append(f"Cluster #{r.cluster_id} -- {r.trailhead}  (trip date {r.trip_date:%Y-%m-%d})")
+        suffix = f"  [{r.peak_note}]" if r.peak_note else ""
+        lines.append(f"Cluster #{r.cluster_id} -- {r.trailhead}  "
+                      f"(trip date {r.trip_date:%Y-%m-%d}){suffix}")
         if r.wilderness_area:
             lines.append(f"  Wilderness: {r.wilderness_area}  |  Agency: {r.agency}")
         lines.append(f"  Permit: {r.permit_type}")

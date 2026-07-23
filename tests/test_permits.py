@@ -15,6 +15,7 @@ from sierra_peaks.data_loader import load_trailheads
 from sierra_peaks.model import Cluster, Peak
 from sierra_peaks.permits import (
     load_permits,
+    load_permit_overrides,
     permit_status,
     clusters_permit_info,
     format_permit_report,
@@ -22,6 +23,7 @@ from sierra_peaks.permits import (
 
 TRAILHEADS = os.path.join(os.path.dirname(__file__), "..", "data", "trailheads.csv")
 PERMITS = os.path.join(os.path.dirname(__file__), "..", "data", "permits.csv")
+OVERRIDES = os.path.join(os.path.dirname(__file__), "..", "data", "permit_overrides.csv")
 
 
 def test_load_permits_covers_every_trailhead_group():
@@ -145,3 +147,81 @@ def test_interagency_reciprocity_surfaces_for_boundary_trailheads():
 
 def test_format_permit_report_empty():
     assert "no permit info" in format_permit_report([]).lower()
+
+
+def test_inyo_gtw_has_different_season_than_general_inyo():
+    # Cottonwood (GT-coded trails) uses a shorter season than the JM/AA
+    # May 1 - Nov 1 window -- confirmed against Inyo NF's own trail table.
+    permits = load_permits(PERMITS)
+    general = permits["inyo_jmw_aaw"]
+    gtw = permits["inyo_gtw"]
+    assert gtw.quota_season_start != general.quota_season_start
+    assert gtw.in_quota_season(date(2027, 7, 15))       # within Jun 26 - Sep 15
+    assert not gtw.in_quota_season(date(2027, 5, 15))   # before season, unlike general Inyo
+    assert not gtw.in_quota_season(date(2027, 10, 15))  # after season, unlike general Inyo
+
+
+def test_horseshoe_meadows_uses_gtw_season_not_general():
+    trailheads = load_trailheads(TRAILHEADS)
+    th = next(t for t in trailheads if t.name == "Horseshoe Meadows (Cottonwood)")
+    assert th.permit_group == "inyo_gtw"
+
+
+def test_inyo_hoover_portion_is_non_quota():
+    # Lundy Canyon and Saddlebag Lake are Inyo NF (not Humboldt-Toiyabe) and
+    # non-quota, per Inyo NF's own official trail/quota table (HH01, HH04).
+    trailheads = load_trailheads(TRAILHEADS)
+    th_by_name = {t.name: t for t in trailheads}
+    permits = load_permits(PERMITS)
+
+    lundy = th_by_name["Lundy Canyon"]
+    assert lundy.land_agency == "Inyo NF"
+    assert lundy.permit_group == "inyo_hoover_nonquota"
+
+    saddlebag = th_by_name["Saddlebag Lake"]
+    assert saddlebag.land_agency == "Inyo NF"
+    assert saddlebag.permit_group == "inyo_hoover_nonquota"
+
+    rule = permits["inyo_hoover_nonquota"]
+    assert not rule.quota_required
+    assert "self-issue" in permit_status(rule, date(2027, 7, 15)).lower()
+
+
+def test_mount_russell_override_surfaces_second_permit():
+    # Whitney Portal defaults to the Whitney Zone lottery, but Mount Russell
+    # (Mountaineers Route / North Fork of Lone Pine Creek) needs the regular
+    # Inyo NF permit instead -- both should show up for a mixed trip.
+    permits = load_permits(PERMITS)
+    trailheads = load_trailheads(TRAILHEADS)
+    overrides = load_permit_overrides(OVERRIDES)
+    assert overrides.get("Mount Russell") == "inyo_jmw_aaw"
+
+    c = Cluster(
+        cluster_id=0,
+        peaks=[Peak("Mount Whitney", 36.578, -118.292, 14505),
+               Peak("Mount Russell", 36.595, -118.303, 14094)],
+        trailhead="Whitney Portal",
+    )
+    rows = clusters_permit_info([c], trailheads, permits, date(2027, 7, 1),
+                                 overrides=overrides)
+    assert len(rows) == 2
+    assert any("Whitney" in r.permit_type and not r.peak_note for r in rows)
+    assert any(r.peak_note and "Mount Russell" in r.peak_note for r in rows)
+    report = format_permit_report(rows)
+    assert "Mount Russell" in report
+
+
+def test_override_skipped_when_peak_absent_or_matches_default():
+    # A cluster with only Mount Whitney (no override target) gets one entry.
+    permits = load_permits(PERMITS)
+    trailheads = load_trailheads(TRAILHEADS)
+    overrides = load_permit_overrides(OVERRIDES)
+    c = Cluster(cluster_id=0, peaks=[Peak("Mount Whitney", 36.578, -118.292, 14505)],
+                trailhead="Whitney Portal")
+    rows = clusters_permit_info([c], trailheads, permits, date(2027, 7, 1),
+                                 overrides=overrides)
+    assert len(rows) == 1
+
+
+def test_load_permit_overrides_missing_file_returns_empty():
+    assert load_permit_overrides("data/does_not_exist.csv") == {}

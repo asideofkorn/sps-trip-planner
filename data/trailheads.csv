@@ -5,8 +5,8 @@ Mount Rose,east,39.3139,-119.8975,8900,Hwy 431; Mount Rose,Mount Rose Wilderness
 Leavitt Meadows,east,38.3358,-119.5519,7200,West Walker; Leavitt/Tower country,Hoover Wilderness,Humboldt-Toiyabe NF,hoover
 Twin Lakes (Bridgeport),east,38.1456,-119.3733,7100,Mono Village; Matterhorn/Sawtooth Ridge,Hoover Wilderness,Humboldt-Toiyabe NF,hoover
 Virginia Lakes,east,38.048,-119.2652,9800,"Road's end 6mi west of Conway Summit off Hwy 395; Dunderberg Peak, Excelsior Mountain, Virginia Peak, Twin Peaks.",Hoover Wilderness,Humboldt-Toiyabe NF,hoover
-Lundy Canyon,east,38.0024,-119.2912,7800,"North of Lee Vining via Lundy Lake Rd, past Lundy Lake Resort; north-side approach to Mount Warren via Lake Canyon Trail.",Hoover Wilderness,Humboldt-Toiyabe NF,hoover
-Saddlebag Lake,east,37.9664,-119.2722,10100,20 Lakes Basin; Conness/North Peak,Hoover Wilderness,Inyo NF,inyo_jmw_aaw
+Lundy Canyon,east,38.0024,-119.2912,7800,"North of Lee Vining via Lundy Lake Rd, past Lundy Lake Resort; north-side approach to Mount Warren via Lake Canyon Trail.",Hoover Wilderness,Inyo NF,inyo_hoover_nonquota
+Saddlebag Lake,east,37.9664,-119.2722,10100,20 Lakes Basin; Conness/North Peak,Hoover Wilderness,Inyo NF,inyo_hoover_nonquota
 Tioga Pass,east,37.9106,-119.2575,9945,Mount Dana / Gaylor; Yosemite east entrance,Yosemite Wilderness,Yosemite NP,yosemite
 Walker Lake (Bloody Canyon),east,37.8736,-119.1583,7500,Mono Pass (Yosemite); Gibbs/Lewis,Ansel Adams Wilderness,Inyo NF,inyo_jmw_aaw
 Rush Creek (Silver Lake),east,37.7847,-119.1283,7200,Rush Creek; Donohue/Lyell country,Ansel Adams Wilderness,Inyo NF,inyo_jmw_aaw
@@ -36,7 +36,7 @@ Pinyon Creek,east,36.751,-118.322,6800,Via Pinyon Creek Rd off Onion Valley Rd n
 Symmes Creek (Shepherd Pass),east,36.6917,-118.2967,6300,Shepherd Pass; Williamson/Tyndall group,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
 Whitney Portal,east,36.5861,-118.2414,8360,Mount Whitney Trail & Mountaineers Route,Mount Whitney Zone (John Muir Wilderness),Inyo NF,whitney_zone
 Granite View Drive (Turtle Creek),east,36.555,-118.195,6800,Spur near Turtle Creek Campground off Horseshoe Meadows Rd; alternate approach to Mount LeConte/Mount Corcoran. Coords approximate — unverified.,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Horseshoe Meadows (Cottonwood),east,36.4506,-118.1697,10040,Cottonwood Lakes & Cottonwood Pass; far southern Sierra,Golden Trout Wilderness,Inyo NF,inyo_jmw_aaw
+Horseshoe Meadows (Cottonwood),east,36.4506,-118.1697,10040,Cottonwood Lakes & Cottonwood Pass; far southern Sierra,Golden Trout Wilderness,Inyo NF,inyo_gtw
 Cartago Canal,east,36.318,-118.035,3700,Crosses the LA Aqueduct near Cartago on Hwy 395; primary access for Cartago Peak.,South Sierra Wilderness,Sequoia NF,gtw_free
 Sage Flat (Olancha),east,36.2042,-118.0758,5600,Olancha Peak / southern Sierra,South Sierra Wilderness,Sequoia NF,gtw_free
 Blackrock/Monache Road (21S36),east,36.128,-118.26,7900,"USFS road 21S36 (Monache Jeep Rd) off 21S03 near Black Rock Station; Smith Mountain, Crag Peak. Coords approximate — unverified.",Golden Trout Wilderness,Sequoia NF,gtw_free
