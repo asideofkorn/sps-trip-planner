@@ -239,7 +239,7 @@ def test_provenance_fields_load_and_flag_dated_sources():
     assert dated.source_last_updated == "2021-06-13"
     assert dated.verified_date == "2026-07-23"
     # Rows never independently verified (web-search only) have no verified_date.
-    unverified = permits["yosemite"]
+    unverified = permits["seki"]
     assert unverified.verified_date == ""
 
 
@@ -254,8 +254,8 @@ def test_report_shows_provenance_and_flags_unverified_rows():
     assert "source last updated 2021-06-13" in report
     assert "we last checked this against the source on 2026-07-23" in report
 
-    unverified = Cluster(cluster_id=1, peaks=[Peak("Q", 37.87, -119.34, 12000)],
-                          trailhead="Tuolumne Meadows")
+    unverified = Cluster(cluster_id=1, peaks=[Peak("Goat Mountain", 36.79, -118.58, 10800)],
+                          trailhead="Roads End (Cedar Grove)")
     rows = clusters_permit_info([unverified], trailheads, permits, date(2027, 7, 1))
     report = format_permit_report(rows)
     assert "not independently verified" in report.lower()
@@ -301,3 +301,27 @@ def test_format_source_log_empty():
     assert "no source log entries" in format_source_log([]).lower()
     assert "no source log entries for made_up_group" in format_source_log(
         [], permit_group="made_up_group").lower()
+
+
+def test_yosemite_uses_lottery_language_not_simple_booking():
+    # Yosemite's 60% portion is a weekly lottery, not a simple first-come
+    # reservation window like Inyo/SEKI -- the status message must say so.
+    permits = load_permits(PERMITS)
+    rule = permits["yosemite"]
+    trip = date(2027, 7, 15)
+    opens = trip - __import__("datetime").timedelta(days=rule.reservation_window_days)
+
+    before = permit_status(rule, trip, today=opens - __import__("datetime").timedelta(days=1))
+    assert "lottery" in before.lower()
+    assert "book now" not in before.lower()
+
+    after = permit_status(rule, trip, today=opens)
+    assert "lottery" in after.lower()
+    assert "book now" not in after.lower()
+
+
+def test_yosemite_provenance_reflects_nps_source():
+    permits = load_permits(PERMITS)
+    rule = permits["yosemite"]
+    assert rule.source_last_updated == "2025-11-13"
+    assert rule.verified_date  # now independently verified, not web-search-only

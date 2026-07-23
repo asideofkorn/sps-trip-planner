@@ -80,6 +80,11 @@ _WHITNEY_ZONE = "whitney_zone"
 # Special-cased because its off-season isn't self-issue -- it's in-person/email
 # only, unlike the generic "free/self-issue off-season" assumption below.
 _CPMA = "cpma"
+# Special-cased because the 60% portion is a weekly lottery (apply within a
+# week-long window, don't just show up at the 168-day mark and book), not a
+# simple first-come reservation like the generic "window is open" message
+# below implies.
+_YOSEMITE = "yosemite"
 
 
 @dataclass
@@ -235,6 +240,16 @@ def permit_status(
                 "basis; see the reservation method for timing.")
 
     opens = trip_date - timedelta(days=rule.reservation_window_days)
+    if rule.permit_group == _YOSEMITE:
+        if today < opens:
+            return (f"Weekly lottery for your hiking-start week opens around "
+                     f"{opens:%Y-%m-%d} -- apply within that week-long window "
+                     f"(Sunday-Saturday), don't wait for a simple booking window "
+                     f"to open.")
+        return (f"Lottery window for this date has likely opened (~{opens:%Y-%m-%d}) "
+                f"-- apply on recreation.gov if you haven't; if the lottery has "
+                f"closed, check for unclaimed first-come spots or the 40% released "
+                f"7 days out.")
     if today < opens:
         return f"Reservations open {opens:%Y-%m-%d} (7am Pacific) -- mark your calendar."
     return (f"Reservation window is OPEN (opened {opens:%Y-%m-%d}) -- book now on "
