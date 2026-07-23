@@ -14,6 +14,7 @@ Read this before redistributing or relying on the bundled data.
 | `data/trailheads.csv` | Curated by this project from public sources (PCTA, NPS, USFS, Wikipedia); coordinates are facts. `wilderness_area`/`land_agency`/`permit_group` columns added July 2026, cross-referenced against the agency sources below | Provided under the project license; verify before navigational use |
 | `data/permits.csv` | Curated by this project from official sources (recreation.gov, nps.gov, fs.usda.gov) as of July 2026 | Facts (agency, fees, dates) are not copyrightable; provided under the project license. Quota seasons, reservation windows and lottery dates change annually — treat as a planning aid and verify against the listed `apply_url` before relying on any date. |
 | `data/permit_overrides.csv` | Curated by this project from official sources (recreation.gov, fs.usda.gov) as of July 2026 | Same terms as `data/permits.csv` above. Deliberately conservative — only entries with a directly-named source are included. |
+| `data/permit_source_log.csv` | Compiled by this project as an audit trail of its own verification process (web searches and user-provided screenshots/text of the sources above) | Append-only by design — never edit a past entry, only add new ones. Facts are not copyrightable; provided under the project license. |
 | `charts/*` (basemap tiles, when rendered) | © OpenStreetMap contributors; OpenTopoMap (CC-BY-SA); Esri | Tiles are fetched client-side; attribution is shown on the map |
 
 ## The Sierra Club source documents (removed)

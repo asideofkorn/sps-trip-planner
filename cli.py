@@ -38,7 +38,8 @@ def _parse_args(argv=None) -> argparse.Namespace:
         description="Cluster Sierra Peaks into efficient 1-3 day peak-bagging trips.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    p.add_argument("--input", "-i", required=True, help="SPS peak CSV or JSON file")
+    p.add_argument("--input", "-i", help="SPS peak CSV or JSON file "
+                   "(not required with --permit-sources, which doesn't touch peak data)")
     p.add_argument("--output", "-o", help="Write ranked itineraries to this JSON file")
     p.add_argument("--eps-mi", type=float, default=6.0,
                    help="Spatial grouping radius in horizontal miles (default 6)")
@@ -95,6 +96,15 @@ def _parse_args(argv=None) -> argparse.Namespace:
                    help="Peak-level permit_group overrides for --permits, for "
                         "peaks whose actual permit differs from their trailhead's "
                         "default (default data/permit_overrides.csv)")
+    p.add_argument("--permit-sources", nargs="?", const="__all__", default=None,
+                   metavar="PERMIT_GROUP",
+                   help="Print the permit source-verification log (audit trail of "
+                        "every source checked per permit_group, and any unresolved "
+                        "conflicts between sources) and exit. Optionally pass a "
+                        "permit_group name to filter to just that group.")
+    p.add_argument("--permit-source-log-file", default="data/permit_source_log.csv",
+                   help="Source log dataset for --permit-sources "
+                        "(default data/permit_source_log.csv)")
     p.add_argument("--list", default="SPS",
                    help="If the data has a 'list' column, keep only this list "
                         "(default SPS; use 'all' to keep everything)")
@@ -142,6 +152,17 @@ def _print_summary(clusters) -> None:
 
 def main(argv=None) -> int:
     args = _parse_args(argv)
+
+    if args.permit_sources is not None:
+        from sierra_peaks.permits import load_source_log, format_source_log
+        group = None if args.permit_sources == "__all__" else args.permit_sources
+        log = load_source_log(args.permit_source_log_file)
+        print(format_source_log(log, permit_group=group))
+        return 0
+
+    if not args.input:
+        print("error: --input is required (unless using --permit-sources)", file=sys.stderr)
+        return 2
 
     include_approach = args.include_approach or args.approach_report or args.permits
 

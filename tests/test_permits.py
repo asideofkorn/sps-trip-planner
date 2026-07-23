@@ -16,6 +16,9 @@ from sierra_peaks.model import Cluster, Peak
 from sierra_peaks.permits import (
     load_permits,
     load_permit_overrides,
+    load_source_log,
+    unresolved_conflicts,
+    format_source_log,
     permit_status,
     clusters_permit_info,
     format_permit_report,
@@ -24,6 +27,7 @@ from sierra_peaks.permits import (
 TRAILHEADS = os.path.join(os.path.dirname(__file__), "..", "data", "trailheads.csv")
 PERMITS = os.path.join(os.path.dirname(__file__), "..", "data", "permits.csv")
 OVERRIDES = os.path.join(os.path.dirname(__file__), "..", "data", "permit_overrides.csv")
+SOURCE_LOG = os.path.join(os.path.dirname(__file__), "..", "data", "permit_source_log.csv")
 
 
 def test_load_permits_covers_every_trailhead_group():
@@ -255,3 +259,45 @@ def test_report_shows_provenance_and_flags_unverified_rows():
     rows = clusters_permit_info([unverified], trailheads, permits, date(2027, 7, 1))
     report = format_permit_report(rows)
     assert "not independently verified" in report.lower()
+
+
+def test_load_source_log_missing_file_returns_empty():
+    assert load_source_log("data/does_not_exist.csv") == []
+
+
+def test_source_log_loads_every_permit_group():
+    log = load_source_log(SOURCE_LOG)
+    permits = load_permits(PERMITS)
+    logged_groups = {e.permit_group for e in log}
+    assert set(permits) <= logged_groups
+
+
+def test_resolved_conflict_does_not_show_as_unresolved():
+    # whitney_zone had a real ambiguous-screenshot entry that a later,
+    # cleaner source resolved -- the log preserves both, but the group
+    # should NOT show up as a live unresolved conflict.
+    log = load_source_log(SOURCE_LOG)
+    assert "whitney_zone" not in unresolved_conflicts(log)
+    report = format_source_log(log, permit_group="whitney_zone")
+    assert "CONFLICT" in report  # the historical entry is still visible
+    assert "CORRECTS" in report  # ...followed by its resolution
+
+
+def test_unresolved_conflict_is_detected():
+    # A synthetic log where the LATEST entry for a group is a conflict
+    # (never followed by a resolving entry) must be flagged.
+    from sierra_peaks.permits import SourceLogEntry
+    log = [
+        SourceLogEntry("2026-01-01", "test_group", "https://a.example", "", "websearch",
+                        "new-group", "initial"),
+        SourceLogEntry("2026-02-01", "test_group", "https://b.example", "", "user-screenshot",
+                        "unresolved-conflict", "b disagrees with a, not yet reconciled"),
+    ]
+    assert unresolved_conflicts(log) == ["test_group"]
+    assert "UNRESOLVED CONFLICTS: test_group" in format_source_log(log)
+
+
+def test_format_source_log_empty():
+    assert "no source log entries" in format_source_log([]).lower()
+    assert "no source log entries for made_up_group" in format_source_log(
+        [], permit_group="made_up_group").lower()

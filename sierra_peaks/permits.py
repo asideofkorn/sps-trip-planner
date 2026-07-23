@@ -47,6 +47,21 @@ Trail peaks, or Mount Carillon) are intentionally left off rather than
 guessed at; treat any peak sharing a trailhead with a lottery/special
 permit as worth double-checking if its standard route isn't the trailhead's
 main trail.
+
+``data/permits.csv`` only stores the current best-known answer per
+permit_group -- each edit overwrites the last one, so on its own it can't
+reveal that two different sources disagreed. ``data/permit_source_log.csv``
+is the append-only complement: one row per verification event (never
+edited, only appended to), recording the source URL, the source's own
+"last updated" date, how it was checked, and a verdict of ``new-group``,
+``confirms-existing``, ``corrects-existing``, or ``unresolved-conflict``.
+:func:`unresolved_conflicts` reports any permit_group whose *most recent*
+logged entry is still an unresolved conflict. When a new source disagrees
+with what's already logged, log it as ``unresolved-conflict`` first (don't
+silently pick one), then once it's reconciled -- by updating
+``data/permits.csv`` and appending a follow-up ``corrects-existing`` entry
+explaining which source won and why -- the group drops out of the conflict
+list because the log is read in chronological order.
 """
 
 from __future__ import annotations
@@ -357,4 +372,95 @@ def format_permit_report(rows: Sequence[ClusterPermitInfo]) -> str:
         "listed trailhead -- a fresh trip starting inside the neighboring "
         "wilderness/park still needs its own permit."
     )
+    return "\n".join(lines)
+
+
+_CONFLICT_VERDICT = "unresolved-conflict"
+_VALID_VERDICTS = {"new-group", "confirms-existing", "corrects-existing", _CONFLICT_VERDICT}
+
+
+@dataclass
+class SourceLogEntry:
+    """One row of ``data/permit_source_log.csv``: a single verification event.
+
+    The log is append-only -- never edit or delete a past entry, even to fix
+    a conflict. Append a new entry that resolves it instead, so the sequence
+    of checks (and any disagreement between them) stays visible.
+    """
+
+    date_checked: str
+    permit_group: str
+    source_url: str
+    source_last_updated: str
+    method: str
+    verdict: str
+    summary: str
+
+
+def load_source_log(
+    path: str | Path = "data/permit_source_log.csv",
+) -> List[SourceLogEntry]:
+    """Load the append-only permit source-verification log, in file order.
+
+    Returns an empty list if the file doesn't exist -- the log is an
+    optional audit trail, not a required input for permit lookups.
+    """
+    path = Path(path)
+    if not path.exists():
+        return []
+    df = pd.read_csv(path)
+    return [
+        SourceLogEntry(
+            date_checked=_str_field(row, "date_checked"),
+            permit_group=_str_field(row, "permit_group"),
+            source_url=_str_field(row, "source_url"),
+            source_last_updated=_str_field(row, "source_last_updated"),
+            method=_str_field(row, "method"),
+            verdict=_str_field(row, "verdict"),
+            summary=_str_field(row, "summary"),
+        )
+        for _, row in df.iterrows()
+    ]
+
+
+def unresolved_conflicts(log: Sequence[SourceLogEntry]) -> List[str]:
+    """permit_groups whose most recently logged entry is still a conflict.
+
+    Assumes ``log`` is in chronological order (as loaded from the file) --
+    the last entry seen per permit_group wins, so a later ``corrects-existing``
+    entry resolves an earlier ``unresolved-conflict`` for the same group.
+    """
+    latest: Dict[str, SourceLogEntry] = {}
+    for entry in log:
+        latest[entry.permit_group] = entry
+    return [group for group, entry in latest.items() if entry.verdict == _CONFLICT_VERDICT]
+
+
+def format_source_log(
+    log: Sequence[SourceLogEntry], permit_group: Optional[str] = None
+) -> str:
+    """Render the source log as readable text, optionally filtered to one group."""
+    rows = [e for e in log if permit_group is None or e.permit_group == permit_group]
+    if not rows:
+        return f"No source log entries{f' for {permit_group}' if permit_group else ''}."
+
+    lines = []
+    conflicts = set(unresolved_conflicts(log))
+    if conflicts and permit_group is None:
+        lines.append(f"UNRESOLVED CONFLICTS: {', '.join(sorted(conflicts))}")
+        lines.append("")
+
+    current_group = None
+    for e in rows:
+        if e.permit_group != current_group:
+            current_group = e.permit_group
+            flag = "  <-- UNRESOLVED CONFLICT" if current_group in conflicts else ""
+            lines.append(f"=== {current_group}{flag} ===")
+        marker = {"new-group": "NEW", "confirms-existing": "CONFIRMS",
+                   "corrects-existing": "CORRECTS", _CONFLICT_VERDICT: "CONFLICT"}.get(e.verdict, e.verdict)
+        src = e.source_url or "(no single URL -- web search / general knowledge)"
+        updated = f", source updated {e.source_last_updated}" if e.source_last_updated else ""
+        lines.append(f"  [{e.date_checked}] {marker} via {e.method}{updated}")
+        lines.append(f"    {src}")
+        lines.append(f"    {e.summary}")
     return "\n".join(lines)

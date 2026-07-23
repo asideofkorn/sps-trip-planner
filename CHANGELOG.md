@@ -6,6 +6,21 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- `--permit-sources [GROUP]`: prints `data/permit_source_log.csv`, a new
+  append-only audit trail of every source checked per permit_group (source
+  URL, the source's own update date, how it was checked, and a verdict of
+  `new-group`/`confirms-existing`/`corrects-existing`/`unresolved-conflict`).
+  Unlike `permits.csv` (which only holds the current best answer and gets
+  overwritten on each edit), this log preserves every check, so a later
+  source that disagrees with an earlier one is visible rather than silently
+  replacing it. `unresolved_conflicts()` flags any permit_group whose most
+  recent logged entry hasn't been reconciled yet. New
+  `sierra_peaks/permits.py` (`SourceLogEntry`, `load_source_log`,
+  `unresolved_conflicts`, `format_source_log`). Backfilled with this
+  project's actual verification history to date, including one real
+  screenshot-resolution ambiguity (Whitney lottery results date) that was
+  logged as a conflict and then resolved by a follow-up entry, demonstrating
+  the intended workflow.
 - Provenance tracking for `data/permits.csv`: two new columns,
   `source_last_updated` (the source page/document's own "last updated" date,
   e.g. an fs.usda.gov footer or a PDF's filename date) and `verified_date`

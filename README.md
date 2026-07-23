@@ -310,6 +310,35 @@ trailhead/quota PDF this project used is dated 2021-06-13) or a blank
 freshly-updated source, and re-verify before relying on it for an actual
 booking deadline.
 
+**Catching disagreement between sources (`--permit-sources`).** `permits.csv`
+only stores the *current best answer* per permit — each edit overwrites the
+last one, so on its own it can't reveal that two sources disagreed.
+`data/permit_source_log.csv` is the append-only complement: one row per
+verification event (never edited, only appended to), recording the source
+URL, the source's own update date, how it was checked, and a verdict —
+`new-group`, `confirms-existing`, `corrects-existing`, or
+`unresolved-conflict`. See the full history for one permit, or everything:
+
+```bash
+python cli.py --permit-sources whitney_zone   # one group's history
+python cli.py --permit-sources                # everything, conflicts first
+```
+
+That second command prints an `UNRESOLVED CONFLICTS:` line up top listing
+any permit_group whose *most recent* logged entry disagrees with an earlier
+one and hasn't been reconciled yet. **The workflow when you find a new
+source:** append a row to `permit_source_log.csv` describing what it says.
+If it agrees with the current data, mark it `confirms-existing`. If it
+disagrees, mark it `unresolved-conflict` and describe the discrepancy
+*before* deciding which one is right — don't silently overwrite. Once you've
+worked out which source wins (and why — more recent, more authoritative,
+more specific), update `permits.csv` and append one more log row marked
+`corrects-existing` explaining the resolution. Because the log is read in
+chronological order, that follow-up entry is what makes the group stop
+showing up as an unresolved conflict — the history of the disagreement stays
+visible, it's just no longer flagged as live. `--permit-sources` doesn't
+need `--input` or trip data; it's a standalone audit tool.
+
 > **This is a planning aid, not a booking guarantee.** Quota-season dates,
 > reservation windows, and lottery timing shift year to year and by trailhead.
 > `data/permits.csv` was curated from official NPS/USFS/recreation.gov sources
@@ -363,6 +392,8 @@ python cli.py --input data/sps_peaks.csv --output out.json --viz clusters.png
 | `--trip-date` | today | planned trip start date (`YYYY-MM-DD`) used by `--permits` |
 | `--permits-file` | `data/permits.csv` | permit rules dataset used by `--permits` |
 | `--permit-overrides-file` | `data/permit_overrides.csv` | peak-level permit_group overrides used by `--permits` |
+| `--permit-sources [GROUP]` | off | print the permit source-verification log (optionally filtered) and exit; doesn't need `--input` |
+| `--permit-source-log-file` | `data/permit_source_log.csv` | source log dataset for `--permit-sources` |
 | `--method` | `dbscan` | grouping method: `dbscan` or `agglomerative` |
 | `--exclude` | – | comma-separated peak names to drop |
 | `--force-together` | – | comma-separated peaks to keep in one trip (repeatable) |
@@ -467,6 +498,7 @@ sierra-peaks-clustering/
 │   ├── trailheads.csv           # trailheads incl. wilderness area / agency / permit_group
 │   ├── permits.csv              # permit rules per permit_group (quota season, apply URL...)
 │   ├── permit_overrides.csv     # peak-level permit_group overrides (see Permit report)
+│   ├── permit_source_log.csv    # append-only source-verification audit trail
 │   └── source/                  # official Sierra Club files + trimmed GNIS subset
 ├── scripts/
 │   ├── build_dataset.py         # XLS + non-SPS PDF -> sps_peaks.csv
