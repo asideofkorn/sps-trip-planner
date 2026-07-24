@@ -239,7 +239,7 @@ def test_provenance_fields_load_and_flag_dated_sources():
     assert dated.source_last_updated == "2021-06-13"
     assert dated.verified_date == "2026-07-23"
     # Rows never independently verified (web-search only) have no verified_date.
-    unverified = permits["seki"]
+    unverified = permits["gtw_free"]
     assert unverified.verified_date == ""
 
 
@@ -254,8 +254,8 @@ def test_report_shows_provenance_and_flags_unverified_rows():
     assert "source last updated 2021-06-13" in report
     assert "we last checked this against the source on 2026-07-23" in report
 
-    unverified = Cluster(cluster_id=1, peaks=[Peak("Goat Mountain", 36.79, -118.58, 10800)],
-                          trailhead="Roads End (Cedar Grove)")
+    unverified = Cluster(cluster_id=1, peaks=[Peak("Angora Mountain", 36.18, -118.48, 10200)],
+                          trailhead="Jerkey Meadow")
     rows = clusters_permit_info([unverified], trailheads, permits, date(2027, 7, 1))
     report = format_permit_report(rows)
     assert "not independently verified" in report.lower()
