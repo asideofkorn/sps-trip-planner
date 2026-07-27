@@ -239,7 +239,7 @@ def test_provenance_fields_load_and_flag_dated_sources():
     assert dated.source_last_updated == "2021-06-13"
     assert dated.verified_date == "2026-07-23"
     # Rows never independently verified (web-search only) have no verified_date.
-    unverified = permits["stanislaus_free"]
+    unverified = permits["toiyabe_free"]
     assert unverified.verified_date == ""
 
 
@@ -254,8 +254,8 @@ def test_report_shows_provenance_and_flags_unverified_rows():
     assert "source last updated 2021-06-13" in report
     assert "we last checked this against the source on 2026-07-23" in report
 
-    unverified = Cluster(cluster_id=1, peaks=[Peak("Black Hawk Mountain", 38.2, -119.78, 9980)],
-                          trailhead="Gianelli Cabin")
+    unverified = Cluster(cluster_id=1, peaks=[Peak("Highland Peak", 38.55, -119.81, 10934)],
+                          trailhead="Ebbetts Pass")
     rows = clusters_permit_info([unverified], trailheads, permits, date(2027, 7, 1))
     report = format_permit_report(rows)
     assert "not independently verified" in report.lower()
@@ -325,3 +325,20 @@ def test_yosemite_provenance_reflects_nps_source():
     rule = permits["yosemite"]
     assert rule.source_last_updated == "2025-11-13"
     assert rule.verified_date  # now independently verified, not web-search-only
+
+
+def test_ebbetts_pass_is_toiyabe_not_stanislaus():
+    # Stanislaus NF's own permit page states outright that Ebbetts Pass is
+    # Humboldt-Toiyabe NF jurisdiction -- this project had it wrong.
+    trailheads = load_trailheads(TRAILHEADS)
+    ebbetts = next(t for t in trailheads if t.name == "Ebbetts Pass")
+    assert ebbetts.land_agency == "Humboldt-Toiyabe NF"
+    assert ebbetts.permit_group == "toiyabe_free"
+
+    permits = load_permits(PERMITS)
+    assert "toiyabe_free" in permits
+    assert not permits["toiyabe_free"].verified_date  # explicitly unconfirmed placeholder
+
+    # Sonora Pass, on the same source page, is confirmed correct as-is.
+    sonora = next(t for t in trailheads if t.name == "Sonora Pass")
+    assert sonora.land_agency == "Stanislaus NF"
