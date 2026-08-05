@@ -38,7 +38,8 @@ def _parse_args(argv=None) -> argparse.Namespace:
         description="Cluster Sierra Peaks into efficient 1-3 day peak-bagging trips.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    p.add_argument("--input", "-i", required=True, help="SPS peak CSV or JSON file")
+    p.add_argument("--input", "-i", help="SPS peak CSV or JSON file "
+                   "(not required with --permit-sources, which doesn't touch peak data)")
     p.add_argument("--output", "-o", help="Write ranked itineraries to this JSON file")
     p.add_argument("--eps-mi", type=float, default=6.0,
                    help="Spatial grouping radius in horizontal miles (default 6)")
@@ -82,6 +83,28 @@ def _parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--trailheads", default="data/trailheads.csv",
                    help="Trailhead CSV used with --include-approach "
                         "(default data/trailheads.csv)")
+    p.add_argument("--permits", action="store_true",
+                   help="Print a per-trip permit report (agency, permit type, "
+                        "quota season, and when to apply for --trip-date). "
+                        "Implies --include-approach.")
+    p.add_argument("--trip-date", default=None,
+                   help="Planned trip start date (YYYY-MM-DD) for --permits "
+                        "(default: today)")
+    p.add_argument("--permits-file", default="data/permits.csv",
+                   help="Permit rules dataset for --permits (default data/permits.csv)")
+    p.add_argument("--permit-overrides-file", default="data/permit_overrides.csv",
+                   help="Peak-level permit_group overrides for --permits, for "
+                        "peaks whose actual permit differs from their trailhead's "
+                        "default (default data/permit_overrides.csv)")
+    p.add_argument("--permit-sources", nargs="?", const="__all__", default=None,
+                   metavar="PERMIT_GROUP",
+                   help="Print the permit source-verification log (audit trail of "
+                        "every source checked per permit_group, and any unresolved "
+                        "conflicts between sources) and exit. Optionally pass a "
+                        "permit_group name to filter to just that group.")
+    p.add_argument("--permit-source-log-file", default="data/permit_source_log.csv",
+                   help="Source log dataset for --permit-sources "
+                        "(default data/permit_source_log.csv)")
     p.add_argument("--list", default="SPS",
                    help="If the data has a 'list' column, keep only this list "
                         "(default SPS; use 'all' to keep everything)")
@@ -130,7 +153,18 @@ def _print_summary(clusters) -> None:
 def main(argv=None) -> int:
     args = _parse_args(argv)
 
-    include_approach = args.include_approach or args.approach_report
+    if args.permit_sources is not None:
+        from sierra_peaks.permits import load_source_log, format_source_log
+        group = None if args.permit_sources == "__all__" else args.permit_sources
+        log = load_source_log(args.permit_source_log_file)
+        print(format_source_log(log, permit_group=group))
+        return 0
+
+    if not args.input:
+        print("error: --input is required (unless using --permit-sources)", file=sys.stderr)
+        return 2
+
+    include_approach = args.include_approach or args.approach_report or args.permits
 
     config = ClusterConfig(
         eps_mi=args.eps_mi,
@@ -194,6 +228,23 @@ def main(argv=None) -> int:
         print("Approach-amortization report")
         print("=" * 28)
         print(format_approach_report(rows))
+        print()
+
+    if args.permits:
+        import datetime
+        from sierra_peaks.permits import (
+            load_permits, load_permit_overrides, clusters_permit_info,
+            format_permit_report,
+        )
+        trip_date = (datetime.date.fromisoformat(args.trip_date) if args.trip_date
+                     else datetime.date.today())
+        permit_rules = load_permits(args.permits_file)
+        permit_overrides = load_permit_overrides(args.permit_overrides_file)
+        rows = clusters_permit_info(clusters, trailheads, permit_rules, trip_date,
+                                     overrides=permit_overrides)
+        print(f"Permit report (trip date {trip_date.isoformat()})")
+        print("=" * 28)
+        print(format_permit_report(rows))
         print()
 
     if args.output:

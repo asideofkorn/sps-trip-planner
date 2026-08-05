@@ -61,6 +61,9 @@ class Trailhead:
     elevation_ft: float = 0.0
     side: str = ""          # "east", "west", or "crest"
     notes: str = ""
+    wilderness_area: str = ""
+    land_agency: str = ""
+    permit_group: str = ""  # key into data/permits.csv; "" if unclassified
 
 
 @dataclass

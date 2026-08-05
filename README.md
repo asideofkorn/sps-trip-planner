@@ -7,8 +7,10 @@ and exports the itineraries as JSON.
 
 It models off-trail, class 1–2 travel between summits using **great-circle
 distance** for the horizontal component and **Naismith's Rule** to convert
-vertical ascent into equivalent effort. Permit logistics are out of scope — this
-focuses on the geographic/physical optimization.
+vertical ascent into equivalent effort. A curated permit dataset (`--permits`,
+see below) can tell you which agency issues the permit for each trip's
+trailhead, whether it's quota season, and when to apply — but the core focus
+stays the geographic/physical optimization.
 
 Running it on the real SPS list produces mountaineering-sound groupings: the
 Palisades traverse, the Evolution group, the Whitney/Williamson group, the Mono
@@ -219,6 +221,130 @@ the budget; `save_mi` is the approach freed by reaching it. The report is a
 *signal*, bounded by the day budget, not a promise. Raising `--max-days` unlocks
 more amortization (~133 mi recoverable at 3 days vs ~80 at 2).
 
+### Permit report (`--permits`)
+
+Every trailhead in `data/trailheads.csv` is tagged with a wilderness area,
+issuing agency, and a `permit_group` key into `data/permits.csv` — a curated
+table of permit type, quota season, reservation window/method, fees, and the
+official apply URL for each agency covering the SPS range (Inyo NF, Sierra NF,
+Sequoia NF, Stanislaus NF, Eldorado NF/LTBMU, Humboldt-Toiyabe NF, Yosemite NP,
+and Sequoia & Kings Canyon NP, including the separate Mt. Whitney Zone lottery).
+
+`--permits` (which implies `--include-approach`, since it needs each trip's
+chosen trailhead) prints, per trip, the permit type, whether `--trip-date`
+falls in that area's quota season, and — if so — when the reservation window
+opens relative to today:
+
+```bash
+python cli.py -i data/sps_peaks.csv --permits --trip-date 2027-07-15 --max-days 3
+```
+
+```
+Cluster #2 -- Whitney Portal  (trip date 2027-07-15)
+  Wilderness: Mount Whitney Zone (John Muir Wilderness)  |  Agency: Inyo National Forest
+  Permit: Mount Whitney Zone Permit
+  Status: Lottery for 2027 opens Feb 1; apply by Mar 1.
+  Fee: $15/person plus $6 processing fee
+  Apply: https://www.recreation.gov/permits/445860
+```
+
+Run it once per candidate month across your 12-month planning window (or loop
+`--trip-date` over several dates) to see, trip by trip, which ones need a
+lottery entry, a 6-month rolling reservation, a day-of walk-up, or nothing at
+all.
+
+**Which agency issues the permit — and interagency reciprocity.** The permit
+you need is determined by the *trailhead you start from*, not by which
+wilderness or park each individual peak in the trip happens to sit in. Sierra
+Nevada wilderness permits are interagency: a permit issued for your starting
+trailhead is honored for the whole continuous trip even where the route
+crosses into a neighboring wilderness or national park, so you do **not**
+need a second permit from whoever's land you pass through — as long as the
+trip both starts and ends at the trailhead the permit was issued for. For
+example, a free self-issue Emigrant Wilderness permit picked up for a
+Stanislaus NF trailhead covers a route that crosses into Yosemite at Bond
+Pass; a Sierra NF permit from Clover Meadow covers the leg over Isberg Pass
+into Yosemite to reach Foerster Peak; a Hoover Wilderness permit from Twin
+Lakes covers the crossing into Yosemite's Kerrick Canyon for Tower Peak. When
+a trip's trailhead permit has this kind of cross-boundary reach, the report
+prints a `Crosses into other land:` line explaining it — but a few boundary
+crossings have their own procedural wrinkle (e.g. the Kibbie Lake/Lake
+Eleanor corridor out of Stanislaus NF requires calling Yosemite's Groveland
+Ranger District a day ahead), so read that line rather than assuming blanket
+reciprocity everywhere.
+
+**Per-peak permit overrides.** A trailhead's `permit_group` is a default, not
+a guarantee for every peak reached from it — some trailheads serve more than
+one permitted trail with different rules. Whitney Portal is the clearest
+example: the classic Mt. Whitney Trail (Mount Whitney, Mount Muir) is covered
+by the Whitney Zone lottery, but Mount Russell is reached via the
+Mountaineers Route / North Fork of Lone Pine Creek trail, which Inyo NF
+explicitly excludes from that lottery and instead permits under its regular
+John Muir Wilderness system. `data/permit_overrides.csv` (peak name →
+permit_group) captures known cases like this; `--permits` prints an extra
+entry tagged `[for <peak> only]` alongside the trailhead's default when a
+cluster mixes peaks that need different permits. This file is deliberately
+conservative — only peaks with a directly-named source are listed. Other
+Whitney-Portal-served peaks likely need the same treatment but aren't listed
+because their exact approach trail isn't confirmed yet: **Thor Peak, Mount
+Irvine, Mount McAdie, Mount Mallory, Mount LeConte, and Mount Corcoran**
+(commonly reached via the separate Meysan Lakes Trail) and **Mount Carillon**
+(adjacent to Mount Russell on the Mountaineers Route side). If your trip
+includes any of these, verify the actual permit with Inyo NF rather than
+trusting the default Whitney Zone entry the tool shows for that trailhead.
+
+**Provenance: two dates, not one.** Every row in `data/permits.csv` carries
+two separate dates, both printed as a `Provenance:` line in the report:
+`source_last_updated` is the date the *source itself* says it was last
+updated (e.g. an fs.usda.gov page's own "Last updated" footer, or a PDF's
+filename date) — this is a fact about the source, not about this repo.
+`verified_date` is the date *this dataset* was last checked against that
+source. The two commonly disagree: a source can say "last updated 2021" and
+still be the newest information we have, checked yesterday — or a source can
+say "last updated this month" but not have been independently checked here
+at all yet, in which case `verified_date` is blank and the report prints
+`NOT independently verified against a primary source (web-search synthesis
+only)` instead. Treat any row with an old `source_last_updated` (the Inyo NF
+trailhead/quota PDF this project used is dated 2021-06-13) or a blank
+`verified_date` as lower-confidence than one checked recently against a
+freshly-updated source, and re-verify before relying on it for an actual
+booking deadline.
+
+**Catching disagreement between sources (`--permit-sources`).** `permits.csv`
+only stores the *current best answer* per permit — each edit overwrites the
+last one, so on its own it can't reveal that two sources disagreed.
+`data/permit_source_log.csv` is the append-only complement: one row per
+verification event (never edited, only appended to), recording the source
+URL, the source's own update date, how it was checked, and a verdict —
+`new-group`, `confirms-existing`, `corrects-existing`, or
+`unresolved-conflict`. See the full history for one permit, or everything:
+
+```bash
+python cli.py --permit-sources whitney_zone   # one group's history
+python cli.py --permit-sources                # everything, conflicts first
+```
+
+That second command prints an `UNRESOLVED CONFLICTS:` line up top listing
+any permit_group whose *most recent* logged entry disagrees with an earlier
+one and hasn't been reconciled yet. **The workflow when you find a new
+source:** append a row to `permit_source_log.csv` describing what it says.
+If it agrees with the current data, mark it `confirms-existing`. If it
+disagrees, mark it `unresolved-conflict` and describe the discrepancy
+*before* deciding which one is right — don't silently overwrite. Once you've
+worked out which source wins (and why — more recent, more authoritative,
+more specific), update `permits.csv` and append one more log row marked
+`corrects-existing` explaining the resolution. Because the log is read in
+chronological order, that follow-up entry is what makes the group stop
+showing up as an unresolved conflict — the history of the disagreement stays
+visible, it's just no longer flagged as live. `--permit-sources` doesn't
+need `--input` or trip data; it's a standalone audit tool.
+
+> **This is a planning aid, not a booking guarantee.** Quota-season dates,
+> reservation windows, and lottery timing shift year to year and by trailhead.
+> `data/permits.csv` was curated from official NPS/USFS/recreation.gov sources
+> in July 2026 — always confirm against the linked `apply_url` before relying
+> on a date.
+
 ---
 
 ## Installation
@@ -262,6 +388,12 @@ python cli.py --input data/sps_peaks.csv --output out.json --viz clusters.png
 | `--include-approach` | off | model the trailhead approach (walk in/out) and fold it into distance, effort, days & score |
 | `--approach-report` | off | print an approach-amortization report (implies `--include-approach`) |
 | `--trailheads` | `data/trailheads.csv` | trailhead file used with `--include-approach` |
+| `--permits` | off | print a permit report per trip (implies `--include-approach`) |
+| `--trip-date` | today | planned trip start date (`YYYY-MM-DD`) used by `--permits` |
+| `--permits-file` | `data/permits.csv` | permit rules dataset used by `--permits` |
+| `--permit-overrides-file` | `data/permit_overrides.csv` | peak-level permit_group overrides used by `--permits` |
+| `--permit-sources [GROUP]` | off | print the permit source-verification log (optionally filtered) and exit; doesn't need `--input` |
+| `--permit-source-log-file` | `data/permit_source_log.csv` | source log dataset for `--permit-sources` |
 | `--method` | `dbscan` | grouping method: `dbscan` or `agglomerative` |
 | `--exclude` | – | comma-separated peak names to drop |
 | `--force-together` | – | comma-separated peaks to keep in one trip (repeatable) |
@@ -363,6 +495,10 @@ sierra-peaks-clustering/
 ├── data/
 │   ├── sps_peaks.csv            # authoritative 247 SPS + 354 non-SPS peaks
 │   ├── sps_sample.csv           # 30-peak demo subset
+│   ├── trailheads.csv           # trailheads incl. wilderness area / agency / permit_group
+│   ├── permits.csv              # permit rules per permit_group (quota season, apply URL...)
+│   ├── permit_overrides.csv     # peak-level permit_group overrides (see Permit report)
+│   ├── permit_source_log.csv    # append-only source-verification audit trail
 │   └── source/                  # official Sierra Club files + trimmed GNIS subset
 ├── scripts/
 │   ├── build_dataset.py         # XLS + non-SPS PDF -> sps_peaks.csv
@@ -381,12 +517,14 @@ sierra-peaks-clustering/
 │   ├── pipeline.py              # cluster → order → score → rank
 │   ├── manual.py                # merge / split / exclude / force-together
 │   ├── export.py                # JSON export
+│   ├── permits.py               # permit lookup + date-aware quota/reservation status
 │   └── visualize.py             # optional matplotlib map
 └── tests/
-    └── test_pipeline.py         # 16 unit/integration tests
+    ├── test_pipeline.py         # clustering/routing/approach unit & integration tests
+    └── test_permits.py          # permit-lookup unit tests
 ```
 
-Run the tests: `python tests/test_pipeline.py` (or `python -m pytest tests/`).
+Run the tests: `python -m pytest tests/` (or `python tests/test_pipeline.py`).
 
 ---
 
@@ -403,7 +541,11 @@ Run the tests: `python tests/test_pipeline.py` (or `python -m pytest tests/`).
   downstream is unchanged.
 - **Elevation gain** is the sum of positive summit-to-summit deltas along the
   route — a lower bound that ignores intermediate ups-and-downs.
-- **Permits** are intentionally out of scope.
+- **Permits** (`--permits`, see above) are a planning aid, not a booking
+  system: `data/permits.csv` is a manually curated snapshot of quota seasons,
+  reservation windows and lottery timing, which agencies change from year to
+  year. It doesn't call recreation.gov or check live availability. Always
+  confirm against the linked `apply_url` before relying on a date.
 ```
 
 ---

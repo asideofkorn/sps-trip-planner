@@ -6,6 +6,64 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- `--permit-sources [GROUP]`: prints `data/permit_source_log.csv`, a new
+  append-only audit trail of every source checked per permit_group (source
+  URL, the source's own update date, how it was checked, and a verdict of
+  `new-group`/`confirms-existing`/`corrects-existing`/`unresolved-conflict`).
+  Unlike `permits.csv` (which only holds the current best answer and gets
+  overwritten on each edit), this log preserves every check, so a later
+  source that disagrees with an earlier one is visible rather than silently
+  replacing it. `unresolved_conflicts()` flags any permit_group whose most
+  recent logged entry hasn't been reconciled yet. New
+  `sierra_peaks/permits.py` (`SourceLogEntry`, `load_source_log`,
+  `unresolved_conflicts`, `format_source_log`). Backfilled with this
+  project's actual verification history to date, including one real
+  screenshot-resolution ambiguity (Whitney lottery results date) that was
+  logged as a conflict and then resolved by a follow-up entry, demonstrating
+  the intended workflow.
+- Provenance tracking for `data/permits.csv`: two new columns,
+  `source_last_updated` (the source page/document's own "last updated" date,
+  e.g. an fs.usda.gov footer or a PDF's filename date) and `verified_date`
+  (when this repo last checked that row against the source). The two are
+  independent -- a row can trace to an old source that's still the best
+  available data, or to a fresh-looking page that was never independently
+  checked here. `--permits` now prints a `Provenance:` line per trip showing
+  both, or flags rows with no `verified_date` as web-search-only /
+  not independently verified. Surfaced that the Inyo NF trailhead/quota PDF
+  used for the `inyo_gtw` and `inyo_hoover_nonquota` groups is dated
+  2021-06-13 -- the agency/quota-status facts are unlikely to have changed,
+  but the exact quota numbers should be re-verified before relying on them.
+- `--permits`: per-trip permit report (implies `--include-approach`). Every
+  trailhead in `data/trailheads.csv` is tagged with a `wilderness_area`,
+  `land_agency`, and `permit_group`; the new `data/permits.csv` maps each
+  `permit_group` to its permit type, quota season, reservation window/method,
+  fees, and official apply URL (Inyo NF, Sierra NF, Sequoia NF, Stanislaus NF,
+  Eldorado NF/LTBMU, Humboldt-Toiyabe NF, Yosemite NP, and Sequoia & Kings
+  Canyon NP, including the separate Mt. Whitney Zone lottery). Given
+  `--trip-date`, it reports whether that date falls in the quota season and
+  when the reservation window opens. New `sierra_peaks/permits.py`
+  (`load_permits`, `permit_status`, `clusters_permit_info`,
+  `format_permit_report`) and `tests/test_permits.py`.
+- Peak-level permit overrides (`data/permit_overrides.csv`,
+  `load_permit_overrides`, `--permit-overrides-file`): some trailheads serve
+  more than one permitted trail with different rules -- e.g. Whitney Portal's
+  classic Mt. Whitney Trail is lottery-only, but Mount Russell (Mountaineers
+  Route / North Fork of Lone Pine Creek) is explicitly excluded from that
+  lottery and uses the regular Inyo NF John Muir Wilderness permit instead.
+  `clusters_permit_info` now emits an extra `[for <peak> only]` entry when a
+  cluster mixes peaks needing different permits. Populated conservatively --
+  only peaks with a directly-named source, e.g. Mount Russell; other likely
+  candidates (Thor Peak, Mount Irvine, Mount McAdie, Mount Mallory, Mount
+  LeConte, Mount Corcoran, Mount Carillon) are flagged in the README rather
+  than guessed at.
+- Two new Inyo NF permit groups, `inyo_gtw` and `inyo_hoover_nonquota`,
+  correcting two trailheads that were tagged to the wrong permit_group:
+  `Horseshoe Meadows (Cottonwood)` (Golden Trout Wilderness entries have a
+  shorter quota season -- late June to Sep 15 -- than Inyo's general John
+  Muir/Ansel Adams May 1 - Nov 1 season) and `Lundy Canyon` / `Saddlebag
+  Lake` (both actually Inyo NF-administered and non-quota, not
+  Humboldt-Toiyabe NF's quota'd Hoover Wilderness system as previously
+  tagged). All confirmed against Inyo NF's official trail/quota table.
 - Approach-aware capacity splitting: with `--include-approach`, the trip budget
   is enforced including the trailhead approach. Splitting starts from the
   inter-peak floor and tightens only when an extra split actually makes trips fit
