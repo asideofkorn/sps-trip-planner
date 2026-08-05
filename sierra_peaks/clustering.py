@@ -170,7 +170,8 @@ def _unit_centroid(unit: Sequence[Peak]) -> Tuple[float, float]:
 
 
 def _approach_estimate(
-    peaks: Sequence[Peak], trailheads: Sequence[Trailhead], sinuosity: float
+    peaks: Sequence[Peak], trailheads: Sequence[Trailhead], sinuosity: float,
+    router=None,
 ) -> float:
     """Cheap estimate of a trip's approach effort, in effective miles.
 
@@ -181,7 +182,7 @@ def _approach_estimate(
     th = choose_trailhead(peaks, trailheads)
     if th is None:
         return 0.0
-    legs = [approach_leg(th, p, sinuosity) for p in peaks]
+    legs = [approach_leg(th, p, sinuosity, router=router) for p in peaks]
     in_eff = min(naismith_effective_miles(d, g) for d, g in legs)
     out_eff = min(d for d, _ in legs)
     return in_eff + out_eff
@@ -283,7 +284,7 @@ def cluster_peaks(
     if config.include_approach and trailheads:
         def total_effort(pk: Sequence[Peak]) -> float:
             return _route_effective_mi(pk) + _approach_estimate(
-                pk, trailheads, config.sinuosity
+                pk, trailheads, config.sinuosity, router=config.router
             )
 
     excluded = {name for name in config.exclude}

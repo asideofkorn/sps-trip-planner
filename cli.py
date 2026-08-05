@@ -108,14 +108,26 @@ def _parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--list", default="SPS",
                    help="If the data has a 'list' column, keep only this list "
                         "(default SPS; use 'all' to keep everything)")
-    p.add_argument("--use-passes", action="store_true",
+    router_group = p.add_mutually_exclusive_group()
+    router_group.add_argument("--use-passes", action="store_true",
                    help="Route cross-crest legs through mountain passes instead of "
                         "straight lines (uses data/passes.csv)")
+    router_group.add_argument("--use-trails", action="store_true",
+                   help="Route inter-peak and approach legs over real trail-network "
+                        "geometry from OpenStreetMap instead of straight lines "
+                        "(uses data/trails.graphml)")
     p.add_argument("--passes-file", default="data/passes.csv",
                    help="Passes dataset for --use-passes (default data/passes.csv)")
     p.add_argument("--pass-tier", type=int, default=1, choices=[1, 2],
                    help="Which passes may be used as crossings: 1 = named passes "
                         "only (default), 2 = also minor gaps/saddles")
+    p.add_argument("--trails-file", default="data/trails.graphml",
+                   help="Trail network graph for --use-trails "
+                        "(default data/trails.graphml)")
+    p.add_argument("--trail-max-snap-mi", type=float, default=1.5,
+                   help="Beyond this straight-line distance from the trail network, "
+                        "a peak/trailhead leg falls back to direct routing "
+                        "(default 1.5)")
     p.add_argument("--viz", help="Write a matplotlib PNG of clusters/routes here")
     return p.parse_args(argv)
 
@@ -188,6 +200,17 @@ def main(argv=None) -> int:
               f"from {args.passes_file}"
               + ("" if config.router.crest.usable else "  [crest model UNUSABLE — "
                  "need >=2 tier-1 passes; falling back to straight-line]"))
+
+    if args.use_trails:
+        from sierra_peaks.trails import build_router as build_trail_router
+        config.router = build_trail_router(args.trails_file,
+                                           max_snap_mi=args.trail_max_snap_mi)
+        g = config.router.graph
+        print(f"Trail routing ON: {g.number_of_nodes()} trail nodes, "
+              f"{g.number_of_edges()} edges from {args.trails_file} "
+              f"(max snap {args.trail_max_snap_mi} mi)"
+              + ("" if config.router.usable else "  [trail graph UNUSABLE — empty; "
+                 "falling back to straight-line]"))
 
     list_filter = None if args.list.lower() == "all" else args.list
     peaks = load_peaks(args.input, list_filter=list_filter)

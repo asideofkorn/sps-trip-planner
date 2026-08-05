@@ -36,6 +36,21 @@ pass coordinates you first need a Gap-bearing extract.
 major Sierra crest/road passes (`coord_source = seed`) so the data is usable
 without the rebuild; the steps above upgrade those rows to `coord_source = GNIS`.
 
+## Rebuilding the trail network (`data/trails.graphml`)
+
+`data/trails.graphml` is a Sierra Nevada path/footway/track/bridleway/steps
+network fetched from OpenStreetMap (via the Overpass API, through `osmnx`),
+used by `--use-trails`. Unlike the other datasets in this repo it's a fetched
+snapshot rather than a hand-curated seed, so it's rebuilt from scratch, not
+merged:
+
+    pip install -e .[trails]   # osmnx, fetch-only; not needed to use --use-trails
+    python scripts/fetch_osm_trails.py --out data/trails.graphml
+
+This requires outbound network access to the Overpass API and can take
+several minutes over a bounding box this size. Re-run it periodically to pick
+up new/rerouted OSM trails; there's no automatic staleness check.
+
 ## NOT bundled (copyrighted — download yourself)
 
 The following Sierra Club Sierra Peaks Section publications are **not**

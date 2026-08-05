@@ -69,14 +69,17 @@ def choose_trailhead(
 
 
 def approach_leg(
-    trailhead: Trailhead, peak: Peak, sinuosity: float = DEFAULT_SINUOSITY
+    trailhead: Trailhead, peak: Peak, sinuosity: float = DEFAULT_SINUOSITY,
+    router=None,
 ) -> Tuple[float, float]:
     """One-way trailhead -> summit approach as ``(distance_mi, ascent_ft)``.
 
     Uses the peak's authoritative round-trip numbers when the chosen trailhead is
-    that peak's standard ``nearest_trailhead``; otherwise estimates geometrically.
-    The returned ascent is the climb on the way *in*; the caller decides whether a
-    given leg is ascending (entry) or descending (exit).
+    that peak's standard ``nearest_trailhead``; otherwise, if a ``router`` (e.g.
+    ``sierra_peaks.trails.TrailRouter``) is given, its leg cost is used; otherwise
+    falls back to a geometric estimate. The returned ascent is the climb on the
+    way *in*; the caller decides whether a given leg is ascending (entry) or
+    descending (exit).
     """
     mileage_rt = peak.meta.get("mileage_rt")
     gain_ft = peak.meta.get("gain_ft")
@@ -86,6 +89,10 @@ def approach_leg(
     if matches and mileage_rt:
         distance = float(mileage_rt) / 2.0
         ascent = float(gain_ft) if gain_ft else max(0.0, peak.elevation_ft - trailhead.elevation_ft)
+    elif router is not None:
+        r = router.leg(trailhead, peak, by="effective")
+        distance = r.horizontal_mi
+        ascent = r.ascent_ft
     else:
         distance = haversine_miles(
             trailhead.latitude, trailhead.longitude, peak.latitude, peak.longitude
@@ -99,6 +106,7 @@ def approach_metrics(
     entry: Peak,
     exit_: Peak,
     sinuosity: float = DEFAULT_SINUOSITY,
+    router=None,
 ) -> dict:
     """Total approach for a loop trip: hike *in* to ``entry``, out from ``exit_``.
 
@@ -108,8 +116,8 @@ def approach_metrics(
 
     Returns ``horizontal_mi``, ``effective_mi`` and ``elevation_gain_ft``.
     """
-    in_dist, in_gain = approach_leg(trailhead, entry, sinuosity)
-    out_dist, _ = approach_leg(trailhead, exit_, sinuosity)
+    in_dist, in_gain = approach_leg(trailhead, entry, sinuosity, router=router)
+    out_dist, _ = approach_leg(trailhead, exit_, sinuosity, router=router)
     return {
         "horizontal_mi": in_dist + out_dist,
         "effective_mi": naismith_effective_miles(in_dist, in_gain) + out_dist,
@@ -118,7 +126,8 @@ def approach_metrics(
 
 
 def approach_costs_to_peaks(
-    trailhead: Trailhead, peaks: Sequence[Peak], sinuosity: float = DEFAULT_SINUOSITY
+    trailhead: Trailhead, peaks: Sequence[Peak], sinuosity: float = DEFAULT_SINUOSITY,
+    router=None,
 ) -> List[float]:
     """Inbound (ascending) approach effective miles from ``trailhead`` to each peak.
 
@@ -127,6 +136,6 @@ def approach_costs_to_peaks(
     """
     costs = []
     for p in peaks:
-        dist, gain = approach_leg(trailhead, p, sinuosity)
+        dist, gain = approach_leg(trailhead, p, sinuosity, router=router)
         costs.append(naismith_effective_miles(dist, gain))
     return costs

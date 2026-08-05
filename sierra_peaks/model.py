@@ -89,6 +89,7 @@ class Cluster:
     estimated_days: int = 0
     score: float = 0.0
     passes: List[str] = field(default_factory=list)  # crest passes crossed on the route
+    route_source: str = ""  # "" (straight-line), "passes", or "trails"
     # Approach (trailhead <-> route endpoints); zero/empty when not modeled.
     trailhead: str = ""
     trailhead_side: str = ""
@@ -122,6 +123,8 @@ class Cluster:
             seen: dict = {}
             d["passes_crossed"] = [seen.setdefault(p, p) for p in self.passes
                                    if p not in seen]
+        if self.route_source:
+            d["route_source"] = self.route_source
         if self.trailhead:
             d["trailhead"] = self.trailhead
             d["trailhead_side"] = self.trailhead_side

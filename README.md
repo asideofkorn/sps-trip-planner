@@ -96,6 +96,34 @@ The crest is approximated by a monotone longitude/latitude line fit over the
 tier-1 passes, so peaks sitting almost *on* the crest can be assigned a side
 coarsely; denser pass data (`merge_passes.py --add-all`) sharpens it.
 
+### Trail-network routing (`--use-trails`)
+
+`data/trails.graphml` is a Sierra Nevada trail network (path/footway/track/
+bridleway/steps, including unofficial use-trails) sourced for free from
+OpenStreetMap. It's fetched once, offline, by `scripts/fetch_osm_trails.py`
+(requires `pip install -e .[trails]`) and committed as a static artifact — the
+CLI/library never touch the network, only `networkx` at load time.
+
+Trail routing is **opt-in** and mutually exclusive with `--use-passes`. With
+`--use-trails`, an inter-peak or trailhead-approach leg is routed as a
+straight-line "snap" to the nearest mapped trail node, a shortest path along
+the trail network, then a straight-line snap to the destination — replacing
+the default straight-line assumption with real trail geometry for the
+walkable middle portion of the leg.
+
+```bash
+python cli.py -i data/sps_peaks.csv --use-trails
+python cli.py -i data/sps_peaks.csv --use-trails --trail-max-snap-mi 2.5
+```
+
+Coverage is uneven across OSM. A peak or trailhead farther than
+`--trail-max-snap-mi` (default 1.5) from any mapped trail, or one whose
+snapped node has no path to the other endpoint (e.g. a disconnected pocket of
+trail data), falls back leg-by-leg to the same straight-line calculation used
+when no router is given at all — it never produces a worse estimate than the
+default. Ascent is still the plain summit-to-summit elevation delta, not
+summed along the trail path (see the extension-points note below).
+
 ### Input schema
 
 Minimum required columns are `name`, `latitude`, `longitude`, `elevation_ft`
@@ -149,6 +177,10 @@ peaks (CSV/JSON)
 - **Trip budget**: `max_effective_mi = miles_per_day × max_days` (default
   `15 × 3 = 45`). Estimated days = `ceil(effective_mi / miles_per_day)`, capped
   at `max_days`.
+- Two opt-in alternatives to the default straight-line horizontal distance:
+  crest-aware [pass routing](#mountain-passes-crest-aware-routing)
+  (`--use-passes`) and OSM-derived [trail-network
+  routing](#trail-network-routing---use-trails) (`--use-trails`).
 
 ### Approach modeling (`--include-approach`)
 
@@ -399,6 +431,12 @@ python cli.py --input data/sps_peaks.csv --output out.json --viz clusters.png
 | `--force-together` | – | comma-separated peaks to keep in one trip (repeatable) |
 | `--merge` | – | comma-separated cluster IDs to merge, then re-plan (repeatable) |
 | `--split` | – | split a cluster: `ID:K` (repeatable) |
+| `--use-passes` | off | route cross-crest legs through mountain passes (mutually exclusive with `--use-trails`) |
+| `--passes-file` | `data/passes.csv` | passes dataset used by `--use-passes` |
+| `--pass-tier` | `1` | which passes may be used as crossings: `1` named only, `2` also minor gaps/saddles |
+| `--use-trails` | off | route legs over OSM trail-network geometry (mutually exclusive with `--use-passes`) |
+| `--trails-file` | `data/trails.graphml` | trail network graph used by `--use-trails` |
+| `--trail-max-snap-mi` | `1.5` | beyond this distance from the trail network, a leg falls back to direct routing |
 | `--viz` | – | write a matplotlib PNG (per-peak labels auto-hide above 40 peaks) |
 
 ### Manual tweaking
@@ -499,11 +537,13 @@ sierra-peaks-clustering/
 │   ├── permits.csv              # permit rules per permit_group (quota season, apply URL...)
 │   ├── permit_overrides.csv     # peak-level permit_group overrides (see Permit report)
 │   ├── permit_source_log.csv    # append-only source-verification audit trail
+│   ├── trails.graphml           # OSM trail network for --use-trails (fetched, not hand-curated)
 │   └── source/                  # official Sierra Club files + trimmed GNIS subset
 ├── scripts/
 │   ├── build_dataset.py         # XLS + non-SPS PDF -> sps_peaks.csv
 │   ├── merge_gnis.py            # join GNIS coordinates (name + quad)
-│   └── merge_coords.py          # generic GPX/KML/CSV/JSON coordinate joiner
+│   ├── merge_coords.py          # generic GPX/KML/CSV/JSON coordinate joiner
+│   └── fetch_osm_trails.py      # one-off OSM fetch -> data/trails.graphml
 ├── examples/
 │   ├── sps_full_output.json     # statewide 53-trip plan
 │   ├── sps_full_clusters.png    # statewide map
@@ -518,10 +558,13 @@ sierra-peaks-clustering/
 │   ├── manual.py                # merge / split / exclude / force-together
 │   ├── export.py                # JSON export
 │   ├── permits.py               # permit lookup + date-aware quota/reservation status
+│   ├── passes.py                # crest-aware mountain-pass routing (--use-passes)
+│   ├── trails.py                # OSM trail-network routing (--use-trails)
 │   └── visualize.py             # optional matplotlib map
 └── tests/
     ├── test_pipeline.py         # clustering/routing/approach unit & integration tests
-    └── test_permits.py          # permit-lookup unit tests
+    ├── test_permits.py          # permit-lookup unit tests
+    └── test_trails.py           # trail-network routing unit tests (synthetic graphs, no network)
 ```
 
 Run the tests: `python -m pytest tests/` (or `python tests/test_pipeline.py`).
@@ -535,12 +578,18 @@ Run the tests: `python -m pytest tests/` (or `python tests/test_pipeline.py`).
   cliffs or technical terrain. The trailhead approach is off by default but can
   be modeled with `--include-approach` (see above), which uses the official
   per-peak `mileage_rt`/`gain_ft` and the curated `data/trailheads.csv`.
-- **Trail-network distances (optional).** The distance layer is isolated in
-  `distances.py`; swap `build_distance_matrix` for shortest paths over a
-  `networkx` graph built from USFS/NPS trail shapefiles, and everything
-  downstream is unchanged.
+- **Trail-network distances (optional, implemented).** See [`--use-trails`
+  above](#trail-network-routing---use-trails); the distance layer is isolated
+  in `distances.py` so `build_distance_matrix`/`leg_metrics` transparently
+  swap in shortest paths over the OSM-derived graph via
+  `sierra_peaks.trails.TrailRouter`, the same way `--use-passes` plugs in
+  `sierra_peaks.passes.PassRouter`.
 - **Elevation gain** is the sum of positive summit-to-summit deltas along the
-  route — a lower bound that ignores intermediate ups-and-downs.
+  route — a lower bound that ignores intermediate ups-and-downs. With
+  `--use-trails` this lower bound is looser still: horizontal distance now
+  follows real trail switchbacks, but ascent is not yet summed along that
+  path (would need DEM sampling of the trail graph — a documented future
+  extension, not implemented).
 - **Permits** (`--permits`, see above) are a planning aid, not a booking
   system: `data/permits.csv` is a manually curated snapshot of quota seasons,
   reservation windows and lottery timing, which agencies change from year to

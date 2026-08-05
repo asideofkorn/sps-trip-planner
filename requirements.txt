@@ -8,3 +8,8 @@ geopy>=2.3
 matplotlib>=3.7
 # Optional, only needed for scripts/map_clusters.py (interactive topo map):
 folium>=0.16
+# osmnx is intentionally NOT listed here: it's needed only to run
+# scripts/fetch_osm_trails.py (a one-off, manually-run fetch), never by the
+# CLI/library itself (--use-trails loads the committed data/trails.graphml
+# with plain networkx, already listed above). Install it with:
+#   pip install -e .[trails]

@@ -167,8 +167,9 @@ def route_metrics(ordered_peaks: Sequence[Peak], router=None) -> Dict[str, float
             horizontal += r.horizontal_mi
             ascent += r.ascent_ft
             effective += r.effective_mi
-            if r.via_pass:
-                crossed.append(r.via_pass)
+            via_pass = getattr(r, "via_pass", None)
+            if via_pass:
+                crossed.append(via_pass)
             continue
         h = haversine_miles(a.latitude, a.longitude, b.latitude, b.longitude)
         asc = max(0.0, b.elevation_ft - a.elevation_ft)

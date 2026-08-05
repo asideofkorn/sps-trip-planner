@@ -52,7 +52,8 @@ def _order_peaks(peaks: List[Peak], trailhead: Optional[Trailhead],
     # Augment with a trailhead node (last index) whose edges are the inbound
     # approach effort to each peak; routing picks the best entry/exit summits.
     n = len(peaks)
-    approach = approach_costs_to_peaks(trailhead, peaks, config.sinuosity)
+    approach = approach_costs_to_peaks(trailhead, peaks, config.sinuosity,
+                                       router=config.router)
     aug = np.zeros((n + 1, n + 1), dtype=float)
     aug[:n, :n] = cost
     aug[n, :n] = approach
@@ -83,6 +84,10 @@ def build_itinerary(
     else:
         metrics = route_metrics(ordered, router=router)
 
+    route_source = ""
+    if router is not None:
+        route_source = "trails" if type(router).__name__ == "TrailRouter" else "passes"
+
     cluster = Cluster(
         cluster_id=cluster_id,
         peaks=ordered,
@@ -91,10 +96,12 @@ def build_itinerary(
         total_effective_mi=metrics["effective_mi"],
         total_elevation_gain_ft=metrics["elevation_gain_ft"],
         passes=list(metrics.get("passes", [])),
+        route_source=route_source,
     )
 
     if trailhead is not None:
-        appr = approach_metrics(trailhead, ordered[0], ordered[-1], config.sinuosity)
+        appr = approach_metrics(trailhead, ordered[0], ordered[-1], config.sinuosity,
+                                router=router)
         cluster.trailhead = trailhead.name
         cluster.trailhead_side = trailhead.side
         cluster.approach_distance_mi = appr["horizontal_mi"]
