@@ -1,4 +1,4 @@
-# Backcountry Trip Planner
+# Wayproof
 
 Open-source, source-backed logistics for hiking, trail running, backpacking, and
 mountaineering. Sierra Nevada first; designed to expand to U.S. public lands.
@@ -49,7 +49,7 @@ The useful questions are:
 That relationship between objective -> approach -> access -> permit -> timing ->
 evidence is the direction of the project.
 
-Backcountry Trip Planner is not intended to replace CalTopo, Gaia GPS,
+Wayproof is not intended to replace CalTopo, Gaia GPS,
 AllTrails, Strava Routes, or other detailed mapping and navigation tools. Those
 products are better suited to drawing, inspecting, and navigating exact routes.
 This project is focused on the logistical knowledge around the trip: what access
@@ -161,7 +161,7 @@ webpage has superseded it. Recreation.gov may describe a rule differently from
 the land manager's own page. Two official sources can even appear to contradict
 one another.
 
-For that reason, Backcountry Trip Planner separates the project's current
+For that reason, Wayproof separates the project's current
 structured answer from the evidence history used to reach it.
 
 ### Current Permit Data
@@ -270,7 +270,7 @@ Whitney Portal -> Whitney lottery
 can produce the wrong answer for a peak reached from the same trailhead by a
 different route.
 
-`data/approaches.csv` (loaded by `sierra_peaks/access.py`) models this as an
+`data/approaches.csv` (loaded by `wayproof/access.py`) models this as an
 explicit relationship rather than an opaque peak-name patch: which peak, which
 named approach/route, which trailhead it starts from, and -- when a source
 confirms it -- which permit product actually governs it. Each row carries:
@@ -366,7 +366,7 @@ Do not describe generated clustering output as a "verified route."
 ## Installation
 
 ```bash
-cd sps-trip-planner
+cd wayproof
 pip install -r requirements.txt
 ```
 
@@ -461,9 +461,9 @@ compatibility. These names refer to the experimental geographic-discovery
 implementation described below.
 
 ```python
-from sierra_peaks import load_peaks, ClusterConfig
-from sierra_peaks.pipeline import plan_trips
-from sierra_peaks.export import save_json
+from wayproof import load_peaks, ClusterConfig
+from wayproof.pipeline import plan_trips
+from wayproof.export import save_json
 
 peaks = load_peaks("data/peaks.csv", list_filter="SPS",
                     collections_path="data/collections/sps.csv")
@@ -494,7 +494,7 @@ core.
   `benchmark_rating` -- everything that comes specifically from the Sierra
   Club SPS program's own two source documents.
 
-`sierra_peaks.data_loader.load_peaks` joins the two by `name` when given a
+`wayproof.data_loader.load_peaks` joins the two by `name` when given a
 `collections_path`; loading `data/peaks.csv` alone works too, just without
 collection metadata. Both files are committed and ready to use; the
 copyrighted Sierra Club source documents themselves are not redistributed
@@ -808,7 +808,7 @@ a percentage-split release -- 60% of the quota six months out, the remaining
 the second release existed only as a sentence a human had to read, never as
 a date the tool itself could act on.
 
-`data/release_policies.csv` (loaded by `sierra_peaks/release_policy.py`)
+`data/release_policies.csv` (loaded by `wayproof/release_policy.py`)
 records each permit_group's release cycle as an ordered list of phases
 instead, so every dated event is computable, not just the first one. Four
 mechanisms cover every case in the current dataset:
@@ -832,7 +832,7 @@ date is left unresolved and its `notes` field is surfaced instead of a
 guess.
 
 **Not every permit_group is migrated.** Yosemite's weekly lottery cycle is
-deliberately left on its own special-cased logic in `sierra_peaks/permits.py`
+deliberately left on its own special-cased logic in `wayproof/permits.py`
 -- its own source states that exact per-area reservation dates come from a
 downloadable dataset that hasn't been retrieved, so forcing weekday-precise
 computed dates onto an already-approximate source would manufacture false
@@ -957,7 +957,7 @@ included for quick experimentation.
 ### Project Layout
 
 ```text
-sps-trip-planner/
+wayproof/
 ├── plan.py                      # resolve logistics for named objectives (flagship)
 ├── cli.py                       # experimental candidate-grouping entry point
 ├── requirements.txt
@@ -989,7 +989,7 @@ sps-trip-planner/
 │   ├── sps_full_output.json
 │   ├── sps_full_clusters.png
 │   └── example_output.json
-├── sierra_peaks/
+├── wayproof/
 │   ├── model.py
 │   ├── data_loader.py
 │   ├── distances.py

@@ -67,5 +67,5 @@ python scripts/split_collections.py      # staging -> data/peaks.csv + data/coll
 ```
 
 `data/sps_peaks.csv` is a git-ignored, rebuild-only staging file -- it is not
-loaded by any runtime code (`cli.py`, `plan.py`, `sierra_peaks/`). The final
+loaded by any runtime code (`cli.py`, `plan.py`, `wayproof/`). The final
 step splits it into the two files that actually are.

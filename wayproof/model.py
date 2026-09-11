@@ -91,7 +91,7 @@ class Cluster:
     ranking; higher means denser by the project's effort heuristic.
 
     The ``approach_*`` / ``trailhead*`` fields are populated only when approach
-    modeling is enabled (see :class:`~sierra_peaks.clustering.ClusterConfig`).
+    modeling is enabled (see :class:`~wayproof.clustering.ClusterConfig`).
     They cover the walk from the trailhead to the first summit and back from the
     last; the ``total_*`` figures then include that approach.
     """

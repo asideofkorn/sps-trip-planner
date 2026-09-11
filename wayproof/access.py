@@ -1,7 +1,7 @@
 """Peak-specific approach relationships: which named route a peak is climbed
 by, and which permit product actually governs that route.
 
-A trailhead's ``permit_group`` (see :mod:`sierra_peaks.permits`) is a useful
+A trailhead's ``permit_group`` (see :mod:`wayproof.permits`) is a useful
 default, but it is not a guarantee for every peak reached from that
 trailhead. Some trailheads serve more than one named approach, and different
 approaches from the same trailhead can fall under different permit products.
@@ -19,7 +19,7 @@ patch:
 
 - ``status=confirmed`` -- a directly-named source states this peak's real
   approach uses a different permit product than its trailhead's default.
-  :func:`~sierra_peaks.permits.clusters_permit_info` emits an extra,
+  :func:`~wayproof.permits.clusters_permit_info` emits an extra,
   peak-specific permit entry for these.
 - ``status=unconfirmed`` -- a different approach is plausible (for example,
   the dataset's own source-listed trailhead for the peak names a different

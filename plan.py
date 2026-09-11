@@ -30,10 +30,10 @@ import datetime
 import json
 import sys
 
-from sierra_peaks.access import load_approaches
-from sierra_peaks.data_loader import load_peaks, load_trailheads
-from sierra_peaks.permits import load_permits
-from sierra_peaks.plan import resolve_plan, format_plan_summary
+from wayproof.access import load_approaches
+from wayproof.data_loader import load_peaks, load_trailheads
+from wayproof.permits import load_permits
+from wayproof.plan import resolve_plan, format_plan_summary
 
 
 def _parse_args(argv=None) -> argparse.Namespace:

@@ -1,4 +1,4 @@
-"""Tests for the plan module (sierra_peaks.plan).
+"""Tests for the plan module (wayproof.plan).
 
 Run with:  python -m pytest tests/test_plan.py
 """
@@ -12,10 +12,10 @@ from datetime import date
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from sierra_peaks.access import load_approaches
-from sierra_peaks.data_loader import load_peaks, load_trailheads
-from sierra_peaks.permits import load_permits
-from sierra_peaks.plan import resolve_plan, format_plan_summary
+from wayproof.access import load_approaches
+from wayproof.data_loader import load_peaks, load_trailheads
+from wayproof.permits import load_permits
+from wayproof.plan import resolve_plan, format_plan_summary
 
 PEAKS = os.path.join(os.path.dirname(__file__), "..", "data", "peaks.csv")
 COLLECTIONS = os.path.join(os.path.dirname(__file__), "..", "data", "collections", "sps.csv")

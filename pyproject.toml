@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sierra-peaks-clustering"
+name = "wayproof"
 version = "0.1.0"
 description = "Source-backed outdoor trip logistics for Sierra Nevada objectives, with experimental SPS candidate grouping."
 readme = "README.md"
@@ -32,14 +32,14 @@ viz = ["matplotlib>=3.7", "folium>=0.16"]
 dev = ["pytest>=7.0"]
 
 [project.urls]
-Homepage = "https://github.com/asideofkorn/sps-trip-planner"
-Repository = "https://github.com/asideofkorn/sps-trip-planner"
-Issues = "https://github.com/asideofkorn/sps-trip-planner/issues"
+Homepage = "https://github.com/asideofkorn/wayproof"
+Repository = "https://github.com/asideofkorn/wayproof"
+Issues = "https://github.com/asideofkorn/wayproof/issues"
 
 [project.scripts]
-sps-cluster = "cli:main"
-sps-plan = "plan:main"
+wayproof = "plan:main"
+wayproof-cluster = "cli:main"
 
 [tool.setuptools]
-packages = ["sierra_peaks"]
+packages = ["wayproof"]
 py-modules = ["cli", "plan"]

@@ -154,7 +154,7 @@ def route_metrics(ordered_peaks: Sequence[Peak], router=None) -> Dict[str, float
 
     Returns horizontal miles, Naismith effective miles, and cumulative ascent
     (positive elevation gain summed leg-by-leg along the sequence). When a
-    ``router`` (``sierra_peaks.passes.PassRouter``) is given, cross-crest legs
+    ``router`` (``wayproof.passes.PassRouter``) is given, cross-crest legs
     are routed through the cheapest pass and the ordered list of passes the
     candidate sequence crosses is returned under ``"passes"``.
     """

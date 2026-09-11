@@ -82,12 +82,12 @@ def load_peaks(
         A collection file (e.g. ``data/collections/sps.csv``) to left-join
         onto ``path`` by ``name``, adding fields like ``list``/``section``/
         ``mileage_rt`` that belong to a named collection rather than to the
-        peak's core identity (see :mod:`sierra_peaks.model`'s ``Peak.collection``
+        peak's core identity (see :mod:`wayproof.model`'s ``Peak.collection``
         and ``DATA_LICENSE.md``'s Source Policy section). Optional --
         ``path`` alone is a complete, collection-agnostic peak dataset;
         omitting this just means no collection metadata is attached.
         Silently skipped if the file doesn't exist, same as
-        :func:`sierra_peaks.access.load_approaches`'s optional-file pattern.
+        :func:`wayproof.access.load_approaches`'s optional-file pattern.
     """
     path = Path(path)
     if not path.exists():
@@ -167,7 +167,7 @@ def load_trailheads(path: str | Path) -> List[Trailhead]:
 
     Expected columns: ``name``, ``latitude``, ``longitude``, and optionally
     ``elevation_ft``, ``side``, ``notes``, ``wilderness_area``, ``land_agency``,
-    ``permit_group`` (the last three feed :mod:`sierra_peaks.permits`).
+    ``permit_group`` (the last three feed :mod:`wayproof.permits`).
     """
     path = Path(path)
     if not path.exists():

@@ -33,9 +33,9 @@ sys.path.insert(0, str(ROOT))
 import folium
 import pandas as pd
 
-from sierra_peaks.data_loader import load_peaks
-from sierra_peaks.clustering import ClusterConfig
-from sierra_peaks.pipeline import plan_trips
+from wayproof.data_loader import load_peaks
+from wayproof.clustering import ClusterConfig
+from wayproof.pipeline import plan_trips
 
 # A repeating palette of visually distinct colours for candidate groups.
 PALETTE = [

@@ -1,7 +1,7 @@
 """Resolve trip logistics for a specific, named set of objectives.
 
 Unlike the experimental geographic clustering pipeline
-(:mod:`sierra_peaks.clustering` / :mod:`sierra_peaks.tsp`), this module does
+(:mod:`wayproof.clustering` / :mod:`wayproof.tsp`), this module does
 not discover or group objectives -- it assumes the user already knows what
 they want to do (e.g. "Mount Williamson and Mount Tyndall") and answers: what
 access applies, what permit governs it, when do you need to act, and what
@@ -9,9 +9,9 @@ evidence backs the answer?
 
 Almost nothing here is new domain logic. :func:`resolve_plan` looks the named
 objectives up, picks their shared trailhead with
-:func:`sierra_peaks.approach.choose_trailhead`, wraps them in a single-use
-:class:`~sierra_peaks.model.Cluster`, and hands that to
-:func:`sierra_peaks.permits.clusters_permit_info` -- reusing the approach
+:func:`wayproof.approach.choose_trailhead`, wraps them in a single-use
+:class:`~wayproof.model.Cluster`, and hands that to
+:func:`wayproof.permits.clusters_permit_info` -- reusing the approach
 override/uncertainty handling and computable release-rule dates already
 built for the clustering pipeline, rather than duplicating any of it.
 

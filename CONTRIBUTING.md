@@ -1,13 +1,13 @@
 # Contributing
 
-Thanks for your interest in improving Backcountry Trip Planner. Contributions
+Thanks for your interest in improving Wayproof. Contributions
 of all kinds are welcome: bug reports, source-backed data corrections, and code.
 
 ## Getting started
 
 ```bash
-git clone https://github.com/<owner>/sps-trip-planner.git
-cd sps-trip-planner
+git clone https://github.com/<owner>/wayproof.git
+cd wayproof
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python tests/test_pipeline.py        # or: python -m pytest tests/

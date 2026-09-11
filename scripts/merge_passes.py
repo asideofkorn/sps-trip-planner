@@ -44,7 +44,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from sierra_peaks.passes import classify
+from wayproof.passes import classify
 DEFAULT_GNIS = ROOT / "data" / "source" / "gnis_sierra_gaps.txt"
 PASSES = ROOT / "data" / "passes.csv"
 

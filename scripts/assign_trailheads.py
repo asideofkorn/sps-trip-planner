@@ -42,7 +42,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from sierra_peaks.distances import haversine_miles
+from wayproof.distances import haversine_miles
 PEAKS = ROOT / "data" / "sps_peaks.csv"
 TRAILHEADS = ROOT / "data" / "trailheads.csv"
 PASSES = ROOT / "data" / "passes.csv"
@@ -73,7 +73,7 @@ def main(argv=None) -> None:
 
     router = None
     if args.use_passes:
-        from sierra_peaks.passes import build_router
+        from wayproof.passes import build_router
         router = build_router(PASSES, candidate_tier=args.pass_tier)
 
     names, sides, dists, passes_crossed = [], [], [], []
