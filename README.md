@@ -73,7 +73,7 @@ MOUNT WILLIAMSON + MOUNT TYNDALL
 Trip date: 2027-07-15
 
 Access
-  Trailhead: Symmes Creek (Shepherd Pass)  (east side)
+  Trailhead: Shepherd Pass  (east side)
 
 Permit
   Wilderness: John Muir Wilderness  |  Agency: Inyo National Forest
