@@ -1,6 +1,6 @@
 name,side,latitude,longitude,elevation_ft,notes,wilderness_area,land_agency,permit_group
 Adams Peak (Constantia),east,39.91,-120.15,6850,"Road 24N22X off Constantia Rd near Doyle; west-side approach to Adams Peak, distinct from Frenchman Lake. Coords approximate — unverified.",,Plumas NF,none
-Frenchman Lake,east,39.8989,-120.1900,5600,Far northern Sierra; Adams Peak / Dixie Mountain,,Plumas NF,none
+Frenchman Lake,east,39.8989,-120.19,5600,Far northern Sierra; Adams Peak / Dixie Mountain,,Plumas NF,none
 Mount Rose,east,39.3139,-119.8975,8900,Hwy 431; Mount Rose,Mount Rose Wilderness,Humboldt-Toiyabe NF,none
 Leavitt Meadows,east,38.3358,-119.5519,7200,West Walker; Leavitt/Tower country,Hoover Wilderness,Humboldt-Toiyabe NF,hoover
 Twin Lakes (Bridgeport),east,38.1456,-119.3733,7100,Mono Village; Matterhorn/Sawtooth Ridge,Hoover Wilderness,Humboldt-Toiyabe NF,hoover
@@ -42,7 +42,7 @@ Sage Flat (Olancha),east,36.2042,-118.0758,5600,Olancha Peak / southern Sierra,S
 Blackrock/Monache Road (21S36),east,36.128,-118.26,7900,"USFS road 21S36 (Monache Jeep Rd) off 21S03 near Black Rock Station; Smith Mountain, Crag Peak. Coords approximate — unverified.",Golden Trout Wilderness,Sequoia NF,gtw_free
 Big Meadow (Kern Plateau),east,36.05,-118.35,7600,"FS TH off Sherman Pass Rd on the Kern Plateau; Cannell Peak, Taylor Dome. Coords approximate — unverified.",Golden Trout Wilderness,Sequoia NF,gtw_free
 Cannell Meadow (Kernville),east,35.9901,-118.36642,2650,TH on Sierra Way north of Kernville; Cannell Trail to the Sirretta Peak area.,South Sierra Wilderness,Sequoia NF,gtw_free
-Kennedy Meadows (South),east,35.9869,-118.1300,6150,PCT; Kern Plateau south (Lamont/Sirretta),Golden Trout Wilderness,Sequoia NF,gtw_free
+Kennedy Meadows (South),east,35.9869,-118.13,6150,PCT; Kern Plateau south (Lamont/Sirretta),Golden Trout Wilderness,Sequoia NF,gtw_free
 Canebrake (Pilot Knob),east,35.729,-118.209,3200,Public access off Hwy 178 near Onyx for Pilot Knob (S); crosses land with restricted access. Coords approximate — unverified.,,Sequoia NF,none
 Indian Wells Canyon (Owens Peak),east,35.7155,-117.9742,3300,"Owens Peak Wilderness TH off Indian Wells Canyon Rd from Hwy 14, south of Walker Pass.",Owens Peak Wilderness,BLM/Sequoia NF,none
 Walker Pass,east,35.6597,-118.0289,5246,Hwy 178 PCT; far southern Sierra (Owens/Morris/Spanish Needle),Owens Peak Wilderness,BLM/Sequoia NF,none
@@ -85,3 +85,5 @@ South Fork Kaweah (Cahoon Gap),west,36.435,-118.746,3650,South Fork Campground/T
 Hidden Falls (Moses Mountain),west,36.2591,-118.6615,6174,Tule River/Mountain Home area; access for Moses Mountain. Post-2020 Castle Fire access may vary — unverified.,Golden Trout Wilderness,Sequoia NF,gtw_free
 Shake Camp (Mountain Home),west,36.2306,-118.7326,6600,"Mountain Home Demonstration State Forest east of Porterville; North Maggie Mountain, Moses Mountain. Coords approximate — unverified.",Golden Trout Wilderness,Sequoia NF,gtw_free
 Jerkey Meadow,west,36.1824,-118.4785,6800,"End of Lloyd Meadow Rd, Golden Trout Wilderness west boundary; Angora Mountain, Kennedy Mountain, Coyote Peaks.",Golden Trout Wilderness,Sequoia NF,gtw_free
+Del Valle (Lichen Bark),east,37.598,-121.699,,"Lichen Bark Parking Area, the northernmost lot near Ardilla Group Camp -- the actual Ohlone Wilderness Trail trailhead within Del Valle Regional Park, distinct from the park's other lots (marina, swim beach, campground loops), which do not start this trail. Coordinates approximate -- unverified.",Ohlone Wilderness,East Bay Regional Park District,none
+Stanford Ave Staging Area,west,37.5043026,-121.9086556,,"West/Fremont end of the Ohlone Wilderness Trail, serving Mission Peak. Heavily used weekends/holidays. Overnight parking is not allowed without a permit obtained while making an Ohlone Wilderness camping reservation; nearby Ohlone College access is day-use only, no overnight parking.",Mission Peak Regional Preserve,East Bay Regional Park District,none

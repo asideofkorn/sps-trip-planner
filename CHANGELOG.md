@@ -5,6 +5,48 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added
+- **Rose Peak and Mission Peak (Diablo Range, Alameda County)**: this
+  project's first peaks outside the Sierra Nevada / SPS collection, added to
+  `data/peaks.csv` with a new `region` field and no `data/collections/sps.csv`
+  row, proving out the core/collection split's actual purpose. Both sit on
+  East Bay Regional Park District land with a genuinely different access
+  model than anything in the Sierra data, which surfaced three new concepts:
+  - `data/campgrounds.csv` / `data/campsites.csv` (new `wayproof/camping.py`,
+    `Campground`, `Campsite`, `load_campgrounds`, `load_campsites`,
+    `campsites_by_campground`): a campground's shared facilities vs. an
+    individually-bookable site within it, since some campgrounds (Sunol
+    Backpack Camp) contain several named sites with a genuinely different
+    proximity to shared water/restroom facilities (Hawks Nest is closer to
+    both than the campground's other six sites).
+  - `data/water_sources.csv` / `data/water_source_log.csv` (new
+    `wayproof/water.py`, `WaterSource`, `WaterSourceLogEntry`,
+    `load_water_sources`, `load_water_source_log`, `log_by_source`,
+    `latest_status_by_source`): an append-only ledger for facts that decay
+    with no announcement (a spigot can go dry with no notice), generalizing
+    `permit_source_log.csv`'s confirms/conflicts pattern beyond permits. An
+    official EBRPD page and this project's own trip notes currently disagree
+    on whether Boyd Camp has water -- both entries are kept rather than one
+    silently overwriting the other; see `DATA_LICENSE.md`'s "Known
+    follow-ups."
+  - `data/park_access.csv` (new `wayproof/park_access.py`, `ParkAccess`,
+    `load_park_access`): a park-level vehicle entrance fee and gate hours,
+    distinct from both a wilderness permit and a campsite reservation --
+    some EBRPD land gates vehicle access independently of either. Confidence
+    is tracked per field: Del Valle's posted fee/hours are independently
+    verifiable, but its fee exemption for backpackers retrieving a shuttled
+    car was confirmed only verbally, in person, by gate staff -- recorded
+    with correspondingly lower confidence rather than presented as
+    equally solid.
+  Sourced from this project's own Ohlone Wilderness Trail trip (Sep 2026),
+  official EBRPD pages, and one independently-verified policy change
+  (the Ohlone Wilderness Trail's day-use permit was discontinued
+  2026-01-01 -- the dataset reflects post-change reality). Two new
+  trailheads (`Del Valle (Lichen Bark)`, `Stanford Ave Staging Area`) were
+  added to `data/trailheads.csv` accordingly. None of this is wired into
+  `plan`'s output yet -- that's a natural next step, not this one.
+  New `tests/test_facilities.py`.
+
 ### Changed
 - **Renamed the project to Wayproof**, completing the rename tracked as
   follow-up work since the initial repositioning pass. GitHub repo
