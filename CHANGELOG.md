@@ -6,6 +6,26 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- `plan.py` (new standalone CLI, `sps-plan` entry point) and
+  `sierra_peaks/plan.py` (`PlanResult`, `resolve_plan`, `format_plan_summary`):
+  resolves access, permit, and evidence logistics for a specific, named set
+  of objectives and a trip date, e.g.
+  `python plan.py "Mount Williamson" "Mount Tyndall" --date 2027-07-15`. This
+  is the first end-to-end delivery of the project's core thesis -- objective
+  -> approach -> access -> permit -> timing -> evidence -- without going
+  through the experimental clustering/TSP pipeline at all. Reuses existing
+  machinery rather than duplicating it: `choose_trailhead` picks the shared
+  trailhead, the named objectives are wrapped in a single-use `Cluster` and
+  handed to `clusters_permit_info` (so approach overrides, unconfirmed-case
+  cautions, and computed release-phase dates all apply for free), and each
+  objective's official `mileage_rt`/`gain_ft` is surfaced directly rather
+  than computing a new geometric estimate. `PlanResult.to_dict()` gives
+  structured JSON output (`--output plan.json`) from day one. Objectives
+  that don't share a single trailhead aren't rejected -- `plan` resolves its
+  best guess and reports the mismatch as an explicit warning. Refactored
+  `format_permit_report`'s per-entry rendering into a shared
+  `format_permit_entry_body` so `plan`'s output doesn't duplicate that
+  formatting logic.
 - `data/release_policies.csv` and new `sierra_peaks/release_policy.py`
   (`ReleasePhase`, `load_release_policies`): structured, computable permit
   release rules, replacing per-group special-cased Python for 8 of 9
