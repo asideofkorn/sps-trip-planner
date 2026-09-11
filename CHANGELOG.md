@@ -94,5 +94,27 @@ All notable changes to this project are documented here. The format is based on
   OpenStreetMap / Esri basemaps.
 - Versioned cluster and benchmark charts under `charts/` (rendered at 300 DPI).
 
+### Changed
+- Repositioned the project around source-backed trip logistics rather than
+  geographic clustering. The README, `cli.py`, `sierra_peaks/__init__.py`, and
+  `pyproject.toml` description now lead with the actual product question --
+  "I want to do this objective on this date; what do I need to know and do to
+  make it happen?" -- ahead of installation and algorithm details, using the
+  Mount Williamson / Mount Tyndall shared-approach-and-permit example to make
+  that concrete before any code is shown.
+- Demoted DBSCAN/TSP-based grouping from the project's headline feature to an
+  explicitly experimental discovery aid. Added a dedicated "Experimental:
+  Geographic Trip Discovery" section and a terminology list (candidate
+  grouping, candidate sequence, known approach, verified rule,
+  unresolved/uncertain) so generated output is never described as a verified
+  route. The JSON schema keeps historical field names (`clusters`,
+  `cluster_id`, `recommended_order`) for compatibility, now documented as
+  such rather than implied to be authoritative.
+- This is a positioning and documentation change; no CLI flags, JSON schema
+  fields, or public function signatures were removed or renamed. The package
+  name (`sierra-peaks-clustering`), CLI entry point (`sps-cluster`), and repo
+  name are intentionally unchanged for now -- a full rename is tracked as
+  separate future work.
+
 ### Notes
 - This is the initial open-source preparation of the Sierra Peaks trip planner.
