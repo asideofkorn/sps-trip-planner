@@ -323,17 +323,25 @@ confirm the current rule at the official URL referenced by the dataset.
 
 ## Current Coverage And Limitations
 
-Current coverage is Sierra Nevada- and SPS-focused.
+Current coverage is Sierra Nevada- and SPS-focused, plus a first step outside
+it: Rose Peak and Mission Peak (Diablo Range, Alameda County), added to
+`data/peaks.csv` with no SPS collection row, on East Bay Regional Park
+District land with a genuinely different access model (no wilderness permit,
+a campsite reservation instead, and a vehicle day-use fee with its own
+exemptions) -- see the "Campgrounds And Facilities" section below.
 
 The repository currently includes:
 
-- `data/peaks.csv` - collection-agnostic summit identity: name, coordinates, elevation, nearest-trailhead access signal
+- `data/peaks.csv` - collection-agnostic summit identity: name, coordinates, elevation, region, nearest-trailhead access signal
 - `data/collections/sps.csv` - the SPS collection layer: list membership, section, class, official mileage/gain, benchmark rating
-- `data/trailheads.csv` - curated Sierra trailheads and access metadata
-- `data/permits.csv` - structured permit rules
+- `data/trailheads.csv` - curated trailheads and access metadata (Sierra Nevada plus, as of Rose Peak/Mission Peak, the East Bay's Diablo Range)
+- `data/permits.csv` - structured wilderness-entry permit rules
 - `data/release_policies.csv` - structured, computable permit release phases
 - `data/approaches.csv` - peak-specific approach/permit relationships, confirmed and unconfirmed
-- `data/permit_source_log.csv` - append-only verification history
+- `data/permit_source_log.csv` - append-only permit verification history
+- `data/campgrounds.csv` / `data/campsites.csv` - backpack campgrounds and their individually-bookable sites
+- `data/water_sources.csv` / `data/water_source_log.csv` - named backcountry water sources and an append-only ledger of dated availability checks (a source can go dry with no announcement, so a later check never overwrites an earlier one)
+- `data/park_access.csv` - park-level vehicle entrance fees, gate hours, and fee exemptions (distinct from a wilderness permit or a campsite reservation)
 - `data/passes.csv` - Sierra pass data used for optional coarse cross-crest
   distance estimates
 
@@ -362,6 +370,55 @@ Use the following terms deliberately:
   confident conclusion.
 
 Do not describe generated clustering output as a "verified route."
+
+## Campgrounds And Facilities
+
+Some access facts don't fit the permit model at all -- water availability
+that changes with no announcement, a campsite's proximity to a shared
+restroom, a park's vehicle entrance fee and gate hours. These were added
+alongside this project's first peaks outside the Sierra Nevada / SPS
+collection (Rose Peak, Mission Peak; East Bay Regional Park District's
+Diablo Range land), which use a genuinely different access model than
+anything in the Sierra data: no wilderness entry permit, a campsite
+reservation instead, and a separate park-level day-use fee with its own
+exemptions.
+
+- **`data/campgrounds.csv`** / **`data/campsites.csv`** -- a campground is a
+  physical cluster with shared facilities (one restroom, one water source,
+  one reservation contact); a campsite is an individually-bookable unit
+  within one. Most campgrounds in this dataset are effectively a single
+  site, but some (Sunol Backpack Camp) contain several named sites that
+  share the campground's facilities yet have a genuinely different
+  proximity to them -- Hawks Nest is documented as closer to both water and
+  the restroom than Sunol Backpack Camp's other six sites. A campground
+  with no differentiated sub-sites has no rows in `campsites.csv` at all,
+  rather than a placeholder row repeating the campground's own name.
+- **`data/water_sources.csv`** / **`data/water_source_log.csv`** -- unlike a
+  coordinate, "is this spigot running" isn't a fact that stays true once
+  recorded. `water_sources.csv` holds the static facts (name, type,
+  associated trailhead/campground); `water_source_log.csv` is an
+  append-only ledger of dated checks against it, the same
+  confirms/conflicts pattern as `permit_source_log.csv` generalized to a
+  non-permit fact. A later check never overwrites an earlier one -- see
+  [`DATA_LICENSE.md`](DATA_LICENSE.md)'s "Known follow-ups" for a live
+  example: an official EBRPD page and this project's own trip notes
+  currently disagree on whether Boyd Camp has water, and both entries are
+  kept rather than one silently overwriting the other.
+- **`data/park_access.csv`** -- a park-level vehicle entrance fee, gate
+  hours, and fee exemptions, distinct from both a wilderness permit
+  (`permits.csv`) and a campsite reservation (`campgrounds.csv`). Some East
+  Bay Regional Park District land gates vehicle access with a day-use fee
+  entirely independent of any backcountry permit or campsite booking --
+  forcing that into `permits.csv`'s quota-season model would leave most of
+  its columns meaningless. Confidence is tracked per field, not per row: a
+  posted fee and gate hours are independently verifiable against the
+  agency's own page, but a fee *exemption* is often something told to a
+  visitor verbally at the gate rather than published anywhere -- `notes`
+  says which is which rather than implying uniform confidence.
+
+None of this is wired into `plan`'s output yet -- these are loadable via
+`wayproof.camping`, `wayproof.water`, and `wayproof.park_access`, but
+surfacing them in `plan`'s report is a natural next step, not this one.
 
 ## Installation
 
@@ -971,6 +1028,11 @@ wayproof/
 │   ├── release_policies.csv      # structured, computable permit release phases
 │   ├── approaches.csv            # peak-specific approach/permit relationships
 │   ├── permit_source_log.csv     # append-only source-verification audit trail
+│   ├── campgrounds.csv           # backpack campgrounds (shared facilities)
+│   ├── campsites.csv             # individually-bookable sites within a campground
+│   ├── water_sources.csv         # named backcountry water sources
+│   ├── water_source_log.csv      # append-only water-availability check ledger
+│   ├── park_access.csv           # park-level entrance fees, gate hours, exemptions
 │   └── source/                   # official Sierra Club files + trimmed GNIS subset
 ├── scripts/
 │   ├── build_dataset.py         # XLS + non-SPS PDF -> sps_peaks.csv (staging)
@@ -1004,12 +1066,16 @@ wayproof/
 │   ├── permits.py
 │   ├── access.py
 │   ├── release_policy.py
+│   ├── camping.py
+│   ├── water.py
+│   ├── park_access.py
 │   ├── plan.py
 │   └── visualize.py
 └── tests/
     ├── test_pipeline.py
     ├── test_permits.py
-    └── test_plan.py
+    ├── test_plan.py
+    └── test_facilities.py
 ```
 
 Run the tests:

@@ -1,0 +1,10 @@
+name,latitude,longitude,type,potable,location,notes
+Lichen Bark (Del Valle),,,spigot (spring-fed),False,Del Valle (Lichen Bark),"At the trailhead itself, not a backcountry camp."
+Stromer Springs,,,spigot (spring-fed),False,Del Valle (Lichen Bark),~mile 1.74 on the Ohlone Wilderness Trail; no restroom or campground here.
+Boyd Camp,,,spigot (spring-fed),False,Boyd Camp,See water_source_log.csv -- an unresolved discrepancy exists between the official EBRPD page and this trip's own planning notes for this source.
+Stewart's Camp,,,spigot (spring-fed),False,Stewart's Camp,
+Maggie's Half Acre,,,spigot (spring-fed),False,Maggie's Half Acre,
+Doe Camp,,,spigot (spring-fed),False,Doe Camp,
+Sunol Backpack Camp,,,spigot (spring-fed),False,Sunol Backpack Camp,Shared by all 7 named sites at this campground.
+Eagle Springs,,,spigot (spring-fed),False,Eagle Springs,
+Stanford Ave Staging Area,,,spigot (spring-fed),False,Stanford Ave Staging Area,"At the trailhead/staging area itself, not a backcountry camp."
