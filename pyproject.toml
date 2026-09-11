@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "sierra-peaks-clustering"
 version = "0.1.0"
-description = "Cluster the Sierra Peaks Section (SPS) list into efficient 1-3 day peak-bagging trips."
+description = "Source-backed outdoor trip logistics for Sierra Nevada objectives, with experimental SPS candidate grouping."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { file = "LICENSE" }
 authors = [{ name = "Chris Kornblatt" }]
-keywords = ["sierra", "mountaineering", "clustering", "tsp", "hiking", "peak-bagging"]
+keywords = ["sierra", "mountaineering", "hiking", "backpacking", "permits", "trip-planning", "public-lands"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

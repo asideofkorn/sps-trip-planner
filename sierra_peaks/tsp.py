@@ -1,11 +1,12 @@
-"""Order peaks within a cluster by solving an open-path TSP.
+"""Order peaks within a candidate group by solving an open-path TSP.
 
 We solve an *open* Hamiltonian path (no forced return to the start) because a
-peak-bagging trip generally enters the range, tags summits in sequence, and
-exits — minimizing on-route backtracking rather than closing a loop.
+candidate mountain outing generally enters the range, tags summits in sequence,
+and exits, so the geometry heuristic minimizes backtracking rather than closing
+a loop.
 
-Small clusters (<= ``BRUTE_FORCE_MAX`` peaks) are solved exactly by brute force.
-Larger clusters use nearest-neighbor construction refined with 2-opt.
+Small groups (<= ``BRUTE_FORCE_MAX`` peaks) are solved exactly by brute force.
+Larger groups use nearest-neighbor construction refined with 2-opt.
 """
 
 from __future__ import annotations
@@ -129,8 +130,8 @@ def solve_tsp_cycle(cost: np.ndarray, start: int = 0) -> List[int]:
     """Return a min-cost closed tour visiting every node, beginning at ``start``.
 
     The returned order lists each node once (the return edge to ``start`` is
-    implied). Used to route a trip that leaves a trailhead, tags every summit,
-    and returns to the same trailhead.
+    implied). Used for a candidate sequence that leaves a trailhead, tags every
+    summit, and returns to the same trailhead.
     """
     n = cost.shape[0]
     if n <= 2:
@@ -152,10 +153,10 @@ def route_metrics(ordered_peaks: Sequence[Peak], router=None) -> Dict[str, float
     """Compute travel totals for a fixed sequence of peaks.
 
     Returns horizontal miles, Naismith effective miles, and cumulative ascent
-    (positive elevation gain summed leg-by-leg along the route). When a
+    (positive elevation gain summed leg-by-leg along the sequence). When a
     ``router`` (``sierra_peaks.passes.PassRouter``) is given, cross-crest legs
     are routed through the cheapest pass and the ordered list of passes the
-    route crosses is returned under ``"passes"``.
+    candidate sequence crosses is returned under ``"passes"``.
     """
     horizontal = 0.0
     ascent = 0.0

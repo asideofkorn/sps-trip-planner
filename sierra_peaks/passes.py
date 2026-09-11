@@ -161,7 +161,7 @@ class LegResult:
 
 
 class PassRouter:
-    """Leg costs that route cross-crest travel through the cheapest pass.
+    """Leg costs that evaluate cross-crest travel through the cheapest pass.
 
     A leg between two same-side points (or when the crest model is unusable) is
     direct. A leg between opposite-side points is forced through one of the

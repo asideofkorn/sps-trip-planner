@@ -1,7 +1,8 @@
-"""Sierra Peaks clustering toolkit.
+"""Sierra trip-logistics toolkit.
 
-Cluster Sierra Peaks Section (SPS) summits into efficient 1-3 day peak-bagging
-trips, order each trip with a TSP solver, and export ranked itineraries.
+Resolve source-backed Sierra trip logistics and generate experimental SPS
+candidate groupings. Geographic grouping and TSP ordering are discovery aids,
+not verified mountain routes.
 """
 
 from .model import Peak, Cluster, Trailhead

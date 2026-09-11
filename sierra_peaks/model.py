@@ -1,4 +1,4 @@
-"""Core data structures: Peak and Cluster."""
+"""Core data structures: Peak, Trailhead, and candidate Cluster."""
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ class Peak:
     meta : dict
         Optional extra attributes carried from the source data (class, section,
         emblem/mountaineers flags, round-trip mileage, gain, trailhead, quad...).
-        Surfaced in the JSON export but not used by the geometry/clustering.
+        Surfaced in the JSON export but not used by the geometry/grouping.
     """
 
     name: str
@@ -68,11 +68,11 @@ class Trailhead:
 
 @dataclass
 class Cluster:
-    """A proposed peak-bagging trip: a set of peaks plus a computed itinerary.
+    """A candidate peak grouping plus a computed sequence.
 
     The geometry fields (order, distances, gain, days) are filled in by the
-    pipeline once a TSP route has been solved. ``score`` is assigned during
-    ranking; higher is more efficient.
+    pipeline once a TSP sequence has been solved. ``score`` is assigned during
+    ranking; higher means denser by the project's effort heuristic.
 
     The ``approach_*`` / ``trailhead*`` fields are populated only when approach
     modeling is enabled (see :class:`~sierra_peaks.clustering.ClusterConfig`).
@@ -88,8 +88,8 @@ class Cluster:
     total_elevation_gain_ft: float = 0.0
     estimated_days: int = 0
     score: float = 0.0
-    passes: List[str] = field(default_factory=list)  # crest passes crossed on the route
-    # Approach (trailhead <-> route endpoints); zero/empty when not modeled.
+    passes: List[str] = field(default_factory=list)  # crest passes crossed by the candidate sequence
+    # Approach (trailhead <-> sequence endpoints); zero/empty when not modeled.
     trailhead: str = ""
     trailhead_side: str = ""
     approach_distance_mi: float = 0.0
@@ -118,7 +118,7 @@ class Cluster:
             "efficiency_score": round(self.score, 4),
         }
         if self.passes:
-            # Ordered, de-duplicated list of crest passes the route crosses.
+            # Ordered, de-duplicated list of crest passes the sequence crosses.
             seen: dict = {}
             d["passes_crossed"] = [seen.setdefault(p, p) for p in self.passes
                                    if p not in seen]
