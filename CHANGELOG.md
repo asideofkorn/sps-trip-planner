@@ -6,6 +6,27 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- `data/approaches.csv` and new `sierra_peaks/access.py` (`ApproachRoute`,
+  `load_approaches`): structured peak -> approach -> permit relationships,
+  replacing the flat `data/permit_overrides.csv` peak-name -> permit-group
+  string map. Each row now carries the named approach/route, the trailhead it
+  starts from, and a `status` of `confirmed` (a source directly states the
+  peak's real permit product) or `unconfirmed` (a different approach is
+  plausible -- e.g. the peak's own source-listed trailhead names a different
+  trail -- but no source confirms which permit governs it). `--permits` (via
+  `clusters_permit_info`) now emits an explicit `UNCERTAIN` caution for
+  unconfirmed peaks instead of silently assuming the trailhead default or
+  silently omitting them, which the old override file could not represent.
+  `--permit-overrides-file` is now `--approaches-file`. This is the first
+  concrete piece of the project's longer-term planning graph (objective ->
+  approach -> entry point -> land unit -> permit product -> rule); `LandUnit`
+  and `PermitProduct` remain simple inline fields on trailheads/`permits.csv`
+  for now, a deliberate scope decision while coverage stays Sierra-only.
+- `Peak.collection` property (reads `meta["list"]`): a small step toward
+  treating `Peak` as one *type* of place-based objective and a named list
+  like SPS as one collection of objectives, rather than the project's whole
+  ontology. No behavior change -- existing `--list` filtering already worked
+  this way; this just gives it a name on the model.
 - `--permit-sources [GROUP]`: prints `data/permit_source_log.csv`, a new
   append-only audit trail of every source checked per permit_group (source
   URL, the source's own update date, how it was checked, and a verdict of

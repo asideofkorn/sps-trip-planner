@@ -180,7 +180,7 @@ python cli.py --permit-sources
 
 The second form surfaces unresolved conflicts across permit groups.
 
-### Permit Overrides: Why Trailhead Alone Is Not Enough
+### Approaches: Modeling Real Permit Relationships
 
 A trailhead's `permit_group` is a useful default, but it is not always
 sufficient to determine the permit for every objective accessible from that
@@ -200,25 +200,55 @@ That means a simplistic rule such as:
 Whitney Portal -> Whitney lottery
 ```
 
-can produce the wrong answer.
+can produce the wrong answer for a peak reached from the same trailhead by a
+different route.
 
-`data/permit_overrides.csv` exists for directly sourced exceptions where the
-objective or route changes the applicable permit relationship.
+`data/approaches.csv` (loaded by `sierra_peaks/access.py`) models this as an
+explicit relationship rather than an opaque peak-name patch: which peak, which
+named approach/route, which trailhead it starts from, and -- when a source
+confirms it -- which permit product actually governs it. Each row carries:
 
-Overrides should be:
+| Column | Meaning |
+|--------|---------|
+| `peak_name` | The objective this approach serves |
+| `trailhead` | The entry point the approach starts from |
+| `approach_name` | The named route (e.g. "Mountaineers Route / North Fork of Lone Pine Creek") |
+| `permit_group` | The permit product this approach uses; blank when unconfirmed |
+| `status` | `confirmed` or `unconfirmed` |
+| `source_url`, `verified_date`, `notes` | Provenance for this specific relationship |
+
+A `confirmed` row is backed by a source that directly states the peak's real
+approach uses a different permit than its trailhead's default (e.g. Mount
+Russell -> `inyo_jmw_aaw`, not Whitney Portal's default `whitney_zone`).
+`clusters_permit_info` emits an extra, peak-specific permit entry for it.
+
+Not every uncertainty has a confirmed answer yet. Mount Irvine and Mount
+Mallory's source-listed trailhead names the Meysan Lake Trail -- a different
+route than Whitney Portal's main trail -- but no source has been found
+confirming which permit product actually governs it. Rather than silently
+assuming the trailhead default, or silently dropping the peak, these are
+recorded with `status=unconfirmed`, and the permit report surfaces an explicit
+`UNCERTAIN` caution for that peak instead of a fabricated answer:
+
+```text
+Group #0 -- Whitney Portal  [UNCERTAIN for Mount Irvine: approach may be
+Meysan Lake Trail, not confirmed against a source -- do not assume the
+Whitney Portal default above applies without verifying independently. ...]
+```
+
+This is the concrete first piece of the project's longer-term planning graph:
+objective -> approach -> entry point -> land unit -> permit product -> rule.
+`LandUnit` and `PermitProduct` are still simple inline fields on trailheads
+and `permits.csv` today rather than fully separate tables -- a deliberate
+scope decision while coverage stays Sierra-only, not an oversight.
+
+New approach rows should be:
 
 - explicit,
-- conservative,
-- backed by an authoritative source,
-- and limited to cases where the relationship is actually known.
-
-If the applicable entry route has not been verified, the project should preserve
-that uncertainty rather than guess.
-
-This is an early example of why the long-term planning model needs to represent
-relationships between objectives, approaches, entry points, land units, and
-permit products, rather than assuming every permit can be inferred from the
-nearest trailhead.
+- conservative (only added when there is a concrete reason -- a named
+  alternate trail, a source, or both -- to question the trailhead default),
+- and clearly marked `unconfirmed` rather than guessed at when the governing
+  permit isn't directly sourced.
 
 Planning aid, not booking guarantee: quota seasons, reservation windows, lottery
 rules, and release policies can change. Before acting on a real deadline,
@@ -233,7 +263,7 @@ The repository currently includes:
 - `data/sps_peaks.csv` - SPS summit and associated metadata
 - `data/trailheads.csv` - curated Sierra trailheads and access metadata
 - `data/permits.csv` - structured permit rules
-- `data/permit_overrides.csv` - directly sourced permit exceptions
+- `data/approaches.csv` - peak-specific approach/permit relationships, confirmed and unconfirmed
 - `data/permit_source_log.csv` - append-only verification history
 - `data/passes.csv` - Sierra pass data used for optional coarse cross-crest
   distance estimates
@@ -323,7 +353,7 @@ Example summary output:
 | `--permits` | off | Print permit logistics per candidate group; implies `--include-approach` |
 | `--trip-date` | today | Planned trip start date (`YYYY-MM-DD`) used by `--permits` |
 | `--permits-file` | `data/permits.csv` | Permit rules dataset used by `--permits` |
-| `--permit-overrides-file` | `data/permit_overrides.csv` | Peak-level permit-group overrides used by `--permits` |
+| `--approaches-file` | `data/approaches.csv` | Peak-specific approach/permit relationships used by `--permits` |
 | `--permit-sources [GROUP]` | off | Print the permit source-verification log and exit; optionally filtered by permit group |
 | `--permit-source-log-file` | `data/permit_source_log.csv` | Source log dataset for `--permit-sources` |
 | `--use-passes` | off | Evaluate cross-crest distance through mountain passes instead of straight lines |
@@ -748,7 +778,7 @@ sps-trip-planner/
 │   ├── sps_sample.csv           # 30-peak demo subset
 │   ├── trailheads.csv           # trailheads incl. wilderness area / agency / permit_group
 │   ├── permits.csv              # permit rules per permit_group
-│   ├── permit_overrides.csv     # peak-level permit_group overrides
+│   ├── approaches.csv           # peak-specific approach/permit relationships
 │   ├── permit_source_log.csv    # append-only source-verification audit trail
 │   └── source/                  # official Sierra Club files + trimmed GNIS subset
 ├── scripts/
@@ -780,6 +810,7 @@ sps-trip-planner/
 │   ├── passes.py
 │   ├── diagnostics.py
 │   ├── permits.py
+│   ├── access.py
 │   └── visualize.py
 └── tests/
     ├── test_pipeline.py

@@ -11,11 +11,11 @@ from datetime import date
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from sierra_peaks.access import ApproachRoute, load_approaches
 from sierra_peaks.data_loader import load_trailheads
 from sierra_peaks.model import Cluster, Peak
 from sierra_peaks.permits import (
     load_permits,
-    load_permit_overrides,
     load_source_log,
     unresolved_conflicts,
     format_source_log,
@@ -26,7 +26,7 @@ from sierra_peaks.permits import (
 
 TRAILHEADS = os.path.join(os.path.dirname(__file__), "..", "data", "trailheads.csv")
 PERMITS = os.path.join(os.path.dirname(__file__), "..", "data", "permits.csv")
-OVERRIDES = os.path.join(os.path.dirname(__file__), "..", "data", "permit_overrides.csv")
+APPROACHES = os.path.join(os.path.dirname(__file__), "..", "data", "approaches.csv")
 SOURCE_LOG = os.path.join(os.path.dirname(__file__), "..", "data", "permit_source_log.csv")
 
 
@@ -191,14 +191,16 @@ def test_inyo_hoover_portion_is_non_quota():
     assert "self-issue" in permit_status(rule, date(2027, 7, 15)).lower()
 
 
-def test_mount_russell_override_surfaces_second_permit():
+def test_mount_russell_approach_surfaces_second_permit():
     # Whitney Portal defaults to the Whitney Zone lottery, but Mount Russell
     # (Mountaineers Route / North Fork of Lone Pine Creek) needs the regular
     # Inyo NF permit instead -- both should show up for a mixed trip.
     permits = load_permits(PERMITS)
     trailheads = load_trailheads(TRAILHEADS)
-    overrides = load_permit_overrides(OVERRIDES)
-    assert overrides.get("Mount Russell") == "inyo_jmw_aaw"
+    approaches = load_approaches(APPROACHES)
+    russell = next(a for a in approaches if a.peak_name == "Mount Russell")
+    assert russell.confirmed
+    assert russell.permit_group == "inyo_jmw_aaw"
 
     c = Cluster(
         cluster_id=0,
@@ -207,28 +209,97 @@ def test_mount_russell_override_surfaces_second_permit():
         trailhead="Whitney Portal",
     )
     rows = clusters_permit_info([c], trailheads, permits, date(2027, 7, 1),
-                                 overrides=overrides)
+                                 approaches=approaches)
     assert len(rows) == 2
     assert any("Whitney" in r.permit_type and not r.peak_note for r in rows)
-    assert any(r.peak_note and "Mount Russell" in r.peak_note for r in rows)
+    russell_row = next(r for r in rows if r.peak_note and "Mount Russell" in r.peak_note)
+    assert russell_row.approach_status == "confirmed"
+    assert "North Fork" in russell_row.approach_name
     report = format_permit_report(rows)
     assert "Mount Russell" in report
+    assert "North Fork" in report
 
 
-def test_override_skipped_when_peak_absent_or_matches_default():
-    # A cluster with only Mount Whitney (no override target) gets one entry.
+def test_unconfirmed_approach_flags_caution_without_asserting_new_permit():
+    # Mount Irvine's source-listed trailhead names a different trail (Meysan
+    # Lake Trail) than Whitney Portal's main trail, but no source confirms
+    # which permit actually governs it -- this should surface as a caution,
+    # not a silently-assumed default or an invented permit.
     permits = load_permits(PERMITS)
     trailheads = load_trailheads(TRAILHEADS)
-    overrides = load_permit_overrides(OVERRIDES)
+    approaches = load_approaches(APPROACHES)
+    irvine = next(a for a in approaches if a.peak_name == "Mount Irvine")
+    assert not irvine.confirmed
+    assert irvine.permit_group == ""
+
+    c = Cluster(
+        cluster_id=0,
+        peaks=[Peak("Mount Whitney", 36.578, -118.292, 14505),
+               Peak("Mount Irvine", 36.556, -118.264, 13780)],
+        trailhead="Whitney Portal",
+    )
+    rows = clusters_permit_info([c], trailheads, permits, date(2027, 7, 1),
+                                 approaches=approaches)
+    assert len(rows) == 2
+    default_row = next(r for r in rows if not r.peak_note)
+    caution_row = next(r for r in rows if r.peak_note)
+    # The caution reuses the trailhead's default permit type -- it flags
+    # uncertainty rather than asserting a different (unverified) permit.
+    assert caution_row.permit_type == default_row.permit_type
+    assert caution_row.approach_status == "unconfirmed"
+    assert "UNCERTAIN" in caution_row.peak_note
+    assert "Mount Irvine" in caution_row.peak_note
+    report = format_permit_report(rows)
+    assert "UNCERTAIN" in report
+
+
+def test_approach_skipped_when_peak_absent_or_matches_default():
+    # A cluster with only Mount Whitney (no approach-specific peak) gets one entry.
+    permits = load_permits(PERMITS)
+    trailheads = load_trailheads(TRAILHEADS)
+    approaches = load_approaches(APPROACHES)
     c = Cluster(cluster_id=0, peaks=[Peak("Mount Whitney", 36.578, -118.292, 14505)],
                 trailhead="Whitney Portal")
     rows = clusters_permit_info([c], trailheads, permits, date(2027, 7, 1),
-                                 overrides=overrides)
+                                 approaches=approaches)
     assert len(rows) == 1
 
 
-def test_load_permit_overrides_missing_file_returns_empty():
-    assert load_permit_overrides("data/does_not_exist.csv") == {}
+def test_approach_from_different_trailhead_is_skipped():
+    # A known approach naming a different trailhead than the one the cluster
+    # actually used shouldn't apply -- it describes access from elsewhere.
+    permits = load_permits(PERMITS)
+    trailheads = load_trailheads(TRAILHEADS)
+    approaches = [ApproachRoute(
+        peak_name="Mount Russell", trailhead="Some Other Trailhead",
+        approach_name="A different route", permit_group="inyo_jmw_aaw",
+        status="confirmed",
+    )]
+    c = Cluster(cluster_id=0, peaks=[Peak("Mount Russell", 36.595, -118.303, 14094)],
+                trailhead="Whitney Portal")
+    rows = clusters_permit_info([c], trailheads, permits, date(2027, 7, 1),
+                                 approaches=approaches)
+    assert len(rows) == 1
+    assert not rows[0].peak_note
+
+
+def test_load_approaches_missing_file_returns_empty():
+    assert load_approaches("data/does_not_exist.csv") == []
+
+
+def test_load_approaches_rejects_invalid_status():
+    import pytest
+    import tempfile
+
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".csv", delete=False) as f:
+        f.write("peak_name,trailhead,approach_name,permit_group,status\n")
+        f.write("Test Peak,Test Trailhead,Test Route,none,bogus\n")
+        path = f.name
+    try:
+        with pytest.raises(ValueError):
+            load_approaches(path)
+    finally:
+        os.unlink(path)
 
 
 def test_provenance_fields_load_and_flag_dated_sources():
