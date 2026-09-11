@@ -1,0 +1,19 @@
+permit_group,phase_order,mechanism,season,offset_days,fixed_month_day,time_of_day,timezone,allocation_pct,label,notes
+hoover,1,reservation,,182,,,America/Los_Angeles,50,first_release,50% of the quota opens on recreation.gov 6 months (182 days) before entry.
+hoover,2,reservation,,3,,,America/Los_Angeles,50,second_release,"Remaining 50% opens 3 days before entry, printable immediately (the first release is printable only up to 7 days before entry)."
+inyo_jmw_aaw,1,reservation,,182,,07:00,America/Los_Angeles,60,first_release,60% of each trailhead's daily quota opens 6 months before entry.
+inyo_jmw_aaw,2,reservation,,14,,07:00,America/Los_Angeles,40,second_release,"Remaining 40% opens 2 weeks before entry, same release time."
+inyo_gtw,1,reservation,,182,,07:00,America/Los_Angeles,60,first_release,Same recreation.gov mechanics as the general Inyo NF permit; select the Cottonwood Lakes (GT39) or Cottonwood Pass (GT60) trail specifically.
+inyo_gtw,2,reservation,,14,,07:00,America/Los_Angeles,40,second_release,"Remaining 40% opens 2 weeks before entry, same release time."
+sierra_nf,1,reservation,,182,,,,60,first_release,Continuous rolling window opening 6 months before entry; bookable up to 1 day before if space remains.
+sierra_nf,2,reservation,,,,,,40,second_release,"Remaining ~40% released for shorter-notice/walk-up-style booking on recreation.gov; exact release offset not stated by the source -- do not assume a specific date, check recreation.gov directly closer to the trip."
+seki,1,reservation,,182,,07:00,America/Los_Angeles,,release,"Full quota released daily at 7:00am Pacific, up to 6 months before entry."
+desolation,1,reservation,,182,,,,,release,Reservable on recreation.gov up to 6 months before arrival; walk-in/space-available permits also issued up to the day of entry within the quota season.
+whitney_zone,1,lottery_annual,in_season,,02-01,,,,apply_start,Lottery application window opens on recreation.gov.
+whitney_zone,2,lottery_annual,in_season,,03-01,,,,apply_end,Lottery application window closes.
+whitney_zone,3,lottery_annual,in_season,,03-15,,,,results,Lottery results published.
+whitney_zone,4,lottery_annual,in_season,,04-21,,,,claim_deadline,Deadline to claim and pay for a won lottery date.
+whitney_zone,5,reservation,in_season,,04-22,07:00,America/Los_Angeles,,unclaimed_release,Unclaimed dates open first-come on recreation.gov.
+whitney_zone,6,reservation,off_season,14,,,,,off_season_release,"Outside the quota season (Nov 2 - Apr 30), permits are still required and reserved online (not walk-up) but unlimited; reservable up to 2 weeks ahead."
+cpma,1,walkup,in_season,,,,,,in_season_walkup,"Issued in person at the Carson Pass Information Station on the day of entry, first-come first-served (station only staffed in summer)."
+cpma,2,contact_required,off_season,,,,,,off_season_contact,"Station closed; obtain in person at the Amador Ranger District office (26820 Silver Drive, Pioneer CA, Mon-Fri 8am-4:30pm) or by emailing SM.FS.mowilderness@usda.gov."

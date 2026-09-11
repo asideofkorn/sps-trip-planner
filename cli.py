@@ -93,6 +93,9 @@ def _parse_args(argv=None) -> argparse.Namespace:
                         "(default: today)")
     p.add_argument("--permits-file", default="data/permits.csv",
                    help="Permit rules dataset for --permits (default data/permits.csv)")
+    p.add_argument("--release-policies-file", default="data/release_policies.csv",
+                   help="Structured permit release-phase dataset for --permits "
+                        "(default data/release_policies.csv)")
     p.add_argument("--approaches-file", default="data/approaches.csv",
                    help="Peak-specific approach relationships for --permits, for "
                         "peaks whose actual permit differs from (or is uncertain "
@@ -240,7 +243,7 @@ def main(argv=None) -> int:
         )
         trip_date = (datetime.date.fromisoformat(args.trip_date) if args.trip_date
                      else datetime.date.today())
-        permit_rules = load_permits(args.permits_file)
+        permit_rules = load_permits(args.permits_file, args.release_policies_file)
         approaches = load_approaches(args.approaches_file)
         rows = clusters_permit_info(clusters, trailheads, permit_rules, trip_date,
                                      approaches=approaches)

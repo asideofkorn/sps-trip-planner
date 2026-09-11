@@ -28,6 +28,11 @@ TRAILHEADS = os.path.join(os.path.dirname(__file__), "..", "data", "trailheads.c
 PERMITS = os.path.join(os.path.dirname(__file__), "..", "data", "permits.csv")
 APPROACHES = os.path.join(os.path.dirname(__file__), "..", "data", "approaches.csv")
 SOURCE_LOG = os.path.join(os.path.dirname(__file__), "..", "data", "permit_source_log.csv")
+RELEASE_POLICIES = os.path.join(os.path.dirname(__file__), "..", "data", "release_policies.csv")
+
+
+def _permits():
+    return load_permits(PERMITS, RELEASE_POLICIES)
 
 
 def test_load_permits_covers_every_trailhead_group():
@@ -413,3 +418,133 @@ def test_ebbetts_pass_is_toiyabe_not_stanislaus():
     # Sonora Pass, on the same source page, is confirmed correct as-is.
     sonora = next(t for t in trailheads if t.name == "Sonora Pass")
     assert sonora.land_agency == "Stanislaus NF"
+
+
+# --- Structured, computable release rules (data/release_policies.csv) -----
+
+def test_release_phases_load_and_attach_to_rule():
+    permits = _permits()
+    rule = permits["inyo_jmw_aaw"]
+    assert [p.offset_days for p in rule.release_phases] == [182, 14]
+    assert [p.allocation_pct for p in rule.release_phases] == [60, 40]
+
+
+def test_split_release_surfaces_both_phase_dates():
+    # Previously only the 60% first-release date was ever computed; the 40%
+    # second release existed only as prose in reservation_method. Both should
+    # now be surfaced as real dates.
+    permits = _permits()
+    rule = permits["inyo_jmw_aaw"]
+    trip = date(2027, 7, 15)
+    status = permit_status(rule, trip, today=date(2027, 7, 2))
+    assert "2027-01-14" in status  # 60% release, 182 days before
+    assert "2027-07-01" in status  # 40% release, 14 days before
+    assert "40%" in status
+
+
+def test_hoover_split_release_dates():
+    permits = _permits()
+    rule = permits["hoover"]
+    trip = date(2027, 7, 15)
+    status = permit_status(rule, trip, today=date(2027, 1, 1))
+    assert "2027-01-14" in status  # 50% release, 182 days before
+    assert "2027-07-12" in status  # 50% release, 3 days before
+    assert "50%" in status
+
+
+def test_sierra_nf_second_phase_has_no_fabricated_date():
+    # The source states a ~40% second allocation but not its exact release
+    # offset -- the tool must not invent a specific date for it.
+    permits = _permits()
+    rule = permits["sierra_nf"]
+    trip = date(2027, 7, 15)
+    status = permit_status(rule, trip, today=date(2027, 7, 10))
+    assert "exact release offset not stated" in status
+
+
+def test_whitney_annual_lottery_still_works_via_structured_phases():
+    permits = _permits()
+    rule = permits["whitney_zone"]
+    trip = date(2027, 8, 1)
+    assert rule.release_phases  # migrated, not on the legacy fallback
+
+    before_open = permit_status(rule, trip, today=date(2027, 1, 15))
+    assert "opens" in before_open.lower()
+    during_lottery = permit_status(rule, trip, today=date(2027, 2, 15))
+    assert "open now" in during_lottery.lower()
+    after_results = permit_status(rule, trip, today=date(2027, 4, 1))
+    assert "claim" in after_results.lower()
+    after_release = permit_status(rule, trip, today=date(2027, 5, 1))
+    assert "first-come" in after_release.lower()
+
+
+def test_whitney_off_season_uses_reservation_not_lottery_language():
+    # A winter trip date is a genuinely different, simpler mechanism per the
+    # source -- it must not trigger lottery wording at all.
+    permits = _permits()
+    rule = permits["whitney_zone"]
+    trip = date(2027, 1, 20)  # outside May 1 - Nov 1
+    assert not rule.in_quota_season(trip)
+    status = permit_status(rule, trip, today=date(2027, 1, 1)).lower()
+    assert "lottery" not in status
+    assert "open" in status
+
+
+def test_cpma_mechanisms_are_data_driven():
+    permits = _permits()
+    rule = permits["cpma"]
+    mechanisms = {p.mechanism for p in rule.release_phases}
+    assert mechanisms == {"walkup", "contact_required"}
+
+    trip = date(2027, 7, 15)
+    assert "first-come" in permit_status(rule, trip).lower()
+
+    winter = date(2027, 12, 15)
+    status = permit_status(rule, winter).lower()
+    assert "should be free/self-issue" not in status
+    assert "amador" in status
+
+
+def test_yosemite_still_uses_legacy_special_case():
+    # Yosemite's weekly lottery is deliberately left unmigrated -- see
+    # sierra_peaks/release_policy.py's module docstring for why.
+    permits = _permits()
+    rule = permits["yosemite"]
+    assert rule.release_phases == []
+
+
+def test_load_release_policies_missing_file_returns_empty():
+    from sierra_peaks.release_policy import load_release_policies
+    assert load_release_policies("data/does_not_exist.csv") == {}
+
+
+def test_load_release_policies_rejects_invalid_mechanism():
+    import pytest
+    import tempfile
+    from sierra_peaks.release_policy import load_release_policies
+
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".csv", delete=False) as f:
+        f.write("permit_group,phase_order,mechanism,season,offset_days\n")
+        f.write("test_group,1,bogus,,10\n")
+        path = f.name
+    try:
+        with pytest.raises(ValueError):
+            load_release_policies(path)
+    finally:
+        os.unlink(path)
+
+
+def test_load_release_policies_rejects_invalid_season():
+    import pytest
+    import tempfile
+    from sierra_peaks.release_policy import load_release_policies
+
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".csv", delete=False) as f:
+        f.write("permit_group,phase_order,mechanism,season,offset_days\n")
+        f.write("test_group,1,reservation,bogus_season,10\n")
+        path = f.name
+    try:
+        with pytest.raises(ValueError):
+            load_release_policies(path)
+    finally:
+        os.unlink(path)
