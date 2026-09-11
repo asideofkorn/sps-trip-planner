@@ -263,6 +263,7 @@ The repository currently includes:
 - `data/sps_peaks.csv` - SPS summit and associated metadata
 - `data/trailheads.csv` - curated Sierra trailheads and access metadata
 - `data/permits.csv` - structured permit rules
+- `data/release_policies.csv` - structured, computable permit release phases
 - `data/approaches.csv` - peak-specific approach/permit relationships, confirmed and unconfirmed
 - `data/permit_source_log.csv` - append-only verification history
 - `data/passes.csv` - Sierra pass data used for optional coarse cross-crest
@@ -353,6 +354,7 @@ Example summary output:
 | `--permits` | off | Print permit logistics per candidate group; implies `--include-approach` |
 | `--trip-date` | today | Planned trip start date (`YYYY-MM-DD`) used by `--permits` |
 | `--permits-file` | `data/permits.csv` | Permit rules dataset used by `--permits` |
+| `--release-policies-file` | `data/release_policies.csv` | Structured permit release-phase dataset used by `--permits` |
 | `--approaches-file` | `data/approaches.csv` | Peak-specific approach/permit relationships used by `--permits` |
 | `--permit-sources [GROUP]` | off | Print the permit source-verification log and exit; optionally filtered by permit group |
 | `--permit-source-log-file` | `data/permit_source_log.csv` | Source log dataset for `--permit-sources` |
@@ -663,6 +665,57 @@ Run it once per candidate month across a 12-month planning window, or loop
 `--trip-date` over several dates, to see which candidate groups need a lottery
 entry, a 6-month rolling reservation, a day-of walk-up, or nothing at all.
 
+### Computable Release Rules
+
+*When* a permit's reservation inventory actually opens used to live only as
+prose in `permits.csv`'s `reservation_method` column. That meant a group with
+a percentage-split release -- 60% of the quota six months out, the remaining
+40% two weeks out, say -- only ever had its *first* release date computed;
+the second release existed only as a sentence a human had to read, never as
+a date the tool itself could act on.
+
+`data/release_policies.csv` (loaded by `sierra_peaks/release_policy.py`)
+records each permit_group's release cycle as an ordered list of phases
+instead, so every dated event is computable, not just the first one. Four
+mechanisms cover every case in the current dataset:
+
+| Mechanism | Meaning | Example |
+|-----------|---------|---------|
+| `reservation` | Opens at a computed date, then first-come online. A group can have more than one -- each with its own `allocation_pct` | Inyo NF's 60% at 6 months, 40% at 2 weeks |
+| `lottery_annual` | Fixed calendar dates every year, independent of the trip date | Mount Whitney Zone's Feb 1 - Mar 1 application window |
+| `walkup` | In person, day-of, first-come, no advance reservation | Carson Pass Management Area in season |
+| `contact_required` | Not self-issue and not walk-up -- call or email the agency | Carson Pass Management Area off season |
+
+A phase can be scoped to `season = in_season` or `off_season` when a permit
+group's mechanics genuinely differ by season -- Whitney Zone's annual lottery
+only governs in-season trips; a winter trip uses a completely different
+(and much simpler) online-reservation mechanism, not a lottery with a footnote.
+
+This never fabricates a date: when a source states an allocation split
+without a specific release offset (Sierra NF's remaining ~40%, "released for
+shorter-notice/walk-up-style booking" with no exact day given), that phase's
+date is left unresolved and its `notes` field is surfaced instead of a
+guess.
+
+**Not every permit_group is migrated.** Yosemite's weekly lottery cycle is
+deliberately left on its own special-cased logic in `sierra_peaks/permits.py`
+-- its own source states that exact per-area reservation dates come from a
+downloadable dataset that hasn't been retrieved, so forcing weekday-precise
+computed dates onto an already-approximate source would manufacture false
+precision rather than remove it. A permit_group absent from
+`release_policies.csv` simply falls back to the older, coarser
+single-release-date logic.
+
+```bash
+python cli.py -i data/sps_peaks.csv --permits --trip-date 2027-07-15 \
+  --release-policies-file data/release_policies.csv
+```
+
+```text
+Status: Reservations open 2027-01-14 (07:00 America/Los_Angeles) -- mark your
+calendar. A further 40% release opens 2027-07-01 (07:00 America/Los_Angeles).
+```
+
 ## Manual Grouping And Overrides
 
 Manual grouping controls let a human override heuristic grouping when real-world
@@ -778,6 +831,7 @@ sps-trip-planner/
 │   ├── sps_sample.csv           # 30-peak demo subset
 │   ├── trailheads.csv           # trailheads incl. wilderness area / agency / permit_group
 │   ├── permits.csv              # permit rules per permit_group
+│   ├── release_policies.csv     # structured, computable permit release phases
 │   ├── approaches.csv           # peak-specific approach/permit relationships
 │   ├── permit_source_log.csv    # append-only source-verification audit trail
 │   └── source/                  # official Sierra Club files + trimmed GNIS subset
@@ -811,6 +865,7 @@ sps-trip-planner/
 │   ├── diagnostics.py
 │   ├── permits.py
 │   ├── access.py
+│   ├── release_policy.py
 │   └── visualize.py
 └── tests/
     ├── test_pipeline.py

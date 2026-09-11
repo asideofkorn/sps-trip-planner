@@ -6,6 +6,31 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- `data/release_policies.csv` and new `sierra_peaks/release_policy.py`
+  (`ReleasePhase`, `load_release_policies`): structured, computable permit
+  release rules, replacing per-group special-cased Python for 8 of 9
+  quota-required permit groups. Previously, a group with a percentage-split
+  release (e.g. Inyo NF's 60% at 6 months, 40% at 2 weeks) only ever had its
+  *first* release date computed -- the second release existed only as prose
+  in `reservation_method`. `permit_status()` now resolves every phase
+  generically by `mechanism` (`reservation`, `lottery_annual`, `walkup`,
+  `contact_required`), correctly surfacing every dated phase, e.g. both the
+  60% and 40% Inyo NF dates. Mount Whitney Zone's annual lottery (previously
+  hardcoded as Python `date(year, 2, 1)` literals) and CPMA's walk-up/contact
+  split are now data-driven too; a phase can be scoped to `season =
+  in_season`/`off_season` for groups whose mechanics genuinely differ (a
+  winter Whitney trip now correctly gets simple off-season reservation
+  language instead of lottery wording with a footnote, which is what the
+  source actually describes but the old code didn't implement). A phase with
+  no exact release offset in the source (Sierra NF's ~40% second allocation)
+  is left unresolved rather than assigned a fabricated date. Yosemite's
+  weekly lottery is deliberately NOT migrated -- its own source states exact
+  per-area dates come from a downloadable dataset that hasn't been
+  retrieved, so this remains on its original special-cased logic rather than
+  manufacture false precision. New `--release-policies-file` CLI flag
+  (default `data/release_policies.csv`); `load_permits()` now also accepts a
+  `release_policies_path` argument and attaches each group's phases to its
+  `PermitRule.release_phases`.
 - `data/approaches.csv` and new `sierra_peaks/access.py` (`ApproachRoute`,
   `load_approaches`): structured peak -> approach -> permit relationships,
   replacing the flat `data/permit_overrides.csv` peak-name -> permit-group

@@ -7,6 +7,17 @@ trailhead to its permit rule and, given a candidate trip start date, works out
 whether that date falls in the quota season and when the reservation window
 opens.
 
+*When* a permit_group's inventory actually becomes available -- a single
+rolling release, a percentage-split release, an annual lottery, a walk-up-only
+system, or one requiring direct contact off-season -- is computed generically
+from ``data/release_policies.csv`` (see :mod:`sierra_peaks.release_policy`)
+rather than special-cased per group in this module. That closed a real gap:
+previously, a permit_group with e.g. a 60%-then-40% split release only ever
+had its *first* release date computed; the second release existed only as a
+sentence in ``reservation_method``, never as a date the tool itself could act
+on. Yosemite's weekly lottery is the one deliberate exception still handled
+inline below -- see :mod:`sierra_peaks.release_policy` for why.
+
 A permit's issuing agency is the trailhead's agency, not necessarily the
 agency governing every peak reached from it: Sierra Nevada wilderness permits
 are interagency -- a permit issued for the trailhead you start at is honored
@@ -75,7 +86,7 @@ list because the log is read in chronological order.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date, timedelta
 from pathlib import Path
 from typing import Dict, List, Optional, Sequence
@@ -84,16 +95,23 @@ import pandas as pd
 
 from .access import ApproachRoute
 from .model import Cluster, Trailhead
+from .release_policy import (
+    ReleasePhase,
+    IN_SEASON,
+    OFF_SEASON,
+    RESERVATION,
+    LOTTERY_ANNUAL,
+    WALKUP,
+    CONTACT_REQUIRED,
+    load_release_policies,
+)
 
-# Special-cased because it's a lottery, not a rolling reservation window.
-_WHITNEY_ZONE = "whitney_zone"
-# Special-cased because its off-season isn't self-issue -- it's in-person/email
-# only, unlike the generic "free/self-issue off-season" assumption below.
-_CPMA = "cpma"
 # Special-cased because the 60% portion is a weekly lottery (apply within a
 # week-long window, don't just show up at the 168-day mark and book), not a
 # simple first-come reservation like the generic "window is open" message
-# below implies.
+# below implies. Unlike every other lottery/split-release group, this one is
+# deliberately NOT migrated to data/release_policies.csv -- see that module's
+# docstring for why (the source's own per-area dates are approximate).
 _YOSEMITE = "yosemite"
 
 
@@ -113,6 +131,10 @@ class PermitRule:
     apply_url: str = ""
     notes: str = ""
     interagency_note: str = ""
+    # Structured release phases from data/release_policies.csv, if migrated
+    # (see sierra_peaks.release_policy). Empty for groups still on the
+    # generic reservation_window_days fallback below (currently Yosemite).
+    release_phases: List[ReleasePhase] = field(default_factory=list)
     source_last_updated: str = ""  # the source page/doc's own "last updated" date, if shown
     verified_date: str = ""        # date this row was last checked against that source
 
@@ -144,12 +166,23 @@ def _str_field(row, col: str) -> str:
     return str(val).strip()
 
 
-def load_permits(path: str | Path = "data/permits.csv") -> Dict[str, PermitRule]:
-    """Load the curated permit-rule table, keyed by ``permit_group``."""
+def load_permits(
+    path: str | Path = "data/permits.csv",
+    release_policies_path: str | Path = "data/release_policies.csv",
+) -> Dict[str, PermitRule]:
+    """Load the curated permit-rule table, keyed by ``permit_group``.
+
+    Also attaches each group's structured release phases from
+    ``release_policies_path`` (see :mod:`sierra_peaks.release_policy`), when
+    that permit_group has been migrated there. Groups without any phases
+    (currently only Yosemite) fall back to ``permit_status``'s older,
+    coarser single-offset logic.
+    """
     path = Path(path)
     if not path.exists():
         raise FileNotFoundError(f"Permit rules file not found: {path}")
     df = pd.read_csv(path)
+    phases_by_group = load_release_policies(release_policies_path)
 
     rules: Dict[str, PermitRule] = {}
     for _, row in df.iterrows():
@@ -168,37 +201,115 @@ def load_permits(path: str | Path = "data/permits.csv") -> Dict[str, PermitRule]
             apply_url=_str_field(row, "apply_url"),
             notes=_str_field(row, "notes"),
             interagency_note=_str_field(row, "interagency_note"),
+            release_phases=phases_by_group.get(group, []),
             source_last_updated=_str_field(row, "source_last_updated"),
             verified_date=_str_field(row, "verified_date"),
         )
     return rules
 
 
-def _whitney_lottery_status(trip_date: date, today: date) -> str:
-    year = trip_date.year
-    apply_start = date(year, 2, 1)
-    apply_end = date(year, 3, 1)
-    results = date(year, 3, 15)
-    claim_deadline = date(year, 4, 21)
-    unclaimed_release = date(year, 4, 22)
+def _format_reservation_phases(
+    phases: Sequence[ReleasePhase], trip_date: date, today: date
+) -> str:
+    """Render one or more ``reservation`` phases, earliest date first.
 
+    A single phase reproduces the original simple "reservations open/window
+    is open" wording. A second (or later) phase surfaces its own date and
+    allocation -- the gap this module exists to close: that date previously
+    only ever existed as prose. A phase with no resolvable date (the source
+    gives an allocation but not an exact offset) contributes its ``notes``
+    instead of a fabricated date.
+    """
+    resolved = [(p, p.event_date(trip_date)) for p in phases]
+    dated = sorted(((p, d) for p, d in resolved if d is not None), key=lambda pd: pd[1])
+    undated = [p for p, d in resolved if d is None]
+
+    if not dated:
+        return "Not reservable in advance -- see notes for timing."
+
+    first_phase, first_date = dated[0]
+    time_suffix = f" ({first_phase.time_of_day} {first_phase.timezone})" if first_phase.time_of_day else ""
+    if today < first_date:
+        lines = [f"Reservations open {first_date:%Y-%m-%d}{time_suffix} -- mark your calendar."]
+    else:
+        lines = [f"Reservation window is OPEN (opened {first_date:%Y-%m-%d}{time_suffix}) "
+                 f"-- book now on recreation.gov."]
+
+    for phase, event_date in dated[1:]:
+        pct = f"{int(phase.allocation_pct)}%" if phase.allocation_pct else "remaining"
+        suffix = f" ({phase.time_of_day} {phase.timezone})" if phase.time_of_day else ""
+        verb = "opens" if today < event_date else "also opened"
+        lines.append(f"A further {pct} release {verb} {event_date:%Y-%m-%d}{suffix}.")
+
+    for phase in undated:
+        if phase.notes:
+            lines.append(phase.notes)
+
+    return " ".join(lines)
+
+
+def _format_annual_lottery(
+    phases: Sequence[ReleasePhase], trip_date: date, today: date
+) -> str:
+    """Render an annual (fixed calendar-date) lottery cycle, e.g. Whitney Zone.
+
+    Requires ``apply_start`` and ``apply_end`` labeled phases at minimum;
+    ``results`` and ``claim_deadline`` are used when present, and a
+    ``reservation`` phase in the same set is treated as the unclaimed-permit
+    release that follows the claim deadline.
+    """
+    by_label = {p.label: p for p in phases if p.mechanism == LOTTERY_ANNUAL}
+    release_phase = next((p for p in phases if p.mechanism == RESERVATION), None)
+
+    apply_start = by_label["apply_start"].event_date(trip_date)
+    apply_end = by_label["apply_end"].event_date(trip_date)
+    results_phase = by_label.get("results")
+    results_date = results_phase.event_date(trip_date) if results_phase else None
+    claim_phase = by_label.get("claim_deadline")
+    claim_date = claim_phase.event_date(trip_date) if claim_phase else None
+    unclaimed_date = release_phase.event_date(trip_date) if release_phase else None
+
+    year = trip_date.year
     if today < apply_start:
-        return (f"Lottery for {year} opens {apply_start:%b %-d}; apply by "
-                f"{apply_end:%b %-d}.")
+        return f"Lottery for {year} opens {apply_start:%b %-d}; apply by {apply_end:%b %-d}."
     if apply_start <= today <= apply_end:
         return f"Lottery is OPEN NOW -- apply by {apply_end:%b %-d}."
-    if apply_end < today < unclaimed_release:
-        return (f"Lottery closed; results post ~{results:%b %-d}, claim & pay by "
-                f"~{claim_deadline:%b %-d}. Unclaimed dates open first-come "
-                f"{unclaimed_release:%b %-d} at 7am Pacific.")
+    if unclaimed_date and apply_end < today < unclaimed_date:
+        return (f"Lottery closed; results post ~{results_date:%b %-d}, claim & pay by "
+                f"~{claim_date:%b %-d}. Unclaimed dates open first-come "
+                f"{unclaimed_date:%b %-d} at 7am Pacific.")
     return (f"{year} lottery process is over -- check recreation.gov for "
             f"first-come availability (cancellations happen) up to 2 days ahead.")
+
+
+def _format_release_events(
+    phases: Sequence[ReleasePhase], trip_date: date, today: date
+) -> str:
+    """Dispatch a permit_group's applicable phases to the right renderer by mechanism."""
+    if any(p.mechanism == LOTTERY_ANNUAL for p in phases):
+        return _format_annual_lottery(phases, trip_date, today)
+    if any(p.mechanism == WALKUP for p in phases):
+        return ("Not reservable in advance -- issued in person on a first-come "
+                "basis; see the reservation method for timing.")
+    if any(p.mechanism == CONTACT_REQUIRED for p in phases):
+        msg = "Not self-issue -- contact the agency directly to arrange a permit."
+        notes = " ".join(p.notes for p in phases if p.notes)
+        return f"{msg} {notes}" if notes else msg
+    return _format_reservation_phases(phases, trip_date, today)
 
 
 def permit_status(
     rule: PermitRule, trip_date: date, today: Optional[date] = None
 ) -> str:
-    """Human-readable guidance for applying for this permit on ``trip_date``."""
+    """Human-readable guidance for applying for this permit on ``trip_date``.
+
+    When ``rule.release_phases`` is populated (see
+    :mod:`sierra_peaks.release_policy`), the status is computed generically
+    from that structured data, filtered to whichever phases apply given
+    whether ``trip_date`` falls in the quota season. Groups not yet migrated
+    (currently only Yosemite -- see that module's docstring for why) fall
+    back to the original coarser single-offset logic below.
+    """
     today = today or date.today()
 
     if not rule.quota_required:
@@ -206,26 +317,24 @@ def permit_status(
             return "Free self-issue permit -- no reservation needed, available any time."
         return "No wilderness permit required."
 
-    if rule.permit_group == _WHITNEY_ZONE:
-        base = _whitney_lottery_status(trip_date, today)
-        if not rule.in_quota_season(trip_date):
-            base += " (Trip date is outside the May 1 - Nov 1 quota season.)"
-        return base
+    in_season = rule.in_quota_season(trip_date)
+    off_season_phases = [p for p in rule.release_phases if p.season == OFF_SEASON]
+    in_season_phases = [p for p in rule.release_phases if p.season != OFF_SEASON]
 
-    if not rule.in_quota_season(trip_date):
+    if not in_season:
+        if off_season_phases:
+            return _format_release_events(off_season_phases, trip_date, today)
         start, end = rule.quota_season_start, rule.quota_season_end
         season = (f"{date(2001, *start):%b %-d} - {date(2001, *end):%b %-d}"
                    if start and end else "the quota season")
-        if rule.permit_group == _CPMA:
-            return (f"Trip date is outside the {season} quota season -- the Carson "
-                    f"Pass Information Station is closed. Permit is still required "
-                    f"but is NOT self-issue: get it in person at the Amador Ranger "
-                    f"District office or by emailing SM.FS.mowilderness@usda.gov "
-                    f"the week of your trip (see notes).")
         return (f"Trip date is outside the {season} quota season -- permit still "
                 f"required but should be free/self-issue, no reservation (confirm "
                 f"with the agency for current off-season rules).")
 
+    if in_season_phases:
+        return _format_release_events(in_season_phases, trip_date, today)
+
+    # Legacy path for permit_groups not yet migrated to data/release_policies.csv.
     if rule.reservation_window_days is None or rule.reservation_window_days == 0:
         return ("Not reservable in advance -- issued in person on a first-come "
                 "basis; see the reservation method for timing.")
