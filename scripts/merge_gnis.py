@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Fill latitude/longitude in data/sps_peaks.csv from USGS GNIS data.
+"""Fill latitude/longitude in the data/sps_peaks.csv build-staging file from
+USGS GNIS data (see scripts/build_dataset.py's docstring for the full
+rebuild sequence; data/sps_peaks.csv is a rebuild-only intermediate, not the
+runtime dataset -- that's data/peaks.csv + data/collections/sps.csv).
 
 GNIS (the federal gazetteer the SPS list is itself built from) provides the
 authoritative decimal coordinates plus the USGS quad name, so peaks are matched

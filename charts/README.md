@@ -67,7 +67,7 @@ Open the `.html` in any browser — tiles load client-side, so no setup is neede
 
 ```bash
 # Cluster charts
-python cli.py -i data/sps_peaks.csv \
+python cli.py -i data/peaks.csv \
   --eps-mi 6 --miles-per-day 15 \
   --viz charts/sps_clusters_balanced_6mi-15mpd_$(date +%F).png
 
@@ -76,6 +76,6 @@ python scripts/parse_benchmarks.py        # -> data/benchmark_routes.csv
 python scripts/plot_benchmarks.py         # -> charts/benchmark_*_<date>.png
 
 # Interactive topo map (trails + contours via OpenTopoMap)
-python scripts/map_clusters.py -i data/sps_peaks.csv -o charts/sps_map.html \
+python scripts/map_clusters.py -i data/peaks.csv -o charts/sps_map.html \
   --by-trailhead --trailhead-field nearest_trailhead --trailhead-max-mi 15
 ```

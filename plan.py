@@ -44,13 +44,18 @@ def _parse_args(argv=None) -> argparse.Namespace:
     )
     p.add_argument("objectives", nargs="+", help="One or more objective (peak) names")
     p.add_argument("--date", required=True, help="Planned trip date (YYYY-MM-DD)")
-    p.add_argument("--peaks-file", default="data/sps_peaks.csv",
-                   help="Peak dataset (default data/sps_peaks.csv)")
-    p.add_argument("--list", default="SPS",
-                   help="If the peak data has a 'list' column, keep only this list "
-                        "(default 'SPS'; use 'all' for non-SPS-tracked objectives too "
-                        "-- note the bundled dataset currently has a couple of known "
-                        "name collisions between lists, e.g. 'Mount Johnson')")
+    p.add_argument("--peaks-file", default="data/peaks.csv",
+                   help="Core peak dataset: name, coordinates, elevation -- "
+                        "collection-agnostic (default data/peaks.csv)")
+    p.add_argument("--collections-file", default="data/collections/sps.csv",
+                   help="Collection metadata (list, section, official mileage, etc.) "
+                        "joined onto --peaks-file by name (default data/collections/sps.csv). "
+                        "Pass '' to resolve objectives from core geography alone, "
+                        "with no collection metadata.")
+    p.add_argument("--list", default="all",
+                   help="If the collection data has a 'list' column, keep only this "
+                        "list (default 'all', so both SPS and non-SPS-tracked "
+                        "objectives resolve; pass 'SPS' to restrict to the 247-peak list)")
     p.add_argument("--trailheads-file", default="data/trailheads.csv",
                    help="Trailhead dataset (default data/trailheads.csv)")
     p.add_argument("--permits-file", default="data/permits.csv",
@@ -70,7 +75,8 @@ def main(argv=None) -> int:
     trip_date = datetime.date.fromisoformat(args.date)
 
     list_filter = None if args.list.lower() == "all" else args.list
-    peaks = load_peaks(args.peaks_file, list_filter=list_filter)
+    peaks = load_peaks(args.peaks_file, list_filter=list_filter,
+                        collections_path=args.collections_file or None)
     trailheads = load_trailheads(args.trailheads_file)
     permits = load_permits(args.permits_file, args.release_policies_file)
     approaches = load_approaches(args.approaches_file)

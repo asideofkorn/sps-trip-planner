@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Join coordinates into data/sps_peaks.csv from a peakbagger-style export.
+"""Join coordinates into the data/sps_peaks.csv build-staging file from a
+peakbagger-style export (see scripts/build_dataset.py's docstring for the
+full rebuild sequence; data/sps_peaks.csv is a rebuild-only intermediate,
+not the runtime dataset -- that's data/peaks.csv + data/collections/sps.csv).
 
 Accepts a GPX, KML, CSV, or JSON file containing peak names + lat/lon and
 matches them, by normalized name (with an elevation tie-breaker when names are

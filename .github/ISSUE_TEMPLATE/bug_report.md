@@ -12,7 +12,7 @@ A clear and concise description of what went wrong.
 The exact command or code you ran, e.g.:
 
 ```bash
-python cli.py -i data/sps_peaks.csv --eps-mi 6
+python cli.py -i data/peaks.csv --eps-mi 6
 ```
 
 **Expected behavior**

@@ -7,14 +7,21 @@ documents are NOT redistributed in this repo; see DATA_LICENSE.md):
   * scrambler_ratings_non_sps_2025.pdf - non-SPS High Sierra peaks
 
 Download them from https://angeles.sierraclub.org/sierra_peaks. The committed
-data/sps_peaks.csv already contains the built result, so you only need these to
-rebuild from scratch.
+data/peaks.csv and data/collections/sps.csv already contain the built result
+(see scripts/split_collections.py), so you only need these to rebuild from
+scratch.
 
 Output:
-  * data/sps_peaks.csv  - one row per peak with rich attributes. Latitude and
+  * data/sps_peaks.csv  - a REBUILD-ONLY STAGING file (git-ignored, not the
+    runtime dataset), one row per peak with rich attributes. Latitude and
     longitude are left blank here; they are joined in afterward by
     ``scripts/merge_coords.py`` from a peakbagger GPX/CSV export, because none
     of the Sierra Club source documents contain full lat/long coordinates.
+    Run ``scripts/merge_gnis.py``, then ``scripts/assign_trailheads.py``,
+    then ``scripts/split_collections.py`` on this staging file to produce
+    the committed data/peaks.csv (core, collection-agnostic) and
+    data/collections/sps.csv (SPS-specific fields) -- see DATA_LICENSE.md's
+    Source Policy section for why that split exists.
 
 The numeric/text fields below are factual data (names, elevations, ratings)
 extracted from the published list; they are not creative content.

@@ -7,7 +7,10 @@ Mountaineer's Route at S-3.1), so the natural model is **one row per route**,
 with the peak as a foreign key.
 
 Outputs ``data/benchmark_routes.csv`` with one row per benchmark route, joined
-to ``data/sps_peaks.csv`` for coordinates / section where the peak matches.
+to the data/sps_peaks.csv build-staging file for coordinates / section where
+the peak matches (regenerate that staging file via scripts/build_dataset.py
++ scripts/merge_gnis.py first if it's not already present -- it's a
+rebuild-only intermediate, not the runtime dataset).
 
 Usage:
     python scripts/parse_benchmarks.py

@@ -16,8 +16,8 @@ Tiles are fetched by the browser when the file is opened — no network is neede
 to *generate* the HTML.
 
 Usage:
-    python scripts/map_clusters.py -i data/sps_peaks.csv -o map.html
-    python scripts/map_clusters.py -i data/sps_peaks.csv -o map.html \
+    python scripts/map_clusters.py -o map.html
+    python scripts/map_clusters.py -o map.html \
         --by-trailhead --trailhead-field nearest_trailhead --trailhead-max-mi 15
 """
 
@@ -135,7 +135,8 @@ def build_map(clusters, trailheads: pd.DataFrame | None, out: Path) -> None:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Interactive topo map of SPS candidate groups.")
-    ap.add_argument("--input", "-i", default="data/sps_peaks.csv")
+    ap.add_argument("--input", "-i", default="data/peaks.csv")
+    ap.add_argument("--collections", default="data/collections/sps.csv")
     ap.add_argument("--output", "-o", default="charts/sps_map.html")
     ap.add_argument("--trailheads", default="data/trailheads.csv")
     ap.add_argument("--eps-mi", type=float, default=6.0)
@@ -146,7 +147,8 @@ def main(argv=None) -> int:
     args = ap.parse_args(argv)
 
     list_filter = None if args.list.lower() == "all" else args.list
-    peaks = load_peaks(args.input, list_filter=list_filter)
+    peaks = load_peaks(args.input, list_filter=list_filter,
+                        collections_path=args.collections or None)
     config = ClusterConfig(
         eps_mi=args.eps_mi, by_trailhead=args.by_trailhead,
         trailhead_field=args.trailhead_field, trailhead_max_mi=args.trailhead_max_mi,

@@ -327,7 +327,8 @@ Current coverage is Sierra Nevada- and SPS-focused.
 
 The repository currently includes:
 
-- `data/sps_peaks.csv` - SPS summit and associated metadata
+- `data/peaks.csv` - collection-agnostic summit identity: name, coordinates, elevation, nearest-trailhead access signal
+- `data/collections/sps.csv` - the SPS collection layer: list membership, section, class, official mileage/gain, benchmark rating
 - `data/trailheads.csv` - curated Sierra trailheads and access metadata
 - `data/permits.csv` - structured permit rules
 - `data/release_policies.csv` - structured, computable permit release phases
@@ -380,10 +381,10 @@ Python 3.9+ is supported. Core dependencies are `pandas`, `numpy`,
 python plan.py "Mount Williamson" "Mount Tyndall" --date 2027-07-15
 
 # Generate experimental candidate groupings for the full SPS list.
-python cli.py --input data/sps_peaks.csv --output out.json --viz clusters.png
+python cli.py --input data/peaks.csv --output out.json --viz clusters.png
 
 # Include approach estimates and permit logistics for a July 2027 trip date.
-python cli.py -i data/sps_peaks.csv --include-approach --permits \
+python cli.py -i data/peaks.csv --include-approach --permits \
   --trip-date 2027-07-15 --max-days 3
 
 # Inspect the source-verification log for permit data.
@@ -409,8 +410,9 @@ Example summary output:
 |------|---------|-------------|
 | `objectives` | required | One or more objective (peak) names, positional |
 | `--date` | required | Planned trip date (`YYYY-MM-DD`) |
-| `--peaks-file` | `data/sps_peaks.csv` | Peak dataset |
-| `--list` | `SPS` | Keep only this `list` value; use `all` for non-SPS-tracked objectives too |
+| `--peaks-file` | `data/peaks.csv` | Core peak dataset: name, coordinates, elevation |
+| `--collections-file` | `data/collections/sps.csv` | Collection metadata (list, section, mileage, etc.) joined by name; pass `''` for core geography alone |
+| `--list` | `all` | Keep only this `list` value; pass `SPS` to restrict to the 247-peak list |
 | `--trailheads-file` | `data/trailheads.csv` | Trailhead dataset |
 | `--permits-file` | `data/permits.csv` | Permit rules dataset |
 | `--release-policies-file` | `data/release_policies.csv` | Structured permit release-phase dataset |
@@ -421,7 +423,8 @@ Example summary output:
 
 | Flag | Default | Description |
 |------|---------|-------------|
-| `--input, -i` | required | Peak CSV or JSON file; not required with `--permit-sources` |
+| `--input, -i` | required | Peak CSV or JSON file (e.g. `data/peaks.csv`); not required with `--permit-sources` |
+| `--collections-file` | `data/collections/sps.csv` | Collection metadata joined onto `--input` by name; pass `''` to load `--input` standalone |
 | `--output, -o` | - | Write ranked candidate groupings to this JSON file |
 | `--list` | `SPS` | Keep only this `list` value; use `all` to keep everything |
 | `--eps-mi` | `6.0` | Spatial grouping radius in horizontal miles |
@@ -462,7 +465,8 @@ from sierra_peaks import load_peaks, ClusterConfig
 from sierra_peaks.pipeline import plan_trips
 from sierra_peaks.export import save_json
 
-peaks = load_peaks("data/sps_peaks.csv", list_filter="SPS")
+peaks = load_peaks("data/peaks.csv", list_filter="SPS",
+                    collections_path="data/collections/sps.csv")
 groups = plan_trips(peaks, ClusterConfig(eps_mi=6, miles_per_day=15, max_days=3))
 save_json(groups, "out.json")
 ```
@@ -471,10 +475,30 @@ save_json(groups, "out.json")
 
 ### Peak Data
 
-The bundled dataset (`data/sps_peaks.csv`) is built from the official Sierra
-Club sources and joined to authoritative USGS GNIS coordinates. The processed
-CSV is committed and ready to use; the copyrighted Sierra Club source documents
-themselves are not redistributed here. Download them yourself to rebuild; see
+Peak data is split into two files, per [`DATA_LICENSE.md`](DATA_LICENSE.md)'s
+Source Policy: a public-domain-first **core** dataset, and an optional **SPS
+collection** layered on top of it. This keeps a mountain's existence from
+depending on a private compilation -- only its membership in the SPS
+collection does -- and is the same architecture a future non-Sierra-Club
+collection (a different range, a different list) would layer onto the same
+core.
+
+- **`data/peaks.csv`** (core, collection-agnostic): `name`, `latitude`,
+  `longitude`, `elevation_ft`, `elev_estimated`, `coord_source`, and the
+  project-computed `nearest_trailhead`/`nearest_trailhead_side`/
+  `nearest_trailhead_mi` access signal. A peak's presence here depends only
+  on having a name and a location.
+- **`data/collections/sps.csv`** (the SPS collection): `list` (`SPS` or
+  `non-SPS`), `section`, `class`, `emblem`, `mountaineers`, `mileage_rt`,
+  `gain_ft`, `loss_ft`, `trailhead` (named route), `quad`, `benchmark`,
+  `benchmark_rating` -- everything that comes specifically from the Sierra
+  Club SPS program's own two source documents.
+
+`sierra_peaks.data_loader.load_peaks` joins the two by `name` when given a
+`collections_path`; loading `data/peaks.csv` alone works too, just without
+collection metadata. Both files are committed and ready to use; the
+copyrighted Sierra Club source documents themselves are not redistributed
+here. Download them yourself to rebuild; see
 [`DATA_LICENSE.md`](DATA_LICENSE.md) and
 [`data/source/README.md`](data/source/README.md).
 
@@ -492,6 +516,12 @@ Clyde Minaret, and Rogers Peak. Each row records its `coord_source`. The
 peakbagger-sourced coordinates are a known third-party dependency tracked for
 independent re-verification -- see [`DATA_LICENSE.md`](DATA_LICENSE.md).
 
+Two peak names ("Mount Johnson", "Thunder Mountain") appear under both
+`SPS` and `non-SPS` with conflicting data in the underlying source
+documents; the SPS-list entry is kept for both files. See
+[`DATA_LICENSE.md`](DATA_LICENSE.md) for that tie-break and the still-open
+follow-up to independently resolve which value is correct.
+
 #### Rebuilding The Dataset
 
 Only needed to rebuild from scratch; requires the Sierra Club source documents
@@ -499,16 +529,22 @@ in `data/source/`, which are not bundled. The scripts print a download reminder
 if they are missing.
 
 ```bash
-# 1. Parse the Sierra Club sources -> data/sps_peaks.csv (coords blank)
+# 1. Parse the Sierra Club sources -> data/sps_peaks.csv (staging, coords blank)
 python scripts/build_dataset.py
 
 # 2. Join GNIS coordinates (uses the committed Sierra subset)
 python scripts/merge_gnis.py
+
+# 3. Split the staging file into data/peaks.csv + data/collections/sps.csv
+python scripts/split_collections.py
 ```
 
-`scripts/merge_gnis.py` holds the curated alias map and the 6 manual
+`scripts/merge_gnis.py` holds the curated alias map and the 7 manual
 peakbagger coordinates. `data/source/gnis_sierra_summits.txt` is a trimmed
-Sierra-box GNIS subset committed for reproducibility.
+Sierra-box GNIS subset committed for reproducibility. `data/sps_peaks.csv` is
+a git-ignored, rebuild-only staging file -- see
+[`data/source/README.md`](data/source/README.md) for the full sequence,
+including `scripts/assign_trailheads.py`.
 
 ### Trailheads
 
@@ -524,10 +560,12 @@ python scripts/assign_trailheads.py
 ```
 
 to add `nearest_trailhead`, `nearest_trailhead_side`, and
-`nearest_trailhead_mi` (straight-line) columns to `data/sps_peaks.csv`. The
-nearest-trailhead assignment is an access signal and can be used for candidate
-grouping with `--trailhead-field nearest_trailhead`; it is not proof of the
-actual approach a user should take.
+`nearest_trailhead_mi` (straight-line) columns to the `data/sps_peaks.csv`
+build-staging file (see "Rebuilding The Dataset" above -- these end up in
+the committed `data/peaks.csv` core dataset). The nearest-trailhead
+assignment is an access signal and can be used for candidate grouping with
+`--trailhead-field nearest_trailhead`; it is not proof of the actual approach
+a user should take.
 
 ### Mountain Passes
 
@@ -545,8 +583,8 @@ This affects candidate grouping, TSP ordering, reported mileage/gain, and adds a
 `passes_crossed` list per group in the JSON.
 
 ```bash
-python cli.py -i data/sps_peaks.csv --use-passes
-python cli.py -i data/sps_peaks.csv --use-passes --pass-tier 2
+python cli.py -i data/peaks.csv --use-passes
+python cli.py -i data/peaks.csv --use-passes --pass-tier 2
 python scripts/assign_trailheads.py --use-passes
 ```
 
@@ -561,11 +599,17 @@ grouping system. It does not turn the tool into a terrain-aware route planner.
 
 Minimum required columns are `name`, `latitude`, `longitude`, and
 `elevation_ft`. Common aliases like `lat`, `lon`, and `elevation` are accepted.
-The full dataset also carries `list`, `class`, `section`, `emblem`,
-`mountaineers`, `mileage_rt`, `gain_ft`, `loss_ft`, `trailhead`, `quad`,
-`coord_source`, `benchmark`/`benchmark_rating`, and `nearest_trailhead*`, which
-flow through to the JSON export as per-peak `attributes`. JSON input is also
-supported as a list of objects or `{"peaks": [...]}`.
+The core file (`data/peaks.csv`) also optionally carries `elev_estimated`,
+`coord_source`, and `nearest_trailhead`/`nearest_trailhead_side`/
+`nearest_trailhead_mi`. Collection metadata comes from a separate file joined
+by `name` via `load_peaks`'s `collections_path` argument (or
+`--collections-file` on the CLI); the bundled SPS collection
+(`data/collections/sps.csv`) carries `list`, `class`, `section`, `emblem`,
+`mountaineers`, `mileage_rt`, `gain_ft`, `loss_ft`, `trailhead`, `quad`, and
+`benchmark`/`benchmark_rating`. All of these flow through to the JSON export
+as per-peak `attributes`. JSON input is also supported as a list of objects
+or `{"peaks": [...]}` -- collection fields can simply be included inline in
+that case, same as any other JSON peak record.
 
 ## Experimental: Geographic Trip Discovery
 
@@ -671,7 +715,7 @@ trailhead-to-objective connection is the correct, legal, or technically feasible
 route.
 
 ```bash
-python cli.py -i data/sps_peaks.csv --include-approach --max-days 2 -o weekend.json
+python cli.py -i data/peaks.csv --include-approach --max-days 2 -o weekend.json
 ```
 
 > **Approach-aware capacity splitting.** With `--include-approach`, the effort
@@ -692,7 +736,7 @@ be avoided if those objectives could be repacked into fewer trips within the
 configured day budget.
 
 ```bash
-python cli.py -i data/sps_peaks.csv --approach-report --max-days 3
+python cli.py -i data/peaks.csv --approach-report --max-days 3
 ```
 
 ```text
@@ -739,7 +783,7 @@ area's quota season, and, when applicable, when the reservation window opens
 relative to today:
 
 ```bash
-python cli.py -i data/sps_peaks.csv --permits --trip-date 2027-07-15 --max-days 3
+python cli.py -i data/peaks.csv --permits --trip-date 2027-07-15 --max-days 3
 ```
 
 ```text
@@ -797,7 +841,7 @@ precision rather than remove it. A permit_group absent from
 single-release-date logic.
 
 ```bash
-python cli.py -i data/sps_peaks.csv --permits --trip-date 2027-07-15 \
+python cli.py -i data/peaks.csv --permits --trip-date 2027-07-15 \
   --release-policies-file data/release_policies.csv
 ```
 
@@ -813,12 +857,12 @@ route knowledge is better than the geometry:
 
 ```bash
 # Force the Palisade 14ers together, exclude a sub-peak, tighten the daily budget.
-python cli.py -i data/sps_peaks.csv \
+python cli.py -i data/peaks.csv \
   --force-together "NORTH PALISADE,Polemonium Peak,Thunderbolt Peak,Mount Sill" \
   --exclude "Mount Muir" --miles-per-day 12 --max-days 2
 
-python cli.py -i data/sps_peaks.csv --merge 5,6
-python cli.py -i data/sps_peaks.csv --split 4:2
+python cli.py -i data/peaks.csv --merge 5,6
+python cli.py -i data/peaks.csv --split 4:2
 ```
 
 `--merge` applies to first-pass IDs; `--split` applies afterward. After each
@@ -918,19 +962,22 @@ sps-trip-planner/
 ├── cli.py                       # experimental candidate-grouping entry point
 ├── requirements.txt
 ├── data/
-│   ├── sps_peaks.csv            # 247 SPS + tracked non-SPS peaks
-│   ├── sps_sample.csv           # 30-peak demo subset
-│   ├── trailheads.csv           # trailheads incl. wilderness area / agency / permit_group
-│   ├── permits.csv              # permit rules per permit_group
-│   ├── release_policies.csv     # structured, computable permit release phases
-│   ├── approaches.csv           # peak-specific approach/permit relationships
-│   ├── permit_source_log.csv    # append-only source-verification audit trail
-│   └── source/                  # official Sierra Club files + trimmed GNIS subset
+│   ├── peaks.csv                 # core: name, coordinates, elevation (collection-agnostic)
+│   ├── collections/
+│   │   └── sps.csv               # SPS collection: list, section, mileage, benchmark rating
+│   ├── sps_sample.csv            # 30-peak demo subset
+│   ├── trailheads.csv            # trailheads incl. wilderness area / agency / permit_group
+│   ├── permits.csv               # permit rules per permit_group
+│   ├── release_policies.csv      # structured, computable permit release phases
+│   ├── approaches.csv            # peak-specific approach/permit relationships
+│   ├── permit_source_log.csv     # append-only source-verification audit trail
+│   └── source/                   # official Sierra Club files + trimmed GNIS subset
 ├── scripts/
-│   ├── build_dataset.py         # XLS + non-SPS PDF -> sps_peaks.csv
+│   ├── build_dataset.py         # XLS + non-SPS PDF -> sps_peaks.csv (staging)
 │   ├── merge_gnis.py            # join GNIS coordinates (name + quad)
 │   ├── merge_coords.py          # generic GPX/KML/CSV/JSON coordinate joiner
 │   ├── assign_trailheads.py     # nearest-trailhead access signals
+│   ├── split_collections.py     # staging -> data/peaks.csv + data/collections/sps.csv
 │   ├── build_gnis_gaps.py       # trimmed GNIS gap/pass source data
 │   ├── merge_passes.py          # pass dataset assembly
 │   ├── fill_pass_elevation.py   # pass elevation backfill helper
