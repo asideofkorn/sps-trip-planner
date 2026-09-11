@@ -47,7 +47,7 @@ def leg_metrics(a: Peak, b: Peak, router=None) -> Tuple[float, float, float]:
 
     Ascent is the positive elevation difference; descending to a lower peak
     contributes no Naismith penalty (the standard, simple form of the rule).
-    When a ``router`` (``sierra_peaks.passes.PassRouter``) is supplied, a leg that
+    When a ``router`` (``wayproof.passes.PassRouter``) is supplied, a leg that
     crosses the Sierra crest is routed through the cheapest pass instead of
     tunnelling straight through the ridge.
     """
@@ -73,7 +73,7 @@ def build_distance_matrix(
         the two directional legs so it can be used by distance-based clustering.
     router : PassRouter, optional
         If given, cross-crest legs are routed through the cheapest pass (see
-        :mod:`sierra_peaks.passes`). When ``None`` the original straight-line
+        :mod:`wayproof.passes`). When ``None`` the original straight-line
         behaviour is used.
     """
     n = len(peaks)

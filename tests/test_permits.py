@@ -11,10 +11,10 @@ from datetime import date
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from sierra_peaks.access import ApproachRoute, load_approaches
-from sierra_peaks.data_loader import load_trailheads
-from sierra_peaks.model import Cluster, Peak
-from sierra_peaks.permits import (
+from wayproof.access import ApproachRoute, load_approaches
+from wayproof.data_loader import load_trailheads
+from wayproof.model import Cluster, Peak
+from wayproof.permits import (
     load_permits,
     load_source_log,
     unresolved_conflicts,
@@ -362,7 +362,7 @@ def test_resolved_conflict_does_not_show_as_unresolved():
 def test_unresolved_conflict_is_detected():
     # A synthetic log where the LATEST entry for a group is a conflict
     # (never followed by a resolving entry) must be flagged.
-    from sierra_peaks.permits import SourceLogEntry
+    from wayproof.permits import SourceLogEntry
     log = [
         SourceLogEntry("2026-01-01", "test_group", "https://a.example", "", "websearch",
                         "new-group", "initial"),
@@ -507,21 +507,21 @@ def test_cpma_mechanisms_are_data_driven():
 
 def test_yosemite_still_uses_legacy_special_case():
     # Yosemite's weekly lottery is deliberately left unmigrated -- see
-    # sierra_peaks/release_policy.py's module docstring for why.
+    # wayproof/release_policy.py's module docstring for why.
     permits = _permits()
     rule = permits["yosemite"]
     assert rule.release_phases == []
 
 
 def test_load_release_policies_missing_file_returns_empty():
-    from sierra_peaks.release_policy import load_release_policies
+    from wayproof.release_policy import load_release_policies
     assert load_release_policies("data/does_not_exist.csv") == {}
 
 
 def test_load_release_policies_rejects_invalid_mechanism():
     import pytest
     import tempfile
-    from sierra_peaks.release_policy import load_release_policies
+    from wayproof.release_policy import load_release_policies
 
     with tempfile.NamedTemporaryFile(mode="w", suffix=".csv", delete=False) as f:
         f.write("permit_group,phase_order,mechanism,season,offset_days\n")
@@ -537,7 +537,7 @@ def test_load_release_policies_rejects_invalid_mechanism():
 def test_load_release_policies_rejects_invalid_season():
     import pytest
     import tempfile
-    from sierra_peaks.release_policy import load_release_policies
+    from wayproof.release_policy import load_release_policies
 
     with tempfile.NamedTemporaryFile(mode="w", suffix=".csv", delete=False) as f:
         f.write("permit_group,phase_order,mechanism,season,offset_days\n")

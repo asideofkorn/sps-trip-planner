@@ -26,11 +26,11 @@ import argparse
 import sys
 from typing import List
 
-from sierra_peaks.data_loader import load_peaks, load_trailheads
-from sierra_peaks.clustering import ClusterConfig, cluster_peaks
-from sierra_peaks.pipeline import build_itineraries, rank_clusters
-from sierra_peaks import manual
-from sierra_peaks.export import save_json, clusters_to_payload
+from wayproof.data_loader import load_peaks, load_trailheads
+from wayproof.clustering import ClusterConfig, cluster_peaks
+from wayproof.pipeline import build_itineraries, rank_clusters
+from wayproof import manual
+from wayproof.export import save_json, clusters_to_payload
 
 
 def _parse_args(argv=None) -> argparse.Namespace:
@@ -166,7 +166,7 @@ def main(argv=None) -> int:
     args = _parse_args(argv)
 
     if args.permit_sources is not None:
-        from sierra_peaks.permits import load_source_log, format_source_log
+        from wayproof.permits import load_source_log, format_source_log
         group = None if args.permit_sources == "__all__" else args.permit_sources
         log = load_source_log(args.permit_source_log_file)
         print(format_source_log(log, permit_group=group))
@@ -193,7 +193,7 @@ def main(argv=None) -> int:
     )
 
     if args.use_passes:
-        from sierra_peaks.passes import build_router
+        from wayproof.passes import build_router
         config.router = build_router(args.passes_file, candidate_tier=args.pass_tier)
         n_wp = len(config.router.waypoints)
         print(f"Pass routing ON: {n_wp} crossing passes (tier<={args.pass_tier}) "
@@ -235,7 +235,7 @@ def main(argv=None) -> int:
     _print_summary(clusters)
 
     if args.approach_report:
-        from sierra_peaks.diagnostics import (
+        from wayproof.diagnostics import (
             approach_amortization, format_approach_report,
         )
         rows = approach_amortization(clusters, config)
@@ -246,8 +246,8 @@ def main(argv=None) -> int:
 
     if args.permits:
         import datetime
-        from sierra_peaks.access import load_approaches
-        from sierra_peaks.permits import (
+        from wayproof.access import load_approaches
+        from wayproof.permits import (
             load_permits, clusters_permit_info, format_permit_report,
         )
         trip_date = (datetime.date.fromisoformat(args.trip_date) if args.trip_date
@@ -266,7 +266,7 @@ def main(argv=None) -> int:
         print(f"Wrote candidate groupings to {args.output}")
 
     if args.viz:
-        from sierra_peaks.visualize import plot_clusters
+        from wayproof.visualize import plot_clusters
         plot_clusters(clusters, output_path=args.viz)
         print(f"Wrote visualization to {args.viz}")
 

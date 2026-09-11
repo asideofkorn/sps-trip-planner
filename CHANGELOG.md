@@ -6,6 +6,18 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Changed
+- **Renamed the project to Wayproof**, completing the rename tracked as
+  follow-up work since the initial repositioning pass. GitHub repo
+  `sps-trip-planner` -> `wayproof`; Python package `sierra_peaks/` ->
+  `wayproof/`; distribution name `sierra-peaks-clustering` -> `wayproof`;
+  CLI entry points `sps-plan` -> `wayproof` (the flagship command now gets
+  the bare name) and `sps-cluster` -> `wayproof-cluster` (kept distinct
+  since clustering remains explicitly experimental). `cli.py` and `plan.py`
+  keep their filenames; only the installed console-script names changed.
+  Data files and identifiers referring to the actual Sierra Club Sierra
+  Peaks Section program (`data/collections/sps.csv`, `list=SPS`, etc.) are
+  unaffected -- that's a real third-party program name, not project
+  branding.
 - **Split the peak dataset into a public-domain-first core plus an optional
   SPS collection**, closing the architectural follow-up from the source
   policy pass: `data/peaks.csv` (name, coordinates, elevation, and the
@@ -48,7 +60,7 @@ All notable changes to this project are documented here. The format is based on
 
 ### Added
 - `plan.py` (new standalone CLI, `sps-plan` entry point) and
-  `sierra_peaks/plan.py` (`PlanResult`, `resolve_plan`, `format_plan_summary`):
+  `wayproof/plan.py` (`PlanResult`, `resolve_plan`, `format_plan_summary`):
   resolves access, permit, and evidence logistics for a specific, named set
   of objectives and a trip date, e.g.
   `python plan.py "Mount Williamson" "Mount Tyndall" --date 2027-07-15`. This
@@ -67,7 +79,7 @@ All notable changes to this project are documented here. The format is based on
   `format_permit_report`'s per-entry rendering into a shared
   `format_permit_entry_body` so `plan`'s output doesn't duplicate that
   formatting logic.
-- `data/release_policies.csv` and new `sierra_peaks/release_policy.py`
+- `data/release_policies.csv` and new `wayproof/release_policy.py`
   (`ReleasePhase`, `load_release_policies`): structured, computable permit
   release rules, replacing per-group special-cased Python for 8 of 9
   quota-required permit groups. Previously, a group with a percentage-split
@@ -92,7 +104,7 @@ All notable changes to this project are documented here. The format is based on
   (default `data/release_policies.csv`); `load_permits()` now also accepts a
   `release_policies_path` argument and attaches each group's phases to its
   `PermitRule.release_phases`.
-- `data/approaches.csv` and new `sierra_peaks/access.py` (`ApproachRoute`,
+- `data/approaches.csv` and new `wayproof/access.py` (`ApproachRoute`,
   `load_approaches`): structured peak -> approach -> permit relationships,
   replacing the flat `data/permit_overrides.csv` peak-name -> permit-group
   string map. Each row now carries the named approach/route, the trailhead it
@@ -122,7 +134,7 @@ All notable changes to this project are documented here. The format is based on
   source that disagrees with an earlier one is visible rather than silently
   replacing it. `unresolved_conflicts()` flags any permit_group whose most
   recent logged entry hasn't been reconciled yet. New
-  `sierra_peaks/permits.py` (`SourceLogEntry`, `load_source_log`,
+  `wayproof/permits.py` (`SourceLogEntry`, `load_source_log`,
   `unresolved_conflicts`, `format_source_log`). Backfilled with this
   project's actual verification history to date, including one real
   screenshot-resolution ambiguity (Whitney lottery results date) that was
@@ -148,7 +160,7 @@ All notable changes to this project are documented here. The format is based on
   Eldorado NF/LTBMU, Humboldt-Toiyabe NF, Yosemite NP, and Sequoia & Kings
   Canyon NP, including the separate Mt. Whitney Zone lottery). Given
   `--trip-date`, it reports whether that date falls in the quota season and
-  when the reservation window opens. New `sierra_peaks/permits.py`
+  when the reservation window opens. New `wayproof/permits.py`
   (`load_permits`, `permit_status`, `clusters_permit_info`,
   `format_permit_report`) and `tests/test_permits.py`.
 - Peak-level permit overrides (`data/permit_overrides.csv`,
@@ -179,7 +191,7 @@ All notable changes to this project are documented here. The format is based on
   `plan_trips` now accept `trailheads`.
 - `--approach-report`: approach-amortization diagnostic ranking trailheads that
   serve multiple trips by recoverable approach effort (implies
-  `--include-approach`). New `sierra_peaks/diagnostics.py`
+  `--include-approach`). New `wayproof/diagnostics.py`
   (`approach_amortization`, `format_approach_report`).
 - `--include-approach`: model the trailhead approach (walk in to the first
   summit and out from the last) using `data/trailheads.csv`. Anchors each trip
@@ -203,7 +215,7 @@ All notable changes to this project are documented here. The format is based on
 
 ### Changed
 - Repositioned the project around source-backed trip logistics rather than
-  geographic clustering. The README, `cli.py`, `sierra_peaks/__init__.py`, and
+  geographic clustering. The README, `cli.py`, `wayproof/__init__.py`, and
   `pyproject.toml` description now lead with the actual product question --
   "I want to do this objective on this date; what do I need to know and do to
   make it happen?" -- ahead of installation and algorithm details, using the

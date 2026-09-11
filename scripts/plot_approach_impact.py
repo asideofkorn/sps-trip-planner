@@ -1,8 +1,8 @@
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from sierra_peaks import load_peaks, load_trailheads, ClusterConfig, plan_trips
-from sierra_peaks.approach import choose_trailhead
+from wayproof import load_peaks, load_trailheads, ClusterConfig, plan_trips
+from wayproof.approach import choose_trailhead
 
 peaks = load_peaks("data/peaks.csv", list_filter="SPS",
                     collections_path="data/collections/sps.csv")

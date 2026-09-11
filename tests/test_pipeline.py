@@ -11,20 +11,20 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from sierra_peaks.model import Peak, Trailhead
-from sierra_peaks.data_loader import load_peaks, load_trailheads
-from sierra_peaks.distances import (
+from wayproof.model import Peak, Trailhead
+from wayproof.data_loader import load_peaks, load_trailheads
+from wayproof.distances import (
     haversine_miles,
     naismith_effective_miles,
     leg_metrics,
     build_distance_matrix,
 )
-from sierra_peaks.tsp import solve_tsp, solve_tsp_cycle, route_metrics
-from sierra_peaks.clustering import ClusterConfig, cluster_peaks
-from sierra_peaks.pipeline import build_itineraries, rank_clusters, plan_trips
-from sierra_peaks.approach import choose_trailhead, approach_metrics
-from sierra_peaks.diagnostics import approach_amortization, format_approach_report
-from sierra_peaks import manual
+from wayproof.tsp import solve_tsp, solve_tsp_cycle, route_metrics
+from wayproof.clustering import ClusterConfig, cluster_peaks
+from wayproof.pipeline import build_itineraries, rank_clusters, plan_trips
+from wayproof.approach import choose_trailhead, approach_metrics
+from wayproof.diagnostics import approach_amortization, format_approach_report
+from wayproof import manual
 
 DATA = os.path.join(os.path.dirname(__file__), "..", "data", "sps_sample.csv")
 TRAILHEADS = os.path.join(os.path.dirname(__file__), "..", "data", "trailheads.csv")
@@ -197,7 +197,7 @@ def test_manual_merge_and_split_roundtrip():
 
 
 def test_pass_classify_tiers_and_kinds():
-    from sierra_peaks.passes import classify
+    from wayproof.passes import classify
     assert classify("Forester Pass") == (1, "pass")
     assert classify("Lamarck Col") == (1, "col")
     assert classify("Echo Summit") == (1, "pass")        # road summit
@@ -208,7 +208,7 @@ def test_pass_classify_tiers_and_kinds():
 
 
 def _synthetic_passes():
-    from sierra_peaks.passes import Pass
+    from wayproof.passes import Pass
     # A north-south crest near longitude -118.4.
     return [
         Pass("South Pass", 36.7, -118.40, 11000, tier=1, kind="pass"),
@@ -218,7 +218,7 @@ def _synthetic_passes():
 
 
 def test_crest_model_assigns_sides():
-    from sierra_peaks.passes import CrestModel
+    from wayproof.passes import CrestModel
     crest = CrestModel(_synthetic_passes(), crest_tier=1)
     assert crest.usable
     # East of the crest (less-negative longitude) vs west of it.
@@ -227,7 +227,7 @@ def test_crest_model_assigns_sides():
 
 
 def test_router_same_side_is_direct():
-    from sierra_peaks.passes import PassRouter
+    from wayproof.passes import PassRouter
     router = PassRouter(_synthetic_passes(), candidate_tier=1)
     a = Peak("a", 37.0, -118.0, 12000)
     b = Peak("b", 37.1, -118.1, 12000)   # both east of the crest
@@ -238,7 +238,7 @@ def test_router_same_side_is_direct():
 
 
 def test_router_cross_crest_routes_through_pass():
-    from sierra_peaks.passes import PassRouter
+    from wayproof.passes import PassRouter
     router = PassRouter(_synthetic_passes(), candidate_tier=1)
     east = Peak("east", 37.0, -118.0, 12000)
     west = Peak("west", 37.0, -118.9, 12000)
@@ -249,7 +249,7 @@ def test_router_cross_crest_routes_through_pass():
 
 
 def test_build_router_from_dataset():
-    from sierra_peaks.passes import build_router
+    from wayproof.passes import build_router
     passes_csv = os.path.join(os.path.dirname(__file__), "..", "data", "passes.csv")
     router = build_router(passes_csv, candidate_tier=1)
     assert router.crest.usable
@@ -257,7 +257,7 @@ def test_build_router_from_dataset():
 
 
 def test_pipeline_with_router_partitions_and_budgets():
-    from sierra_peaks.passes import PassRouter
+    from wayproof.passes import PassRouter
     peaks = load_peaks(DATA)
     router = PassRouter(_synthetic_passes(), candidate_tier=1)
     config = ClusterConfig(eps_mi=6.0, miles_per_day=15.0, max_days=3, router=router)

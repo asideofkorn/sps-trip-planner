@@ -10,13 +10,13 @@ opens.
 *When* a permit_group's inventory actually becomes available -- a single
 rolling release, a percentage-split release, an annual lottery, a walk-up-only
 system, or one requiring direct contact off-season -- is computed generically
-from ``data/release_policies.csv`` (see :mod:`sierra_peaks.release_policy`)
+from ``data/release_policies.csv`` (see :mod:`wayproof.release_policy`)
 rather than special-cased per group in this module. That closed a real gap:
 previously, a permit_group with e.g. a 60%-then-40% split release only ever
 had its *first* release date computed; the second release existed only as a
 sentence in ``reservation_method``, never as a date the tool itself could act
 on. Yosemite's weekly lottery is the one deliberate exception still handled
-inline below -- see :mod:`sierra_peaks.release_policy` for why.
+inline below -- see :mod:`wayproof.release_policy` for why.
 
 A permit's issuing agency is the trailhead's agency, not necessarily the
 agency governing every peak reached from it: Sierra Nevada wilderness permits
@@ -49,7 +49,7 @@ reached from it: some trailheads serve more than one permitted trail with
 different rules (e.g. Whitney Portal serves the lottery-only classic Mt.
 Whitney Trail, but also the separately-permitted Mountaineers Route /
 North Fork of Lone Pine Creek trail for Mount Russell). ``data/approaches.csv``
-(see :mod:`sierra_peaks.access`) records these peak-specific approach
+(see :mod:`wayproof.access`) records these peak-specific approach
 relationships as structured data: which named route a peak uses, which
 trailhead it starts from, and -- when a source directly confirms it -- which
 permit_group actually governs it. :func:`clusters_permit_info` emits an
@@ -132,7 +132,7 @@ class PermitRule:
     notes: str = ""
     interagency_note: str = ""
     # Structured release phases from data/release_policies.csv, if migrated
-    # (see sierra_peaks.release_policy). Empty for groups still on the
+    # (see wayproof.release_policy). Empty for groups still on the
     # generic reservation_window_days fallback below (currently Yosemite).
     release_phases: List[ReleasePhase] = field(default_factory=list)
     source_last_updated: str = ""  # the source page/doc's own "last updated" date, if shown
@@ -173,7 +173,7 @@ def load_permits(
     """Load the curated permit-rule table, keyed by ``permit_group``.
 
     Also attaches each group's structured release phases from
-    ``release_policies_path`` (see :mod:`sierra_peaks.release_policy`), when
+    ``release_policies_path`` (see :mod:`wayproof.release_policy`), when
     that permit_group has been migrated there. Groups without any phases
     (currently only Yosemite) fall back to ``permit_status``'s older,
     coarser single-offset logic.
@@ -304,7 +304,7 @@ def permit_status(
     """Human-readable guidance for applying for this permit on ``trip_date``.
 
     When ``rule.release_phases`` is populated (see
-    :mod:`sierra_peaks.release_policy`), the status is computed generically
+    :mod:`wayproof.release_policy`), the status is computed generically
     from that structured data, filtered to whichever phases apply given
     whether ``trip_date`` falls in the quota season. Groups not yet migrated
     (currently only Yosemite -- see that module's docstring for why) fall
@@ -415,7 +415,7 @@ def clusters_permit_info(
 
     Clusters without a trailhead (approach modeling was off) are skipped --
     there is nothing to key the permit lookup on. ``approaches`` (see
-    :mod:`sierra_peaks.access`) supplies peak-specific approach relationships:
+    :mod:`wayproof.access`) supplies peak-specific approach relationships:
 
     - A ``confirmed`` route whose permit_group differs from the trailhead
       default adds an extra, peak-specific permit entry, so a mixed trip
@@ -495,7 +495,7 @@ def clusters_permit_info(
 
 def format_permit_entry_body(r: ClusterPermitInfo) -> List[str]:
     """Render one permit entry's detail lines (no header) -- shared by
-    :func:`format_permit_report` and :mod:`sierra_peaks.plan`."""
+    :func:`format_permit_report` and :mod:`wayproof.plan`."""
     lines = []
     if r.wilderness_area:
         lines.append(f"  Wilderness: {r.wilderness_area}  |  Agency: {r.agency}")

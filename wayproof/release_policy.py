@@ -10,8 +10,8 @@ sentence a human had to read, never as a date the tool itself could act on.
 ``data/release_policies.csv`` records each permit_group's release cycle as an
 ordered list of phases instead: one row per dated event, with an explicit
 ``mechanism`` describing what kind of event it is. Loaded via
-:func:`load_release_policies` and attached to each :class:`~sierra_peaks.permits.PermitRule`
-via ``load_permits``, this lets :func:`sierra_peaks.permits.permit_status`
+:func:`load_release_policies` and attached to each :class:`~wayproof.permits.PermitRule`
+via ``load_permits``, this lets :func:`wayproof.permits.permit_status`
 compute every phase's actual date generically instead of special-casing each
 permit_group's mechanics in Python.
 
@@ -39,7 +39,7 @@ regardless.
 
 Not every permit_group is migrated here. Yosemite's weekly lottery cycle is
 deliberately left on its own special-cased logic in
-:mod:`sierra_peaks.permits` -- its own source is explicit that exact
+:mod:`wayproof.permits` -- its own source is explicit that exact
 per-area reservation dates come from a downloadable dataset that hasn't been
 retrieved, so forcing weekday-precise computed dates onto an already-fuzzy
 source would manufacture false precision rather than remove it. A
@@ -138,7 +138,7 @@ def load_release_policies(
 
     Returns an empty dict if the file doesn't exist. A permit_group with no
     phases here simply hasn't been migrated off the older generic
-    reservation-window fallback in :func:`sierra_peaks.permits.permit_status`.
+    reservation-window fallback in :func:`wayproof.permits.permit_status`.
     """
     path = Path(path)
     if not path.exists():

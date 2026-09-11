@@ -1,7 +1,7 @@
 """Model the trailhead approach: the walk from the car to the first summit and
 the descent from the last summit back.
 
-The inter-peak sequence (see :mod:`sierra_peaks.distances`) estimates direct
+The inter-peak sequence (see :mod:`wayproof.distances`) estimates direct
 travel between summits, but it ignores how you reach the range from a road.
 This module closes that gap using data already in the dataset:
 
