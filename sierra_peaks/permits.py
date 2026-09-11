@@ -493,6 +493,32 @@ def clusters_permit_info(
     return rows
 
 
+def format_permit_entry_body(r: ClusterPermitInfo) -> List[str]:
+    """Render one permit entry's detail lines (no header) -- shared by
+    :func:`format_permit_report` and :mod:`sierra_peaks.plan`."""
+    lines = []
+    if r.wilderness_area:
+        lines.append(f"  Wilderness: {r.wilderness_area}  |  Agency: {r.agency}")
+    lines.append(f"  Permit: {r.permit_type}")
+    lines.append(f"  Status: {r.status}")
+    if r.fee_notes:
+        lines.append(f"  Fee: {r.fee_notes}")
+    if r.apply_url:
+        lines.append(f"  Apply: {r.apply_url}")
+    if r.notes:
+        lines.append(f"  Note: {r.notes}")
+    if r.interagency_note:
+        lines.append(f"  Crosses into other land: {r.interagency_note}")
+    if r.verified_date:
+        src = f"source last updated {r.source_last_updated}" if r.source_last_updated else "source's own update date not shown"
+        lines.append(f"  Provenance: {src}; we last checked this against the "
+                      f"source on {r.verified_date}.")
+    else:
+        lines.append("  Provenance: NOT independently verified against a primary "
+                      "source (web-search synthesis only) -- treat with extra caution.")
+    return lines
+
+
 def format_permit_report(rows: Sequence[ClusterPermitInfo]) -> str:
     """Render permit guidance as readable text, one block per cluster."""
     if not rows:
@@ -504,25 +530,7 @@ def format_permit_report(rows: Sequence[ClusterPermitInfo]) -> str:
         suffix = f"  [{r.peak_note}]" if r.peak_note else ""
         lines.append(f"Group #{r.cluster_id} -- {r.trailhead}  "
                       f"(trip date {r.trip_date:%Y-%m-%d}){suffix}")
-        if r.wilderness_area:
-            lines.append(f"  Wilderness: {r.wilderness_area}  |  Agency: {r.agency}")
-        lines.append(f"  Permit: {r.permit_type}")
-        lines.append(f"  Status: {r.status}")
-        if r.fee_notes:
-            lines.append(f"  Fee: {r.fee_notes}")
-        if r.apply_url:
-            lines.append(f"  Apply: {r.apply_url}")
-        if r.notes:
-            lines.append(f"  Note: {r.notes}")
-        if r.interagency_note:
-            lines.append(f"  Crosses into other land: {r.interagency_note}")
-        if r.verified_date:
-            src = f"source last updated {r.source_last_updated}" if r.source_last_updated else "source's own update date not shown"
-            lines.append(f"  Provenance: {src}; we last checked this against the "
-                          f"source on {r.verified_date}.")
-        else:
-            lines.append("  Provenance: NOT independently verified against a primary "
-                          "source (web-search synthesis only) -- treat with extra caution.")
+        lines.extend(format_permit_entry_body(r))
         lines.append("")
     lines.append(
         "Permit rules and dates change year to year -- verify against the "

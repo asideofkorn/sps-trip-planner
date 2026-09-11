@@ -38,7 +38,8 @@ Issues = "https://github.com/asideofkorn/sps-trip-planner/issues"
 
 [project.scripts]
 sps-cluster = "cli:main"
+sps-plan = "plan:main"
 
 [tool.setuptools]
 packages = ["sierra_peaks"]
-py-modules = ["cli"]
+py-modules = ["cli", "plan"]

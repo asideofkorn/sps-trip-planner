@@ -56,6 +56,69 @@ This project is focused on the logistical knowledge around the trip: what access
 applies, what rules matter, when you need to act, and what evidence supports the
 answer.
 
+## `plan`: Objective + Date -> Logistics
+
+`plan.py` is that answer, for objectives you already know you want to do. Unlike
+`cli.py`'s experimental geographic clustering (which discovers and groups
+objectives from a whole peak list), `plan` takes specific, named objectives and
+resolves access, permit, and evidence logistics for them directly -- no
+clustering or route discovery involved.
+
+```bash
+python plan.py "Mount Williamson" "Mount Tyndall" --date 2027-07-15
+```
+
+```text
+MOUNT WILLIAMSON + MOUNT TYNDALL
+Trip date: 2027-07-15
+
+Access
+  Trailhead: Shepherd Pass  (east side)
+
+Permit
+  Wilderness: John Muir Wilderness  |  Agency: Inyo National Forest
+  Permit: Inyo NF Wilderness Permit (John Muir / Ansel Adams / Golden Trout-Inyo / Hoover-Inyo entries)
+  Status: Reservations open 2027-01-14 (07:00 America/Los_Angeles) -- mark your
+  calendar. A further 40% release opens 2027-07-01 (07:00 America/Los_Angeles).
+  Fee: $6/permit + $5/person ($15/person if the trip enters or exits via the Mt. Whitney Zone)
+  Apply: https://www.recreation.gov/permits/233262
+  Provenance: source last updated 2026-07-08; we last checked this against the
+  source on 2026-07-23.
+
+Known per-objective mileage (official round trip, from source data)
+  MOUNT WILLIAMSON: 12.9 mi round trip, 8,990 ft gain
+  Mount Tyndall: 11.1 mi round trip, 8,360 ft gain
+  These are each objective's own official round-trip stats from its standard
+  trailhead -- not a computed combined route. Whether they can reasonably be
+  linked into one continuous trip is not modeled here; treat as reference
+  points, not a verified itinerary.
+
+Planning aid, not a booking guarantee -- verify the current rule at the
+official source before acting on any date above.
+```
+
+A trailhead shared by objectives with different actual approaches -- e.g. Mount
+Whitney and Mount Russell from Whitney Portal -- surfaces both permits it
+actually needs, using the same approach-relationship data described below:
+
+```bash
+python plan.py "Mount Whitney" "Mount Russell" --date 2027-07-01
+```
+
+`--output plan.json` writes the same resolution as structured JSON (objectives,
+trailhead, every permit entry, warnings) for downstream use.
+
+**Current scope, deliberately:** `plan`'s objectives must share a single
+trailhead, the same assumption made everywhere else access is modeled in this
+project. Objectives that don't share one aren't rejected -- `plan` still
+resolves its best guess and reports the mismatch as an explicit warning rather
+than silently trusting it. A loop or point-to-point traverse with a genuinely
+different entry and exit is a natural next step, not something this models yet.
+
+```bash
+python plan.py --help
+```
+
 ## What The Project Can Do Today
 
 The current implementation is centered on the Sierra Nevada and the Sierra Peaks
@@ -63,6 +126,9 @@ Section dataset.
 
 It can:
 
+- Resolve access, permit, and evidence logistics for a specific, named set of
+  objectives and a trip date (`plan.py`), without going through the
+  experimental clustering pipeline.
 - Load the 247-peak SPS list with summit coordinates, elevation, class, section,
   emblem and mountaineers flags, mileage/gain fields, trailhead metadata, USGS
   quad, and source metadata.
@@ -74,8 +140,9 @@ It can:
   provenance dates.
 - Preserve an append-only history of permit-source verification, including
   conflicting evidence.
-- Apply explicitly sourced permit overrides when a trailhead's default permit
-  relationship is not sufficient for a particular objective.
+- Apply explicitly sourced, peak-specific approach relationships when a
+  trailhead's default permit is not sufficient for a particular objective,
+  including flagging suspected-but-unconfirmed cases rather than guessing.
 - Generate experimental geographic candidate groupings for SPS peaks using
   proximity, effort estimates, optional pass-aware distance calculations, and
   TSP-based sequencing.
@@ -276,6 +343,8 @@ The project does not currently:
 - model complete trail topology,
 - determine whether off-trail terrain is technically passable,
 - evaluate current snow, ice, creek, avalanche, wildfire, or weather conditions,
+- resolve `plan` objectives that don't share a single trailhead (a loop or
+  point-to-point traverse with a distinct entry and exit isn't modeled yet),
 - or certify that a generated peak sequence is a safe or feasible route.
 
 Use the following terms deliberately:
@@ -307,6 +376,9 @@ Python 3.9+ is supported. Core dependencies are `pandas`, `numpy`,
 ## Quick Start
 
 ```bash
+# Resolve access, permit, and evidence logistics for specific objectives.
+python plan.py "Mount Williamson" "Mount Tyndall" --date 2027-07-15
+
 # Generate experimental candidate groupings for the full SPS list.
 python cli.py --input data/sps_peaks.csv --output out.json --viz clusters.png
 
@@ -330,6 +402,22 @@ Example summary output:
 ```
 
 ## CLI Usage
+
+### `plan.py`
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `objectives` | required | One or more objective (peak) names, positional |
+| `--date` | required | Planned trip date (`YYYY-MM-DD`) |
+| `--peaks-file` | `data/sps_peaks.csv` | Peak dataset |
+| `--list` | `SPS` | Keep only this `list` value; use `all` for non-SPS-tracked objectives too |
+| `--trailheads-file` | `data/trailheads.csv` | Trailhead dataset |
+| `--permits-file` | `data/permits.csv` | Permit rules dataset |
+| `--release-policies-file` | `data/release_policies.csv` | Structured permit release-phase dataset |
+| `--approaches-file` | `data/approaches.csv` | Peak-specific approach/permit relationships |
+| `--output, -o` | - | Write the resolved plan to this JSON file |
+
+### `cli.py` (experimental candidate grouping)
 
 | Flag | Default | Description |
 |------|---------|-------------|
@@ -824,7 +912,8 @@ included for quick experimentation.
 
 ```text
 sps-trip-planner/
-├── cli.py                       # command-line entry point
+├── plan.py                      # resolve logistics for named objectives (flagship)
+├── cli.py                       # experimental candidate-grouping entry point
 ├── requirements.txt
 ├── data/
 │   ├── sps_peaks.csv            # 247 SPS + tracked non-SPS peaks
@@ -866,10 +955,12 @@ sps-trip-planner/
 │   ├── permits.py
 │   ├── access.py
 │   ├── release_policy.py
+│   ├── plan.py
 │   └── visualize.py
 └── tests/
     ├── test_pipeline.py
-    └── test_permits.py
+    ├── test_permits.py
+    └── test_plan.py
 ```
 
 Run the tests:

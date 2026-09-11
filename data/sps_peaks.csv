@@ -122,7 +122,7 @@ Mount Haeckel,37.150992,-118.661007,13418,SPS,15.4,3,False,False,9.7,4495.0,150.
 Mount Bago,36.769994,-118.438088,11870,SPS,9.6,1,False,False,9.7,4110.0,1430.0,Kearsarge Pass Trail,Mount Clarence King,False,GNIS,False,,Onion Valley (Kearsarge Pass),east,5.4
 Mount Winchell,37.104596,-118.526166,13775,SPS,14.6,3,False,False,9.7,6065.0,100.0,North Fork Trail,North Palisade,False,GNIS,False,,South Lake (Bishop Pass),east,4.9
 Royce Peak,37.318174,-118.770896,13280,SPS,17.2,2,False,False,9.7,6030.0,150.0,Pine Creek Pass Trail,Mount Hilgard,True,GNIS,False,,Pine Creek,east,5.5
-Mount Keith,36.700069,-118.343416,13976,SPS,8.9,2,False,False,9.7,8315.0,650.0,Shepherd Pass Trail,Mount Williamson,False,GNIS,False,,Symmes Creek (Shepherd Pass),east,2.7
+Mount Keith,36.700069,-118.343416,13976,SPS,8.9,2,False,False,9.7,8315.0,650.0,Shepherd Pass Trail,Mount Williamson,False,GNIS,False,,Shepherd Pass,east,2.7
 Cardinal Mountain,36.999405,-118.412737,13396,SPS,10.1,2,False,False,9.8,7980.0,40.0,Taboose Pass Trail,Mount Pinchot,False,GNIS,False,,Red Lake (McMurry Meadows),east,3.9
 Black Mountain,36.809148,-118.378012,13291,SPS,9.11,2,False,False,10.0,7640.0,275.0,Baxter Pass Trail,Mount Clarence King,False,GNIS,False,,Onion Valley (Kearsarge Pass),east,3.4
 Mount Wynne,36.938011,-118.402918,13179,SPS,10.4,2,False,False,10.0,7995.0,550.0,Scotty Spring,Mount Pinchot,False,GNIS,False,,Sawmill Pass,east,2.0
@@ -148,7 +148,7 @@ Mount Silliman,36.643245,-118.696764,11188,SPS,6.2,1,False,False,11.0,4770.0,330
 OLANCHA PEAK,36.265368,-118.118152,12123,SPS,3.1,2,True,False,11.0,6435.0,100.0,Olancha Pass Trail,OLANCHA,False,GNIS,True,S-2.1,Sage Flat (Olancha),east,4.8
 Goodale Mountain,36.972169,-118.385438,12772,SPS,10.9,2s3,False,False,11.0,7395.0,40.0,Taboose Pass Trail,Mount Pinchot,False,GNIS,False,,Sawmill Pass,east,2.9
 Mount Langley,36.523367,-118.239416,14026,SPS,3.5,1,False,False,11.1,4795.0,400.0,Cottonwood Lakes Trail,Mount Langley,False,GNIS,True,S-1.1,Granite View Drive (Turtle Creek),east,3.3
-Mount Tyndall,36.655744,-118.337273,14019,SPS,5.8,2,False,False,11.1,8360.0,650.0,Shepherd Pass Trail,Mount Williamson,False,GNIS,False,,Symmes Creek (Shepherd Pass),east,3.4
+Mount Tyndall,36.655744,-118.337273,14019,SPS,5.8,2,False,False,11.1,8360.0,650.0,Shepherd Pass Trail,Mount Williamson,False,GNIS,False,,Shepherd Pass,east,3.4
 Mount Prater,37.036793,-118.434705,13471,SPS,12.3,1,False,False,11.3,8735.0,80.0,Red Lake Trail,Split Mountain,False,GNIS,False,,Red Lake (McMurry Meadows),east,4.1
 Black Hawk Mountain,38.20597,-119.708986,10348,SPS,23.1,2,False,False,11.4,4190.0,200.0,Huckleberry Trail,Emigrant Lake,False,GNIS,False,,Gianelli Cabin,west,4.1
 Mount Davis,37.714989,-119.219382,12303,SPS,19.5,2,False,False,11.4,5100.0,1120.0,Pacific Crest Trail,Mount Ritter,False,GNIS,False,,Rush Creek (Silver Lake),east,6.9
@@ -161,15 +161,15 @@ North Guard,36.716527,-118.490038,13327,SPS,7.1,3s4,False,False,12.0,5715.0,200.
 MOUNT RITTER,37.688965,-119.199575,13143,SPS,19.3,2,True,False,12.2,6070.0,1250.0,Pacific Crest Trail,MOUNT RITTER,False,GNIS,True,S-3.2,Agnew Meadows,east,6.3
 Kennedy Mountain,36.879116,-118.668186,11433,SPS,11.5,1,False,False,12.2,7685.0,800.0,Jerky Meadows Trail,Slide Bluffs,False,GNIS,False,,Deer Cove,west,5.8
 Mount Harrington,36.870005,-118.733645,11009,SPS,11.6,3,False,False,12.4,7210.0,750.0,Kennedy Pass Trail,Cedar Grove,False,GNIS,False,,Deer Cove,west,4.7
-Junction Peak,36.690962,-118.366282,13845,SPS,8.8,3,False,True,12.4,8185.0,650.0,Shepherd Pass Trail,Mount Williamson,True,GNIS,False,,Symmes Creek (Shepherd Pass),east,3.9
+Junction Peak,36.690962,-118.366282,13845,SPS,8.8,3,False,True,12.4,8185.0,650.0,Shepherd Pass Trail,Mount Williamson,True,GNIS,False,,Shepherd Pass,east,3.9
 Mount Clark,37.696373,-119.428613,11522,SPS,20.4,3s4,False,True,12.5,5190.0,900.0,Mono Meadows Trail,Merced Peak,False,GNIS,False,,Sunrise Lakes (Tenaya Lake),crest,7.4
 East Vidette,36.743814,-118.400555,12356,SPS,8.6,2s3,False,True,12.5,5515.0,1350.0,Kearsarge Pass Trail,Mount Brewer,False,GNIS,False,,Onion Valley (Kearsarge Pass),east,3.8
 The Hermit,37.162897,-118.718487,12328,SPS,15.1,2s5,False,True,12.5,6195.0,3125.0,Lamark Lakes Trail,Mount Darwin,False,GNIS,False,,North Lake (Piute/Lamarck),east,6.8
 Mount Izaak Walton,37.469966,-118.889922,12077,SPS,18.2,2,False,False,12.6,5215.0,800.0,Mono Creek Trail,Graveyard Peak,False,GNIS,False,,McGee Creek,east,7.6
-Trojan Peak,36.642322,-118.315286,13947,SPS,5.7,2,False,False,12.6,8565.0,920.0,Shepherd Pass Trail,Mount Williamson,False,GNIS,False,,Symmes Creek (Shepherd Pass),east,3.6
+Trojan Peak,36.642322,-118.315286,13947,SPS,5.7,2,False,False,12.6,8565.0,920.0,Shepherd Pass Trail,Mount Williamson,False,GNIS,False,,Shepherd Pass,east,3.6
 West Vidette,36.733905,-118.419727,12533,SPS,8.7,2,False,False,12.7,5695.0,2350.0,Kearsarge Pass Trail,Mount Brewer,True,GNIS,False,,Onion Valley (Kearsarge Pass),east,5.1
 Recess Peak,37.38242,-118.855452,12813,SPS,17.5,2,False,False,12.9,6385.0,1150.0,Bear Ridge Trail,Mount Abbot,False,GNIS,False,,Mosquito Flat (Rock Creek),east,7.0
-MOUNT WILLIAMSON,36.655954,-118.311085,14370,SPS,5.9,2,True,False,12.9,8990.0,920.0,Shepherd Pass Trail,MOUNT WILLIAMSON,True,GNIS,True,S-3.1,Symmes Creek (Shepherd Pass),east,2.6
+MOUNT WILLIAMSON,36.655954,-118.311085,14370,SPS,5.9,2,True,False,12.9,8990.0,920.0,Shepherd Pass Trail,MOUNT WILLIAMSON,True,GNIS,True,S-3.1,Shepherd Pass,east,2.6
 Colosseum Mountain,36.90719,-118.367004,12473,SPS,10.2,1,False,False,13.0,8405.0,520.0,Sawmill Pass Trail,Aberdeen,False,GNIS,False,,Sawmill Pass,east,1.8
 Mount Florence,37.739772,-119.316033,12561,SPS,21.3,2,False,False,13.2,5050.0,100.0,John Muir Trail,Mount Lyell,False,GNIS,False,,Sunrise Lakes (Tenaya Lake),crest,8.9
 MOUNT BREWER,36.708319,-118.485233,13570,SPS,7.9,2,True,False,13.5,6310.0,550.0,Roads end to Bubbs Creek Trail,MOUNT BREWER,False,GNIS,False,,Roads End (Cedar Grove),west,8.1
@@ -181,7 +181,7 @@ Mount Hilgard,37.360312,-118.826932,13361,SPS,17.4,2,False,False,13.7,7760.0,180
 Mount MacClure,37.74357,-119.280355,12880,SPS,21.4,3,False,False,13.8,4280.0,120.0,John Muir Trail,Mount Lyell,True,GNIS,False,,Rush Creek (Silver Lake),east,8.8
 MOUNT LYELL,37.739412,-119.271888,13144,SPS,21.5,3,True,False,13.8,4545.0,120.0,John Muir Trail,MOUNT LYELL,False,GNIS,False,,Rush Creek (Silver Lake),east,8.4
 Mount Gabb,37.376631,-118.802736,13680,SPS,17.6,2,False,False,13.8,7905.0,1625.0,Pine Creek Pass Trail,Mount Abbot,True,GNIS,False,,Mosquito Flat (Rock Creek),east,5.1
-Mount Barnard,36.628403,-118.321599,13990,SPS,5.6,2,False,False,13.9,9330.0,1650.0,Shepherd Pass Trail,Mount Williamson,False,GNIS,False,,Symmes Creek (Shepherd Pass),east,4.6
+Mount Barnard,36.628403,-118.321599,13990,SPS,5.6,2,False,False,13.9,9330.0,1650.0,Shepherd Pass Trail,Mount Williamson,False,GNIS,False,,Shepherd Pass,east,4.6
 Charybdis,37.086854,-118.668169,13096,SPS,13.7,3,False,True,14.0,5820.0,1800.0,Sabrina Basin Trail,Mount Goddard,False,GNIS,False,,South Lake (Bishop Pass),east,8.0
 Pyramid Peak (S),36.906413,-118.462111,12779,SPS,10.6,2,False,False,14.0,7980.0,250.0,Sawmill Pass Trail,Mount Pinchot,False,GNIS,False,,Sawmill Pass,east,5.6
 Deerhorn Mountain,36.712963,-118.41045,13281,SPS,8.5,3,False,True,14.0,6440.0,2350.0,Kearsarge Pass Trail,Mount Brewer,False,GNIS,False,,Pinyon Creek,east,5.6
@@ -216,20 +216,20 @@ State Peak,36.931979,-118.545429,12620,SPS,11.3,2,False,False,18.7,8305.0,720.0,
 Wheel Mountain,37.046727,-118.629452,12774,SPS,13.4,3,False,False,18.7,6815.0,3850.0,Bishop Pass Trail,Mount Goddard,False,GNIS,False,,South Lake (Bishop Pass),east,9.1
 Mount Chamberlin,36.533542,-118.310654,13169,SPS,3.9,1,False,False,18.8,5130.0,1900.0,Cottonwood Pass Trail,Mount Whitney,False,GNIS,False,,Whitney Portal,east,5.3
 MOUNT GODDARD,37.102915,-118.719884,13568,SPS,13.9,2,True,False,18.8,7960.0,2200.0,Bishop Pass Trail,MOUNT GODDARD,False,GNIS,False,,South Lake (Bishop Pass),east,9.6
-Caltech Peak,36.688415,-118.390488,13832,SPS,8.12,2,False,False,18.9,9275.0,1775.0,Shepherd Pass Trail,Mount Brewer,False,GNIS,False,,Symmes Creek (Shepherd Pass),east,5.2
+Caltech Peak,36.688415,-118.390488,13832,SPS,8.12,2,False,False,18.9,9275.0,1775.0,Shepherd Pass Trail,Mount Brewer,False,GNIS,False,,Shepherd Pass,east,5.2
 Mount Newcomb,36.540068,-118.293411,13422,SPS,3.1,2,False,False,19.0,5380.0,1900.0,Cottonwood Pass Trail,Mount Whitney,False,GNIS,False,,Whitney Portal,east,4.3
 Triple Divide Peak,36.592884,-118.530756,12634,SPS,7.1,2,False,True,19.2,7325.0,2450.0,Alta Peak Trail,Triple Divide Peak,False,GNIS,False,,Mineral King,west,10.4
 Red Peak,37.653725,-119.409495,11699,SPS,20.2,2,False,False,19.5,5470.0,1000.0,Mono Meadows Trail,Merced Peak,False,GNIS,False,,Mono Meadow,west,9.7
 Forester Peak,37.690021,-119.290751,12057,SPS,19.8,2,False,False,19.8,6385.0,1300.0,Iceberg Pass Trail,Mount Lyell,False,GNIS,False,,Rush Creek (Silver Lake),east,11.0
-Table Mountain,36.659904,-118.473704,13632,SPS,7.6,3,False,True,19.9,9920.0,2600.0,Shepherd Pass Trail,Mount Brewer,False,GNIS,False,,Symmes Creek (Shepherd Pass),east,10.1
+Table Mountain,36.659904,-118.473704,13632,SPS,7.6,3,False,True,19.9,9920.0,2600.0,Shepherd Pass Trail,Mount Brewer,False,GNIS,False,,Shepherd Pass,east,10.1
 Mount Henry,37.183191,-118.827236,12196,SPS,15.13,2,False,False,20.0,4715.0,700.0,Blackcap Basin Trail,Mount Henry,False,GNIS,False,,Florence Lake,west,10.0
-Thunder Mountain,36.668952,-118.475777,13517,SPS,7.7,3s4,False,True,20.0,9625.0,2420.0,Shepherd Pass Trail,Mount Brewer,True,GNIS,False,,Symmes Creek (Shepherd Pass),east,10.0
+Thunder Mountain,36.668952,-118.475777,13517,SPS,7.7,3s4,False,True,20.0,9625.0,2420.0,Shepherd Pass Trail,Mount Brewer,True,GNIS,False,,Shepherd Pass,east,10.0
 Marion Peak,36.956863,-118.522297,12719,SPS,11.2,2,False,False,20.0,10655.0,3350.0,Taboose Pass Trail,Marion Peak,False,GNIS,False,,Sawmill Pass,east,8.7
-Milestone Mountain,36.634474,-118.484532,13638,SPS,7.4,3,False,True,20.1,9930.0,2600.0,Shepherd Pass Trail,Mount Brewer,False,GNIS,False,,Symmes Creek (Shepherd Pass),east,11.1
-Midway Mountain,36.643325,-118.48371,13665,SPS,7.5,2,False,False,20.2,9955.0,2600.0,Shepherd Pass Trail,Mount Brewer,False,GNIS,False,,Symmes Creek (Shepherd Pass),east,10.9
-Mount Genevra,36.683307,-118.434325,13054,SPS,8.2,2,False,False,20.3,9620.0,1600.0,Roads end to Bubbs Creek Trail,Mount Brewer,False,GNIS,False,,Symmes Creek (Shepherd Pass),east,7.6
+Milestone Mountain,36.634474,-118.484532,13638,SPS,7.4,3,False,True,20.1,9930.0,2600.0,Shepherd Pass Trail,Mount Brewer,False,GNIS,False,,Shepherd Pass,east,11.1
+Midway Mountain,36.643325,-118.48371,13665,SPS,7.5,2,False,False,20.2,9955.0,2600.0,Shepherd Pass Trail,Mount Brewer,False,GNIS,False,,Shepherd Pass,east,10.9
+Mount Genevra,36.683307,-118.434325,13054,SPS,8.2,2,False,False,20.3,9620.0,1600.0,Roads end to Bubbs Creek Trail,Mount Brewer,False,GNIS,False,,Shepherd Pass,east,7.6
 Observation Peak,37.023215,-118.523665,12362,SPS,13.1,2,False,False,20.7,7550.0,4000.0,Bishop Pass Trail,North Palisade,False,GNIS,False,,Big Pine Creek (Glacier Lodge),east,8.4
-Mount Jordan,36.682248,-118.449785,13320,SPS,8.1,3s4,False,False,20.8,9885.0,1600.0,Granite Pass Trail,Mount Brewer,True,GNIS,False,,Symmes Creek (Shepherd Pass),east,8.5
+Mount Jordan,36.682248,-118.449785,13320,SPS,8.1,3s4,False,False,20.8,9885.0,1600.0,Granite Pass Trail,Mount Brewer,True,GNIS,False,,Shepherd Pass,east,8.5
 Emerald Peak,37.165368,-118.763821,12546,SPS,15.12,2,False,False,21.5,6035.0,850.0,Blayney Meadows Trail,Mount Henry,False,GNIS,False,,North Lake (Piute/Lamarck),east,8.7
 Gray Peak,37.673668,-119.418746,11573,SPS,20.3,2,False,False,22.0,6045.0,1700.0,Mono Meadows Trail,Merced Peak,False,GNIS,False,,Sunrise Lakes (Tenaya Lake),crest,9.0
 Mount Lippincott,36.521169,-118.563106,12265,SPS,6.4,2,False,False,22.0,8405.0,3950.0,Sawtooth Pass Trail,Triple Divide Peak,False,GNIS,False,,Mineral King,west,5.1
@@ -238,7 +238,7 @@ Mount Stewart,36.569665,-118.554655,12200,SPS,6.6,2,False,False,22.7,7940.0,3000
 Black Kaweah,36.545384,-118.51583,13720,SPS,6.1,3,False,True,22.7,10010.0,4100.0,Sawtooth Pass Trail,Triple Divide Peak,True,GNIS,False,,Mineral King,west,7.8
 Red Kaweah,36.54,-118.505625,13720,SPS,6.9,2,False,False,23.0,10010.0,4100.0,Sawtooth Pass Trail,Triple Divide Peak,True,GNIS,False,,Mineral King,west,7.9
 Picket Guard Peak,36.576609,-118.47221,12303,SPS,6.11,2,False,False,23.2,10595.0,4600.0,Shepherd Pass Trail,Mount Kaweah,False,GNIS,False,,Mineral King,west,11.0
-Kern Point,36.596685,-118.444891,12730,SPS,6.12,2,False,False,23.5,11020.0,4600.0,Shepherd Pass Trail,Mount Kaweah,True,GNIS,False,,Symmes Creek (Shepherd Pass),east,10.5
+Kern Point,36.596685,-118.444891,12730,SPS,6.12,2,False,False,23.5,11020.0,4600.0,Shepherd Pass Trail,Mount Kaweah,True,GNIS,False,,Shepherd Pass,east,10.5
 Tunemah Peak,36.995323,-118.688309,11894,SPS,13.12,2,False,False,24.0,7625.0,2450.0,Crown Valley Trail,Slide Bluffs,False,GNIS,False,,Deer Cove,west,13.3
 Whaleback,36.63028,-118.531162,11717,SPS,7.3,3,False,False,24.0,6225.0,2850.0,Marvin Pass Trail,Sphinx Lake,False,GNIS,False,,Lodgepole (Twin Lakes),west,10.9
 Pettit Peak,37.985194,-119.480153,10788,SPS,22.1,2,False,False,25.0,6390.0,2700.0,Barney Lake Trail,Falls Ridge,False,GNIS,False,,Lundy Canyon,east,10.4
@@ -289,8 +289,8 @@ Pinnacle Ridge,36.574085,-118.281696,13058,non-SPS,4.13,4,False,False,,,,,Whitne
 Crooks Peak,36.574409,-118.290717,14080,non-SPS,4.14,2,False,False,,,,,Whitney,False,GNIS,False,,Whitney Portal,east,2.9
 Keeler Needle,36.575405,-118.291276,14240,non-SPS,4.15,2-3,False,False,,,,,Whitney,False,GNIS,False,,Whitney Portal,east,2.9
 Mount Carl Heller,,,13225,non-SPS,5.1,3,False,False,,,,,Williamson,False,,False,,,,
-Tawny Point,36.628507,-118.376004,12332,non-SPS,5.11,1,False,False,,,,,Williamson,False,GNIS,False,,Symmes Creek (Shepherd Pass),east,6.2
-Mount Versteeg #,36.647715,-118.325618,13470,non-SPS,5.12,2,False,False,,,,,Williamson,False,GNIS,False,,Symmes Creek (Shepherd Pass),east,3.4
+Tawny Point,36.628507,-118.376004,12332,non-SPS,5.11,1,False,False,,,,,Williamson,False,GNIS,False,,Shepherd Pass,east,6.2
+Mount Versteeg #,36.647715,-118.325618,13470,non-SPS,5.12,2,False,False,,,,,Williamson,False,GNIS,False,,Shepherd Pass,east,3.4
 Mount Tyndall - Southwest Peak,,,13540,non-SPS,5.13,2,False,False,,,,,Williamson,False,,False,,,,
 Polychrome Peak,,,13018,non-SPS,5.14,2,False,False,,,,,Williamson,False,,False,,,,
 Kaweah Queen,36.554655,-118.508554,13366,non-SPS,6.13,2,False,False,,,,,Peak,False,GNIS,False,,Mineral King,west,8.6
@@ -300,7 +300,7 @@ Twin Peaks (SEKI),,,10479,non-SPS,6.18,3,False,False,,,,,Silliman,False,,False,,
 Mount Maddox,36.727937,-118.74718,9656,non-SPS,6.19,2-3,False,False,,,,,Silliman,False,GNIS,False,,Marvin Pass,west,4.7
 Mitchell Peak,,,10378,non-SPS,6.2,1,False,False,,,,,Silliman,False,,False,,,,
 Lookout Peak (Kings Canyon),,,8510,non-SPS,6.21,1,False,False,,,,,Grove,False,,False,,,,
-Centennial Peak,36.627659,-118.490372,13206,non-SPS,7.11,2,False,False,,,,,Brewer,False,GNIS,False,,Symmes Creek (Shepherd Pass),east,11.6
+Centennial Peak,36.627659,-118.490372,13206,non-SPS,7.11,2,False,False,,,,,Brewer,False,GNIS,False,,Shepherd Pass,east,11.6
 Mount Francis Farquhar,,,12893,non-SPS,7.12,3,False,False,,,,,Brewer,False,,False,,,,
 Cross Mountain,,,12160,non-SPS,7.13,2,False,False,,,,,Brewer,False,,False,,,,
 Palmer Mountain,36.747712,-118.569252,11252,non-SPS,7.14,2,False,False,,,,,Lakes,False,GNIS,False,,Roads End (Cedar Grove),west,3.3
