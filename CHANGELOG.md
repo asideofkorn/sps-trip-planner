@@ -5,6 +5,21 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Changed
+- `DATA_LICENSE.md`: added an explicit Source Policy section (Tier A federal
+  data / Tier B openly-licensed community data / Tier C reference-only
+  data) and classified every data file as `public_domain`, `open_license`,
+  `project_created`, or `third_party_reference_only`. Fixed a factual drift
+  bug found in the process: the dataset actually has 240 GNIS-sourced and
+  7 peakbagger-sourced SPS peak coordinates (Rogers Peak had been added to
+  `sps_peaks.csv` without updating the documented "241 GNIS / 6
+  peakbagger" counts in the README and here). Documented two follow-ups
+  surfaced by the classification pass rather than rushed into this change:
+  independently re-verifying the 7 peakbagger-sourced coordinates against a
+  Tier A source, and splitting `sps_peaks.csv`'s public-domain geography
+  from its SPS-specific curated fields into a core-dataset-plus-optional-
+  collections architecture.
+
 ### Added
 - `plan.py` (new standalone CLI, `sps-plan` entry point) and
   `sierra_peaks/plan.py` (`PlanResult`, `resolve_plan`, `format_plan_summary`):

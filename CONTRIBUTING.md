@@ -22,7 +22,11 @@ python tests/test_pipeline.py        # or: python -m pytest tests/
 - **Keep changes focused.** One logical change per PR with a clear description.
 - **Data changes:** if you correct peak data, cite the authoritative source
   (USGS GNIS, the official SPS list). Do not commit copyrighted source
-  documents — see `DATA_LICENSE.md`.
+  documents — see `DATA_LICENSE.md`. New data sources should be Tier A
+  (federal/public) where one exists; a Tier C source (Peakbagger,
+  SummitPost, guidebooks, blogs) can justify a fact but its content isn't
+  copied into the project's own database — see `DATA_LICENSE.md`'s Source
+  Policy section.
 
 ## Reporting bugs / requesting features
 
