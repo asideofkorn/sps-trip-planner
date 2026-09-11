@@ -112,7 +112,14 @@ def _parse_args(argv=None) -> argparse.Namespace:
                         "(default data/permit_source_log.csv)")
     p.add_argument("--list", default="SPS",
                    help="If the data has a 'list' column, keep only this list "
-                        "(default SPS; use 'all' to keep everything)")
+                        "(default SPS; use 'all' to keep everything). Requires "
+                        "--collections-file to actually have a 'list' column "
+                        "when --input is the core dataset (data/peaks.csv).")
+    p.add_argument("--collections-file", default="data/collections/sps.csv",
+                   help="Collection metadata (list, section, official mileage, etc.) "
+                        "joined onto --input by name (default data/collections/sps.csv). "
+                        "Pass '' to load --input as a standalone, collection-agnostic "
+                        "peak dataset with no collection metadata.")
     p.add_argument("--use-passes", action="store_true",
                    help="Evaluate cross-crest distance through mountain passes "
                         "instead of straight lines (uses data/passes.csv)")
@@ -195,8 +202,10 @@ def main(argv=None) -> int:
                  "need >=2 tier-1 passes; falling back to straight-line]"))
 
     list_filter = None if args.list.lower() == "all" else args.list
-    peaks = load_peaks(args.input, list_filter=list_filter)
+    peaks = load_peaks(args.input, list_filter=list_filter,
+                        collections_path=args.collections_file or None)
     print(f"Loaded {len(peaks)} peaks from {args.input}"
+          + (f" + {args.collections_file}" if args.collections_file else "")
           + (f" (list={args.list})" if list_filter else ""))
 
     trailheads = None

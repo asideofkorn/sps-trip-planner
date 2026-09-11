@@ -1,8 +1,11 @@
 # data/source/
 
 Raw source inputs used to *rebuild* the processed datasets. You don't need
-these to run the tool — the built results (`data/sps_peaks.csv`,
-`data/benchmark_routes.csv`) are committed.
+these to run the tool — the built results (`data/peaks.csv`,
+`data/collections/sps.csv`, `data/benchmark_routes.csv`) are committed. See
+[`../../DATA_LICENSE.md`](../../DATA_LICENSE.md)'s Source Policy section for
+why the peak data is split into a collection-agnostic core plus an SPS
+collection layer rather than one combined file.
 
 ## Bundled here
 
@@ -52,3 +55,17 @@ if you want to rebuild the datasets from scratch:
 The rebuild scripts (`scripts/build_dataset.py`, `scripts/parse_benchmarks.py`)
 will print a download reminder if a file is missing. These formats are
 git-ignored so they are not accidentally re-committed.
+
+## Full rebuild sequence
+
+```bash
+python scripts/build_dataset.py          # Sierra Club sources -> data/sps_peaks.csv (staging, coords blank)
+python scripts/merge_gnis.py             # + GNIS coordinates
+python scripts/merge_coords.py ...       # + the 7 peakbagger coordinates GNIS doesn't have
+python scripts/assign_trailheads.py      # + nearest_trailhead access signals
+python scripts/split_collections.py      # staging -> data/peaks.csv + data/collections/sps.csv
+```
+
+`data/sps_peaks.csv` is a git-ignored, rebuild-only staging file -- it is not
+loaded by any runtime code (`cli.py`, `plan.py`, `sierra_peaks/`). The final
+step splits it into the two files that actually are.

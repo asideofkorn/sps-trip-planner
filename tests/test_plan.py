@@ -17,19 +17,16 @@ from sierra_peaks.data_loader import load_peaks, load_trailheads
 from sierra_peaks.permits import load_permits
 from sierra_peaks.plan import resolve_plan, format_plan_summary
 
-PEAKS = os.path.join(os.path.dirname(__file__), "..", "data", "sps_peaks.csv")
+PEAKS = os.path.join(os.path.dirname(__file__), "..", "data", "peaks.csv")
+COLLECTIONS = os.path.join(os.path.dirname(__file__), "..", "data", "collections", "sps.csv")
 TRAILHEADS = os.path.join(os.path.dirname(__file__), "..", "data", "trailheads.csv")
 PERMITS = os.path.join(os.path.dirname(__file__), "..", "data", "permits.csv")
 RELEASE_POLICIES = os.path.join(os.path.dirname(__file__), "..", "data", "release_policies.csv")
 APPROACHES = os.path.join(os.path.dirname(__file__), "..", "data", "approaches.csv")
 
 
-def _inputs():
-    # SPS-only, matching plan.py's default -- the full dataset (list_filter=None)
-    # currently has a couple of known cross-list name collisions (see the
-    # "Fix duplicate peak names" follow-up), which is exactly why that's a
-    # default a caller opts into, not the default itself.
-    peaks = load_peaks(PEAKS, list_filter="SPS")
+def _inputs(list_filter="SPS"):
+    peaks = load_peaks(PEAKS, list_filter=list_filter, collections_path=COLLECTIONS)
     trailheads = load_trailheads(TRAILHEADS)
     permits = load_permits(PERMITS, RELEASE_POLICIES)
     approaches = load_approaches(APPROACHES)
@@ -108,14 +105,17 @@ def test_format_plan_summary_includes_official_mileage():
     assert "not a computed combined route" in summary.lower()
 
 
-def test_full_dataset_has_known_cross_list_name_collisions():
-    # Documents a known, pre-existing data issue (tracked separately): loading
-    # the unfiltered dataset currently raises on a couple of names that exist
-    # under both list=SPS and list=non-SPS with conflicting elevations. This
-    # is exactly why plan.py defaults --list to "SPS" rather than "all".
-    import pytest
-    with pytest.raises(ValueError, match="Duplicate peak name"):
-        load_peaks(PEAKS, list_filter=None)
+def test_full_dataset_loads_without_cross_list_name_collisions():
+    # A couple of names ("Mount Johnson", "Thunder Mountain") used to exist
+    # under both list=SPS and list=non-SPS with conflicting elevations,
+    # crashing an unfiltered load. scripts/split_collections.py now applies a
+    # documented SPS-preferred tie-break when producing data/peaks.csv and
+    # data/collections/sps.csv, so this should no longer raise -- this is
+    # exactly why plan.py can default --list to "all" now. The underlying
+    # discrepancy (which value is actually correct, not just which list to
+    # prefer) is still a separate, tracked follow-up.
+    peaks = load_peaks(PEAKS, list_filter=None, collections_path=COLLECTIONS)
+    assert len({p.name for p in peaks}) == len(peaks)
 
 
 def test_plan_result_to_dict_is_json_serializable():

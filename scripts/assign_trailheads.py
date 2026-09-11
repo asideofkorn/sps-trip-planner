@@ -1,5 +1,11 @@
 """Assign each peak its nearest trailhead from data/trailheads.csv.
 
+Operates on the data/sps_peaks.csv build-staging file (see
+scripts/build_dataset.py's docstring for the full rebuild sequence;
+data/sps_peaks.csv is a rebuild-only intermediate, not the runtime dataset
+-- that's data/peaks.csv + data/collections/sps.csv, produced by
+scripts/split_collections.py as the final rebuild step).
+
 Adds three columns to ``data/sps_peaks.csv``:
   * ``nearest_trailhead``      — name of the closest curated trailhead
   * ``nearest_trailhead_side`` — east / west / crest

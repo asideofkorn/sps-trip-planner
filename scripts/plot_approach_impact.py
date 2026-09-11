@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 from sierra_peaks import load_peaks, load_trailheads, ClusterConfig, plan_trips
 from sierra_peaks.approach import choose_trailhead
 
-peaks = load_peaks("data/sps_peaks.csv", list_filter="SPS")
+peaks = load_peaks("data/peaks.csv", list_filter="SPS",
+                    collections_path="data/collections/sps.csv")
 ths = load_trailheads("data/trailheads.csv")
 cfg = ClusterConfig(max_days=2, include_approach=True)
 clusters = plan_trips(peaks, cfg, trailheads=ths)

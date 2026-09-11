@@ -48,7 +48,8 @@ Every data file below is also classified by what that means for reuse:
 |---------|--------|-----------------|-------|
 | `data/source/gnis_sierra_summits.txt` | USGS Geographic Names Information System (GNIS) | `public_domain` | U.S. Government work |
 | Sierra Club SPS PDFs/XLS (`sps_list_29th_ed_2025.pdf`, `sps_list_with_mileage.xls`, `scrambler_ratings_non_sps_2025.pdf`, `benchmark_routes.pdf`) | Sierra Club — Angeles Chapter, Sierra Peaks Section (SPS) | `third_party_reference_only` | **© Sierra Club. NOT redistributed in this repo** (removed from the tree and git history). Download from the SPS site to rebuild — see below. |
-| `data/sps_peaks.csv`, `data/benchmark_routes.csv` | Derived: factual data (names, elevations, coordinates, class, mileage) extracted from the sources above | `public_domain` for GNIS-sourced coordinates (`coord_source=GNIS`, 454 of 601 rows); `third_party_reference_only` for the 7 rows with `coord_source=peakbagger` (unofficially-named summits with no GNIS entry); `project_created`/derived for everything else | Facts are not copyrightable; the *compilation* draws on the SPS list. Attribute the Sierra Club SPS and USGS GNIS. The peakbagger-sourced coordinates are tracked for independent re-verification against a Tier A source (topo/3DEP) rather than treated as equally solid -- see "Known follow-ups" below. |
+| `data/peaks.csv` (core: name, coordinates, elevation, nearest-trailhead access signal) | GNIS for 453 of 599 rows; peakbagger.com for 7 unofficially-named summits with no GNIS entry; 139 rows have no coordinates yet (non-SPS peaks not yet independently located) | `public_domain` for GNIS-sourced coordinates; `third_party_reference_only` for the 7 peakbagger-sourced rows; `project_created` for the derived `nearest_trailhead*` access signal | Facts are not copyrightable. Attribute USGS GNIS. The peakbagger-sourced coordinates are tracked for independent re-verification against a Tier A source (topo/3DEP) -- see "Known follow-ups" below. Collection-agnostic: this file has no dependency on the Sierra Club compilation. |
+| `data/collections/sps.csv` (the SPS collection: list, section, class, mileage/gain, benchmark rating), `data/benchmark_routes.csv` | Derived: factual data extracted from the Sierra Club SPS list and non-SPS scrambler ratings | `project_created`/derived | Facts are not copyrightable; the *compilation* draws on the SPS list. Attribute the Sierra Club SPS. Two names ("Mount Johnson", "Thunder Mountain") appeared under both `list=SPS` and `list=non-SPS` with conflicting data; the SPS-list entry was kept for both this file and `data/peaks.csv` -- see "Known follow-ups". |
 | `data/trailheads.csv` | Curated by this project from public sources (PCTA, NPS, USFS, Wikipedia); coordinates are facts. `wilderness_area`/`land_agency`/`permit_group` columns added July 2026, cross-referenced against the agency sources below | `project_created` | Provided under the project license; verify before navigational use |
 | `data/permits.csv` | Curated by this project from official sources (recreation.gov, nps.gov, fs.usda.gov) as of July 2026 | `project_created` | Facts (agency, fees, dates) are not copyrightable; provided under the project license. Quota seasons, reservation windows and lottery dates change annually — treat as a planning aid and verify against the listed `apply_url` before relying on any date. |
 | `data/release_policies.csv` | Derived by this project from the same official sources as `data/permits.csv`, restructured from prose into discrete dated phases | `project_created` | Same terms as `data/permits.csv` above. A phase with no exact release offset in the source is left unresolved rather than guessed at. |
@@ -58,28 +59,38 @@ Every data file below is also classified by what that means for reuse:
 
 ## Known follow-ups
 
-This classification pass surfaced two things worth fixing, tracked as
-separate work rather than rushed here:
-
 - **The 7 peakbagger-sourced coordinates should be independently
   re-verified** (via USGS 3DEP/topo, with this project's own documented
   determination) rather than carried indefinitely as a third-party
   dependency. That's real per-peak geographic verification work, not a
   find-and-replace -- doing it carelessly risks introducing a wrong
   coordinate for a real mountain feature, which is worse than the current
-  honestly-labeled dependency.
-- **`data/sps_peaks.csv` mixes public-domain geography (name, coordinates,
-  elevation) with SPS-specific curated fields (`list`, `section`, `emblem`,
-  `mountaineers`, `mileage_rt`/`gain_ft`, benchmark rating) in one file.**
-  A cleaner long-term architecture separates a public-domain core dataset
-  (peak ID, coordinates, elevation -- sourced from USGS alone) from optional
-  collection layers like SPS (`section`, `emblem`, etc., keyed to that core
-  ID) -- so a mountain's existence in this project never depends on the
-  Sierra Club compilation, only its *membership in the SPS collection*
-  does. This also directly serves national expansion: a future California
-  or Colorado collection would layer onto the same core dataset the same
-  way. Not done in this pass -- it's a real data-model migration touching
-  the loader, scripts, and JSON export schema, not a documentation change.
+  honestly-labeled dependency. Not yet done.
+- **Two names ("Mount Johnson", "Thunder Mountain") appear under both
+  `list=SPS` and `list=non-SPS` with conflicting elevation data** in the
+  underlying Sierra Club source documents. `scripts/split_collections.py`
+  applies a documented, conservative tie-break (prefer the primary SPS-list
+  entry) so both `data/peaks.csv` and `data/collections/sps.csv` have a
+  unique `name` key -- required for the core/collection join to be
+  meaningful at all. That tie-break resolves the operational issue (an
+  unfiltered load no longer crashes) but is not the same as determining
+  *which value is actually correct*; that independent investigation is
+  still open.
+
+### Resolved by the core/collection split
+
+Peak data used to mix public-domain geography (name, coordinates,
+elevation) with SPS-specific curated fields (`list`, `section`, `emblem`,
+`mountaineers`, `mileage_rt`/`gain_ft`, benchmark rating) in one file
+(`data/sps_peaks.csv`). It's now split into `data/peaks.csv` (core,
+collection-agnostic -- a mountain's existence here never depends on the
+Sierra Club compilation) and `data/collections/sps.csv` (everything that
+does, keyed to the core dataset by `name`). `scripts/split_collections.py`
+performs the split as the final step of the rebuild pipeline (see
+`data/source/README.md`); `data/sps_peaks.csv` is now a git-ignored,
+rebuild-only staging file, not the runtime dataset. This also directly
+serves national expansion: a future California or Colorado collection would
+layer onto the same core dataset the same way.
 
 ## The Sierra Club source documents (removed)
 
@@ -88,8 +99,8 @@ scrambler ratings, and benchmark routes) are copyrighted. To avoid infringing
 that copyright in a public repository, they have been **removed from the working
 tree and purged from git history**. Only the underlying *facts* (peak names,
 elevations, classes, coordinates) live on, in the derived datasets
-`data/sps_peaks.csv` and `data/benchmark_routes.csv`, which are not copyrightable
-and remain with attribution.
+`data/peaks.csv`, `data/collections/sps.csv`, and `data/benchmark_routes.csv`,
+which are not copyrightable and remain with attribution.
 
 To rebuild the datasets from scratch, download the originals from the SPS site
 (<https://angeles.sierraclub.org/sierra_peaks>) and place them under

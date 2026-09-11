@@ -11,3 +11,8 @@ out.json
 data/source/*.pdf
 data/source/*.xls
 data/source/*.xlsx
+
+# Rebuild-only staging file, superseded by the committed data/peaks.csv
+# (core) + data/collections/sps.csv (SPS collection) split -- see
+# scripts/split_collections.py and DATA_LICENSE.md's Source Policy section.
+data/sps_peaks.csv

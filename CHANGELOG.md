@@ -6,6 +6,32 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Changed
+- **Split the peak dataset into a public-domain-first core plus an optional
+  SPS collection**, closing the architectural follow-up from the source
+  policy pass: `data/peaks.csv` (name, coordinates, elevation, and the
+  project-computed `nearest_trailhead*` access signal -- collection-agnostic,
+  no dependency on the Sierra Club compilation) and
+  `data/collections/sps.csv` (`list`, `section`, `class`, `emblem`,
+  `mountaineers`, `mileage_rt`/`gain_ft`/`loss_ft`, `trailhead`, `quad`,
+  `benchmark`/`benchmark_rating` -- everything specific to the SPS program's
+  own source documents), joined by `name`. `data/sps_peaks.csv` becomes a
+  git-ignored, rebuild-only staging file, no longer the runtime dataset.
+  `load_peaks()` gained an optional `collections_path` argument that
+  left-joins a collection onto the core dataset by name and validates it
+  doesn't redefine core columns; omitting it loads the core dataset
+  standalone. New `scripts/split_collections.py` performs the split as the
+  final rebuild step. `cli.py`, `plan.py`, and `scripts/map_clusters.py`
+  gained a `--collections-file` flag (default `data/collections/sps.csv`).
+  Verified byte-identical JSON output and full per-peak fidelity (247/247
+  SPS peaks, zero field mismatches) against the old single-file load.
+  This also resolved the operational half of the "duplicate peak names"
+  follow-up: `split_collections.py` applies a documented, conservative
+  tie-break (two names -- "Mount Johnson", "Thunder Mountain" -- appearing
+  under both `list=SPS` and `list=non-SPS` with conflicting data now keep
+  their SPS-list entry), so `plan.py`'s `--list` default changes from `SPS`
+  to `all` since loading the unfiltered dataset no longer crashes.
+  Independently determining which of the conflicting values is actually
+  correct remains a separate, open follow-up.
 - `DATA_LICENSE.md`: added an explicit Source Policy section (Tier A federal
   data / Tier B openly-licensed community data / Tier C reference-only
   data) and classified every data file as `public_domain`, `open_license`,

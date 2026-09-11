@@ -418,6 +418,65 @@ def test_load_peaks_json(tmp_path):
     assert [p.name for p in loaded] == [p.name for p in peaks]
 
 
+def test_load_peaks_core_only_has_no_collection_metadata(tmp_path):
+    core = tmp_path / "core.csv"
+    core.write_text("name,latitude,longitude,elevation_ft\n"
+                     "Test Peak,37.0,-118.0,10000\n")
+    peaks = load_peaks(str(core))
+    assert len(peaks) == 1
+    assert peaks[0].meta == {}
+    assert peaks[0].collection == ""
+
+
+def test_load_peaks_merges_collection_by_name(tmp_path):
+    core = tmp_path / "core.csv"
+    core.write_text("name,latitude,longitude,elevation_ft\n"
+                     "Test Peak,37.0,-118.0,10000\n"
+                     "Other Peak,37.1,-118.1,11000\n")
+    collection = tmp_path / "collection.csv"
+    collection.write_text("name,list,section\n"
+                           "Test Peak,SPS,1.1\n")
+    peaks = load_peaks(str(core), collections_path=str(collection))
+    by_name = {p.name: p for p in peaks}
+    assert by_name["Test Peak"].meta == {"list": "SPS", "section": 1.1}
+    assert by_name["Test Peak"].collection == "SPS"
+    # "Other Peak" has no collection row -- present, but with no metadata,
+    # not silently dropped.
+    assert by_name["Other Peak"].meta == {}
+    assert by_name["Other Peak"].collection == ""
+
+
+def test_load_peaks_collection_filter_after_merge(tmp_path):
+    core = tmp_path / "core.csv"
+    core.write_text("name,latitude,longitude,elevation_ft\n"
+                     "Test Peak,37.0,-118.0,10000\n"
+                     "Other Peak,37.1,-118.1,11000\n")
+    collection = tmp_path / "collection.csv"
+    collection.write_text("name,list\nTest Peak,SPS\nOther Peak,non-SPS\n")
+    sps_only = load_peaks(str(core), list_filter="SPS", collections_path=str(collection))
+    assert [p.name for p in sps_only] == ["Test Peak"]
+
+
+def test_load_peaks_missing_collections_file_is_ignored(tmp_path):
+    core = tmp_path / "core.csv"
+    core.write_text("name,latitude,longitude,elevation_ft\n"
+                     "Test Peak,37.0,-118.0,10000\n")
+    peaks = load_peaks(str(core), collections_path=str(tmp_path / "does_not_exist.csv"))
+    assert len(peaks) == 1
+    assert peaks[0].meta == {}
+
+
+def test_load_peaks_collection_cannot_redefine_core_column(tmp_path):
+    import pytest
+    core = tmp_path / "core.csv"
+    core.write_text("name,latitude,longitude,elevation_ft\n"
+                     "Test Peak,37.0,-118.0,10000\n")
+    collection = tmp_path / "collection.csv"
+    collection.write_text("name,elevation_ft\nTest Peak,9999\n")
+    with pytest.raises(ValueError, match="redefines core column"):
+        load_peaks(str(core), collections_path=str(collection))
+
+
 def _run_all():
     import tempfile, types
     g = dict(globals())

@@ -63,6 +63,7 @@ def load_peaks(
     path: str | Path,
     list_filter: str | None = None,
     require_coords: bool = True,
+    collections_path: str | Path | None = None,
 ) -> List[Peak]:
     """Load peaks from a ``.csv`` or ``.json`` file.
 
@@ -77,6 +78,16 @@ def load_peaks(
         equals this value (e.g. ``"SPS"``). Case-insensitive.
     require_coords : bool
         Skip rows with missing/blank latitude or longitude (default True).
+    collections_path : str or Path, optional
+        A collection file (e.g. ``data/collections/sps.csv``) to left-join
+        onto ``path`` by ``name``, adding fields like ``list``/``section``/
+        ``mileage_rt`` that belong to a named collection rather than to the
+        peak's core identity (see :mod:`sierra_peaks.model`'s ``Peak.collection``
+        and ``DATA_LICENSE.md``'s Source Policy section). Optional --
+        ``path`` alone is a complete, collection-agnostic peak dataset;
+        omitting this just means no collection metadata is attached.
+        Silently skipped if the file doesn't exist, same as
+        :func:`sierra_peaks.access.load_approaches`'s optional-file pattern.
     """
     path = Path(path)
     if not path.exists():
@@ -95,6 +106,19 @@ def load_peaks(
         raise ValueError(f"Unsupported file type: {suffix!r} (use .csv or .json)")
 
     df = _normalize_columns(df)
+
+    if collections_path is not None:
+        collections_path = Path(collections_path)
+        if collections_path.exists():
+            cdf = pd.read_csv(collections_path)
+            overlap = (set(df.columns) & set(cdf.columns)) - {"name"}
+            if overlap:
+                raise ValueError(
+                    f"Collection file {collections_path} redefines core "
+                    f"column(s) {sorted(overlap)}; a collection should only "
+                    f"add new fields keyed by name."
+                )
+            df = df.merge(cdf, on="name", how="left")
 
     if list_filter is not None and "list" in df.columns:
         df = df[df["list"].astype(str).str.lower() == list_filter.lower()]
