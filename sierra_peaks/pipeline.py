@@ -1,4 +1,4 @@
-"""End-to-end pipeline: cluster -> order (TSP) -> score -> rank."""
+"""End-to-end pipeline: candidate group -> order (TSP) -> score -> rank."""
 
 from __future__ import annotations
 
@@ -27,16 +27,16 @@ def _estimate_days(effective_mi: float, miles_per_day: float, max_days: int) -> 
 def _efficiency_score(num_peaks: int, effective_mi: float) -> float:
     """Peaks bagged per unit of travel effort.
 
-    Rewards bagging more summits while penalizing longer / higher routes.
+    Rewards more summits while penalizing longer / higher candidate sequences.
     Normalized so a zero-travel singleton scores 1.0 and denser multi-peak
-    trips score above it; long sprawling trips score below it.
+    groups score above it; long sprawling groups score below it.
     """
     return num_peaks / (1.0 + effective_mi / 10.0)
 
 
 def _order_peaks(peaks: List[Peak], trailhead: Optional[Trailhead],
                  config: ClusterConfig) -> List[Peak]:
-    """Return the peaks in route order.
+    """Return the peaks in candidate sequence order.
 
     Without a trailhead this is the open-path TSP (today's behavior). With one,
     the trailhead is added as a fixed start/end node and we solve a closed tour,
@@ -67,7 +67,7 @@ def build_itinerary(
     config: ClusterConfig,
     trailheads: Optional[Sequence[Trailhead]] = None,
 ) -> Cluster:
-    """Solve the TSP for one cluster and populate its metrics."""
+    """Solve the TSP for one candidate group and populate its metrics."""
     peaks = list(peaks)
     router = config.router
 
@@ -116,7 +116,7 @@ def build_itineraries(
     config: ClusterConfig,
     trailheads: Optional[Sequence[Trailhead]] = None,
 ) -> List[Cluster]:
-    """Build a :class:`Cluster` (with TSP order + metrics) for each group."""
+    """Build a :class:`Cluster` with candidate sequence and metrics for each group."""
     return [
         build_itinerary(i, peaks, config, trailheads)
         for i, peaks in enumerate(peak_groups)
@@ -124,7 +124,7 @@ def build_itineraries(
 
 
 def rank_clusters(clusters: Sequence[Cluster]) -> List[Cluster]:
-    """Return clusters sorted by efficiency (best first) and renumber IDs."""
+    """Return candidate groups sorted by score and renumber IDs."""
     ranked = sorted(clusters, key=lambda c: c.score, reverse=True)
     for new_id, cluster in enumerate(ranked):
         cluster.cluster_id = new_id
@@ -136,7 +136,7 @@ def plan_trips(
     config: Optional[ClusterConfig] = None,
     trailheads: Optional[Sequence[Trailhead]] = None,
 ) -> List[Cluster]:
-    """Full pipeline: cluster the peaks, order each trip, rank by efficiency."""
+    """Full pipeline: group peaks, order each candidate sequence, rank by score."""
     config = config or ClusterConfig()
     groups = cluster_peaks(peaks, config, trailheads)
     clusters = build_itineraries(groups, config, trailheads)

@@ -1,12 +1,17 @@
-# SPS Cluster Charts
+# SPS Candidate Group Charts
 
-Versioned visualizations of Sierra Peaks Section (SPS) peak clusters and
-suggested TSP routes. All charts cover the **247 SPS-list peaks** only
+Versioned visualizations of Sierra Peaks Section (SPS) candidate peak groups and
+suggested TSP sequences. All charts cover the **247 SPS-list peaks** only
 (non-SPS peaks excluded via the default `--list SPS`).
+
+These are geographic discovery artifacts, not verified route recommendations.
+They do not model cliffs, technical terrain, trail topology, snow/ice
+conditions, creek crossings, private-property barriers, or every required
+descent and reclimb.
 
 Naming convention: `sps_clusters_<profile>_<eps>mi-<miles-per-day>mpd_<YYYY-MM-DD>.png`
 
-| File | Profile | Params | Trips | Est. days |
+| File | Profile | Params | Groups | Est. days |
 |------|---------|--------|-------|-----------|
 | `sps_clusters_balanced_6mi-15mpd_2026-06-19.png` | Balanced | `--eps-mi 6 --miles-per-day 15` | 53 | 69 |
 | `sps_clusters_dayhike_4mi-12mpd_2026-06-19.png` | Conservative day-hikes | `--eps-mi 4 --miles-per-day 12` | 72 | 87 |
@@ -15,10 +20,9 @@ Naming convention: `sps_clusters_<profile>_<eps>mi-<miles-per-day>mpd_<YYYY-MM-D
 
 | `sps_clusters_by-nearest-trailhead_6mi-cap15_2026-06-19.png` | Grouped by nearest curated trailhead | `--by-trailhead --trailhead-field nearest_trailhead --trailhead-max-mi 15` | 35 | 64 |
 
-`--by-trailhead` keeps every peak sharing a trailhead in one trip (then eps still
-merges nearby trailheads), producing natural "basecamp at one trailhead, bag
-everything reachable" expeditions (e.g. Mount Whitney Trail = 16 peaks, Shepherd
-Pass = 13).
+`--by-trailhead` keeps every peak sharing a trailhead in one candidate group
+(then eps still merges nearby trailheads), producing access-based groupings to
+investigate (e.g. Mount Whitney Trail = 16 peaks, Shepherd Pass = 13).
 
 Two refinements address the messy raw `trailhead` text (which mixes point
 trailheads with long trail names like **Pacific Crest Trail** — 8 peaks spanning
@@ -28,7 +32,7 @@ trailheads with long trail names like **Pacific Crest Trail** — 8 peaks spanni
   miles, so long trails break into sensible chunks.
 * `--trailhead-field nearest_trailhead` groups on the geographically nearest
   curated trailhead (see `data/trailheads.csv`) instead, giving the cleanest
-  map — 35 tidy per-trailhead expeditions, no cross-range lines.
+  map: 35 per-trailhead candidate groups, no cross-range lines.
 
 ## Benchmark progression charts
 
@@ -44,12 +48,13 @@ climbs. Useful for picking starter objectives and building up by difficulty.
 
 ## Interactive topo maps (HTML)
 
-`scripts/map_clusters.py` renders trips onto a pan/zoom Leaflet map with
+`scripts/map_clusters.py` renders candidate groups onto a pan/zoom Leaflet map with
 switchable open basemaps. The default **OpenTopoMap** layer is OpenStreetMap
 data and shows the **hiking-trail network** (JMT, PCT, use-trails) plus
-contours, so you can see each trip against real trails and terrain. Also
+contours, so you can inspect each group against real trails and terrain. Also
 includes OpenStreetMap and Esri satellite layers, and toggleable overlays for
-trip routes, peaks (coloured by trip), benchmark peaks (★), and trailheads (⌂).
+candidate sequences, peaks (coloured by group), benchmark peaks (★), and
+trailheads (⌂).
 
 Open the `.html` in any browser — tiles load client-side, so no setup is needed.
 

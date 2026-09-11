@@ -1,15 +1,15 @@
-"""Render SPS clusters onto an interactive topographic map (Leaflet / folium).
+"""Render SPS candidate groups onto an interactive topographic map.
 
 Produces a self-contained ``.html`` file you can open in any browser and pan /
 zoom around the Sierra. Basemaps are switchable in the top-right layer control:
 
   * **OpenTopoMap** — OpenStreetMap-based topo with contours AND the hiking-trail
-    network (JMT, PCT, use-trails, etc.), so you can see trips against real
-    trails and terrain.
+    network (JMT, PCT, use-trails, etc.), so you can inspect candidate
+    sequences against real trails and terrain.
   * **OpenStreetMap** — standard street/path map.
   * **Esri World Imagery** — satellite.
 
-Layers (toggleable): trip routes, peaks (coloured by trip), benchmark peaks,
+Layers (toggleable): candidate sequences, peaks (coloured by group), benchmark peaks,
 and trailheads.
 
 Tiles are fetched by the browser when the file is opened — no network is needed
@@ -37,7 +37,7 @@ from sierra_peaks.data_loader import load_peaks
 from sierra_peaks.clustering import ClusterConfig
 from sierra_peaks.pipeline import plan_trips
 
-# A repeating palette of visually distinct colours for trips.
+# A repeating palette of visually distinct colours for candidate groups.
 PALETTE = [
     "#e6194b", "#3cb44b", "#4363d8", "#f58231", "#911eb4", "#46f0f0",
     "#f032e6", "#bcf60c", "#fabebe", "#008080", "#9a6324", "#800000",
@@ -62,7 +62,7 @@ def _basemaps(fmap: folium.Map) -> None:
 
 def _peak_popup(p, trip_id: int) -> str:
     m = p.meta
-    rows = [f"<b>{p.name}</b>", f"Trip #{trip_id}",
+    rows = [f"<b>{p.name}</b>", f"Group #{trip_id}",
             f"{int(p.elevation_ft):,} ft"]
     if m.get("class"):
         rows.append(f"Class {m['class']}")
@@ -83,8 +83,8 @@ def build_map(clusters, trailheads: pd.DataFrame | None, out: Path) -> None:
     fmap = folium.Map(location=center, zoom_start=8, tiles=None, control_scale=True)
     _basemaps(fmap)
 
-    routes = folium.FeatureGroup(name="Trip routes", show=True)
-    peaks_fg = folium.FeatureGroup(name="Peaks (by trip)", show=True)
+    routes = folium.FeatureGroup(name="Candidate sequences", show=True)
+    peaks_fg = folium.FeatureGroup(name="Peaks (by group)", show=True)
     bench_fg = folium.FeatureGroup(name="Benchmark peaks", show=True)
 
     for c in clusters:
@@ -93,7 +93,7 @@ def build_map(clusters, trailheads: pd.DataFrame | None, out: Path) -> None:
         if len(ordered) > 1:
             folium.PolyLine(
                 ordered, color=color, weight=3, opacity=0.8,
-                tooltip=f"Trip #{c.cluster_id}: {c.num_peaks} peaks, "
+                tooltip=f"Group #{c.cluster_id}: {c.num_peaks} peaks, "
                         f"{c.estimated_days}d, {c.total_distance_mi:.0f} mi",
             ).add_to(routes)
         for p in c.peaks:
@@ -134,7 +134,7 @@ def build_map(clusters, trailheads: pd.DataFrame | None, out: Path) -> None:
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="Interactive topo map of SPS clusters.")
+    ap = argparse.ArgumentParser(description="Interactive topo map of SPS candidate groups.")
     ap.add_argument("--input", "-i", default="data/sps_peaks.csv")
     ap.add_argument("--output", "-o", default="charts/sps_map.html")
     ap.add_argument("--trailheads", default="data/trailheads.csv")
@@ -161,7 +161,7 @@ def main(argv=None) -> int:
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
     build_map(clusters, th, out)
-    print(f"Wrote interactive map with {len(clusters)} trips to {out}")
+    print(f"Wrote interactive map with {len(clusters)} candidate groups to {out}")
     return 0
 
 

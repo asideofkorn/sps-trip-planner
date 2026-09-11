@@ -358,7 +358,7 @@ def format_permit_report(rows: Sequence[ClusterPermitInfo]) -> str:
     lines = []
     for r in rows:
         suffix = f"  [{r.peak_note}]" if r.peak_note else ""
-        lines.append(f"Cluster #{r.cluster_id} -- {r.trailhead}  "
+        lines.append(f"Group #{r.cluster_id} -- {r.trailhead}  "
                       f"(trip date {r.trip_date:%Y-%m-%d}){suffix}")
         if r.wilderness_area:
             lines.append(f"  Wilderness: {r.wilderness_area}  |  Agency: {r.agency}")

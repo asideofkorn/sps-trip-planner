@@ -1,7 +1,7 @@
 # Contributing
 
-Thanks for your interest in improving Sierra Peaks Clustering! Contributions of
-all kinds are welcome — bug reports, data corrections, and code.
+Thanks for your interest in improving Backcountry Trip Planner. Contributions
+of all kinds are welcome: bug reports, source-backed data corrections, and code.
 
 ## Getting started
 

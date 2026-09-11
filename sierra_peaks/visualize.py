@@ -1,4 +1,4 @@
-"""Optional matplotlib visualization of clustered peaks and TSP routes.
+"""Optional matplotlib visualization of candidate peak groups and TSP sequences.
 
 Import is lazy so the rest of the toolkit works without matplotlib installed.
 """
@@ -16,7 +16,7 @@ def plot_clusters(
     show: bool = False,
     label_peaks: Optional[bool] = None,
 ):
-    """Scatter peaks colored by cluster and draw each TSP route.
+    """Scatter peaks colored by candidate group and draw each TSP sequence.
 
     ``label_peaks`` controls per-peak name labels; when ``None`` they are shown
     only for small plots (<= 40 peaks) to avoid clutter on statewide maps.
@@ -41,7 +41,7 @@ def plot_clusters(
         color = cmap(c.cluster_id % 20)
         lons = [p.longitude for p in c.peaks]
         lats = [p.latitude for p in c.peaks]
-        # Route line follows the TSP order (peaks are already stored in order).
+        # Line follows the TSP candidate sequence (peaks are already stored in order).
         if len(c.peaks) > 1:
             ax.plot(lons, lats, "-", color=color, linewidth=1.5, alpha=0.7, zorder=1)
         ax.scatter(lons, lats, color=color, s=60, edgecolors="k", zorder=2)
@@ -65,7 +65,7 @@ def plot_clusters(
 
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Latitude")
-    ax.set_title("Sierra Peaks clusters & recommended TSP routes")
+    ax.set_title("Sierra Peaks candidate groups & TSP sequences")
     ax.grid(True, alpha=0.3)
     fig.tight_layout()
 

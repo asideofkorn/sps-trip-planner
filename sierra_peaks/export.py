@@ -1,4 +1,4 @@
-"""Serialize ranked clusters to the JSON export schema."""
+"""Serialize ranked candidate groups to the JSON export schema."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from .clustering import ClusterConfig
 def clusters_to_payload(
     clusters: Sequence[Cluster], config: Optional[ClusterConfig] = None
 ) -> dict:
-    """Build the full export dict: summary + per-cluster itineraries."""
+    """Build the full export dict: summary + per-group candidate sequences."""
     total_peaks = sum(c.num_peaks for c in clusters)
     total_days = sum(c.estimated_days for c in clusters)
     payload = {

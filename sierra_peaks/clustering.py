@@ -1,13 +1,18 @@
-"""Group peaks into capacity-constrained, geographically tight clusters.
+"""Group peaks into capacity-constrained geographic candidates.
 
 Two-stage strategy:
 
 1. **Spatial grouping** — DBSCAN over the haversine distance matrix finds
-   natural geographic clusters at a chosen reachability radius (``eps_mi``).
-   Outliers become their own singleton trips.
-2. **Capacity splitting** — any group whose optimal TSP route exceeds the trip
+   geographic candidate groups at a chosen reachability radius (``eps_mi``).
+   Outliers become their own singleton groups.
+2. **Capacity splitting** — any group whose estimated TSP sequence exceeds the
    budget (``max_effective_mi``, i.e. up to ``max_days`` of hiking) is
-   recursively split with agglomerative clustering until every trip fits.
+   recursively split with agglomerative clustering until every group fits the
+   heuristic budget.
+
+These candidate groups do not establish route feasibility. They do not model
+cliffs, technical terrain, trail topology, snow/ice conditions, creek crossings,
+private-property barriers, or all required descents and reclimbs.
 
 Must-link constraints (``force_together``) are honored by treating linked peaks
 as a single atomic unit that is never separated during grouping or splitting.
@@ -29,19 +34,19 @@ from .tsp import solve_tsp, route_metrics
 
 @dataclass
 class ClusterConfig:
-    """Tunable parameters for clustering and the trip budget."""
+    """Tunable parameters for candidate grouping and the effort budget."""
 
     eps_mi: float = 6.0           # DBSCAN reachability radius (horizontal miles)
     min_samples: int = 1          # DBSCAN core-point threshold
     miles_per_day: float = 15.0   # daily hiking budget (effective miles)
-    max_days: int = 3             # cap on trip length
+    max_days: int = 3             # cap on estimated group length
     method: str = "dbscan"        # "dbscan" or "agglomerative"
     exclude: List[str] = field(default_factory=list)
     force_together: List[List[str]] = field(default_factory=list)
-    by_trailhead: bool = False    # keep peaks sharing a trailhead in one trip
+    by_trailhead: bool = False    # keep peaks sharing a trailhead in one group
     trailhead_field: str = "trailhead"      # meta key to group on when by_trailhead
     trailhead_max_mi: Optional[float] = None  # cap: only link same-TH peaks within this
-    router: object = None         # optional PassRouter: route cross-crest legs via passes
+    router: object = None         # optional PassRouter: adjust cross-crest distances via passes
     include_approach: bool = False  # model the trailhead <-> first/last-peak approach
     sinuosity: float = 1.25       # trail-distance inflation for geometric approach legs
 
@@ -51,12 +56,11 @@ class ClusterConfig:
 
 
 def _route_effective_mi(peaks: Sequence[Peak], router=None) -> float:
-    """Nearest-neighbor estimate of the open-path effective length, in miles.
+    """Nearest-neighbor estimate of open-path effective length, in miles.
 
-    Used only for capacity-feasibility checks during splitting. Nearest-neighbor
-    yields a path no shorter than the optimal, so it is a valid upper bound: if
-    this estimate fits the budget, the optimal route fits too. Much faster than a
-    full TSP solve, which keeps statewide (~250 peak) clustering tractable.
+    Used only for capacity-feasibility checks during splitting. This is a fast
+    computational bound for the geometric sequence, not proof of a feasible
+    mountain route, and keeps statewide grouping tractable.
     """
     n = len(peaks)
     if n <= 1:
@@ -139,9 +143,9 @@ def _trailhead_groups(
     """Group peak names by their trailhead metadata.
 
     Peaks reached from the same trailhead form a must-link group, so they end up
-    in the same trip. Peaks with no trailhead are left ungrouped. When ``max_mi``
-    is given, a trailhead's peaks are further split so only peaks within that
-    straight-line distance of each other are linked.
+    in the same candidate group. Peaks with no trailhead are left ungrouped.
+    When ``max_mi`` is given, a trailhead's peaks are further split so only
+    peaks within that straight-line distance of each other are linked.
     """
     buckets: Dict[str, List[Peak]] = {}
     for p in peaks:
@@ -172,9 +176,9 @@ def _unit_centroid(unit: Sequence[Peak]) -> Tuple[float, float]:
 def _approach_estimate(
     peaks: Sequence[Peak], trailheads: Sequence[Trailhead], sinuosity: float
 ) -> float:
-    """Cheap estimate of a trip's approach effort, in effective miles.
+    """Cheap estimate of a candidate group's approach effort, in effective miles.
 
-    Anchors to the trailhead the itinerary would choose, then takes the cheapest
+    Anchors to the trailhead the candidate sequence would choose, then takes the cheapest
     inbound (ascending) and cheapest outbound (descending) legs -- a fast proxy
     for the entry/exit summits the closed-tour solver settles on.
     """
@@ -190,7 +194,7 @@ def _approach_estimate(
 def _interpeak_split(
     units: List[List[Peak]], max_effective_mi: float, router=None
 ) -> List[List[List[Peak]]]:
-    """Split units into sub-groups each fitting the *inter-peak* trip budget.
+    """Split units into sub-groups each fitting the *inter-peak* effort budget.
 
     Returns a list of sub-groups, where each sub-group is itself a list of units.
     """
@@ -201,7 +205,7 @@ def _interpeak_split(
     centroids = np.array([_unit_centroid(u) for u in units])
     n = len(units)
     # Start near the obvious lower bound (total effort / budget) instead of 2,
-    # so we don't waste time on small k that cannot possibly fit a big cluster.
+    # so we don't waste time on small k that cannot possibly fit a big group.
     k0 = max(2, int(_route_effective_mi(flat_peaks, router) // max_effective_mi) + 1)
     for k in range(min(k0, n), n + 1):
         labels = AgglomerativeClustering(n_clusters=k).fit_predict(centroids)
@@ -224,13 +228,13 @@ def _split_to_budget(
     total_effort: Optional[Callable[[Sequence[Peak]], float]] = None,
     router=None,
 ) -> List[List[List[Peak]]]:
-    """Split units into sub-groups that each fit the trip budget.
+    """Split units into sub-groups that each fit the effort budget.
 
-    The inter-peak split is always the *floor* (the fewest trips the bare
+    The inter-peak split is always the *floor* (the fewest groups the bare
     traverse allows). When ``total_effort`` is given (approach modeling on), the
     budget is measured including the trailhead approach, and the split is
     tightened beyond the floor -- but only if a modest extra split actually makes
-    the trips fit. Because the approach is largely a fixed per-trip cost,
+    the groups fit. Because the approach is largely a fixed per-group cost,
     splitting further when it cannot help would only multiply that cost, so in
     the approach-dominated case we keep the inter-peak floor instead of
     over-splitting.
@@ -248,7 +252,7 @@ def _split_to_budget(
     if _fits(floor):
         return floor
 
-    # Approach pushed at least one trip over budget: try more sub-groups, but
+    # Approach pushed at least one group over budget: try more sub-groups, but
     # never fewer than the inter-peak floor already requires.
     n = len(units)
     centroids = np.array([_unit_centroid(u) for u in units])
@@ -270,11 +274,11 @@ def cluster_peaks(
     config: Optional[ClusterConfig] = None,
     trailheads: Optional[Sequence[Trailhead]] = None,
 ) -> List[List[Peak]]:
-    """Cluster peaks into budget-respecting trips.
+    """Cluster peaks into budget-respecting candidate groups.
 
-    Returns a list of clusters, each a list of :class:`Peak`. Ordering and
+    Returns a list of groups, each a list of :class:`Peak`. Ordering and
     metrics are computed later by the pipeline. When ``config.include_approach``
-    is set and ``trailheads`` are supplied, the trip budget is enforced including
+    is set and ``trailheads`` are supplied, the effort budget is enforced including
     the trailhead approach (see :func:`_split_to_budget`).
     """
     config = config or ClusterConfig()
@@ -332,7 +336,7 @@ def cluster_peaks(
             grouped.setdefault(key, []).append(unit)
         groups = list(grouped.values())
 
-    # Stage 2: enforce trip budget.
+    # Stage 2: enforce effort budget.
     final: List[List[Peak]] = []
     for group in groups:
         for subgroup in _split_to_budget(group, config.max_effective_mi,
