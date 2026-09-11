@@ -484,11 +484,13 @@ themselves are not redistributed here. Download them yourself to rebuild; see
 | `scrambler_ratings_non_sps_2025.pdf` | 354 non-SPS High Sierra peaks, labeled `non-SPS`, tracked but outside current SPS grouping defaults | No, Sierra Club copyright |
 | USGS GNIS California + Nevada state files | Decimal lat/long for every peak, matched on name and USGS quad | Yes, public domain |
 
-All 247 SPS peaks have coordinates: 241 from GNIS, including 14
+All 247 SPS peaks have coordinates: 240 from GNIS, including 14
 spelling/wording aliases like *Foerster*/*Forester* and *Maclure*/*MacClure*,
-and 6 unofficially named peaks from peakbagger.com: Taylor Dome, Spanish Needle,
-Rockhouse Peak, Cartago Peak, North Maggie Mountain, and Clyde Minaret. Each row
-records its `coord_source`.
+and 7 unofficially named peaks (no GNIS entry) from peakbagger.com: Taylor
+Dome, Spanish Needle, Rockhouse Peak, Cartago Peak, North Maggie Mountain,
+Clyde Minaret, and Rogers Peak. Each row records its `coord_source`. The
+peakbagger-sourced coordinates are a known third-party dependency tracked for
+independent re-verification -- see [`DATA_LICENSE.md`](DATA_LICENSE.md).
 
 #### Rebuilding The Dataset
 
@@ -990,7 +992,10 @@ python -m pytest tests/
 The source code is licensed under the [MIT License](LICENSE).
 
 The data has separate provenance and terms; see
-[`DATA_LICENSE.md`](DATA_LICENSE.md). Sierra Club source documents in
+[`DATA_LICENSE.md`](DATA_LICENSE.md), including its Source Policy section
+explaining the project's federal-data-first sourcing tiers and how every
+data file is classified (`public_domain` / `open_license` / `project_created`
+/ `third_party_reference_only`). Sierra Club source documents in
 `data/source/` are copyrighted and are not redistributed here. Peak data derives
 from the Sierra Club SPS list and USGS GNIS; map tiles are © OpenStreetMap
 contributors / OpenTopoMap (CC-BY-SA) / Esri.
