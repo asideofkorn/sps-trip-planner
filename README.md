@@ -416,9 +416,20 @@ exemptions.
   visitor verbally at the gate rather than published anywhere -- `notes`
   says which is which rather than implying uniform confidence.
 
+- **`data/timed_entry.csv`** -- whether a park requires a timed-entry
+  vehicle reservation is a decision some agencies re-make every year, not a
+  standing policy: Yosemite has flipped between requiring one, not
+  requiring one, and requiring one only for specific date windows in nearly
+  every year since 2020. One row per `(park, year)` by design, so a given
+  year's actual policy is a permanent historical record rather than getting
+  silently overwritten by the next year's decision -- `policy_for_year()`
+  deliberately returns `None` for a year not on file rather than falling
+  back to a neighboring year's answer.
+
 None of this is wired into `plan`'s output yet -- these are loadable via
-`wayproof.camping`, `wayproof.water`, and `wayproof.park_access`, but
-surfacing them in `plan`'s report is a natural next step, not this one.
+`wayproof.camping`, `wayproof.water`, `wayproof.park_access`, and
+`wayproof.timed_entry`, but surfacing them in `plan`'s report is a natural
+next step, not this one.
 
 ## Installation
 
@@ -1033,6 +1044,7 @@ wayproof/
 │   ├── water_sources.csv         # named backcountry water sources
 │   ├── water_source_log.csv      # append-only water-availability check ledger
 │   ├── park_access.csv           # park-level entrance fees, gate hours, exemptions
+│   ├── timed_entry.csv           # year-scoped vehicle timed-entry requirements
 │   └── source/                   # official Sierra Club files + trimmed GNIS subset
 ├── scripts/
 │   ├── build_dataset.py         # XLS + non-SPS PDF -> sps_peaks.csv (staging)
@@ -1069,13 +1081,15 @@ wayproof/
 │   ├── camping.py
 │   ├── water.py
 │   ├── park_access.py
+│   ├── timed_entry.py
 │   ├── plan.py
 │   └── visualize.py
 └── tests/
     ├── test_pipeline.py
     ├── test_permits.py
     ├── test_plan.py
-    └── test_facilities.py
+    ├── test_facilities.py
+    └── test_timed_entry.py
 ```
 
 Run the tests:

@@ -58,9 +58,15 @@ Every data file below is also classified by what that means for reuse:
 | `data/campgrounds.csv`, `data/campsites.csv` | Curated by this project from official East Bay Regional Park District (EBRPD) sources (ebparks.org, ReserveAmerica) plus this project's own firsthand trip notes (Ohlone Wilderness Trail, Sep 2026) | `project_created` | Facts are not copyrightable; provided under the project license. Some fields (e.g. a campground's exact nightly vehicle-gate cutoff) are reported from a single firsthand near-miss experience, not a confirmed posted policy — see each field's own notes. |
 | `data/water_sources.csv`, `data/water_source_log.csv` | `water_sources.csv`: curated by this project. `water_source_log.csv`: a mix of EBRPD's own published "Water Availability Update" page and this project's firsthand trip reports | `project_created` | Append-only ledger by design, same pattern as `permit_source_log.csv` — a water source's status can change with no announcement, so a later check never overwrites an earlier one. See "Known follow-ups" for a real official-vs-firsthand discrepancy already on file (Boyd Camp). |
 | `data/park_access.csv` | Curated by this project from EBRPD's official page (entrance fee, gate hours) plus a verbal, in-person staff confirmation (a fee exemption not found in writing) | `project_created` | The fee-exemption field carries deliberately lower confidence than the fee/hours fields — see the row's own `notes`. |
+| `data/timed_entry.csv` | NPS's own announcements for 2024–2026; secondary/aggregator press coverage (Yosemite Conservancy, Afar) for 2020–2023, since this project has not independently retrieved each year's original NPS announcement | `project_created` (compiled history) | One row per (park, year) by design — never overwrite a prior year's recorded policy with the current year's, since whether a reservation is required is a decision NPS re-makes annually, not a standing rule. Confidence varies by row: 2024–2026 rows cite an official nps.gov page directly; 2020–2023 rows are flagged in their own `notes` as secondary-sourced. |
 
 ## Known follow-ups
 
+- **`data/timed_entry.csv`'s 2020–2023 Yosemite rows are secondary-sourced.**
+  They're cited to aggregator/press coverage rather than each year's
+  original nps.gov announcement, which this project has not independently
+  retrieved. The 2024–2026 rows already cite nps.gov directly; the older
+  rows should be upgraded the same way when time allows.
 - **Mission Peak's GNIS feature ID is unconfirmed.** Its coordinates come
   from USGS topo/Wikipedia sources, not a directly-cited GNIS feature ID
   like the rest of this dataset's peaks. Same remediation as the peakbagger

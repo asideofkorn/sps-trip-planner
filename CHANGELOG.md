@@ -6,6 +6,21 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **`data/timed_entry.csv`** (new `wayproof/timed_entry.py`: `TimedEntryPolicy`,
+  `load_timed_entry`, `policy_for_year`, `latest_policy`): year-scoped vehicle
+  timed-entry/reservation requirements, generalizing `park_access.csv` to a
+  policy some agencies re-decide annually rather than hold fixed. Populated
+  with Yosemite National Park's full recorded history (2020's pandemic-era
+  day-use permit through 2026's elimination of reservations entirely), which
+  genuinely varies year to year (required in 2020-2022, not in 2023, required
+  again with different date windows in 2024-2025, not in 2026) -- exactly the
+  case a single "current state" field would silently overwrite on each
+  change. `policy_for_year()` deliberately returns `None` for a year not on
+  file rather than assuming a neighboring year's policy still applies.
+  2024-2026 rows cite an official nps.gov page directly; 2020-2023 rows are
+  secondary-sourced (flagged in their own `notes` and in `DATA_LICENSE.md`'s
+  Known follow-ups) since this project hasn't independently retrieved each
+  of those years' original NPS announcements. New `tests/test_timed_entry.py`.
 - **Rose Peak and Mission Peak (Diablo Range, Alameda County)**: this
   project's first peaks outside the Sierra Nevada / SPS collection, added to
   `data/peaks.csv` with a new `region` field and no `data/collections/sps.csv`
