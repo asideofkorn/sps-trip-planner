@@ -37,16 +37,25 @@ A trailhead's permit_group is a default, not a guarantee for every peak
 reached from it: some trailheads serve more than one permitted trail with
 different rules (e.g. Whitney Portal serves the lottery-only classic Mt.
 Whitney Trail, but also the separately-permitted Mountaineers Route /
-North Fork of Lone Pine Creek trail for Mount Russell, and the Meysan Lakes
-Trail for several other peaks). ``data/permit_overrides.csv`` lists specific
-peaks whose actual required permit differs from their trailhead's default;
-:func:`clusters_permit_info` emits an extra, peak-specific entry for those.
-This file is deliberately conservative -- only peaks with a directly-named
-source are listed. Known-likely-but-unconfirmed cases (e.g. the Meysan Lakes
-Trail peaks, or Mount Carillon) are intentionally left off rather than
-guessed at; treat any peak sharing a trailhead with a lottery/special
-permit as worth double-checking if its standard route isn't the trailhead's
-main trail.
+North Fork of Lone Pine Creek trail for Mount Russell). ``data/approaches.csv``
+(see :mod:`sierra_peaks.access`) records these peak-specific approach
+relationships as structured data: which named route a peak uses, which
+trailhead it starts from, and -- when a source directly confirms it -- which
+permit_group actually governs it. :func:`clusters_permit_info` emits an
+extra, peak-specific entry for each confirmed relationship that differs from
+the trailhead default.
+
+Some cases are plausible but not directly confirmed by a source (e.g. Mount
+Irvine and Mount Mallory's source-listed trailhead names the Meysan Lake
+Trail, a different route than Whitney Portal's main trail, but no source
+confirms which permit product actually governs it). Rather than silently
+assuming the trailhead default or silently omitting the peak,
+``data/approaches.csv`` can record these with ``status=unconfirmed``;
+:func:`clusters_permit_info` then emits an explicit caution alongside the
+default entry instead of asserting an unverified answer. Treat any peak
+sharing a trailhead with a lottery/special permit as worth double-checking if
+its standard route isn't the trailhead's main trail, even when it has no row
+here yet.
 
 ``data/permits.csv`` only stores the current best-known answer per
 permit_group -- each edit overwrites the last one, so on its own it can't
@@ -73,6 +82,7 @@ from typing import Dict, List, Optional, Sequence
 
 import pandas as pd
 
+from .access import ApproachRoute
 from .model import Cluster, Trailhead
 
 # Special-cased because it's a lottery, not a rolling reservation window.
@@ -162,25 +172,6 @@ def load_permits(path: str | Path = "data/permits.csv") -> Dict[str, PermitRule]
             verified_date=_str_field(row, "verified_date"),
         )
     return rules
-
-
-def load_permit_overrides(
-    path: str | Path = "data/permit_overrides.csv",
-) -> Dict[str, str]:
-    """Load peak-name -> permit_group overrides (see module docstring).
-
-    Returns an empty dict if the file doesn't exist -- overrides are opt-in
-    extra precision, not a required input.
-    """
-    path = Path(path)
-    if not path.exists():
-        return {}
-    df = pd.read_csv(path)
-    return {
-        _str_field(row, "peak_name"): _str_field(row, "permit_group_override")
-        for _, row in df.iterrows()
-        if _str_field(row, "peak_name") and _str_field(row, "permit_group_override")
-    }
 
 
 def _whitney_lottery_status(trip_date: date, today: date) -> str:
@@ -274,11 +265,14 @@ class ClusterPermitInfo:
     peak_note: str = ""  # e.g. "for Mount Russell only" when this overrides the default
     source_last_updated: str = ""
     verified_date: str = ""
+    approach_name: str = ""    # named route this entry is specific to, if any
+    approach_status: str = ""  # "confirmed" / "unconfirmed" / "" (trailhead default)
 
 
 def _permit_entry(
     cluster_id: int, trailhead: str, wilderness_area: str, rule: PermitRule,
     trip_date: date, today: Optional[date], peak_note: str = "",
+    approach_name: str = "", approach_status: str = "",
 ) -> ClusterPermitInfo:
     return ClusterPermitInfo(
         cluster_id=cluster_id,
@@ -295,6 +289,8 @@ def _permit_entry(
         peak_note=peak_note,
         source_last_updated=rule.source_last_updated,
         verified_date=rule.verified_date,
+        approach_name=approach_name,
+        approach_status=approach_status,
     )
 
 
@@ -304,20 +300,30 @@ def clusters_permit_info(
     permits: Dict[str, PermitRule],
     trip_date: date,
     today: Optional[date] = None,
-    overrides: Optional[Dict[str, str]] = None,
+    approaches: Optional[Sequence[ApproachRoute]] = None,
 ) -> List[ClusterPermitInfo]:
     """Resolve permit guidance for every cluster that has a chosen trailhead.
 
     Clusters without a trailhead (approach modeling was off) are skipped --
-    there is nothing to key the permit lookup on. When ``overrides`` names a
-    peak in the cluster whose actual permit_group differs from the
-    trailhead's default (see :func:`load_permit_overrides`), an additional
-    peak-specific entry is emitted alongside the trailhead's default one, so
-    a mixed trip (e.g. Mount Whitney + Mount Russell from Whitney Portal)
-    surfaces both permits it actually needs.
+    there is nothing to key the permit lookup on. ``approaches`` (see
+    :mod:`sierra_peaks.access`) supplies peak-specific approach relationships:
+
+    - A ``confirmed`` route whose permit_group differs from the trailhead
+      default adds an extra, peak-specific permit entry, so a mixed trip
+      (e.g. Mount Whitney + Mount Russell from Whitney Portal) surfaces both
+      permits it actually needs.
+    - An ``unconfirmed`` route adds a caution entry instead of asserting a
+      different permit -- it flags that the trailhead default may not apply
+      to that peak without inventing an unverified answer.
+
+    A route naming a different ``trailhead`` than the cluster's chosen one is
+    skipped -- it describes an approach from somewhere else.
     """
     th_by_name = {t.name: t for t in trailheads}
-    overrides = overrides or {}
+    by_peak: Dict[str, List[ApproachRoute]] = {}
+    for route in approaches or []:
+        by_peak.setdefault(route.peak_name, []).append(route)
+
     rows: List[ClusterPermitInfo] = []
     for c in clusters:
         if not c.trailhead:
@@ -331,21 +337,50 @@ def clusters_permit_info(
         rows.append(_permit_entry(c.cluster_id, c.trailhead, th.wilderness_area,
                                    rule, trip_date, today))
 
-        seen_override_groups = set()
+        seen = set()
         for peak in c.peaks:
-            override_group = overrides.get(peak.name)
-            if not override_group or override_group == th.permit_group:
-                continue
-            if override_group in seen_override_groups:
-                continue  # avoid duplicate entries when >1 peak shares an override
-            override_rule = permits.get(override_group)
-            if override_rule is None:
-                continue
-            seen_override_groups.add(override_group)
-            rows.append(_permit_entry(
-                c.cluster_id, c.trailhead, th.wilderness_area, override_rule,
-                trip_date, today, peak_note=f"for {peak.name} only -- see notes",
-            ))
+            for route in by_peak.get(peak.name, []):
+                if route.trailhead and route.trailhead != c.trailhead:
+                    continue  # this known approach starts from a different trailhead
+
+                if not route.confirmed:
+                    key = ("unconfirmed", peak.name, route.approach_name)
+                    if key in seen:
+                        continue
+                    seen.add(key)
+                    caution = (
+                        f"UNCERTAIN for {peak.name}: approach may be "
+                        f"{route.approach_name or 'a different route'}, not "
+                        f"confirmed against a source -- do not assume the "
+                        f"{c.trailhead} default above applies without "
+                        f"verifying independently."
+                    )
+                    if route.notes:
+                        caution += f" {route.notes}"
+                    rows.append(_permit_entry(
+                        c.cluster_id, c.trailhead, th.wilderness_area, rule,
+                        trip_date, today, peak_note=caution,
+                        approach_name=route.approach_name,
+                        approach_status=route.status,
+                    ))
+                    continue
+
+                if not route.permit_group or route.permit_group == th.permit_group:
+                    continue
+                if route.permit_group in seen:
+                    continue  # avoid duplicate entries when >1 peak shares an approach
+                override_rule = permits.get(route.permit_group)
+                if override_rule is None:
+                    continue
+                seen.add(route.permit_group)
+                note = f"for {peak.name} only"
+                if route.approach_name:
+                    note += f" -- via {route.approach_name}"
+                rows.append(_permit_entry(
+                    c.cluster_id, c.trailhead, th.wilderness_area, override_rule,
+                    trip_date, today, peak_note=note,
+                    approach_name=route.approach_name, approach_status=route.status,
+                ))
     return rows
 
 

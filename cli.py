@@ -93,10 +93,11 @@ def _parse_args(argv=None) -> argparse.Namespace:
                         "(default: today)")
     p.add_argument("--permits-file", default="data/permits.csv",
                    help="Permit rules dataset for --permits (default data/permits.csv)")
-    p.add_argument("--permit-overrides-file", default="data/permit_overrides.csv",
-                   help="Peak-level permit_group overrides for --permits, for "
-                        "peaks whose actual permit differs from their trailhead's "
-                        "default (default data/permit_overrides.csv)")
+    p.add_argument("--approaches-file", default="data/approaches.csv",
+                   help="Peak-specific approach relationships for --permits, for "
+                        "peaks whose actual permit differs from (or is uncertain "
+                        "against) their trailhead's default (default "
+                        "data/approaches.csv)")
     p.add_argument("--permit-sources", nargs="?", const="__all__", default=None,
                    metavar="PERMIT_GROUP",
                    help="Print the permit source-verification log (audit trail of "
@@ -233,16 +234,16 @@ def main(argv=None) -> int:
 
     if args.permits:
         import datetime
+        from sierra_peaks.access import load_approaches
         from sierra_peaks.permits import (
-            load_permits, load_permit_overrides, clusters_permit_info,
-            format_permit_report,
+            load_permits, clusters_permit_info, format_permit_report,
         )
         trip_date = (datetime.date.fromisoformat(args.trip_date) if args.trip_date
                      else datetime.date.today())
         permit_rules = load_permits(args.permits_file)
-        permit_overrides = load_permit_overrides(args.permit_overrides_file)
+        approaches = load_approaches(args.approaches_file)
         rows = clusters_permit_info(clusters, trailheads, permit_rules, trip_date,
-                                     overrides=permit_overrides)
+                                     approaches=approaches)
         print(f"Permit report (trip date {trip_date.isoformat()})")
         print("=" * 28)
         print(format_permit_report(rows))

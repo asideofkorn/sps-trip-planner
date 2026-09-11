@@ -8,7 +8,14 @@ from typing import List, Optional
 
 @dataclass
 class Peak:
-    """A single summit on the SPS list.
+    """A single summit objective.
+
+    Conceptually, ``Peak`` is one *type* of place-based objective this
+    project can plan around; a named list like the Sierra Peaks Section is
+    one **collection** of such objectives (see :attr:`collection`), not the
+    ontology of the whole project. Loop routes, traverses, and multi-peak
+    objectives that aren't a single summit are a natural extension of this
+    same idea, not modeled here yet.
 
     Attributes
     ----------
@@ -32,6 +39,15 @@ class Peak:
     elevation_ft: float
     region: str = ""
     meta: dict = field(default_factory=dict)
+
+    @property
+    def collection(self) -> str:
+        """The named collection this objective belongs to (e.g. ``"SPS"``).
+
+        Read from ``meta["list"]``, the same field ``--list`` filters on.
+        Blank if the source data didn't tag a list/collection.
+        """
+        return str(self.meta.get("list", "") or "")
 
     def to_dict(self) -> dict:
         d = {
