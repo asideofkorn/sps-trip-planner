@@ -20,6 +20,15 @@ All notable changes to this project are documented here. The format is based on
     group, so the column states it rather than assuming it. Tested.
 
 ### Fixed
+- **An inherited rule can read as permission.** The statewide campfire rule,
+  rendered alone on a page with no local fire rule beside it, said "a permit is
+  required for any campfire" and nothing else -- which reads as *campfires are
+  allowed here if you have one*. CAL FIRE's own guidance says the opposite: the
+  permit is a precondition, and local rules override it. Reworded to say so,
+  and `open_questions()` now derives a gap for any group that inherits a
+  broader fire rule with no local one on file (currently 10 groups, including
+  `whitney_zone` and all three Inyo groups). The absence is stated rather than
+  left to imply permission.
 - **The California Campfire Permit rule was wrong in five places and
   inconsistent across seven.** It's state law (PRC 4433) restated by every
   forest, and had been copy-pasted into seven `permits.csv` rows, where it

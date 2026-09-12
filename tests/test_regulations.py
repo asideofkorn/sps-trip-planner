@@ -164,3 +164,47 @@ def test_campfire_rule_carries_the_facts_that_were_previously_missing():
         assert term in text, f"campfire rule should mention {term!r}"
     assert "261.52" in rule.citation and "4433" in rule.citation
     assert "readyforwildfire.org" in rule.source_url
+
+
+# -- the inherited-rule-reads-as-permission failure -------------------------
+
+def test_statewide_campfire_rule_does_not_read_as_permission():
+    # Inherited alone, "a permit is required for any campfire" reads as
+    # permission. It isn't -- CAL FIRE says local rules override, and Sierra
+    # wildernesses commonly ban fires outright.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "ca-campfire-permit")
+    text = f"{rule.summary} {rule.detail}".lower()
+    assert "does not mean fires are allowed" in text or "not mean fires are allowed" in text
+    assert "local restrictions override" in text or "local rules" in text
+
+
+def test_groups_with_no_local_fire_rule_become_open_questions():
+    from wayproof.permits import PermitRule
+    from wayproof.reports import open_questions
+
+    silent = PermitRule(permit_group="whitney_zone", agency="Inyo National Forest",
+                        permit_type="x", quota_required=True, jurisdiction="CA")
+    covered = PermitRule(permit_group="desolation", agency="Eldorado NF", permit_type="y",
+                         quota_required=True, jurisdiction="CA")
+    regs = [
+        _reg("ca-campfire-permit", JURISDICTION, "CA", category="fire"),
+        _reg("desolation-campfire-ban", PERMIT_GROUP, "desolation", category="fire"),
+    ]
+    keys = [q.target_key for q in open_questions(permits=[silent, covered], regulations=regs)
+            if q.target_key.endswith("(fire)")]
+    assert keys == ["whitney_zone (fire)"]
+
+
+def test_a_group_stating_its_fire_rule_in_prose_is_not_flagged_as_unknown():
+    # Several groups still carry the rule as notes prose rather than a
+    # structured regulation. Unmigrated is not the same as unknown.
+    from wayproof.permits import PermitRule
+    from wayproof.reports import open_questions
+
+    prose = PermitRule(permit_group="mokelumne_free", agency="Eldorado NF", permit_type="z",
+                       quota_required=False, jurisdiction="CA",
+                       notes="Campfires are NOT allowed anywhere in the Mokelumne Wilderness.")
+    regs = [_reg("ca-campfire-permit", JURISDICTION, "CA", category="fire")]
+    assert [q for q in open_questions(permits=[prose], regulations=regs)
+            if q.target_key.endswith("(fire)")] == []
