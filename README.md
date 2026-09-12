@@ -694,6 +694,36 @@ regulation's scope reaches at least one permit group. A dead scope fails the
 build instead of quietly reading as covered. The forest-wide rule now reaches
 all three Eldorado groups and shows on 22 trailhead pages.
 
+## `notes` Is Not a Filing Cabinet
+
+Every fact with no better home lands in `permits.csv`'s `notes`, so it accretes.
+It was split once — Desolation went from ~3,500 characters to 955 when
+regulations moved out — and had grown back to 1,917 before this pass.
+
+Size is the symptom. The disease is that facts with a structured home get
+asserted **twice**. Five Mokelumne facts were live in both `notes` and the
+wilderness rulebook, created hours apart on the same day, which is exactly how
+seven copies of the campfire permit rule drifted apart. Each fact now has one
+home:
+
+| Kind of fact | Home |
+|---|---|
+| What you may do on the ground | `regulations.csv`, scoped and inherited |
+| What the permit does **not** cover | `permits.csv` `excludes` |
+| How we know, and who disagreed | `permit_source_log.csv`, cited by entry id |
+| Season, fees, quota | the structured columns that already exist |
+
+`excludes` earns its own field because being wrong about it is discovered at
+the trailhead and cannot be fixed there: the Whitney Zone permit does not cover
+the Mountaineers Route or Mount Russell, which need an ordinary Inyo NF permit.
+That fact spent seven sentences buried in prose; it now renders above the rules
+on all three surfaces.
+
+What deliberately stays in `notes` is genuine miscellany — permit validity
+mechanics, cancellation policy, hazards and seasonal access. No single-row
+tables were invented for facts that occur once. A test fails any `notes` field
+over 1,400 characters, so re-accretion is caught rather than rediscovered.
+
 ## Every Claim Cites Its Evidence
 
 `data/permit_source_log.csv` always recorded *why* this project believes

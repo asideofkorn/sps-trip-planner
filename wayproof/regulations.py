@@ -164,6 +164,36 @@ def load_regulations(path: str | Path = "data/regulations.csv") -> List[Regulati
     return out
 
 
+SPECIFICITY = {PERMIT_GROUP: 0, WILDERNESS: 1, AGENCY: 2, JURISDICTION: 3}
+"""Lower is more specific. A permit's own rule reads above the wilderness
+rulebook, which reads above forest policy, which reads above state law."""
+
+
+def scope_applies(scope_type: str, scope_value: str, permit_group: str = "",
+                  agency: "str | Sequence[str]" = "", jurisdiction: str = "",
+                  wilderness: str = "") -> bool:
+    """Does a rule at ``scope_type``/``scope_value`` reach this permit group?
+
+    Split out of :func:`regulations_for` so any other scoped table -- conditions,
+    hazards, seasonal access -- resolves identically instead of copying four-way
+    scope logic and drifting from it.
+
+    ``agency`` takes one key or several, because a wilderness can be co-managed.
+    Pass ``PermitRule.agency_ids``, never ``PermitRule.agency``: the latter is a
+    display string, and matching on it once made a forest-wide rule inherit to
+    nothing.
+    """
+    if scope_type == PERMIT_GROUP:
+        return bool(permit_group) and scope_value == permit_group
+    if scope_type == WILDERNESS:
+        return bool(wilderness) and scope_value == wilderness
+    if scope_type == AGENCY:
+        agencies = {agency} if isinstance(agency, str) else set(agency)
+        agencies.discard("")
+        return scope_value in agencies
+    return bool(jurisdiction) and scope_value == jurisdiction
+
+
 def regulations_for(
     regulations: Sequence[Regulation],
     permit_group: str = "",
@@ -182,24 +212,14 @@ def regulations_for(
     wilderness can be co-managed, as Desolation is by Eldorado NF and the Lake
     Tahoe Basin Management Unit; a rule from either manager applies.
     """
-    agencies = {agency} if isinstance(agency, str) else set(agency)
-    agencies.discard("")
-
     def applies(reg: Regulation) -> bool:
-        if reg.scope_type == PERMIT_GROUP:
-            return bool(permit_group) and reg.scope_value == permit_group
-        if reg.scope_type == WILDERNESS:
-            return bool(wilderness) and reg.scope_value == wilderness
-        if reg.scope_type == AGENCY:
-            return reg.scope_value in agencies
-        return bool(jurisdiction) and reg.scope_value == jurisdiction
-
-    specificity = {PERMIT_GROUP: 0, WILDERNESS: 1, AGENCY: 2, JURISDICTION: 3}
+        return scope_applies(reg.scope_type, reg.scope_value, permit_group=permit_group,
+                             agency=agency, jurisdiction=jurisdiction, wilderness=wilderness)
 
     def sort_key(reg: Regulation):
         category_rank = (CATEGORY_ORDER.index(reg.category)
                          if reg.category in CATEGORY_ORDER else len(CATEGORY_ORDER))
-        return (category_rank, specificity.get(reg.scope_type, 3), reg.regulation_id)
+        return (category_rank, SPECIFICITY.get(reg.scope_type, 4), reg.regulation_id)
 
     return sorted((r for r in regulations if applies(r)), key=sort_key)
 

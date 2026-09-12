@@ -164,6 +164,9 @@ def _permit_html(permit: dict) -> str:
         out.append(f'<h3>How reservations work</h3><p>{_e(permit["reservation_method"])}</p>')
     if permit["notes"]:
         out.append(f'<h3>Notes</h3><p>{_e(permit["notes"])}</p>')
+    if permit.get("excludes"):
+        out.append('<h3>What this permit does NOT cover</h3>'
+                   f'<div class="card warn"><p>{_e(permit["excludes"])}</p></div>')
     if permit["interagency_note"]:
         out.append(f'<h3>Travel into neighbouring units</h3>'
                    f'<p>{_e(permit["interagency_note"])}</p>')
@@ -436,6 +439,8 @@ def render_trailhead_markdown(view: dict) -> str:
             out += ["### How reservations work", "", permit["reservation_method"], ""]
         if permit["notes"]:
             out += ["### Notes", "", permit["notes"], ""]
+        if permit.get("excludes"):
+            out += ["### What this permit does NOT cover", "", permit["excludes"], ""]
         if permit["interagency_note"]:
             out += ["### Travel into neighbouring units", "", permit["interagency_note"], ""]
 

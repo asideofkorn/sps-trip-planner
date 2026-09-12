@@ -6,6 +6,23 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **`permits.csv` gains `excludes`** — what a permit does *not* cover, and what
+  you need instead. It earns a field because being wrong is discovered at the
+  trailhead and cannot be fixed there. The Whitney Zone permit does not cover
+  the North Fork of Lone Pine Creek approaches (Mountaineers Route, East Face,
+  East Buttress, Mount Russell), which need an ordinary Inyo NF permit — a fact
+  previously buried in seven sentences of prose, now rendered above the rules
+  on all three surfaces. Also covers Golden Trout's Cottonwood entries and the
+  CPMA/general-Mokelumne split.
+- **Eight regulations migrated out of prose**: Hoover's group size and its
+  stricter Sawtooth Ridge Zone exception, four Stanislaus forest-wide rules
+  plus a 14-day stay limit, Sierra NF's stock cap, and Golden Trout's
+  conditional campfire restriction. The Stanislaus entry states that bear
+  canisters are **not** required — a stated non-requirement reads very
+  differently from silence, and Desolation next door requires one on pain of a
+  $5,000 fine.
+- **`scope_applies()`** extracted from `regulations_for()`, so any future
+  scoped table resolves identically instead of copying four-way scope logic.
 - **Claims cite the evidence behind them** (`wayproof/evidence.py`). Every log
   entry gains a stable `entry_id` (`group-date-seq` — sayable out loud,
   sortable, URL-safe), and `regulations.csv` and `permits.csv` gain
@@ -112,6 +129,24 @@ All notable changes to this project are documented here. The format is based on
     posing as the rule itself.
 
 ### Fixed
+- **The `notes` field was holding five facts that were already rules.** Group
+  size, the campfire ban, the Emigrant Lake setback, the one-mile group
+  separation and Woods Lake's day-use status were each asserted twice in
+  `mokelumne_free` — in prose and as resolved rules, created hours apart on the
+  same day. That is the failure that produced seven drifting copies of the
+  campfire permit rule, live again. A new test asserts no `notes` field
+  restates a fact that resolves as a rule, which would have caught it the day
+  it happened.
+- **Verification narrative moved out of `notes` into the log it duplicated.**
+  "Confirmed word-for-word against the official page", "CORRECTS an earlier
+  assumption", "Source conflict resolved by weight of evidence" and similar are
+  history, not permit facts, and were already restated at greater length in the
+  source log. Rows now state the answer and cite the entry id.
+- **Desolation restated its own structured columns**: the quota season sat in
+  `notes` as well as `quota_season_start`/`end`, and parking fees sat in `notes`
+  as well as `fee_notes`.
+- `notes` drops from ~14,400 characters to 7,652, with a test failing any field
+  over 1,400 so it cannot quietly refill a third time.
 - **The day-use reasoning was stored twice.** The full argument — recreation.gov's
   overview against its own operational section — sat in both the Desolation
   notes field and the log entry that closed the conflict. Two copies of one

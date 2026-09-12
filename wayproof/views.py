@@ -169,6 +169,10 @@ def _permit_block(rule: Optional[PermitRule], today: date) -> dict:
         "apply_url": rule.apply_url,
         "notes": rule.notes,
         "interagency_note": rule.interagency_note,
+        # What this permit does NOT admit you to. Rendered high on the
+        # page, because holding the wrong permit is discovered at the
+        # trailhead and cannot be fixed there.
+        "excludes": rule.excludes,
         "source_last_updated": rule.source_last_updated,
         "verified_date": rule.verified_date,
         "release_events": events,

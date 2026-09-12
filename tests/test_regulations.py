@@ -423,7 +423,7 @@ def test_desolation_day_use_is_now_quota_season_only():
                            os.path.join(ROOT, "data", "release_policies.csv"))
     notes = permits["desolation"].notes
     assert "ONLY during quota season" in notes
-    assert "no day-use permit is needed" in notes
+    assert "none is needed" in notes
 
 
 def test_the_contrary_wording_a_reader_will_meet_is_still_named():
@@ -441,7 +441,7 @@ def test_mokelumne_needs_no_day_use_permit_at_all():
     # Adjacent to Desolation and easily confused with it.
     permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
                            os.path.join(ROOT, "data", "release_policies.csv"))
-    assert "no day-use permit is needed for day hiking" in permits["mokelumne_free"].notes
+    assert "no permit is needed for day hiking" in permits["mokelumne_free"].notes
 
 
 def test_the_cpma_naming_trap_is_recorded():
@@ -580,8 +580,8 @@ def test_the_day_use_answer_cites_its_reasoning_instead_of_repeating_it():
     assert "contradicts its own operational section" in notes
 
     entry = index_log(load_source_log(os.path.join(ROOT, "data", "permit_source_log.csv")))
-    reasoning = re.search(r"reasoning is logged at (\S+?) ", notes)
-    closed = re.search(r"conflict was closed at (\S+?)\.", notes)
+    reasoning = re.search(r"reasoning at (\S+?),", notes)
+    closed = re.search(r"closed at (\S+?)\)", notes)
     assert reasoning and closed, "the note must point at both entries"
     for m in (reasoning, closed):
         assert m.group(1) in entry, f"{m.group(1)} must resolve to a real log entry"
