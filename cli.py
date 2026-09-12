@@ -134,6 +134,9 @@ def _parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--pending-reports-file", default="data/pending_reports.csv",
                    help="Submitted-but-unreviewed reports for --open-questions "
                         "(default data/pending_reports.csv)")
+    p.add_argument("--park-access-file", default="data/park_access.csv",
+                   help="Park-level entrance fee/hours dataset for --open-questions "
+                        "(default data/park_access.csv)")
     p.add_argument("--list", default="SPS",
                    help="If the data has a 'list' column, keep only this list "
                         "(default SPS; use 'all' to keep everything). Requires "
@@ -199,6 +202,7 @@ def main(argv=None) -> int:
     if args.open_questions:
         from wayproof.access import load_approaches
         from wayproof.camping import load_campgrounds, load_campsites
+        from wayproof.park_access import load_park_access
         from wayproof.reports import (
             open_questions, format_open_questions,
             pending_reports, format_pending_reports,
@@ -208,18 +212,21 @@ def main(argv=None) -> int:
 
         peaks = load_peaks(args.input or "data/peaks.csv",
                             collections_path=args.collections_file or None)
+        trailheads = load_trailheads(args.trailheads)
         approaches = load_approaches(args.approaches_file)
         water_sources = load_water_sources(args.water_sources_file)
         water_source_log = load_water_source_log(args.water_source_log_file)
         campgrounds = load_campgrounds(args.campgrounds_file)
         campsites = load_campsites(args.campsites_file)
+        park_access = list(load_park_access(args.park_access_file).values())
         by_park = load_timed_entry(args.timed_entry_file)
         timed_entry = [p for policies in by_park.values() for p in policies]
 
         questions = open_questions(
             peaks=peaks, approaches=approaches, water_sources=water_sources,
             water_source_log=water_source_log, campgrounds=campgrounds,
-            campsites=campsites, timed_entry=timed_entry, peak_names=None,
+            campsites=campsites, timed_entry=timed_entry, trailheads=trailheads,
+            park_access=park_access, peak_names=None,
         )
         print(format_open_questions(questions))
         print()

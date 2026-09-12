@@ -1,89 +1,89 @@
-name,side,latitude,longitude,elevation_ft,notes,wilderness_area,land_agency,permit_group
-Adams Peak (Constantia),east,39.91,-120.15,6850,"Road 24N22X off Constantia Rd near Doyle; west-side approach to Adams Peak, distinct from Frenchman Lake. Coords approximate — unverified.",,Plumas NF,none
-Frenchman Lake,east,39.8989,-120.19,5600,Far northern Sierra; Adams Peak / Dixie Mountain,,Plumas NF,none
-Mount Rose,east,39.3139,-119.8975,8900,Hwy 431; Mount Rose,Mount Rose Wilderness,Humboldt-Toiyabe NF,none
-Leavitt Meadows,east,38.3358,-119.5519,7200,West Walker; Leavitt/Tower country,Hoover Wilderness,Humboldt-Toiyabe NF,hoover
-Twin Lakes (Bridgeport),east,38.1456,-119.3733,7100,Mono Village; Matterhorn/Sawtooth Ridge,Hoover Wilderness,Humboldt-Toiyabe NF,hoover
-Virginia Lakes,east,38.048,-119.2652,9800,"Road's end 6mi west of Conway Summit off Hwy 395; Dunderberg Peak, Excelsior Mountain, Virginia Peak, Twin Peaks.",Hoover Wilderness,Humboldt-Toiyabe NF,hoover
-Lundy Canyon,east,38.0024,-119.2912,7800,"North of Lee Vining via Lundy Lake Rd, past Lundy Lake Resort; north-side approach to Mount Warren via Lake Canyon Trail.",Hoover Wilderness,Inyo NF,inyo_hoover_nonquota
-Saddlebag Lake,east,37.9664,-119.2722,10100,20 Lakes Basin; Conness/North Peak,Hoover Wilderness,Inyo NF,inyo_hoover_nonquota
-Tioga Pass,east,37.9106,-119.2575,9945,Mount Dana / Gaylor; Yosemite east entrance,Yosemite Wilderness,Yosemite NP,yosemite
-Walker Lake (Bloody Canyon),east,37.8736,-119.1583,7500,Mono Pass (Yosemite); Gibbs/Lewis,Ansel Adams Wilderness,Inyo NF,inyo_jmw_aaw
-Rush Creek (Silver Lake),east,37.7847,-119.1283,7200,Rush Creek; Donohue/Lyell country,Ansel Adams Wilderness,Inyo NF,inyo_jmw_aaw
-Agnew Meadows,east,37.6819,-119.0847,8300,Ansel Adams Wilderness; Ritter/Banner/Davis,Ansel Adams Wilderness,Inyo NF,inyo_jmw_aaw
-Minaret Vista,east,37.6567,-119.0613,9256,Accesses San Joaquin Mountain via 4x4 road toward Deadman Pass; distinct from Agnew Meadows down in the valley.,Ansel Adams Wilderness,Inyo NF,inyo_jmw_aaw
-Laurel Lakes (Sherwin Creek),east,37.6235,-118.9066,8000,Rough road off Sherwin Creek Rd south of Mammoth Lakes; approach to Bloody Mountain.,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Duck Pass (Mammoth),east,37.5897,-118.9869,9100,Coldwater / Duck Pass; Mammoth Crest,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Convict Lake,east,37.5839,-118.8569,7600,Convict Creek; Morrison/Baldwin,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Hilton Creek,east,37.5633,-118.7568,7237,"TH off Hilton Creek Rd south of McGee Creek near Crowley Lake; Davis Lakes, Mt. Morgan (N), Mt. Stanford (N).",John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-McGee Creek,east,37.5519,-118.7964,8000,McGee Pass; Red Slate/Red and White,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Rock Creek Lake (Tamarack Lakes),east,37.4436,-118.7261,9700,"East shore of Rock Creek Lake, below Mosquito Flat; primary access for Mount Morgan (S).",John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Mosquito Flat (Rock Creek),east,37.4356,-118.7472,10250,Mono Pass & Little Lakes Valley; Abbot/Mills,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Pine Creek,east,37.3736,-118.6986,7400,Pine Creek Pass; Royce/Merriam/Bear Creek Spire,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Horton Lakes (Buttermilk),east,37.3121,-118.6249,8081,"Off Buttermilk Rd west of Bishop; Basin Mountain, Mount Tom, Four Gables.",John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-North Lake (Piute/Lamarck),east,37.2294,-118.6275,9300,Piute Pass & Lamarck Lakes; Humphreys/Darwin,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Lake Sabrina (Sabrina Basin),east,37.2153,-118.6133,9100,Sabrina Basin; Thompson/Haeckel,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-South Lake (Bishop Pass),east,37.1686,-118.5664,9800,Bishop Pass; Goode/Agassiz/Thunderbolt,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Big Pine Creek (Glacier Lodge),east,37.1239,-118.4392,7800,Palisades; Sill/Middle Palisade/North Pal,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Birch Lake (McMurry Meadows Rd),east,37.0874,-118.3555,6548,"Unpaved road off Glacier Lodge Rd near Big Pine; Birch Mountain, The Thumb, Mount Bolton-Brown.",John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Red Lake (McMurry Meadows),east,37.0366,-118.36,6500,"Reached via dirt roads from Big Pine; Mount Tinemaha, Split Mountain, Mount Prater.",John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Taboose Pass,east,37.0086,-118.3275,5400,Taboose Pass; steep eastern approach,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Sawmill Pass,east,36.9333,-118.3667,4600,Sawmill Pass; low desert start,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Armstrong Canyon,east,36.9,-118.33,5500,"Passenger-car TH ~5.5mi up the road past the Sawmill Pass TH fork; Mt. Pinchot, Mt. Perkins, Colosseum Mtn. Coords approximate — unverified.",John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Baxter Pass,east,36.84485,-118.29763,6000,"Distinct TH off North Oak Creek/Fish Hatchery Rd, between Onion Valley and Sawmill Pass; Mt. Baxter, Black Mtn, Diamond Peak.",John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Onion Valley (Kearsarge Pass),east,36.7713,-118.3401,9200,Kearsarge Pass; University/Gould/Rixford,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Pinyon Creek,east,36.751,-118.322,6800,Via Pinyon Creek Rd off Onion Valley Rd near Independence; use trail to Mount Bradley. Coords approximate — unverified.,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Shepherd Pass,east,36.6917,-118.2967,6300,"Primary access for Mount Williamson and Mount Tyndall, off Foothill Road near Independence. Sits in the Symmes Creek drainage/canyon -- ""Symmes Creek"" is a road junction/sign passed en route (keep left there and continue ~1.9 mi further to the separately signed Shepherd Pass Trailhead), not this trailhead's own name; a lower, separate stock trailhead also exists nearby. Confirmed 2026-09-11 via climber.org driving directions and Natural Atlas -- previously mislabeled ""Symmes Creek (Shepherd Pass)"" in this dataset.",John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Whitney Portal,east,36.5861,-118.2414,8360,Mount Whitney Trail & Mountaineers Route,Mount Whitney Zone (John Muir Wilderness),Inyo NF,whitney_zone
-Granite View Drive (Turtle Creek),east,36.555,-118.195,6800,Spur near Turtle Creek Campground off Horseshoe Meadows Rd; alternate approach to Mount LeConte/Mount Corcoran. Coords approximate — unverified.,John Muir Wilderness,Inyo NF,inyo_jmw_aaw
-Horseshoe Meadows (Cottonwood),east,36.4506,-118.1697,10040,Cottonwood Lakes & Cottonwood Pass; far southern Sierra,Golden Trout Wilderness,Inyo NF,inyo_gtw
-Cartago Canal,east,36.318,-118.035,3700,Crosses the LA Aqueduct near Cartago on Hwy 395; primary access for Cartago Peak.,South Sierra Wilderness,Sequoia NF,gtw_free
-Sage Flat (Olancha),east,36.2042,-118.0758,5600,Olancha Peak / southern Sierra,South Sierra Wilderness,Sequoia NF,gtw_free
-Blackrock/Monache Road (21S36),east,36.128,-118.26,7900,"USFS road 21S36 (Monache Jeep Rd) off 21S03 near Black Rock Station; Smith Mountain, Crag Peak. Coords approximate — unverified.",Golden Trout Wilderness,Sequoia NF,gtw_free
-Big Meadow (Kern Plateau),east,36.05,-118.35,7600,"FS TH off Sherman Pass Rd on the Kern Plateau; Cannell Peak, Taylor Dome. Coords approximate — unverified.",Golden Trout Wilderness,Sequoia NF,gtw_free
-Cannell Meadow (Kernville),east,35.9901,-118.36642,2650,TH on Sierra Way north of Kernville; Cannell Trail to the Sirretta Peak area.,South Sierra Wilderness,Sequoia NF,gtw_free
-Kennedy Meadows (South),east,35.9869,-118.13,6150,PCT; Kern Plateau south (Lamont/Sirretta),Golden Trout Wilderness,Sequoia NF,gtw_free
-Canebrake (Pilot Knob),east,35.729,-118.209,3200,Public access off Hwy 178 near Onyx for Pilot Knob (S); crosses land with restricted access. Coords approximate — unverified.,,Sequoia NF,none
-Indian Wells Canyon (Owens Peak),east,35.7155,-117.9742,3300,"Owens Peak Wilderness TH off Indian Wells Canyon Rd from Hwy 14, south of Walker Pass.",Owens Peak Wilderness,BLM/Sequoia NF,none
-Walker Pass,east,35.6597,-118.0289,5246,Hwy 178 PCT; far southern Sierra (Owens/Morris/Spanish Needle),Owens Peak Wilderness,BLM/Sequoia NF,none
-Ebbetts Pass,crest,38.5453,-119.8083,8730,Hwy 4; Highland/Reynolds,Carson-Iceberg Wilderness,Humboldt-Toiyabe NF,toiyabe_free
-Disaster Creek (Clark Fork),crest,38.49506,-119.78722,6600,"End of Clark Fork Rd off Hwy 108, Carson-Iceberg Wilderness; Disaster Peak.",Carson-Iceberg Wilderness,Stanislaus NF,stanislaus_free
-St. Mary's Pass,crest,38.335,-119.651,9500,USFS TH 0.8mi west of Sonora Pass on Hwy 108; Stanislaus Peak.,Carson-Iceberg Wilderness,Stanislaus NF,stanislaus_free
-Sonora Pass,crest,38.3278,-119.6364,9624,Hwy 108; Leavitt/Stanislaus,Carson-Iceberg Wilderness,Stanislaus NF,stanislaus_free
-Tuolumne Meadows,crest,37.8736,-119.3375,8600,Yosemite high country; Cathedral/Lyell,Yosemite Wilderness,Yosemite NP,yosemite
-Sunrise Lakes (Tenaya Lake),crest,37.8008,-119.4585,8150,West end of Tenaya Lake on Tioga Rd; primary access for Clouds Rest.,Yosemite Wilderness,Yosemite NP,yosemite
-Lakes Basin Campground,west,39.7007,-120.6588,6503,"Off Gold Lake Hwy near Graeagle, far northern Sierra; Long Lake/Bear Lakes Trail to Mount Elwell.",,Plumas NF,none
-Sierra Buttes,west,39.5917,-120.6431,6200,Lakes Basin; Sierra Buttes,,Tahoe NF,none
-Mount Lola,west,39.4493,-120.3488,7769,On Henness Pass Rd north of Independence Lake; distinct from Castle Peak (Donner) trailhead.,,Tahoe NF,none
-Meadow Lake Road (Tollhouse Lake),west,39.43,-120.58,6800,"Access for English Mountain via Meadow Lake/Bowman Lake Rd area, Tahoe NF. Coords approximate — unverified.",,Tahoe NF,none
-Castle Peak (Donner),west,39.3439,-120.3486,7200,I-80 Boreal; Castle/Basin Peak,,Tahoe NF,none
-Squaw Valley (Granite Chief),west,39.1975,-120.2853,6200,Granite Chief Trail starts at the Olympic Valley fire station parking area; Granite Chief.,Granite Chief Wilderness,Tahoe NF,none
-Mount Tallac,west,38.9275,-120.0641,6480,Off Hwy 89 near Fallen Leaf Lake; standard approach to Mount Tallac.,Desolation Wilderness,Eldorado NF/LTBMU,desolation
-Fountain Place (Freel Peak),west,38.87,-119.935,7000,"End of Fountain Place Rd, South Lake Tahoe; Armstrong Pass Connector to Tahoe Rim Trail for Freel Peak. Coords approximate — unverified.",,LTBMU,none
-Wrights Lake (Rockbound),west,38.8427,-120.2327,6967,Rockbound Trail from Wrights Lake Campground; route to Dicks Peak via Rockbound Valley/Dicks Pass.,Desolation Wilderness,Eldorado NF,desolation
-Lyons Creek,west,38.8103,-120.2394,6706,"Off Wrights Lake Rd near Hwy 50, Desolation Wilderness; standard approach to Pyramid Peak.",Desolation Wilderness,Eldorado NF,desolation
-Carson Pass,west,38.6944,-120.0006,8574,Hwy 88; Round Top/Elephants Back,Mokelumne Wilderness,Eldorado NF,cpma
-Woods Lake,west,38.6799,-120.0326,8200,Woods Lake Campground off Hwy 88 near Carson Pass; Round Top via Woods Lake-Winnemucca-Round Top Lake trail.,Mokelumne Wilderness,Eldorado NF,cpma
-Tanglefoot (Bear River Reservoir),west,38.52,-120.19,7000,Off FS Road 8N14 south of Bear River Reservoir via Hwy 88; Mokelumne Peak. Coords approximate — unverified.,Mokelumne Wilderness,Eldorado NF,mokelumne_free
-Gianelli Cabin,west,38.196,-119.784,8600,Via Pinecrest Lake Rd/Dodge Ridge Rd; Huckleberry Trail into Emigrant Wilderness for Black Hawk Mountain. Coords approximate — unverified.,Emigrant Wilderness,Stanislaus NF,stanislaus_free
-Hetch Hetchy,west,37.9469,-119.7872,3800,Northern Yosemite; Tower Peak country,Yosemite Wilderness,Yosemite NP,yosemite
-Mono Meadow,west,37.6713,-119.5851,7300,"South side of Glacier Point Road; access for Merced Peak, Mount Starr King, Mount Clark, Red Peak, Gray Peak.",Yosemite Wilderness,Yosemite NP,yosemite
-Isberg (Clover Meadow),west,37.517,-119.352,7100,Near Clover Meadow Ranger Station via Beasore/Minarets Rd; Isberg Pass Trail for Foerster Peak. Coords approximate — unverified.,Ansel Adams Wilderness,Sierra NF,sierra_nf
-Lake Edison (Vermilion),west,37.3772,-119.0208,7650,Mono Creek; Seven Gables/Gabbot,John Muir Wilderness,Sierra NF,sierra_nf
-Florence Lake,west,37.2719,-118.9719,7328,Blayney/MTR; south Fork San Joaquin,John Muir Wilderness,Sierra NF,sierra_nf
-Courtright Reservoir,west,37.0814,-118.9706,8180,Maxson; Dusy Basin from the west,John Muir Wilderness,Sierra NF,sierra_nf
-Wishon Reservoir,west,37.0086,-118.9728,6500,Woodchuck/Crown Valley; west slope,John Muir Wilderness,Sierra NF,sierra_nf
-Rancheria,west,36.97548,-118.95607,7600,A few miles past Wishon Reservoir via FR 11S31; primary access to Tehipite Dome.,John Muir Wilderness,Sierra NF,sierra_nf
-Deer Cove,west,36.80385,-118.71378,4400,On Hwy 180 near Grizzly Falls; approach to Mount Harrington via Deer Cove Trail through Monarch Wilderness.,Monarch Wilderness,Sequoia NF,gtw_free
-Roads End (Cedar Grove),west,36.7947,-118.5831,5035,Bubbs Creek & Copper Creek; Kings Canyon,Sequoia-Kings Canyon Wilderness,Kings Canyon NP,seki
-Marvin Pass,west,36.741,-118.83,8000,"Via Big Meadows Rd, Jennie Lakes Wilderness; Whaleback, Glacier Ridge. Coords approximate — unverified.",Jennie Lakes Wilderness,Sequoia NF,none
-Lodgepole (Twin Lakes),west,36.6058,-118.7261,6720,"Twin Lakes/Silliman Pass TH at Lodgepole Campground, Sequoia NP, ~2mi from Wolverton; Mount Silliman.",Sequoia-Kings Canyon Wilderness,Sequoia NP,seki
-Wolverton (Sequoia),west,36.5969,-118.7344,7250,Alta/Pear Lake; Sequoia,Sequoia-Kings Canyon Wilderness,Sequoia NP,seki
-Crescent Meadow,west,36.5547,-118.7494,6700,High Sierra Trail; Sequoia,Sequoia-Kings Canyon Wilderness,Sequoia NP,seki
-Mineral King,west,36.4527,-118.5969,7830,Sawtooth/Timber Gap/Farewell; Sequoia south,Sequoia-Kings Canyon Wilderness,Sequoia NP,seki
-South Fork Kaweah (Cahoon Gap),west,36.435,-118.746,3650,South Fork Campground/TH near Three Rivers; Cahoon Gap Trail to Homers Nose. Coords approximate — unverified.,Sequoia-Kings Canyon Wilderness,Sequoia NP,seki
-Hidden Falls (Moses Mountain),west,36.2591,-118.6615,6174,Tule River/Mountain Home area; access for Moses Mountain. Post-2020 Castle Fire access may vary — unverified.,Golden Trout Wilderness,Sequoia NF,gtw_free
-Shake Camp (Mountain Home),west,36.2306,-118.7326,6600,"Mountain Home Demonstration State Forest east of Porterville; North Maggie Mountain, Moses Mountain. Coords approximate — unverified.",Golden Trout Wilderness,Sequoia NF,gtw_free
-Jerkey Meadow,west,36.1824,-118.4785,6800,"End of Lloyd Meadow Rd, Golden Trout Wilderness west boundary; Angora Mountain, Kennedy Mountain, Coyote Peaks.",Golden Trout Wilderness,Sequoia NF,gtw_free
-Del Valle (Lichen Bark),east,37.598,-121.699,,"Lichen Bark Parking Area, the northernmost lot near Ardilla Group Camp -- the actual Ohlone Wilderness Trail trailhead within Del Valle Regional Park, distinct from the park's other lots (marina, swim beach, campground loops), which do not start this trail. Coordinates approximate -- unverified.",Ohlone Wilderness,East Bay Regional Park District,none
-Stanford Ave Staging Area,west,37.5043026,-121.9086556,,"West/Fremont end of the Ohlone Wilderness Trail, serving Mission Peak. Heavily used weekends/holidays. Overnight parking is not allowed without a permit obtained while making an Ohlone Wilderness camping reservation; nearby Ohlone College access is day-use only, no overnight parking.",Mission Peak Regional Preserve,East Bay Regional Park District,none
+name,side,latitude,longitude,elevation_ft,notes,wilderness_area,land_agency,permit_group,park
+Adams Peak (Constantia),east,39.91,-120.15,6850.0,"Road 24N22X off Constantia Rd near Doyle; west-side approach to Adams Peak, distinct from Frenchman Lake. Coords approximate — unverified.",,Plumas NF,none,
+Frenchman Lake,east,39.8989,-120.19,5600.0,Far northern Sierra; Adams Peak / Dixie Mountain,,Plumas NF,none,
+Mount Rose,east,39.3139,-119.8975,8900.0,Hwy 431; Mount Rose,Mount Rose Wilderness,Humboldt-Toiyabe NF,none,
+Leavitt Meadows,east,38.3358,-119.5519,7200.0,West Walker; Leavitt/Tower country,Hoover Wilderness,Humboldt-Toiyabe NF,hoover,
+Twin Lakes (Bridgeport),east,38.1456,-119.3733,7100.0,Mono Village; Matterhorn/Sawtooth Ridge,Hoover Wilderness,Humboldt-Toiyabe NF,hoover,
+Virginia Lakes,east,38.048,-119.2652,9800.0,"Road's end 6mi west of Conway Summit off Hwy 395; Dunderberg Peak, Excelsior Mountain, Virginia Peak, Twin Peaks.",Hoover Wilderness,Humboldt-Toiyabe NF,hoover,
+Lundy Canyon,east,38.0024,-119.2912,7800.0,"North of Lee Vining via Lundy Lake Rd, past Lundy Lake Resort; north-side approach to Mount Warren via Lake Canyon Trail.",Hoover Wilderness,Inyo NF,inyo_hoover_nonquota,
+Saddlebag Lake,east,37.9664,-119.2722,10100.0,20 Lakes Basin; Conness/North Peak,Hoover Wilderness,Inyo NF,inyo_hoover_nonquota,
+Tioga Pass,east,37.9106,-119.2575,9945.0,Mount Dana / Gaylor; Yosemite east entrance,Yosemite Wilderness,Yosemite NP,yosemite,
+Walker Lake (Bloody Canyon),east,37.8736,-119.1583,7500.0,Mono Pass (Yosemite); Gibbs/Lewis,Ansel Adams Wilderness,Inyo NF,inyo_jmw_aaw,
+Rush Creek (Silver Lake),east,37.7847,-119.1283,7200.0,Rush Creek; Donohue/Lyell country,Ansel Adams Wilderness,Inyo NF,inyo_jmw_aaw,
+Agnew Meadows,east,37.6819,-119.0847,8300.0,Ansel Adams Wilderness; Ritter/Banner/Davis,Ansel Adams Wilderness,Inyo NF,inyo_jmw_aaw,
+Minaret Vista,east,37.6567,-119.0613,9256.0,Accesses San Joaquin Mountain via 4x4 road toward Deadman Pass; distinct from Agnew Meadows down in the valley.,Ansel Adams Wilderness,Inyo NF,inyo_jmw_aaw,
+Laurel Lakes (Sherwin Creek),east,37.6235,-118.9066,8000.0,Rough road off Sherwin Creek Rd south of Mammoth Lakes; approach to Bloody Mountain.,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Duck Pass (Mammoth),east,37.5897,-118.9869,9100.0,Coldwater / Duck Pass; Mammoth Crest,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Convict Lake,east,37.5839,-118.8569,7600.0,Convict Creek; Morrison/Baldwin,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Hilton Creek,east,37.5633,-118.7568,7237.0,"TH off Hilton Creek Rd south of McGee Creek near Crowley Lake; Davis Lakes, Mt. Morgan (N), Mt. Stanford (N).",John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+McGee Creek,east,37.5519,-118.7964,8000.0,McGee Pass; Red Slate/Red and White,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Rock Creek Lake (Tamarack Lakes),east,37.4436,-118.7261,9700.0,"East shore of Rock Creek Lake, below Mosquito Flat; primary access for Mount Morgan (S).",John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Mosquito Flat (Rock Creek),east,37.4356,-118.7472,10250.0,Mono Pass & Little Lakes Valley; Abbot/Mills,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Pine Creek,east,37.3736,-118.6986,7400.0,Pine Creek Pass; Royce/Merriam/Bear Creek Spire,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Horton Lakes (Buttermilk),east,37.3121,-118.6249,8081.0,"Off Buttermilk Rd west of Bishop; Basin Mountain, Mount Tom, Four Gables.",John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+North Lake (Piute/Lamarck),east,37.2294,-118.6275,9300.0,Piute Pass & Lamarck Lakes; Humphreys/Darwin,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Lake Sabrina (Sabrina Basin),east,37.2153,-118.6133,9100.0,Sabrina Basin; Thompson/Haeckel,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+South Lake (Bishop Pass),east,37.1686,-118.5664,9800.0,Bishop Pass; Goode/Agassiz/Thunderbolt,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Big Pine Creek (Glacier Lodge),east,37.1239,-118.4392,7800.0,Palisades; Sill/Middle Palisade/North Pal,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Birch Lake (McMurry Meadows Rd),east,37.0874,-118.3555,6548.0,"Unpaved road off Glacier Lodge Rd near Big Pine; Birch Mountain, The Thumb, Mount Bolton-Brown.",John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Red Lake (McMurry Meadows),east,37.0366,-118.36,6500.0,"Reached via dirt roads from Big Pine; Mount Tinemaha, Split Mountain, Mount Prater.",John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Taboose Pass,east,37.0086,-118.3275,5400.0,Taboose Pass; steep eastern approach,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Sawmill Pass,east,36.9333,-118.3667,4600.0,Sawmill Pass; low desert start,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Armstrong Canyon,east,36.9,-118.33,5500.0,"Passenger-car TH ~5.5mi up the road past the Sawmill Pass TH fork; Mt. Pinchot, Mt. Perkins, Colosseum Mtn. Coords approximate — unverified.",John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Baxter Pass,east,36.84485,-118.29763,6000.0,"Distinct TH off North Oak Creek/Fish Hatchery Rd, between Onion Valley and Sawmill Pass; Mt. Baxter, Black Mtn, Diamond Peak.",John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Onion Valley (Kearsarge Pass),east,36.7713,-118.3401,9200.0,Kearsarge Pass; University/Gould/Rixford,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Pinyon Creek,east,36.751,-118.322,6800.0,Via Pinyon Creek Rd off Onion Valley Rd near Independence; use trail to Mount Bradley. Coords approximate — unverified.,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Shepherd Pass,east,36.6917,-118.2967,6300.0,"Primary access for Mount Williamson and Mount Tyndall, off Foothill Road near Independence. Sits in the Symmes Creek drainage/canyon -- ""Symmes Creek"" is a road junction/sign passed en route (keep left there and continue ~1.9 mi further to the separately signed Shepherd Pass Trailhead), not this trailhead's own name; a lower, separate stock trailhead also exists nearby. Confirmed 2026-09-11 via climber.org driving directions and Natural Atlas -- previously mislabeled ""Symmes Creek (Shepherd Pass)"" in this dataset.",John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Whitney Portal,east,36.5861,-118.2414,8360.0,Mount Whitney Trail & Mountaineers Route,Mount Whitney Zone (John Muir Wilderness),Inyo NF,whitney_zone,
+Granite View Drive (Turtle Creek),east,36.555,-118.195,6800.0,Spur near Turtle Creek Campground off Horseshoe Meadows Rd; alternate approach to Mount LeConte/Mount Corcoran. Coords approximate — unverified.,John Muir Wilderness,Inyo NF,inyo_jmw_aaw,
+Horseshoe Meadows (Cottonwood),east,36.4506,-118.1697,10040.0,Cottonwood Lakes & Cottonwood Pass; far southern Sierra,Golden Trout Wilderness,Inyo NF,inyo_gtw,
+Cartago Canal,east,36.318,-118.035,3700.0,Crosses the LA Aqueduct near Cartago on Hwy 395; primary access for Cartago Peak.,South Sierra Wilderness,Sequoia NF,gtw_free,
+Sage Flat (Olancha),east,36.2042,-118.0758,5600.0,Olancha Peak / southern Sierra,South Sierra Wilderness,Sequoia NF,gtw_free,
+Blackrock/Monache Road (21S36),east,36.128,-118.26,7900.0,"USFS road 21S36 (Monache Jeep Rd) off 21S03 near Black Rock Station; Smith Mountain, Crag Peak. Coords approximate — unverified.",Golden Trout Wilderness,Sequoia NF,gtw_free,
+Big Meadow (Kern Plateau),east,36.05,-118.35,7600.0,"FS TH off Sherman Pass Rd on the Kern Plateau; Cannell Peak, Taylor Dome. Coords approximate — unverified.",Golden Trout Wilderness,Sequoia NF,gtw_free,
+Cannell Meadow (Kernville),east,35.9901,-118.36642,2650.0,TH on Sierra Way north of Kernville; Cannell Trail to the Sirretta Peak area.,South Sierra Wilderness,Sequoia NF,gtw_free,
+Kennedy Meadows (South),east,35.9869,-118.13,6150.0,PCT; Kern Plateau south (Lamont/Sirretta),Golden Trout Wilderness,Sequoia NF,gtw_free,
+Canebrake (Pilot Knob),east,35.729,-118.209,3200.0,Public access off Hwy 178 near Onyx for Pilot Knob (S); crosses land with restricted access. Coords approximate — unverified.,,Sequoia NF,none,
+Indian Wells Canyon (Owens Peak),east,35.7155,-117.9742,3300.0,"Owens Peak Wilderness TH off Indian Wells Canyon Rd from Hwy 14, south of Walker Pass.",Owens Peak Wilderness,BLM/Sequoia NF,none,
+Walker Pass,east,35.6597,-118.0289,5246.0,Hwy 178 PCT; far southern Sierra (Owens/Morris/Spanish Needle),Owens Peak Wilderness,BLM/Sequoia NF,none,
+Ebbetts Pass,crest,38.5453,-119.8083,8730.0,Hwy 4; Highland/Reynolds,Carson-Iceberg Wilderness,Humboldt-Toiyabe NF,toiyabe_free,
+Disaster Creek (Clark Fork),crest,38.49506,-119.78722,6600.0,"End of Clark Fork Rd off Hwy 108, Carson-Iceberg Wilderness; Disaster Peak.",Carson-Iceberg Wilderness,Stanislaus NF,stanislaus_free,
+St. Mary's Pass,crest,38.335,-119.651,9500.0,USFS TH 0.8mi west of Sonora Pass on Hwy 108; Stanislaus Peak.,Carson-Iceberg Wilderness,Stanislaus NF,stanislaus_free,
+Sonora Pass,crest,38.3278,-119.6364,9624.0,Hwy 108; Leavitt/Stanislaus,Carson-Iceberg Wilderness,Stanislaus NF,stanislaus_free,
+Tuolumne Meadows,crest,37.8736,-119.3375,8600.0,Yosemite high country; Cathedral/Lyell,Yosemite Wilderness,Yosemite NP,yosemite,
+Sunrise Lakes (Tenaya Lake),crest,37.8008,-119.4585,8150.0,West end of Tenaya Lake on Tioga Rd; primary access for Clouds Rest.,Yosemite Wilderness,Yosemite NP,yosemite,
+Lakes Basin Campground,west,39.7007,-120.6588,6503.0,"Off Gold Lake Hwy near Graeagle, far northern Sierra; Long Lake/Bear Lakes Trail to Mount Elwell.",,Plumas NF,none,
+Sierra Buttes,west,39.5917,-120.6431,6200.0,Lakes Basin; Sierra Buttes,,Tahoe NF,none,
+Mount Lola,west,39.4493,-120.3488,7769.0,On Henness Pass Rd north of Independence Lake; distinct from Castle Peak (Donner) trailhead.,,Tahoe NF,none,
+Meadow Lake Road (Tollhouse Lake),west,39.43,-120.58,6800.0,"Access for English Mountain via Meadow Lake/Bowman Lake Rd area, Tahoe NF. Coords approximate — unverified.",,Tahoe NF,none,
+Castle Peak (Donner),west,39.3439,-120.3486,7200.0,I-80 Boreal; Castle/Basin Peak,,Tahoe NF,none,
+Squaw Valley (Granite Chief),west,39.1975,-120.2853,6200.0,Granite Chief Trail starts at the Olympic Valley fire station parking area; Granite Chief.,Granite Chief Wilderness,Tahoe NF,none,
+Mount Tallac,west,38.9275,-120.0641,6480.0,Off Hwy 89 near Fallen Leaf Lake; standard approach to Mount Tallac.,Desolation Wilderness,Eldorado NF/LTBMU,desolation,
+Fountain Place (Freel Peak),west,38.87,-119.935,7000.0,"End of Fountain Place Rd, South Lake Tahoe; Armstrong Pass Connector to Tahoe Rim Trail for Freel Peak. Coords approximate — unverified.",,LTBMU,none,
+Wrights Lake (Rockbound),west,38.8427,-120.2327,6967.0,Rockbound Trail from Wrights Lake Campground; route to Dicks Peak via Rockbound Valley/Dicks Pass.,Desolation Wilderness,Eldorado NF,desolation,
+Lyons Creek,west,38.8103,-120.2394,6706.0,"Off Wrights Lake Rd near Hwy 50, Desolation Wilderness; standard approach to Pyramid Peak.",Desolation Wilderness,Eldorado NF,desolation,
+Carson Pass,west,38.6944,-120.0006,8574.0,Hwy 88; Round Top/Elephants Back,Mokelumne Wilderness,Eldorado NF,cpma,
+Woods Lake,west,38.6799,-120.0326,8200.0,Woods Lake Campground off Hwy 88 near Carson Pass; Round Top via Woods Lake-Winnemucca-Round Top Lake trail.,Mokelumne Wilderness,Eldorado NF,cpma,
+Tanglefoot (Bear River Reservoir),west,38.52,-120.19,7000.0,Off FS Road 8N14 south of Bear River Reservoir via Hwy 88; Mokelumne Peak. Coords approximate — unverified.,Mokelumne Wilderness,Eldorado NF,mokelumne_free,
+Gianelli Cabin,west,38.196,-119.784,8600.0,Via Pinecrest Lake Rd/Dodge Ridge Rd; Huckleberry Trail into Emigrant Wilderness for Black Hawk Mountain. Coords approximate — unverified.,Emigrant Wilderness,Stanislaus NF,stanislaus_free,
+Hetch Hetchy,west,37.9469,-119.7872,3800.0,Northern Yosemite; Tower Peak country,Yosemite Wilderness,Yosemite NP,yosemite,
+Mono Meadow,west,37.6713,-119.5851,7300.0,"South side of Glacier Point Road; access for Merced Peak, Mount Starr King, Mount Clark, Red Peak, Gray Peak.",Yosemite Wilderness,Yosemite NP,yosemite,
+Isberg (Clover Meadow),west,37.517,-119.352,7100.0,Near Clover Meadow Ranger Station via Beasore/Minarets Rd; Isberg Pass Trail for Foerster Peak. Coords approximate — unverified.,Ansel Adams Wilderness,Sierra NF,sierra_nf,
+Lake Edison (Vermilion),west,37.3772,-119.0208,7650.0,Mono Creek; Seven Gables/Gabbot,John Muir Wilderness,Sierra NF,sierra_nf,
+Florence Lake,west,37.2719,-118.9719,7328.0,Blayney/MTR; south Fork San Joaquin,John Muir Wilderness,Sierra NF,sierra_nf,
+Courtright Reservoir,west,37.0814,-118.9706,8180.0,Maxson; Dusy Basin from the west,John Muir Wilderness,Sierra NF,sierra_nf,
+Wishon Reservoir,west,37.0086,-118.9728,6500.0,Woodchuck/Crown Valley; west slope,John Muir Wilderness,Sierra NF,sierra_nf,
+Rancheria,west,36.97548,-118.95607,7600.0,A few miles past Wishon Reservoir via FR 11S31; primary access to Tehipite Dome.,John Muir Wilderness,Sierra NF,sierra_nf,
+Deer Cove,west,36.80385,-118.71378,4400.0,On Hwy 180 near Grizzly Falls; approach to Mount Harrington via Deer Cove Trail through Monarch Wilderness.,Monarch Wilderness,Sequoia NF,gtw_free,
+Roads End (Cedar Grove),west,36.7947,-118.5831,5035.0,Bubbs Creek & Copper Creek; Kings Canyon,Sequoia-Kings Canyon Wilderness,Kings Canyon NP,seki,
+Marvin Pass,west,36.741,-118.83,8000.0,"Via Big Meadows Rd, Jennie Lakes Wilderness; Whaleback, Glacier Ridge. Coords approximate — unverified.",Jennie Lakes Wilderness,Sequoia NF,none,
+Lodgepole (Twin Lakes),west,36.6058,-118.7261,6720.0,"Twin Lakes/Silliman Pass TH at Lodgepole Campground, Sequoia NP, ~2mi from Wolverton; Mount Silliman.",Sequoia-Kings Canyon Wilderness,Sequoia NP,seki,
+Wolverton (Sequoia),west,36.5969,-118.7344,7250.0,Alta/Pear Lake; Sequoia,Sequoia-Kings Canyon Wilderness,Sequoia NP,seki,
+Crescent Meadow,west,36.5547,-118.7494,6700.0,High Sierra Trail; Sequoia,Sequoia-Kings Canyon Wilderness,Sequoia NP,seki,
+Mineral King,west,36.4527,-118.5969,7830.0,Sawtooth/Timber Gap/Farewell; Sequoia south,Sequoia-Kings Canyon Wilderness,Sequoia NP,seki,
+South Fork Kaweah (Cahoon Gap),west,36.435,-118.746,3650.0,South Fork Campground/TH near Three Rivers; Cahoon Gap Trail to Homers Nose. Coords approximate — unverified.,Sequoia-Kings Canyon Wilderness,Sequoia NP,seki,
+Hidden Falls (Moses Mountain),west,36.2591,-118.6615,6174.0,Tule River/Mountain Home area; access for Moses Mountain. Post-2020 Castle Fire access may vary — unverified.,Golden Trout Wilderness,Sequoia NF,gtw_free,
+Shake Camp (Mountain Home),west,36.2306,-118.7326,6600.0,"Mountain Home Demonstration State Forest east of Porterville; North Maggie Mountain, Moses Mountain. Coords approximate — unverified.",Golden Trout Wilderness,Sequoia NF,gtw_free,
+Jerkey Meadow,west,36.1824,-118.4785,6800.0,"End of Lloyd Meadow Rd, Golden Trout Wilderness west boundary; Angora Mountain, Kennedy Mountain, Coyote Peaks.",Golden Trout Wilderness,Sequoia NF,gtw_free,
+Del Valle (Lichen Bark),east,37.598,-121.699,,"Lichen Bark Parking Area, the northernmost lot near Ardilla Group Camp -- the actual Ohlone Wilderness Trail trailhead within Del Valle Regional Park, distinct from the park's other lots (marina, swim beach, campground loops), which do not start this trail. Coordinates approximate -- unverified.",Ohlone Wilderness,East Bay Regional Park District,none,Del Valle Regional Park
+Stanford Ave Staging Area,west,37.5043026,-121.9086556,,"West/Fremont end of the Ohlone Wilderness Trail, serving Mission Peak. Heavily used weekends/holidays. Overnight parking is not allowed without a permit obtained while making an Ohlone Wilderness camping reservation; nearby Ohlone College access is day-use only, no overnight parking.",Mission Peak Regional Preserve,East Bay Regional Park District,none,Mission Peak Regional Preserve

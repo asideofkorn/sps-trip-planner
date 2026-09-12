@@ -36,6 +36,7 @@ from .access import ApproachRoute
 from .camping import Campground, Campsite
 from .model import Cluster, Peak, Trailhead
 from .approach import choose_trailhead
+from .park_access import ParkAccess
 from .permits import (
     ClusterPermitInfo,
     PermitRule,
@@ -43,7 +44,26 @@ from .permits import (
     format_permit_entry_body,
 )
 from .reports import OpenQuestion, open_questions
-from .water import WaterSource, WaterSourceLogEntry
+from .water import WaterSource, WaterSourceLogEntry, latest_status_by_source
+
+
+@dataclass
+class FacilitiesInfo:
+    """What IS known about the resolved trailhead's nearby facilities --
+    the counterpart to ``PlanResult.open_questions``, which is what isn't.
+
+    Linked to the trailhead via ``Trailhead.park`` (campgrounds/park_access)
+    and exact ``WaterSource.location`` match (water sources) -- the same
+    conservative linking :func:`wayproof.reports.open_questions` uses, so a
+    trailhead with no known ``park`` (most Sierra trailheads today) simply
+    gets no campground/park-access facts here, rather than a guessed one.
+    """
+
+    water_sources: List[WaterSource] = field(default_factory=list)
+    water_status: Dict[str, WaterSourceLogEntry] = field(default_factory=dict)
+    campgrounds: List[Campground] = field(default_factory=list)
+    campsites: List[Campsite] = field(default_factory=list)
+    park_access: Optional[ParkAccess] = None
 
 
 @dataclass
@@ -59,6 +79,7 @@ class PlanResult:
     permit_entries: List[ClusterPermitInfo] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)
     open_questions: List[OpenQuestion] = field(default_factory=list)
+    facilities: Optional[FacilitiesInfo] = None
 
     def to_dict(self) -> dict:
         d: dict = {
@@ -102,6 +123,54 @@ class PlanResult:
                  "question": q.question, "context": q.context}
                 for q in self.open_questions
             ]
+        if self.facilities:
+            fac = self.facilities
+            facilities_d: dict = {}
+            if fac.water_sources:
+                facilities_d["water_sources"] = [
+                    {
+                        "name": w.name,
+                        "type": w.type,
+                        "potable": w.potable,
+                        "status": (fac.water_status[w.name].observed_status
+                                   if w.name in fac.water_status else None),
+                        "status_checked_date": (fac.water_status[w.name].checked_date
+                                                 if w.name in fac.water_status else None),
+                        "status_source": (fac.water_status[w.name].source
+                                          if w.name in fac.water_status else None),
+                    }
+                    for w in fac.water_sources
+                ]
+            if fac.campgrounds:
+                facilities_d["campgrounds"] = [
+                    {
+                        "name": c.name,
+                        "reservation_method": c.reservation_method,
+                        "reservation_contact": c.reservation_contact,
+                        "fee_notes": c.fee_notes,
+                        "nightly_entry_cutoff": c.nightly_entry_cutoff,
+                        "campsites": [
+                            {"name": s.name, "capacity": s.capacity,
+                             "water_proximity": s.water_proximity,
+                             "restroom_proximity": s.restroom_proximity}
+                            for s in fac.campsites if s.campground == c.name
+                        ],
+                    }
+                    for c in fac.campgrounds
+                ]
+            if fac.park_access:
+                pa = fac.park_access
+                facilities_d["park_access"] = {
+                    "park": pa.park,
+                    "entrance_fee": pa.entrance_fee,
+                    "fee_conditions": pa.fee_conditions,
+                    "fee_exemptions": pa.fee_exemptions,
+                    "gate_open": pa.gate_open,
+                    "gate_close": pa.gate_close,
+                    "gate_hours_conditions": pa.gate_hours_conditions,
+                }
+            if facilities_d:
+                d["facilities"] = facilities_d
         return d
 
 
@@ -116,6 +185,7 @@ def resolve_plan(
     water_source_log: Optional[Sequence[WaterSourceLogEntry]] = None,
     campgrounds: Optional[Sequence[Campground]] = None,
     campsites: Optional[Sequence[Campsite]] = None,
+    park_access: Optional[Sequence[ParkAccess]] = None,
     today: Optional[date] = None,
 ) -> PlanResult:
     """Resolve access and permit logistics for a specific, named set of objectives.
@@ -125,12 +195,16 @@ def resolve_plan(
     rather than raising -- a plan for a partially-known trip is more useful
     than none.
 
-    ``water_sources``/``water_source_log``/``campgrounds``/``campsites`` are
-    optional; when given, :func:`wayproof.reports.open_questions` derives
-    ``PlanResult.open_questions`` -- unconfirmed or missing facts relevant to
-    these specific objectives, e.g. "we don't have coordinates for this
-    trailhead's water source yet." This is the scavenger-hunt nudge: shown
-    exactly when someone is already planning to be at that location.
+    ``water_sources``/``water_source_log``/``campgrounds``/``campsites``/
+    ``park_access`` are optional; when given, they feed two different things:
+    :func:`wayproof.reports.open_questions` derives ``PlanResult.open_questions``
+    -- unconfirmed or missing facts relevant to these specific objectives,
+    e.g. "we don't have coordinates for this trailhead's water source yet"
+    (the scavenger-hunt nudge, shown exactly when someone is already
+    planning to be at that location) -- while ``PlanResult.facilities``
+    holds what IS already known and confirmed (a water source's last-checked
+    status, a nearby campground's reservation method, the park's entrance
+    fee), linked to the resolved trailhead the same conservative way.
     """
     by_lower = {p.name.strip().lower(): p for p in peaks}
     objectives: List[Peak] = []
@@ -192,8 +266,30 @@ def resolve_plan(
             water_source_log=water_source_log or [],
             campgrounds=campgrounds or [],
             campsites=campsites or [],
+            trailheads=trailheads,
+            park_access=park_access or [],
             peak_names=[p.name for p in objectives],
         )
+
+    facilities: Optional[FacilitiesInfo] = None
+    if trailhead is not None:
+        ws = [w for w in (water_sources or [])
+              if w.location and w.location.strip() == trailhead.name]
+        water_status = {
+            name: entry for name, entry in latest_status_by_source(water_source_log or []).items()
+            if name in {w.name for w in ws}
+        }
+        cgs = ([c for c in (campgrounds or []) if c.park == trailhead.park]
+               if trailhead.park else [])
+        cg_names = {c.name for c in cgs}
+        sites = [s for s in (campsites or []) if s.campground in cg_names]
+        pa = next((p for p in (park_access or []) if trailhead.park and p.park == trailhead.park),
+                  None)
+        if ws or cgs or sites or pa:
+            facilities = FacilitiesInfo(
+                water_sources=ws, water_status=water_status,
+                campgrounds=cgs, campsites=sites, park_access=pa,
+            )
 
     return PlanResult(
         requested_names=list(objective_names),
@@ -205,6 +301,7 @@ def resolve_plan(
         permit_entries=permit_entries,
         warnings=warnings,
         open_questions=questions,
+        facilities=facilities,
     )
 
 
@@ -231,6 +328,42 @@ def format_plan_summary(result: PlanResult) -> str:
     else:
         lines.append("  No trailhead data available.")
     lines.append("")
+
+    if result.facilities:
+        fac = result.facilities
+        lines.append("Facilities")
+        if fac.water_sources:
+            lines.append(f"  Water sources at {result.trailhead.name}:")
+            for w in fac.water_sources:
+                status = fac.water_status.get(w.name)
+                if status:
+                    lines.append(f"    - {w.name}: {status.observed_status} "
+                                 f"(checked {status.checked_date})")
+                else:
+                    lines.append(f"    - {w.name}: no availability check on file")
+        for c in fac.campgrounds:
+            lines.append(f"  Campground: {c.name}")
+            if c.reservation_method:
+                lines.append(f"    Reservation: {c.reservation_method}")
+            if c.fee_notes:
+                lines.append(f"    Fee: {c.fee_notes}")
+            if c.nightly_entry_cutoff:
+                lines.append(f"    Nightly entry cutoff: {c.nightly_entry_cutoff}")
+            sites = [s for s in fac.campsites if s.campground == c.name]
+            if sites:
+                lines.append(f"    Sites: {', '.join(f'{s.name} ({s.capacity})' for s in sites)}")
+        if fac.park_access:
+            pa = fac.park_access
+            lines.append(f"  Park access ({pa.park}):")
+            if pa.entrance_fee:
+                cond = f" ({pa.fee_conditions})" if pa.fee_conditions else ""
+                lines.append(f"    Entrance fee: {pa.entrance_fee}{cond}")
+            if pa.gate_open or pa.gate_close:
+                cond = f" ({pa.gate_hours_conditions})" if pa.gate_hours_conditions else ""
+                lines.append(f"    Gate hours: {pa.gate_open}-{pa.gate_close}{cond}")
+            if pa.fee_exemptions:
+                lines.append(f"    Fee exemptions: {pa.fee_exemptions}")
+        lines.append("")
 
     lines.append("Permit")
     if result.permit_entries:

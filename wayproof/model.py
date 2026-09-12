@@ -77,9 +77,16 @@ class Trailhead:
     elevation_ft: float = 0.0
     side: str = ""          # "east", "west", or "crest"
     notes: str = ""
-    wilderness_area: str = ""
+    wilderness_area: str = ""  # backcountry/permit designation, e.g. "Ohlone Wilderness"
     land_agency: str = ""
     permit_group: str = ""  # key into data/permits.csv; "" if unclassified
+    park: str = ""          # specific park/preserve unit, e.g. "Del Valle Regional Park" --
+                             # distinct from wilderness_area: a trailhead's governing backcountry
+                             # designation and its vehicle-access park unit aren't always the same
+                             # name (Lichen Bark's wilderness_area is "Ohlone Wilderness" but its
+                             # park is "Del Valle Regional Park"). Keys into data/campgrounds.csv's
+                             # and data/park_access.csv's own `park` columns; "" where the concept
+                             # doesn't apply (most Sierra NF/NP trailheads).
 
 
 @dataclass

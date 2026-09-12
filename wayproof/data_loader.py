@@ -168,7 +168,9 @@ def load_trailheads(path: str | Path) -> List[Trailhead]:
 
     Expected columns: ``name``, ``latitude``, ``longitude``, and optionally
     ``elevation_ft``, ``side``, ``notes``, ``wilderness_area``, ``land_agency``,
-    ``permit_group`` (the last three feed :mod:`wayproof.permits`).
+    ``permit_group`` (the last three feed :mod:`wayproof.permits``), and
+    ``park`` (feeds :mod:`wayproof.plan`'s facilities lookups against
+    ``data/campgrounds.csv``/``data/park_access.csv``).
     """
     path = Path(path)
     if not path.exists():
@@ -203,6 +205,7 @@ def load_trailheads(path: str | Path) -> List[Trailhead]:
                 wilderness_area=_field(row, "wilderness_area"),
                 land_agency=_field(row, "land_agency"),
                 permit_group=_field(row, "permit_group"),
+                park=_field(row, "park"),
             )
         )
     if not trailheads:

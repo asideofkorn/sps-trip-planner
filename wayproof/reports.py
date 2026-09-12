@@ -45,6 +45,7 @@ import pandas as pd
 
 from .access import ApproachRoute, UNCONFIRMED
 from .camping import Campground, Campsite
+from .park_access import ParkAccess
 from .model import Peak, Trailhead
 from .timed_entry import TimedEntryPolicy
 from .water import WaterSource, WaterSourceLogEntry, log_by_source
@@ -107,6 +108,8 @@ def open_questions(
     campgrounds: Sequence[Campground] = (),
     campsites: Sequence[Campsite] = (),
     timed_entry: Sequence[TimedEntryPolicy] = (),
+    trailheads: Sequence[Trailhead] = (),
+    park_access: Sequence[ParkAccess] = (),
     peak_names: Optional[Sequence[str]] = None,
 ) -> List[OpenQuestion]:
     """Derive the current list of unconfirmed/missing/conflicting facts.
@@ -115,17 +118,29 @@ def open_questions(
     peaks are returned (see the module docstring for exactly which kinds
     qualify). With ``peak_names=None``, every gap this function knows how to
     detect is returned -- the full backlog view.
+
+    Campground/campsite/park-access gaps are peak-filterable via
+    ``Trailhead.park`` (pass ``trailheads`` to enable this) -- a trailhead's
+    specific park/preserve unit, distinct from its ``wilderness_area``. Omit
+    ``trailheads`` and these three kinds fall back to appearing only in the
+    unfiltered (global) view, same as before this field existed.
     """
     questions: List[OpenQuestion] = []
     peak_names_lower = {n.strip().lower() for n in peak_names} if peak_names is not None else None
 
     relevant_trailheads: set = set()
+    relevant_parks: set = set()
     if peak_names_lower is not None:
         for p in peaks:
             if _matches_peak_names(p.name, peak_names_lower):
                 th = p.meta.get("nearest_trailhead")
                 if th and str(th).strip():
                     relevant_trailheads.add(str(th).strip())
+        by_trailhead_name = {t.name: t for t in trailheads}
+        for th_name in relevant_trailheads:
+            th = by_trailhead_name.get(th_name)
+            if th and th.park:
+                relevant_parks.add(th.park)
 
     # -- Approaches with unconfirmed permit status: always peak-filterable. --
     for r in approaches:
@@ -218,8 +233,20 @@ def open_questions(
                     context=w.location,
                 ))
 
+    # -- Campgrounds/campsites/park-access: peak-filterable via Trailhead.park
+    # when `trailheads` was given; otherwise (or when no park link is known
+    # for the requested peaks) they only appear in the unfiltered view. --
+    campground_park_by_name = {c.name: c.park for c in campgrounds}
+    show_by_park = peak_names_lower is None or bool(relevant_parks)
+
+    def _park_is_relevant(park: str) -> bool:
+        return peak_names_lower is None or (park and park in relevant_parks)
+
+    if show_by_park:
         # -- Campsites missing both proximity fields. --
         for s in campsites:
+            if not _park_is_relevant(campground_park_by_name.get(s.campground, "")):
+                continue
             if not s.water_proximity and not s.restroom_proximity:
                 questions.append(OpenQuestion(
                     target_file="data/campsites.csv",
@@ -230,6 +257,8 @@ def open_questions(
 
         # -- Trailhead/campground notes flagging their own uncertainty. --
         for c in campgrounds:
+            if not _park_is_relevant(c.park):
+                continue
             for field_name, text in (("notes", c.notes), ("nightly_entry_cutoff", c.nightly_entry_cutoff)):
                 if text and any(m in text.lower() for m in _UNCERTAIN_NOTE_MARKERS):
                     questions.append(OpenQuestion(
@@ -239,10 +268,27 @@ def open_questions(
                         context=c.park,
                     ))
 
+        # -- Park-access rows with a lower-confidence field (e.g. a fee
+        # exemption confirmed only verbally, not in writing). --
+        for pa in park_access:
+            if not _park_is_relevant(pa.park):
+                continue
+            for field_name, text in (("fee_exemptions", pa.fee_exemptions), ("notes", pa.notes)):
+                if text and "verbal" in text.lower():
+                    questions.append(OpenQuestion(
+                        target_file="data/park_access.csv",
+                        target_key=f"{pa.park}.{field_name}",
+                        question=f"{pa.park}'s {field_name.replace('_', ' ')} is only verbally confirmed, not published: {text}",
+                        context=pa.park,
+                    ))
+                    break  # one question per park-access row is enough
+
+    if peak_names_lower is None:
         # -- Timed-entry rows sourced to secondary/aggregator coverage rather
-        # than the year's own official NPS announcement. Global view only --
-        # there's no reliable park -> peak link yet (same naming-granularity
-        # gap noted for campgrounds).
+        # than the year's own official NPS announcement. Always global --
+        # no trailhead in this dataset currently sets `park` to a park unit
+        # that also appears in data/timed_entry.csv (e.g. Yosemite's own
+        # trailheads still use the older Sierra permit model, not `park`).
         for t in timed_entry:
             if t.notes and any(m in t.notes.lower() for m in ("secondary", "aggregator")):
                 questions.append(OpenQuestion(
