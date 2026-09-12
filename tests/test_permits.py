@@ -689,6 +689,49 @@ def test_source_last_updated_is_never_borrowed_from_a_second_source():
     assert borrowed == [], (
         f"{borrowed} carry the Eldorado FAQ's date but don't point at an fs.usda.gov page"
     )
+    # A bare year is what a PDF stamps on itself, never what a web page
+    # publishes as its last-updated date. It caught this same borrowing a
+    # second time, from the 2025 Mokelumne PDFs.
+    year_only = [g for g, r in permits.items()
+                 if r.source_last_updated and len(r.source_last_updated) == 4]
+    assert year_only == [], (
+        f"{year_only} carry a bare year, which is a document stamp rather than a page date"
+    )
     # The two rows whose own pages genuinely carry these dates.
     assert permits["cpma"].source_last_updated == "2026-04-06"
     assert permits["mokelumne_free"].source_last_updated == "2026-03-03"
+
+
+def test_two_cpma_conflicts_are_open_and_independent():
+    # One is a source contradicting its own arithmetic (13 sites vs a 3+5+6
+    # breakdown); the other is two 2025 Forest Service documents disagreeing on
+    # whether a season pass exists. Unrelated, and neither closes the other.
+    log = load_source_log(SOURCE_LOG)
+    ids = {c.conflict_id for c in open_conflicts(log) if c.permit_group == "cpma"}
+    assert ids == {"cpma-designated-site-count", "mokelumne-carson-pass-season-pass"}
+
+
+def test_conflicts_stay_separate_across_permit_groups():
+    log = load_source_log(SOURCE_LOG)
+    by_group = {}
+    for c in open_conflicts(log):
+        by_group.setdefault(c.permit_group, set()).add(c.conflict_id)
+    assert by_group == {
+        "desolation": {"desolation-sma-distance"},
+        "cpma": {"cpma-designated-site-count", "mokelumne-carson-pass-season-pass"},
+    }
+
+
+def test_the_cpma_site_count_states_which_number_is_carried():
+    permits = load_permits(PERMITS)
+    notes = permits["cpma"].notes
+    assert "14" in notes and "13" in notes
+    assert "sums to 14" in notes
+
+
+def test_the_america_the_beautiful_rules_differ_between_the_two_permits():
+    # Accepted for CPMA trailhead parking, explicitly NOT accepted on the
+    # Desolation overnight permit. Generalising from one breaks the other.
+    permits = load_permits(PERMITS)
+    assert "ARE accepted" in permits["cpma"].fee_notes
+    assert "do NOT apply" in permits["desolation"].fee_notes

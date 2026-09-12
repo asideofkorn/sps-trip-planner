@@ -6,6 +6,27 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **A `wilderness` regulation scope** (`permits.csv` gains `wilderness_area`).
+  Mokelumne Wilderness is entered on two different permits — the free general
+  self-issue one and the quota'd Carson Pass Management Area one — under a
+  single rulebook. Scoping its rules per permit group would have meant
+  maintaining eleven rules in two places, the exact drift this table exists to
+  stop. Sorts between `permit_group` and `agency`.
+- **The Mokelumne Wilderness rulebook** (11 rules, from the forest's 2025
+  regulations sheet and permit instructions). Both Mokelumne permits go from 6
+  resolved rules to 17, with no duplicated row. Things worth knowing:
+  - **Bear canisters are recommended here, not required**, and counterbalance
+    hanging is accepted — where neighbouring Desolation *requires* a hard-sided
+    canister on pain of a $5,000 fine. The habit generalises wrong in both
+    directions, so the rule says so.
+  - **Day-use group size is 12, overnight is 8** — easy to get backwards.
+  - The campfire ban carries an ecological reason, not just a fire-risk one:
+    downed wood is critical alpine habitat, which is why the forest-wide
+    firewood-gathering allowance doesn't become a fire here.
+  - Mechanized equipment is barred including **strollers and game carts** — the
+    rule is about mechanical transport, not engines.
+  - Natural **and historic** features are protected, broader than Desolation's
+    natural-features-only wording.
 - **Four forest-wide Eldorado NF rules**, from the forest's own FAQ (last
   updated 2026-06-12), stored once and inherited by all three Eldorado permit
   groups:
@@ -41,6 +62,12 @@ All notable changes to this project are documented here. The format is based on
     posing as the rule itself.
 
 ### Fixed
+- **The Carson Pass parking fee was wrong in three ways.** It's charged at the
+  Meiss and Carson Pass Overflow trailheads too, not just Carson Pass; it's
+  paid at a self-service iron ranger with a dashboard tag; and Woods Lake is
+  concession-operated at $8 rather than $5. America the Beautiful Senior and
+  Access passes **are** accepted here — and explicitly are **not** on the
+  Desolation overnight permit, so generalising from one breaks the other.
 - **Desolation day-use permits are quota-season only, not year-round.** This
   was logged as an unresolved conflict rather than guessed, and it is now
   closed: Eldorado NF's FAQ states plainly that outside quota season "no day

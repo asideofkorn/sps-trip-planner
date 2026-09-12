@@ -652,6 +652,7 @@ So a regulation is now stored once and *inherited*, by `scope_type`:
 |---|---|---|
 | `jurisdiction` | `PermitRule.jurisdiction` | California Campfire Permit |
 | `agency` | `PermitRule.agency_ids` | Eldorado NF's 10-day dispersed-camping limit |
+| `wilderness` | `PermitRule.wilderness_area` | Mokelumne's campfire ban, shared by both its permits |
 | `permit_group` | the permit product itself | Desolation's bear canister requirement |
 
 `regulations_for()` resolves all three layers, sorting the specific before the
@@ -664,6 +665,12 @@ every group in the dataset is currently Californian: *"all our groups are in
 California"* is true today by coincidence of coverage, and inheriting statewide
 law off that coincidence would break silently the first time a Nevada or Oregon
 group is added. There's a test for exactly that.
+
+The `wilderness` layer earned itself immediately. Mokelumne Wilderness is
+entered on two different permits — the free general self-issue one and the
+quota'd Carson Pass Management Area one — under a single rulebook. Storing
+those eleven rules per permit group would have meant maintaining each of them
+twice. Both permits now resolve 17 rules with no duplicated row.
 
 ### A scope that matches nothing is worse than a missing rule
 

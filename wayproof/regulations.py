@@ -18,8 +18,16 @@ So a regulation is stored once and *inherited*, via ``scope_type``:
 
 - ``jurisdiction`` -- state law, applying to every permit group in that state
   (``scope_value`` matches ``PermitRule.jurisdiction``)
-- ``agency`` -- a forest- or park-wide rule (matches ``PermitRule.agency``)
+- ``agency`` -- a forest- or park-wide rule (matches ``PermitRule.agency_ids``)
+- ``wilderness`` -- one designated wilderness's own rulebook, which can span
+  several permit products (matches ``PermitRule.wilderness_area``)
 - ``permit_group`` -- specific to one permit product
+
+The wilderness layer exists because Mokelumne Wilderness is entered on two
+different permits -- the free general self-issue one, and the quota'd Carson
+Pass Management Area permit -- governed by a single set of wilderness
+regulations. Scoping those to a permit group would have meant maintaining
+ten rules in two places, which is the drift this module was built to stop.
 
 ``regulations_for`` resolves all three layers for a given permit group. The
 jurisdiction layer is why ``permits.csv`` carries an explicit ``jurisdiction``
@@ -39,8 +47,9 @@ import pandas as pd
 
 JURISDICTION = "jurisdiction"
 AGENCY = "agency"
+WILDERNESS = "wilderness"
 PERMIT_GROUP = "permit_group"
-_VALID_SCOPES = {JURISDICTION, AGENCY, PERMIT_GROUP}
+_VALID_SCOPES = {JURISDICTION, AGENCY, WILDERNESS, PERMIT_GROUP}
 
 # Ordered for presentation: the ones that carry a fine or ruin a trip first.
 CATEGORY_ORDER = [
@@ -98,7 +107,7 @@ class Regulation:
     def scope_label(self) -> str:
         if self.scope_type == JURISDICTION:
             return f"{self.scope_display or self.scope_value} state law"
-        if self.scope_type == AGENCY:
+        if self.scope_type in (AGENCY, WILDERNESS):
             return self.scope_display or self.scope_value
         return "this permit"
 
@@ -153,6 +162,7 @@ def regulations_for(
     permit_group: str = "",
     agency: "str | Sequence[str]" = "",
     jurisdiction: str = "",
+    wilderness: str = "",
 ) -> List[Regulation]:
     """Every regulation applying to one permit group, all three scopes resolved.
 
@@ -171,11 +181,13 @@ def regulations_for(
     def applies(reg: Regulation) -> bool:
         if reg.scope_type == PERMIT_GROUP:
             return bool(permit_group) and reg.scope_value == permit_group
+        if reg.scope_type == WILDERNESS:
+            return bool(wilderness) and reg.scope_value == wilderness
         if reg.scope_type == AGENCY:
             return reg.scope_value in agencies
         return bool(jurisdiction) and reg.scope_value == jurisdiction
 
-    specificity = {PERMIT_GROUP: 0, AGENCY: 1, JURISDICTION: 2}
+    specificity = {PERMIT_GROUP: 0, WILDERNESS: 1, AGENCY: 2, JURISDICTION: 3}
 
     def sort_key(reg: Regulation):
         category_rank = (CATEGORY_ORDER.index(reg.category)

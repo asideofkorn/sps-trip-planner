@@ -162,6 +162,15 @@ class PermitRule:
     # inherit statewide rules (the California Campfire Permit) without
     # copying them into every permit_group.
     jurisdiction: str = ""
+    wilderness_area: str = ""
+    """The designated wilderness this permit admits you to, e.g.
+    ``"Mokelumne Wilderness"``.
+
+    Used by :mod:`wayproof.regulations` to inherit one wilderness's rulebook
+    across every permit product that enters it. Mokelumne has two -- the free
+    general self-issue permit and the quota'd Carson Pass Management Area
+    permit -- sharing one set of regulations.
+    """
     agency_ids: tuple = ()
     """Stable keys for the managing agencies, e.g. ``("eldorado_nf", "ltbmu")``.
 
@@ -238,6 +247,7 @@ def load_permits(
         rules[group] = PermitRule(
             permit_group=group,
             agency=_str_field(row, "agency"),
+            wilderness_area=_str_field(row, "wilderness_area"),
             agency_ids=tuple(
                 part.strip() for part in _str_field(row, "agency_id").split(";") if part.strip()
             ),
