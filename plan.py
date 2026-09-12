@@ -6,6 +6,11 @@ discover or group objectives -- it assumes you already know what you want to
 do and answers: what access applies, what permit governs it, when do you
 need to act, and what evidence backs the answer?
 
+To report something you confirmed or found wrong (including a peak missing
+from the dataset entirely), use ``report.py`` instead -- a report isn't
+tied to a trip date and doesn't need its target to already exist, so it
+doesn't belong on this objective/date-resolution flow.
+
 Examples
 --------
 Access and permit logistics for a single objective::
@@ -21,21 +26,6 @@ Write the resolved plan as structured JSON::
 
     python plan.py "Mount Williamson" "Mount Tyndall" --date 2027-07-15 \\
         --output plan.json
-
-Report back on something you confirmed or corrected while there (appends to
-the pending-review queue, ``data/pending_reports.csv`` -- it does not modify
-any dataset directly; a maintainer reviews and transcribes accepted reports)::
-
-    python plan.py "Rose Peak" --date 2027-06-01 \\
-        --report "Sunol Backpack Camp has 2 vault-toilet restrooms, no showers"
-
-The objective doesn't need to already be in the dataset -- a name that
-doesn't resolve is exactly how someone reports a peak that's missing
-entirely (``--target-file`` defaults to ``data/peaks.csv`` in that case)::
-
-    python plan.py "Mount Carillon" --date 2027-07-01 \\
-        --report "Believed to be a real SPS peak near Mount Russell, not yet in data/peaks.csv" \\
-        --confidence secondhand
 """
 
 from __future__ import annotations
@@ -51,7 +41,6 @@ from wayproof.data_loader import load_peaks, load_trailheads
 from wayproof.park_access import load_park_access
 from wayproof.permits import load_permits
 from wayproof.plan import resolve_plan, format_plan_summary
-from wayproof.reports import submit_report
 from wayproof.water import load_water_sources, load_water_source_log
 
 
@@ -97,24 +86,6 @@ def _parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--park-access-file", default="data/park_access.csv",
                    help="Park-level entrance fee/hours dataset (default data/park_access.csv)")
     p.add_argument("--output", "-o", help="Write the resolved plan to this JSON file")
-    p.add_argument("--report", metavar="TEXT",
-                   help="Submit a claim about these objectives to the pending-review "
-                        "queue (data/pending_reports.csv) instead of/alongside printing "
-                        "the plan -- e.g. something you confirmed or found wrong while "
-                        "there. Reviewed and transcribed manually; does not change any "
-                        "dataset by itself.")
-    p.add_argument("--evidence", default="",
-                   help="Optional supporting detail for --report (a link, a photo "
-                        "description, who told you, etc.)")
-    p.add_argument("--confidence", default="firsthand",
-                   choices=["firsthand", "official_source", "told_by_staff", "secondhand"],
-                   help="How solid --report's claim is (default firsthand)")
-    p.add_argument("--target-file", default="",
-                   help="Which dataset --report's claim is about (e.g. "
-                        "data/water_sources.csv, data/approaches.csv). Defaults to "
-                        "data/peaks.csv if the objective name didn't resolve to a known "
-                        "peak (i.e. you're reporting a peak that's missing entirely), "
-                        "otherwise 'unspecified'.")
     return p.parse_args(argv)
 
 
@@ -140,16 +111,6 @@ def main(argv=None) -> int:
                            campsites=campsites, park_access=park_access)
 
     print(format_plan_summary(result))
-
-    if args.report:
-        target_key = ", ".join(p.name for p in result.objectives) or ", ".join(args.objectives)
-        target_file = args.target_file or ("data/peaks.csv" if result.not_found else "unspecified")
-        report = submit_report(
-            target_file=target_file, target_key=target_key, claim=args.report,
-            evidence=args.evidence, confidence=args.confidence, channel="cli",
-        )
-        print(f"\nSubmitted report {report.report_id} to data/pending_reports.csv "
-              "(pending maintainer review).")
 
     if args.output:
         with open(args.output, "w") as fh:
