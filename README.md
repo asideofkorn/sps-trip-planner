@@ -426,10 +426,72 @@ exemptions.
   deliberately returns `None` for a year not on file rather than falling
   back to a neighboring year's answer.
 
-None of this is wired into `plan`'s output yet -- these are loadable via
 `wayproof.camping`, `wayproof.water`, `wayproof.park_access`, and
-`wayproof.timed_entry`, but surfacing them in `plan`'s report is a natural
-next step, not this one.
+`wayproof.timed_entry` are loadable independently; `plan` currently surfaces
+their gaps (see "The Scavenger Hunt" below) but not yet their full detail
+(e.g. a campground's current water status) in its main report -- a natural
+next step.
+
+## The Scavenger Hunt: Confirming What's Unclear
+
+Some facts in this dataset are marked `unconfirmed`, missing a coordinate,
+or flagged `approximate` -- not because no one could find out, but because
+no one has checked yet. `wayproof.reports` turns that into a loop instead of
+a static disclaimer:
+
+- **`open_questions(...)`** derives the current list of gaps directly from
+  the data's own confidence signals (an `unconfirmed` approach status, a
+  water source with no coordinates, two availability checks that disagree,
+  a note containing "approximate") -- there's no separately maintained,
+  hand-authored gap list to fall out of sync.
+- **`plan` surfaces gaps relevant to the specific objectives you asked
+  about**, right in its output, under "Help us confirm":
+
+  ```bash
+  python plan.py "Rose Peak" --date 2027-06-01
+  ```
+  ```text
+  Help us confirm (if you're going, and you check, please report back)
+    - We don't have coordinates for Lichen Bark (Del Valle) yet.
+    - We don't have coordinates for Stromer Springs yet.
+  ```
+
+  This is the point: the nudge shows up exactly when someone is already
+  planning to be at that location, not on a separate list they'd have to
+  go looking for.
+- **`--report`** submits a claim to `data/pending_reports.csv`, an
+  append-only intake queue -- deliberately separate from the resolved
+  domain ledgers (`water_source_log.csv` etc.), since a submission is a
+  claim to review, not yet a fact:
+
+  ```bash
+  python plan.py "Rose Peak" --date 2027-06-01 \
+    --report "Sunol Backpack Camp has 2 vault-toilet restrooms, no showers" \
+    --confidence firsthand
+  ```
+
+  A maintainer reviews pending reports and, if accepted, manually
+  transcribes them into the relevant CSV (citing the report ID), then calls
+  `wayproof.reports.resolve_report()` to close it out. Nothing here writes
+  to a dataset automatically.
+
+**Why this is built as infrastructure, not a feature of the CLI.**
+`open_questions()` and `submit_report()` don't know or care that CLI is
+calling them -- they're plain, typed Python functions. Right now this
+project has exactly one contributor (its maintainer, populating this by
+hand from real trips), so CLI is the only front door. As that changes, each
+of these becomes an *additional caller* of the same two functions, not a
+redesign:
+
+- a GitHub issue template whose fields map onto `submit_report()`'s
+  parameters, reviewed and transcribed the same way a CLI submission is;
+- an MCP tool exposing both functions to Claude;
+- a ChatGPT Action calling the same two functions;
+- a website form that calls `submit_report()` and a page that renders
+  `open_questions()`.
+
+None of these four are built yet -- they're deliberately just documented
+extension points until there's a real reason to build one.
 
 ## Installation
 
@@ -485,7 +547,14 @@ Example summary output:
 | `--permits-file` | `data/permits.csv` | Permit rules dataset |
 | `--release-policies-file` | `data/release_policies.csv` | Structured permit release-phase dataset |
 | `--approaches-file` | `data/approaches.csv` | Peak-specific approach/permit relationships |
+| `--water-sources-file` | `data/water_sources.csv` | Named backcountry water sources |
+| `--water-source-log-file` | `data/water_source_log.csv` | Append-only water-availability check ledger |
+| `--campgrounds-file` | `data/campgrounds.csv` | Backpack campgrounds |
+| `--campsites-file` | `data/campsites.csv` | Individually-bookable campsites |
 | `--output, -o` | - | Write the resolved plan to this JSON file |
+| `--report TEXT` | - | Submit a claim about these objectives to `data/pending_reports.csv` (see "The Scavenger Hunt") |
+| `--evidence` | `""` | Optional supporting detail for `--report` |
+| `--confidence` | `firsthand` | `firsthand` / `official_source` / `told_by_staff` / `secondhand` |
 
 ### `cli.py` (experimental candidate grouping)
 
@@ -1045,6 +1114,7 @@ wayproof/
 │   ├── water_source_log.csv      # append-only water-availability check ledger
 │   ├── park_access.csv           # park-level entrance fees, gate hours, exemptions
 │   ├── timed_entry.csv           # year-scoped vehicle timed-entry requirements
+│   ├── pending_reports.csv       # community/self submission intake queue (created on first use)
 │   └── source/                   # official Sierra Club files + trimmed GNIS subset
 ├── scripts/
 │   ├── build_dataset.py         # XLS + non-SPS PDF -> sps_peaks.csv (staging)
@@ -1082,6 +1152,7 @@ wayproof/
 │   ├── water.py
 │   ├── park_access.py
 │   ├── timed_entry.py
+│   ├── reports.py
 │   ├── plan.py
 │   └── visualize.py
 └── tests/
@@ -1089,7 +1160,8 @@ wayproof/
     ├── test_permits.py
     ├── test_plan.py
     ├── test_facilities.py
-    └── test_timed_entry.py
+    ├── test_timed_entry.py
+    └── test_reports.py
 ```
 
 Run the tests:

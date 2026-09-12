@@ -58,10 +58,20 @@ Every data file below is also classified by what that means for reuse:
 | `data/campgrounds.csv`, `data/campsites.csv` | Curated by this project from official East Bay Regional Park District (EBRPD) sources (ebparks.org, ReserveAmerica) plus this project's own firsthand trip notes (Ohlone Wilderness Trail, Sep 2026) | `project_created` | Facts are not copyrightable; provided under the project license. Some fields (e.g. a campground's exact nightly vehicle-gate cutoff) are reported from a single firsthand near-miss experience, not a confirmed posted policy — see each field's own notes. |
 | `data/water_sources.csv`, `data/water_source_log.csv` | `water_sources.csv`: curated by this project. `water_source_log.csv`: a mix of EBRPD's own published "Water Availability Update" page and this project's firsthand trip reports | `project_created` | Append-only ledger by design, same pattern as `permit_source_log.csv` — a water source's status can change with no announcement, so a later check never overwrites an earlier one. See "Known follow-ups" for a real official-vs-firsthand discrepancy already on file (Boyd Camp). |
 | `data/park_access.csv` | Curated by this project from EBRPD's official page (entrance fee, gate hours) plus a verbal, in-person staff confirmation (a fee exemption not found in writing) | `project_created` | The fee-exemption field carries deliberately lower confidence than the fee/hours fields — see the row's own `notes`. |
+| `data/pending_reports.csv` | Submitted by this project's maintainer (today) or, in the future, community members, via `plan.py --report` or another intake channel described in the README's "The Scavenger Hunt" section | `project_created` | An intake queue, not a source of truth: a claim here has `status=pending` until a maintainer reviews it and (if accepted) transcribes it into the relevant domain file, citing the report ID. Never treated as confirmed data on its own. |
 | `data/timed_entry.csv` | NPS's own announcements for 2024–2026; secondary/aggregator press coverage (Yosemite Conservancy, Afar) for 2020–2023, since this project has not independently retrieved each year's original NPS announcement | `project_created` (compiled history) | One row per (park, year) by design — never overwrite a prior year's recorded policy with the current year's, since whether a reservation is required is a decision NPS re-makes annually, not a standing rule. Confidence varies by row: 2024–2026 rows cite an official nps.gov page directly; 2020–2023 rows are flagged in their own `notes` as secondary-sourced. |
 
 ## Known follow-ups
 
+- **Campground/campsite gaps aren't peak-scoped yet in `open_questions()`.**
+  `data/trailheads.csv`'s `wilderness_area` ("Ohlone Wilderness") and
+  `data/campgrounds.csv`'s `park` ("Sunol Regional Wilderness", "Del Valle
+  Regional Park") use different naming granularity for the same corridor,
+  so there's no reliable link from a specific peak to "which campgrounds
+  are near it" yet. `wayproof.reports.open_questions()` only surfaces
+  campground/campsite gaps in its unfiltered (global) view for this reason
+  -- reconciling that naming would let those gaps show up contextually in
+  `plan`'s per-objective nudges too.
 - **`data/timed_entry.csv`'s 2020–2023 Yosemite rows are secondary-sourced.**
   They're cited to aggregator/press coverage rather than each year's
   original nps.gov announcement, which this project has not independently

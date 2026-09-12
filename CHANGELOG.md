@@ -6,6 +6,31 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **The scavenger-hunt data loop** (new `wayproof/reports.py`: `OpenQuestion`,
+  `Report`, `open_questions`, `submit_report`, `pending_reports`,
+  `resolve_report`): a channel-agnostic core for surfacing what's unconfirmed
+  or missing, and for recording a claim about it, designed so CLI is only the
+  *first* caller, not the only one. `open_questions()` derives its list live
+  from confidence signals already in the data (`unconfirmed` approach status,
+  a water source with no coordinates, two availability checks that disagree,
+  an "approximate" note) rather than a separately hand-maintained list that
+  could drift out of sync. `plan.py` now surfaces objective-relevant gaps
+  under a new "Help us confirm" section (`PlanResult.open_questions`, also in
+  the JSON export), and a new `--report TEXT` flag (plus `--evidence`,
+  `--confidence`) appends a claim to a new append-only intake queue,
+  `data/pending_reports.csv` -- deliberately separate from the resolved
+  domain ledgers, since a submission is a claim to review, not yet a fact.
+  `resolve_plan()` gained optional `water_sources`/`water_source_log`/
+  `campgrounds`/`campsites` parameters (all backward compatible; omitting
+  them yields `open_questions == []` exactly as before). Peak-scoped
+  filtering is deliberately conservative -- only approach status, a peak's
+  own coordinate flag, and water sources linked by trailhead name currently
+  qualify; campground/campsite gaps only appear in the unfiltered view (see
+  `DATA_LICENSE.md`'s Known follow-ups for why). A GitHub issue template, an
+  MCP tool for Claude, a ChatGPT Action, and a website form are documented in
+  the README as future additional callers of the same two functions, not
+  built in this change. New `tests/test_reports.py`; `tests/test_plan.py`
+  gained end-to-end coverage against the real Rose Peak/Mission Peak data.
 - **`data/timed_entry.csv`** (new `wayproof/timed_entry.py`: `TimedEntryPolicy`,
   `load_timed_entry`, `policy_for_year`, `latest_policy`): year-scoped vehicle
   timed-entry/reservation requirements, generalizing `park_access.csv` to a
