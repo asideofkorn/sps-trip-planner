@@ -425,14 +425,15 @@ def test_desolation_day_use_is_now_quota_season_only():
     assert "no day-use permit is needed" in notes
 
 
-def test_the_losing_source_is_still_named_in_the_stored_answer():
-    # A reader who books on recreation.gov will meet text saying the opposite.
-    # Stating which source lost, and why, beats letting them think we're wrong.
+def test_the_contrary_wording_a_reader_will_meet_is_still_named():
+    # A reader booking on recreation.gov meets an overview sentence saying day
+    # visits need a permit year-round. The stored note has to name that text,
+    # or they'll think we're wrong.
     permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
                            os.path.join(ROOT, "data", "release_policies.csv"))
     notes = permits["desolation"].notes
     assert "recreation.gov" in notes and "year-round" in notes
-    assert "booking platform rather than the regulating authority" in notes
+    assert "overview paragraph" in notes
 
 
 def test_mokelumne_needs_no_day_use_permit_at_all():
@@ -560,3 +561,25 @@ def test_the_booking_widget_cap_is_recorded_as_flat_not_per_zone():
     regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
     rule = next(r for r in regs if r.regulation_id == "desolation-group-size")
     assert "flat rather than per zone" in rule.detail
+
+
+def test_the_day_use_answer_rests_on_the_losing_sources_own_words():
+    # recreation.gov contradicts itself: its overview says day visits need a
+    # permit year-round, its operational section says day use permits come from
+    # a Forest Service office "or at trailheads in the summer". Citing that is
+    # stronger than ranking one agency over another.
+    permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
+                           os.path.join(ROOT, "data", "release_policies.csv"))
+    notes = permits["desolation"].notes
+    assert "IN THE SUMMER" in notes
+    assert "contradicts itself" in notes
+
+
+def test_the_missing_desolation_trailheads_are_stated_not_implied():
+    permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
+                           os.path.join(ROOT, "data", "release_policies.csv"))
+    notes = permits["desolation"].notes
+    assert "13 trailheads" in notes
+    assert "known coverage gap" in notes
+    for th in ("Loon Lake", "Echo Lake", "Meeks Bay", "Glen Alpine"):
+        assert th in notes
