@@ -46,6 +46,7 @@ import pandas as pd
 from .access import ApproachRoute, UNCONFIRMED
 from .camping import Campground, Campsite
 from .model import Peak, Trailhead
+from .timed_entry import TimedEntryPolicy
 from .water import WaterSource, WaterSourceLogEntry, log_by_source
 
 _UNCERTAIN_NOTE_MARKERS = ("approximate", "unconfirmed", "not a confirmed", "not found")
@@ -105,6 +106,7 @@ def open_questions(
     water_source_log: Sequence[WaterSourceLogEntry] = (),
     campgrounds: Sequence[Campground] = (),
     campsites: Sequence[Campsite] = (),
+    timed_entry: Sequence[TimedEntryPolicy] = (),
     peak_names: Optional[Sequence[str]] = None,
 ) -> List[OpenQuestion]:
     """Derive the current list of unconfirmed/missing/conflicting facts.
@@ -139,7 +141,7 @@ def open_questions(
             context=r.peak_name,
         ))
 
-    # -- A peak's own coordinate source flagged as unconfirmed. --
+    # -- A peak's own coordinate source flagged as unconfirmed or Tier C. --
     for p in peaks:
         if peak_names_lower is not None and not _matches_peak_names(p.name, peak_names_lower):
             continue
@@ -150,6 +152,29 @@ def open_questions(
                 target_key=p.name,
                 question=(f"{p.name}'s coordinates are sourced to {coord_source!r}, not yet "
                           "an independently confirmed GNIS feature ID."),
+                context=p.name,
+            ))
+        elif coord_source.strip().lower() == "peakbagger":
+            questions.append(OpenQuestion(
+                target_file="data/peaks.csv",
+                target_key=p.name,
+                question=(f"{p.name}'s coordinates come from peakbagger.com (Tier C), not "
+                          "GNIS -- not yet independently re-verified against a Tier A source."),
+                context=p.name,
+            ))
+
+    # -- A peak's own notes flagging an unresolved data-quality issue, e.g. --
+    # a duplicate-name tie-break where the underlying value conflict is
+    # still unconfirmed. Peak-filterable, since these are direct peak facts.
+    for p in peaks:
+        if peak_names_lower is not None and not _matches_peak_names(p.name, peak_names_lower):
+            continue
+        note = str(p.meta.get("notes", "") or "")
+        if note and any(m in note.lower() for m in _UNCERTAIN_NOTE_MARKERS):
+            questions.append(OpenQuestion(
+                target_file="data/peaks.csv",
+                target_key=p.name,
+                question=f"{p.name}: {note}",
                 context=p.name,
             ))
 
@@ -214,7 +239,40 @@ def open_questions(
                         context=c.park,
                     ))
 
+        # -- Timed-entry rows sourced to secondary/aggregator coverage rather
+        # than the year's own official NPS announcement. Global view only --
+        # there's no reliable park -> peak link yet (same naming-granularity
+        # gap noted for campgrounds).
+        for t in timed_entry:
+            if t.notes and any(m in t.notes.lower() for m in ("secondary", "aggregator")):
+                questions.append(OpenQuestion(
+                    target_file="data/timed_entry.csv",
+                    target_key=f"{t.park} {t.year}",
+                    question=(f"{t.park}'s {t.year} timed-entry record is secondary-sourced, "
+                              "not yet confirmed against that year's original NPS announcement."),
+                    context=t.park,
+                ))
+
     return questions
+
+
+def format_open_questions(questions: Sequence[OpenQuestion]) -> str:
+    """Render the global backlog view: every open question, grouped by
+    target file so related gaps (e.g. everything in data/peaks.csv) sit
+    together."""
+    if not questions:
+        return "No open questions on file."
+    by_file: dict[str, List[OpenQuestion]] = {}
+    for q in questions:
+        by_file.setdefault(q.target_file, []).append(q)
+
+    lines: List[str] = [f"{len(questions)} open question(s) across {len(by_file)} file(s)", ""]
+    for target_file in sorted(by_file):
+        lines.append(target_file)
+        for q in by_file[target_file]:
+            lines.append(f"  [{q.target_key}] {q.question}")
+        lines.append("")
+    return "\n".join(lines).rstrip()
 
 
 def submit_report(

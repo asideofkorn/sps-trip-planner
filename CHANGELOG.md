@@ -6,6 +6,30 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **Migrated every previously session-tracked data-quality item onto the
+  live `open_questions()` system**, plus a new `cli.py --open-questions`
+  flag printing the full backlog across the whole dataset (not scoped to a
+  trip, unlike `plan`'s per-objective nudge):
+  - Broadened `open_questions()`'s peak-coordinate heuristic to flag
+    `coord_source == "peakbagger"` (Tier C) for independent re-verification,
+    not just the literal string "unconfirmed" -- this alone surfaces all 7
+    previously peakbagger-sourced SPS peaks with no further data changes.
+  - New `data/peaks.csv` `notes` column (also added to
+    `wayproof.data_loader`'s meta columns and `scripts/split_collections.py`'s
+    core columns). `_dedupe_by_name()` now writes the SPS/non-SPS conflict
+    it resolves into the kept row's `notes` (previously only in a code
+    comment and `DATA_LICENSE.md`), so the Mount Johnson/Thunder Mountain
+    elevation dispute is now surfaced live instead of living only in prose.
+    `split()`'s column-presence check treats `notes` as optional, like
+    `name`, since it's project-added rather than a raw source field.
+  - New `timed_entry` parameter on `open_questions()`, flagging
+    `data/timed_entry.csv` rows whose `notes` mention "secondary"/"aggregator"
+    sourcing (global view only, same reasoning as campground/campsite gaps).
+  - New `tests/test_split_collections.py` (loads the script by file path,
+    since `scripts/` isn't a package) covering the note-writing behavior
+    directly; `tests/test_reports.py` extended for the new heuristics.
+  `DATA_LICENSE.md`'s Known follow-ups now point to `--open-questions`/`plan`
+  as the live, current view rather than duplicating tracking as static prose.
 - **The scavenger-hunt data loop** (new `wayproof/reports.py`: `OpenQuestion`,
   `Report`, `open_questions`, `submit_report`, `pending_reports`,
   `resolve_report`): a channel-agnostic core for surfacing what's unconfirmed
