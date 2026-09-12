@@ -541,3 +541,22 @@ def test_mokelumne_day_use_group_size_is_larger_than_overnight():
     rule = next(r for r in regs if r.regulation_id == "mokelumne-group-size")
     assert "8 people overnight and 12 for a day hike" in rule.summary
     assert "easy to get backwards" in rule.detail
+
+
+def test_desolation_group_size_does_not_claim_to_cover_day_use():
+    # The 12 comes from the overnight booking widget, where a destination zone
+    # is selected for the first night. Desolation day-use permits are free,
+    # self-issued and not booked there, and no source states their group size.
+    # Mokelumne proves the numbers can differ within one forest: 12 day, 8
+    # overnight.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "desolation-group-size")
+    assert "NO SOURCE ON HAND STATES A GROUP SIZE FOR DESOLATION DAY USE" in rule.detail
+    assert "Do not assume it is also 12" in rule.detail
+    assert "Mokelumne" in rule.detail
+
+
+def test_the_booking_widget_cap_is_recorded_as_flat_not_per_zone():
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "desolation-group-size")
+    assert "flat rather than per zone" in rule.detail

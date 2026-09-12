@@ -62,6 +62,16 @@ All notable changes to this project are documented here. The format is based on
     posing as the rule itself.
 
 ### Fixed
+- **Desolation's group size of 12 no longer implies it covers day use.** The
+  figure comes from recreation.gov's booking widget, where a destination zone
+  is selected for the first night — that's the overnight quota mechanism, and
+  Desolation day-use permits are free, self-issued at the trailhead, and not
+  booked there. No source on hand gives a day-use group size, and assuming it
+  equals the overnight cap is a demonstrably unsafe guess: Mokelumne, under the
+  same forest, caps day hikes at 12 and overnight groups at 8. The absence is
+  now stated on the page rather than read as covered. The widget did confirm
+  the cap is flat rather than per zone, and its "06 Rubicon" dropdown matches
+  the label built from `permit_zones.csv` exactly.
 - **The Carson Pass parking fee was wrong in three ways.** It's charged at the
   Meiss and Carson Pass Overflow trailheads too, not just Carson Pass; it's
   paid at a self-service iron ranger with a dashboard tag; and Woods Lake is
