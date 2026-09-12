@@ -3,6 +3,12 @@ name: Deploy site to GitHub Pages
 on:
   push:
     branches: [main]
+  # Pages state "booking today covers entry around <date>" and "next on
+  # <date>", both computed relative to the build date -- a site only rebuilt
+  # on push would quietly start lying. GitHub disables scheduled workflows
+  # after 60 days without repository activity.
+  schedule:
+    - cron: "17 11 * * *"
   workflow_dispatch:
 
 permissions:

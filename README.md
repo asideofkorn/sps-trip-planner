@@ -546,12 +546,14 @@ of the same two functions, not a redesign:
   whose fields map onto `submit_report()`'s parameters. A maintainer reads
   the issue and runs `report.py submit` with `--channel github_issue`,
   the same review step a CLI submission gets;
-- **a page rendering `open_questions()`** (built -- [wayproof.dev](https://wayproof.dev),
-  via `scripts/build_site.py`, rebuilt on every push to `main` by
-  `.github/workflows/pages.yml`). Its report links reuse the GitHub issue
-  template channel above (pre-filled title/question/target file) rather
-  than calling `submit_report()` directly -- there's no backend behind the
-  static site to write to `data/pending_reports.csv` yet;
+- **the website itself** (built -- [wayproof.dev](https://wayproof.dev), via
+  `scripts/build_site.py`, rebuilt on every push to `main` and daily by
+  `.github/workflows/pages.yml`). It renders `open_questions()` on the
+  landing page and publishes a page per trailhead (see "The Website" below).
+  Its report links reuse the GitHub issue template channel above (pre-filled
+  title/question/target file) rather than calling `submit_report()` directly
+  -- there's no backend behind the static site to write to
+  `data/pending_reports.csv` yet;
 - an MCP tool exposing both functions to Claude (not built);
 - a ChatGPT Action calling the same two functions (not built);
 - a website form that calls `submit_report()` directly, with no GitHub
@@ -562,6 +564,68 @@ of the same two functions, not a redesign:
 The latter three need real hosted infrastructure beyond a static page;
 they stay documented extension points until there's a real reason to
 build one.
+
+## The Website
+
+[wayproof.dev](https://wayproof.dev) is generated from this repository's own
+data by `scripts/build_site.py` and deployed by GitHub Actions on every push
+to `main` -- and once a day besides, because its dated content is computed
+relative to the build date and a push-only build would quietly go stale.
+
+**Every page is published three ways** -- HTML for people, Markdown for
+agents, JSON for programs:
+
+```text
+/trailheads/whitney-portal/        human
+/trailheads/whitney-portal.md      agent
+/trailheads/whitney-portal.json    structured
+```
+
+All three render from a single view model (`wayproof/views.py`) through
+`wayproof/render.py`, so they cannot assert different facts -- a property a
+site whose whole claim is "these facts are sourced and consistent" can't
+treat as optional. The Markdown surface carries provenance and uncertainty
+*inline with each claim*, since an agent relaying a permit rule to someone
+needs the verification date and the `unconfirmed` flag attached to the
+sentence it quotes, not parked in a sidebar. It states its own canonical URL
+so it can be cited accurately, and it deliberately contains no instructions
+aimed at the reading agent: text telling someone else's tool what to do is
+prompt injection, and a source whose entire value is being trustworthy can't
+also be one that injects instructions into its readers' agents.
+
+**Trailhead pages lead with the permit that governs entry**, because that is
+the trailhead's sourced, authoritative content: agency, quota season, fees,
+reservation mechanics, the interagency rule for continuous travel into
+neighbouring units, and the append-only verification history from
+`data/permit_source_log.csv` -- conflicts and their later resolution included.
+
+*Key dates* are computed in the two shapes the data honestly supports. A
+fixed-calendar phase (the Whitney Zone lottery) gets an absolute next date.
+A rolling-offset phase has no date of its own -- it opens N days before
+*your* entry -- so it gets the inverse framing: which entry date today's
+booking window covers.
+
+```text
+In season only: Apply start -- next on 2027-02-01.
+First release (60% of the quota) -- opens 182 days before your entry date
+at 07:00 America/Los_Angeles -- booking today covers entry around 2027-03-13.
+```
+
+A phase whose source publishes neither an offset nor a fixed date still
+resolves to no date at all, and a permit group with no structured release
+policy says so rather than presenting a vaguer answer as an equally precise
+one.
+
+**What a trailhead page does *not* assert** is an approach list. Each peak's
+`nearest_trailhead` is a geometric assignment computed by
+`scripts/assign_trailheads.py`, not a curated relationship, and permits
+attach to where you *enter* the wilderness rather than to whichever summit
+happens to be closest -- a JMT hiker entering at Happy Isles carries that
+permit past peaks whose nearest road is a hundred trail miles away. So
+proximity-derived peaks appear only as an explicitly labelled secondary
+signal, while `data/approaches.csv`'s sourced rows -- the ones that know
+which permit actually governs a named route -- are surfaced as first-class
+facts.
 
 ## Installation
 
@@ -1254,6 +1318,8 @@ wayproof/
 │   ├── timed_entry.py
 │   ├── reports.py
 │   ├── plan.py
+│   ├── views.py                  # page view models (one dict per published page)
+│   ├── render.py                 # HTML / Markdown / JSON renderers over a view
 │   └── visualize.py
 └── tests/
     ├── test_pipeline.py

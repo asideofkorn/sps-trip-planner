@@ -6,6 +6,35 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **Trailhead pages on wayproof.dev, led by permit content** (`wayproof/views.py`,
+  `wayproof/render.py`): one page per trailhead (88 today), each published in
+  three representations from a single view model -- HTML for people,
+  Markdown for agents, JSON for programs. Because all three render from the
+  same resolved dict, no surface can assert a fact another one doesn't, which
+  is the point: a site claiming its facts are sourced and consistent can't
+  afford its agent surface to disagree with its human one.
+  - Each page leads with the permit that governs *entry* there: agency, quota
+    season, fees, reservation mechanics, the `interagency_note` for continuous
+    travel into neighbouring units, and the append-only verification history
+    from `permit_source_log.csv` -- including entries that record a conflict
+    and its later resolution.
+  - **Key dates** are computed relative to the build date, in the two honest
+    shapes the data supports: fixed-calendar phases (a lottery window) get an
+    absolute next date, while rolling-offset phases get the inverse framing --
+    which entry date today's booking window covers. A phase whose source
+    publishes neither still resolves to no date at all rather than a guess,
+    and season-scoped phases say so inline (Whitney Zone's off-season
+    reservation is not a fallback for its in-season lottery).
+  - `data/approaches.csv`'s sourced route-level exceptions are first-class
+    content; `nearest_trailhead` peak lists are explicitly labelled as
+    unverified geometric proximity, because permits attach to where you enter
+    rather than to whichever summit is closest -- a distinction a long
+    point-to-point route (a JMT entry at Happy Isles) makes unavoidable.
+  - Site plumbing: shared `/style.css`, `sitemap.xml` (indexable pages only),
+    `robots.txt`, `rel=alternate` links, JSON-LD, canonical URLs, and a
+    `noindex` gate for pages without a resolved permit rule.
+  - `pages.yml` now also rebuilds daily, since date-relative content on a
+    push-only build would quietly go stale.
 - **First pass at the wayproof.dev website** (`scripts/build_site.py`,
   `.github/workflows/pages.yml`): a static site built and deployed to
   GitHub Pages on every push to `main`. Its "Help us confirm" section is
