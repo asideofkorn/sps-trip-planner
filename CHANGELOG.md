@@ -6,6 +6,40 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **`plan` now surfaces facilities data itself, not just its gaps**
+  (`PlanResult.facilities`, new `wayproof.plan.FacilitiesInfo`, also in the
+  JSON export and a new `Facilities` section in `format_plan_summary()`).
+  `python plan.py "Rose Peak" --date ...` now shows the trailhead's water
+  sources and their last-checked status, nearby campgrounds (reservation
+  method, fee, nightly cutoff), and the park's entrance fee/hours/exemptions
+  -- previously only the gaps in that data ("Help us confirm") were shown,
+  not the data itself.
+  - New `Trailhead.park` field (`data/trailheads.csv` gained a `park`
+    column, populated for the two EBRPD trailheads, blank elsewhere): the
+    specific park/preserve unit for vehicle-access purposes, distinct from
+    `wilderness_area`'s backcountry/permit designation -- a trailhead's
+    governing wilderness and its vehicle-access park aren't always the same
+    name (Lichen Bark's `wilderness_area` is "Ohlone Wilderness" but its
+    `park` is "Del Valle Regional Park"). Links to `data/campgrounds.csv`
+    and `data/park_access.csv`'s own `park` columns.
+  - This also resolves a previously-documented `open_questions()`
+    limitation: campground/campsite/park-access gaps are now peak-filterable
+    via the same `Trailhead.park` link, not just visible in the unfiltered
+    `--open-questions` view. New park-access confidence heuristic alongside
+    it: a `fee_exemptions`/`notes` field containing "verbal" is now flagged
+    as an open question (previously undetected -- Del Valle's own verbally-
+    confirmed fee exemption should have been caught by this from the start).
+  - `resolve_plan()` gained an optional `park_access` parameter; `plan.py`
+    gained `--park-access-file`; `cli.py --open-questions` gained
+    `--park-access-file` too. All backward compatible.
+  - Verified end-to-end against real data: Rose Peak correctly shows 5 Del
+    Valle-area campgrounds and Del Valle's park access; Mission Peak shows
+    only Eagle Springs and no park-access section (no `park_access.csv` row
+    exists for Mission Peak Regional Preserve, and none is fabricated);
+    Sierra peaks show no `Facilities` section at all (no `park` link exists
+    for any Sierra trailhead).
+  - New tests in `tests/test_plan.py`, `tests/test_reports.py`, and
+    `tests/test_pipeline.py`. Full suite passes (162/162).
 - **Reporting a peak missing entirely, and a real first case (Mount
   Carillon).** `plan.py --report` now works when the objective name doesn't
   resolve at all -- `--target-file` defaults to `data/peaks.csv` in that

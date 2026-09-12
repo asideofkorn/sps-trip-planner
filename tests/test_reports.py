@@ -14,7 +14,8 @@ import pytest
 
 from wayproof.access import ApproachRoute
 from wayproof.camping import Campground, Campsite
-from wayproof.model import Peak
+from wayproof.model import Peak, Trailhead
+from wayproof.park_access import ParkAccess
 from wayproof.reports import (
     OpenQuestion,
     Report,
@@ -202,6 +203,70 @@ def test_campground_uncertain_note_flagged_globally():
     qs = open_questions(campgrounds=grounds, peak_names=None)
     assert len(qs) == 1
     assert "Del Valle Family Campground" in qs[0].target_key
+
+
+# --- open_questions: campground/campsite/park-access peak-filtering via
+# Trailhead.park ---------------------------------------------------------
+
+def _trailhead(name, park=""):
+    return Trailhead(name=name, latitude=37.0, longitude=-121.0, park=park)
+
+
+def test_campsite_gap_becomes_peak_filterable_via_trailhead_park():
+    peaks = [_peak("Rose Peak", nearest_trailhead="Del Valle (Lichen Bark)")]
+    trailheads = [_trailhead("Del Valle (Lichen Bark)", park="Del Valle Regional Park")]
+    grounds = [Campground(name="Boyd Camp", park="Del Valle Regional Park")]
+    sites = [Campsite(name="Boyd Camp Site", campground="Boyd Camp", capacity=4)]
+
+    qs = open_questions(peaks=peaks, trailheads=trailheads, campgrounds=grounds,
+                         campsites=sites, peak_names=["Rose Peak"])
+    assert len(qs) == 1
+    assert qs[0].target_key == "Boyd Camp Site"
+
+
+def test_campsite_gap_excluded_for_unrelated_park():
+    peaks = [_peak("Rose Peak", nearest_trailhead="Del Valle (Lichen Bark)")]
+    trailheads = [_trailhead("Del Valle (Lichen Bark)", park="Del Valle Regional Park")]
+    grounds = [Campground(name="Eagle Springs", park="Mission Peak Regional Preserve")]
+    sites = [Campsite(name="Eagle Springs Site", campground="Eagle Springs", capacity=4)]
+
+    qs = open_questions(peaks=peaks, trailheads=trailheads, campgrounds=grounds,
+                         campsites=sites, peak_names=["Rose Peak"])
+    assert qs == []
+
+
+def test_campground_gap_not_peak_filtered_without_trailheads_param():
+    # Omitting `trailheads` entirely must fall back to the old behavior:
+    # campground/campsite gaps only show in the unfiltered view.
+    peaks = [_peak("Rose Peak", nearest_trailhead="Del Valle (Lichen Bark)")]
+    grounds = [Campground(name="Boyd Camp", park="Del Valle Regional Park",
+                           notes="Coordinates approximate.")]
+    qs = open_questions(peaks=peaks, campgrounds=grounds, peak_names=["Rose Peak"])
+    assert qs == []
+    qs_global = open_questions(campgrounds=grounds, peak_names=None)
+    assert len(qs_global) == 1
+
+
+def test_park_access_verbal_confirmation_flagged_and_peak_filterable():
+    peaks = [_peak("Rose Peak", nearest_trailhead="Del Valle (Lichen Bark)")]
+    trailheads = [_trailhead("Del Valle (Lichen Bark)", park="Del Valle Regional Park")]
+    park_access = [ParkAccess(park="Del Valle Regional Park",
+                               fee_exemptions="Confirmed verbally by gate staff.")]
+
+    qs = open_questions(peaks=peaks, trailheads=trailheads, park_access=park_access,
+                         peak_names=["Rose Peak"])
+    assert len(qs) == 1
+    assert qs[0].target_file == "data/park_access.csv"
+
+    qs_global = open_questions(park_access=park_access, peak_names=None)
+    assert len(qs_global) == 1
+
+
+def test_park_access_without_verbal_marker_not_flagged():
+    park_access = [ParkAccess(park="Del Valle Regional Park",
+                               fee_exemptions="Published on the official fee schedule.")]
+    qs = open_questions(park_access=park_access, peak_names=None)
+    assert qs == []
 
 
 # --- open_questions: timed entry (global view only) ------------------------

@@ -426,11 +426,36 @@ exemptions.
   deliberately returns `None` for a year not on file rather than falling
   back to a neighboring year's answer.
 
-`wayproof.camping`, `wayproof.water`, `wayproof.park_access`, and
-`wayproof.timed_entry` are loadable independently; `plan` currently surfaces
-their gaps (see "The Scavenger Hunt" below) but not yet their full detail
-(e.g. a campground's current water status) in its main report -- a natural
-next step.
+`plan` surfaces both what's known and what isn't: a `Facilities` section
+with each of these (water status, campground/reservation details, park
+entrance fee/hours) for the resolved trip's trailhead, and a "Help us
+confirm" section (see "The Scavenger Hunt" below) for what's still missing
+or uncertain about them.
+
+```bash
+python plan.py "Rose Peak" --date 2027-06-01
+```
+```text
+Facilities
+  Water sources at Del Valle (Lichen Bark):
+    - Lichen Bark (Del Valle): reported available (checked 2026-09-05)
+    - Stromer Springs: running (checked 2026-09-05)
+  Campground: Del Valle Family Campground
+    Reservation: ReserveAmerica (reserveamerica.com/explore/del-valle)
+    Nightly entry cutoff: ~10:00 PM (approximate, not a confirmed posted time) -- ...
+  Park access (Del Valle Regional Park):
+    Entrance fee: $10 (weekends & holidays, April through Labor Day)
+    Gate hours: 6:00 AM-9:00 PM (May through Labor Day)
+    Fee exemptions: Vehicles re-entering solely to retrieve a shuttled car ...
+```
+
+This links a trailhead to its campgrounds/park access via `Trailhead.park`
+(the specific park/preserve unit, e.g. `"Del Valle Regional Park"`) --
+deliberately distinct from `wilderness_area` (the backcountry/permit
+designation, e.g. `"Ohlone Wilderness"`), since a trailhead's governing
+wilderness and its vehicle-access park unit aren't always the same name.
+A trailhead with no known `park` (every Sierra trailhead today) simply
+shows no `Facilities` section, rather than a guessed link.
 
 ## The Scavenger Hunt: Confirming What's Unclear
 
@@ -580,6 +605,7 @@ Example summary output:
 | `--water-source-log-file` | `data/water_source_log.csv` | Append-only water-availability check ledger |
 | `--campgrounds-file` | `data/campgrounds.csv` | Backpack campgrounds |
 | `--campsites-file` | `data/campsites.csv` | Individually-bookable campsites |
+| `--park-access-file` | `data/park_access.csv` | Park-level entrance fee/hours dataset |
 | `--output, -o` | - | Write the resolved plan to this JSON file |
 | `--report TEXT` | - | Submit a claim about these objectives to `data/pending_reports.csv` (see "The Scavenger Hunt") -- also how to report a peak missing entirely, just by naming one that doesn't resolve |
 | `--evidence` | `""` | Optional supporting detail for `--report` |

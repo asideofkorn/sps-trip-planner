@@ -289,6 +289,13 @@ def test_load_trailheads():
     assert sierra_buttes.wilderness_area == ""
     assert sierra_buttes.land_agency == "Tahoe NF"
     assert "nan" not in sierra_buttes.wilderness_area.lower()
+    # `park` (the specific park/preserve unit, distinct from wilderness_area)
+    # is blank for Sierra trailheads and only populated for the two EBRPD
+    # ones added alongside Rose Peak/Mission Peak.
+    assert sierra_buttes.park == ""
+    lichen_bark = next(th for th in ths if th.name == "Del Valle (Lichen Bark)")
+    assert lichen_bark.park == "Del Valle Regional Park"
+    assert lichen_bark.wilderness_area == "Ohlone Wilderness"
 
 
 def test_choose_trailhead_modal():

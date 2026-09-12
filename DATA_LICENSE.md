@@ -50,7 +50,7 @@ Every data file below is also classified by what that means for reuse:
 | Sierra Club SPS PDFs/XLS (`sps_list_29th_ed_2025.pdf`, `sps_list_with_mileage.xls`, `scrambler_ratings_non_sps_2025.pdf`, `benchmark_routes.pdf`) | Sierra Club — Angeles Chapter, Sierra Peaks Section (SPS) | `third_party_reference_only` | **© Sierra Club. NOT redistributed in this repo** (removed from the tree and git history). Download from the SPS site to rebuild — see below. |
 | `data/peaks.csv` (core: name, coordinates, elevation, region, nearest-trailhead access signal, `notes`) | GNIS for 454 of 601 rows (incl. Rose Peak, Alameda County); peakbagger.com for 7 unofficially-named SPS summits with no GNIS entry; USGS topo (GNIS ID unconfirmed) for Mission Peak; 139 rows have no coordinates yet (non-SPS peaks not yet independently located) | `public_domain` for GNIS-sourced coordinates; `third_party_reference_only` for the 7 peakbagger-sourced rows and for Mission Peak pending GNIS confirmation; `project_created` for the derived `nearest_trailhead*` access signal and the `region` field | Facts are not copyrightable. Attribute USGS GNIS. Rose Peak and Mission Peak (Diablo Range, Alameda County) are this dataset's first peaks outside the Sierra Nevada / SPS collection -- added with no `data/collections/sps.csv` row, since neither is SPS-tracked, demonstrating the core/collection split's actual purpose. The peakbagger-sourced coordinates and Mission Peak's GNIS ID are tracked for independent re-verification -- see "Known follow-ups" below. Collection-agnostic: this file has no dependency on the Sierra Club compilation. |
 | `data/collections/sps.csv` (the SPS collection: list, section, class, mileage/gain, benchmark rating), `data/benchmark_routes.csv` | Derived: factual data extracted from the Sierra Club SPS list and non-SPS scrambler ratings | `project_created`/derived | Facts are not copyrightable; the *compilation* draws on the SPS list. Attribute the Sierra Club SPS. Two names ("Mount Johnson", "Thunder Mountain") appeared under both `list=SPS` and `list=non-SPS` with conflicting data; the SPS-list entry was kept for both this file and `data/peaks.csv` -- see "Known follow-ups". |
-| `data/trailheads.csv` | Curated by this project from public sources (PCTA, NPS, USFS, Wikipedia); coordinates are facts. `wilderness_area`/`land_agency`/`permit_group` columns added July 2026, cross-referenced against the agency sources below | `project_created` | Provided under the project license; verify before navigational use |
+| `data/trailheads.csv` | Curated by this project from public sources (PCTA, NPS, USFS, Wikipedia); coordinates are facts. `wilderness_area`/`land_agency`/`permit_group` columns added July 2026, cross-referenced against the agency sources below. `park` column added alongside Rose Peak/Mission Peak: the specific park/preserve unit for vehicle-access purposes, distinct from `wilderness_area`'s backcountry/permit designation -- links to `data/campgrounds.csv` and `data/park_access.csv`'s own `park` columns. | `project_created` | Provided under the project license; verify before navigational use |
 | `data/permits.csv` | Curated by this project from official sources (recreation.gov, nps.gov, fs.usda.gov) as of July 2026 | `project_created` | Facts (agency, fees, dates) are not copyrightable; provided under the project license. Quota seasons, reservation windows and lottery dates change annually — treat as a planning aid and verify against the listed `apply_url` before relying on any date. |
 | `data/release_policies.csv` | Derived by this project from the same official sources as `data/permits.csv`, restructured from prose into discrete dated phases | `project_created` | Same terms as `data/permits.csv` above. A phase with no exact release offset in the source is left unresolved rather than guessed at. |
 | `data/approaches.csv` | Curated by this project from official sources (recreation.gov, fs.usda.gov) as of July 2026, plus this project's own peak-source-data cross-references | `project_created` | Same terms as `data/permits.csv` above. Deliberately conservative — `confirmed` rows require a directly-named source; `unconfirmed` rows flag a suspected discrepancy without asserting an unverified permit. |
@@ -72,14 +72,6 @@ of *why* each one exists and how it was classified; it deliberately doesn't
 try to duplicate `open_questions()`'s output, which can drift as new gaps
 are found or existing ones resolved.
 
-- **Campground/campsite gaps aren't peak-scoped yet in `open_questions()`.**
-  `data/trailheads.csv`'s `wilderness_area` ("Ohlone Wilderness") and
-  `data/campgrounds.csv`'s `park` ("Sunol Regional Wilderness", "Del Valle
-  Regional Park") use different naming granularity for the same corridor,
-  so there's no reliable link from a specific peak to "which campgrounds
-  are near it" yet. These gaps only surface in the unfiltered
-  (`--open-questions`) view for this reason -- reconciling that naming
-  would let them show up contextually in `plan`'s per-objective nudges too.
 - **`data/timed_entry.csv`'s 2020–2023 Yosemite rows are secondary-sourced**
   (cited to aggregator/press coverage rather than each year's original
   nps.gov announcement, which this project has not independently
@@ -116,6 +108,21 @@ are found or existing ones resolved.
   operational issue (an unfiltered load no longer crashes) but is not the
   same as determining *which value is actually correct*; that independent
   investigation is still open.
+
+### Resolved: campground/campsite/park-access linking
+
+Campground/campsite/park-access gaps used to only surface in
+`open_questions()`'s unfiltered view: `data/trailheads.csv`'s
+`wilderness_area` ("Ohlone Wilderness") and `data/campgrounds.csv`'s `park`
+("Del Valle Regional Park") used different naming granularity for the same
+corridor, so there was no reliable link from a specific peak to "which
+campgrounds/park fees are near it." `data/trailheads.csv` now has a `park`
+column (the specific park/preserve unit, distinct from `wilderness_area`'s
+backcountry/permit designation), populated for the two EBRPD trailheads and
+blank elsewhere. Both `open_questions()` and `wayproof.plan`'s new
+`PlanResult.facilities` use it, so `plan.py "Rose Peak"` now shows its
+campground/park-access facts and gaps directly, not just in the global
+backlog.
 
 ### Resolved by the core/collection split
 
