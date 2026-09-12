@@ -77,6 +77,13 @@ class Regulation:
     source_url: str = ""
     source_last_updated: str = ""
     verified_date: str = ""
+    scope_display: str = ""
+    """How to name this rule's scope to a reader, when the key isn't readable.
+
+    ``scope_value`` is a matching key, not prose: an agency scope reads
+    ``eldorado_nf``. Set this to ``Eldorado National Forest`` and the surfaces
+    show that instead.
+    """
 
     @property
     def inherited(self) -> bool:
@@ -87,9 +94,9 @@ class Regulation:
     @property
     def scope_label(self) -> str:
         if self.scope_type == JURISDICTION:
-            return f"{self.scope_value} state law"
+            return f"{self.scope_display or self.scope_value} state law"
         if self.scope_type == AGENCY:
-            return self.scope_value
+            return self.scope_display or self.scope_value
         return "this permit"
 
 
@@ -133,6 +140,7 @@ def load_regulations(path: str | Path = "data/regulations.csv") -> List[Regulati
             source_url=_str_field(row, "source_url"),
             source_last_updated=_str_field(row, "source_last_updated"),
             verified_date=_str_field(row, "verified_date"),
+            scope_display=_str_field(row, "scope_display"),
         ))
     return out
 
@@ -140,7 +148,7 @@ def load_regulations(path: str | Path = "data/regulations.csv") -> List[Regulati
 def regulations_for(
     regulations: Sequence[Regulation],
     permit_group: str = "",
-    agency: str = "",
+    agency: "str | Sequence[str]" = "",
     jurisdiction: str = "",
 ) -> List[Regulation]:
     """Every regulation applying to one permit group, all three scopes resolved.
@@ -148,12 +156,20 @@ def regulations_for(
     Ordered by :data:`CATEGORY_ORDER`, then by how specific the rule is, so a
     wilderness's own fire ban reads before the statewide permit requirement it
     sits on top of. Unknown categories sort last rather than being dropped.
+
+    ``agency`` takes one key or several. Pass ``PermitRule.agency_ids``, never
+    ``PermitRule.agency`` -- the latter is a display string. Several because a
+    wilderness can be co-managed, as Desolation is by Eldorado NF and the Lake
+    Tahoe Basin Management Unit; a rule from either manager applies.
     """
+    agencies = {agency} if isinstance(agency, str) else set(agency)
+    agencies.discard("")
+
     def applies(reg: Regulation) -> bool:
         if reg.scope_type == PERMIT_GROUP:
             return bool(permit_group) and reg.scope_value == permit_group
         if reg.scope_type == AGENCY:
-            return bool(agency) and reg.scope_value == agency
+            return reg.scope_value in agencies
         return bool(jurisdiction) and reg.scope_value == jurisdiction
 
     specificity = {PERMIT_GROUP: 0, AGENCY: 1, JURISDICTION: 2}

@@ -20,6 +20,23 @@ All notable changes to this project are documented here. The format is based on
     group, so the column states it rather than assuming it. Tested.
 
 ### Fixed
+- **An agency-scoped regulation inherited to zero permit groups.** The Eldorado
+  NF 10-day dispersed-camping limit was scoped to the agency string
+  `Eldorado National Forest`, which no permit group carries: `permits.csv`'s
+  `agency` column is a display name with ranger-district and co-management
+  detail (`Eldorado NF / LTBMU`, `Eldorado NF (Amador Ranger District)`). The
+  rule looked filed and applied to nobody — the same failure mode as the
+  campfire drift it was meant to fix, one layer up.
+  - `permits.csv` gains `agency_id`: a stable matching key beside the prose,
+    semicolon-separated because co-management is real (Desolation is jointly
+    administered by Eldorado NF and the Lake Tahoe Basin Management Unit, and a
+    rule from either applies). `regulations_for()` takes one key or several.
+  - `regulations.csv` gains an optional `scope_display`, so a scope matched as
+    `eldorado_nf` still reads as "Eldorado National Forest" on both surfaces.
+  - A test now asserts every regulation's scope reaches at least one permit
+    group, and another asserts the display string does *not* match — a dead
+    scope fails the build rather than quietly reading as covered. The rule now
+    reaches all three Eldorado groups and appears on 22 trailhead pages.
 - **Resolving one conflict silently closed every other conflict on the same
   permit group.** `unresolved_conflicts()` read only each group's most recent
   log entry, so a group could carry at most one live disagreement. Desolation

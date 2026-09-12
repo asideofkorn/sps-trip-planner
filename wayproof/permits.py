@@ -138,6 +138,12 @@ class PermitRule:
 
     permit_group: str
     agency: str
+    """Display name of the issuing agency, e.g. ``"Eldorado NF / LTBMU"``.
+
+    Free text, and deliberately so -- it carries ranger-district and
+    co-management detail a reader wants. Never match on it; use
+    :attr:`agency_ids`.
+    """
     permit_type: str
     quota_required: bool
     quota_season_start: Optional[tuple] = None  # (month, day) or None
@@ -156,6 +162,18 @@ class PermitRule:
     # inherit statewide rules (the California Campfire Permit) without
     # copying them into every permit_group.
     jurisdiction: str = ""
+    agency_ids: tuple = ()
+    """Stable keys for the managing agencies, e.g. ``("eldorado_nf", "ltbmu")``.
+
+    Separate from :attr:`agency` for the same reason ``jurisdiction`` is a
+    column rather than an inference: agency-scoped regulations have to match
+    *something*, and matching the display string silently matched nothing --
+    Desolation's reads "Eldorado NF / LTBMU" while the regulation said
+    "Eldorado National Forest", so the forest-wide rule inherited to zero
+    groups and nobody noticed. A list because co-management is real: Desolation
+    is administered jointly by Eldorado NF and the Lake Tahoe Basin Management
+    Unit, and a rule from either applies.
+    """
     source_last_updated: str = ""  # the source page/doc's own "last updated" date, if shown
     verified_date: str = ""        # date this row was last checked against that source
 
@@ -212,6 +230,9 @@ def load_permits(
         rules[group] = PermitRule(
             permit_group=group,
             agency=_str_field(row, "agency"),
+            agency_ids=tuple(
+                part.strip() for part in _str_field(row, "agency_id").split(";") if part.strip()
+            ),
             jurisdiction=_str_field(row, "jurisdiction"),
             permit_type=_str_field(row, "permit_type"),
             quota_required=_str_field(row, "quota_required").lower() == "yes",

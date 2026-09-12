@@ -644,7 +644,7 @@ regulation is now stored once and *inherited*, by `scope_type`:
 | Scope | Matches | Example |
 |---|---|---|
 | `jurisdiction` | `PermitRule.jurisdiction` | California Campfire Permit |
-| `agency` | `PermitRule.agency` | Eldorado NF's 10-day dispersed-camping limit |
+| `agency` | `PermitRule.agency_ids` | Eldorado NF's 10-day dispersed-camping limit |
 | `permit_group` | the permit product itself | Desolation's bear canister requirement |
 
 `regulations_for()` resolves all three layers, sorting the specific before the
@@ -657,6 +657,28 @@ every group in the dataset is currently Californian: *"all our groups are in
 California"* is true today by coincidence of coverage, and inheriting statewide
 law off that coincidence would break silently the first time a Nevada or Oregon
 group is added. There's a test for exactly that.
+
+### A scope that matches nothing is worse than a missing rule
+
+The agency layer taught this the hard way. The Eldorado NF dispersed-camping
+limit was scoped to the agency `Eldorado National Forest`, and **it inherited to
+zero permit groups** -- because `permits.csv`'s `agency` column is a *display*
+name carrying ranger-district and co-management detail. Desolation's reads
+`Eldorado NF / LTBMU`; the Mokelumne groups read
+`Eldorado NF (Amador Ranger District)`. None of them is the string the rule
+matched on, and nothing said so. The rule looked filed. It applied to nobody.
+
+So `permits.csv` carries `agency_id` alongside `agency`: a stable key for
+matching, separate from the prose for reading. It's a *list*, semicolon
+separated, because co-management is real -- Desolation is administered jointly
+by Eldorado NF and the Lake Tahoe Basin Management Unit, and a rule from either
+applies. Regulations scope on the key and carry an optional `scope_display` so a
+reader still sees "Eldorado National Forest" rather than `eldorado_nf`.
+
+The guard matters more than the fix: a test now asserts that **every**
+regulation's scope reaches at least one permit group. A dead scope fails the
+build instead of quietly reading as covered. The forest-wide rule now reaches
+all three Eldorado groups and shows on 22 trailhead pages.
 
 ## The Website
 
