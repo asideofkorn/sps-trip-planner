@@ -56,6 +56,7 @@ _META_COLUMNS = [
     "mileage_rt", "gain_ft", "loss_ft", "trailhead", "quad", "coord_source",
     "benchmark", "benchmark_rating",
     "nearest_trailhead", "nearest_trailhead_side", "nearest_trailhead_mi",
+    "notes",
 ]
 
 

@@ -48,7 +48,7 @@ Every data file below is also classified by what that means for reuse:
 |---------|--------|-----------------|-------|
 | `data/source/gnis_sierra_summits.txt` | USGS Geographic Names Information System (GNIS) | `public_domain` | U.S. Government work |
 | Sierra Club SPS PDFs/XLS (`sps_list_29th_ed_2025.pdf`, `sps_list_with_mileage.xls`, `scrambler_ratings_non_sps_2025.pdf`, `benchmark_routes.pdf`) | Sierra Club — Angeles Chapter, Sierra Peaks Section (SPS) | `third_party_reference_only` | **© Sierra Club. NOT redistributed in this repo** (removed from the tree and git history). Download from the SPS site to rebuild — see below. |
-| `data/peaks.csv` (core: name, coordinates, elevation, region, nearest-trailhead access signal) | GNIS for 454 of 601 rows (incl. Rose Peak, Alameda County); peakbagger.com for 7 unofficially-named SPS summits with no GNIS entry; USGS topo (GNIS ID unconfirmed) for Mission Peak; 139 rows have no coordinates yet (non-SPS peaks not yet independently located) | `public_domain` for GNIS-sourced coordinates; `third_party_reference_only` for the 7 peakbagger-sourced rows and for Mission Peak pending GNIS confirmation; `project_created` for the derived `nearest_trailhead*` access signal and the `region` field | Facts are not copyrightable. Attribute USGS GNIS. Rose Peak and Mission Peak (Diablo Range, Alameda County) are this dataset's first peaks outside the Sierra Nevada / SPS collection -- added with no `data/collections/sps.csv` row, since neither is SPS-tracked, demonstrating the core/collection split's actual purpose. The peakbagger-sourced coordinates and Mission Peak's GNIS ID are tracked for independent re-verification -- see "Known follow-ups" below. Collection-agnostic: this file has no dependency on the Sierra Club compilation. |
+| `data/peaks.csv` (core: name, coordinates, elevation, region, nearest-trailhead access signal, `notes`) | GNIS for 454 of 601 rows (incl. Rose Peak, Alameda County); peakbagger.com for 7 unofficially-named SPS summits with no GNIS entry; USGS topo (GNIS ID unconfirmed) for Mission Peak; 139 rows have no coordinates yet (non-SPS peaks not yet independently located) | `public_domain` for GNIS-sourced coordinates; `third_party_reference_only` for the 7 peakbagger-sourced rows and for Mission Peak pending GNIS confirmation; `project_created` for the derived `nearest_trailhead*` access signal and the `region` field | Facts are not copyrightable. Attribute USGS GNIS. Rose Peak and Mission Peak (Diablo Range, Alameda County) are this dataset's first peaks outside the Sierra Nevada / SPS collection -- added with no `data/collections/sps.csv` row, since neither is SPS-tracked, demonstrating the core/collection split's actual purpose. The peakbagger-sourced coordinates and Mission Peak's GNIS ID are tracked for independent re-verification -- see "Known follow-ups" below. Collection-agnostic: this file has no dependency on the Sierra Club compilation. |
 | `data/collections/sps.csv` (the SPS collection: list, section, class, mileage/gain, benchmark rating), `data/benchmark_routes.csv` | Derived: factual data extracted from the Sierra Club SPS list and non-SPS scrambler ratings | `project_created`/derived | Facts are not copyrightable; the *compilation* draws on the SPS list. Attribute the Sierra Club SPS. Two names ("Mount Johnson", "Thunder Mountain") appeared under both `list=SPS` and `list=non-SPS` with conflicting data; the SPS-list entry was kept for both this file and `data/peaks.csv` -- see "Known follow-ups". |
 | `data/trailheads.csv` | Curated by this project from public sources (PCTA, NPS, USFS, Wikipedia); coordinates are facts. `wilderness_area`/`land_agency`/`permit_group` columns added July 2026, cross-referenced against the agency sources below | `project_created` | Provided under the project license; verify before navigational use |
 | `data/permits.csv` | Curated by this project from official sources (recreation.gov, nps.gov, fs.usda.gov) as of July 2026 | `project_created` | Facts (agency, fees, dates) are not copyrightable; provided under the project license. Quota seasons, reservation windows and lottery dates change annually — treat as a planning aid and verify against the listed `apply_url` before relying on any date. |
@@ -63,49 +63,59 @@ Every data file below is also classified by what that means for reuse:
 
 ## Known follow-ups
 
+As of the scavenger-hunt data loop (see README's "The Scavenger Hunt"),
+every item below is tracked *live*, not just here: run
+`python cli.py --open-questions` for the full current backlog across the
+whole dataset, or `python plan.py "<peak>" --date ...` for the subset
+relevant to a specific objective. This section stays as the durable record
+of *why* each one exists and how it was classified; it deliberately doesn't
+try to duplicate `open_questions()`'s output, which can drift as new gaps
+are found or existing ones resolved.
+
 - **Campground/campsite gaps aren't peak-scoped yet in `open_questions()`.**
   `data/trailheads.csv`'s `wilderness_area` ("Ohlone Wilderness") and
   `data/campgrounds.csv`'s `park` ("Sunol Regional Wilderness", "Del Valle
   Regional Park") use different naming granularity for the same corridor,
   so there's no reliable link from a specific peak to "which campgrounds
-  are near it" yet. `wayproof.reports.open_questions()` only surfaces
-  campground/campsite gaps in its unfiltered (global) view for this reason
-  -- reconciling that naming would let those gaps show up contextually in
-  `plan`'s per-objective nudges too.
-- **`data/timed_entry.csv`'s 2020–2023 Yosemite rows are secondary-sourced.**
-  They're cited to aggregator/press coverage rather than each year's
-  original nps.gov announcement, which this project has not independently
-  retrieved. The 2024–2026 rows already cite nps.gov directly; the older
-  rows should be upgraded the same way when time allows.
-- **Mission Peak's GNIS feature ID is unconfirmed.** Its coordinates come
-  from USGS topo/Wikipedia sources, not a directly-cited GNIS feature ID
-  like the rest of this dataset's peaks. Same remediation as the peakbagger
-  rows below: independently confirm against GNIS rather than carry it
-  indefinitely as a lower-confidence source.
+  are near it" yet. These gaps only surface in the unfiltered
+  (`--open-questions`) view for this reason -- reconciling that naming
+  would let them show up contextually in `plan`'s per-objective nudges too.
+- **`data/timed_entry.csv`'s 2020–2023 Yosemite rows are secondary-sourced**
+  (cited to aggregator/press coverage rather than each year's original
+  nps.gov announcement, which this project has not independently
+  retrieved) -- surfaced live by `open_questions()`'s scan of each row's
+  `notes` for "secondary"/"aggregator". The 2024–2026 rows already cite
+  nps.gov directly.
+- **Mission Peak's GNIS feature ID is unconfirmed** (coordinates come from
+  USGS topo/Wikipedia, not a directly-cited GNIS feature ID) -- surfaced
+  live via `data/peaks.csv`'s `coord_source` field.
 - **Boyd Camp's water availability has an unresolved conflict on file** in
   `data/water_source_log.csv`: EBRPD's official page listed it as available
   (checked 2026-09-02), while this project's own trip-planning notes for
   the same period marked it as having no water -- neither has been
-  independently confirmed on the ground. Left as an open, visible
-  disagreement rather than picking one silently, per the ledger's own
-  append-only design.
+  independently confirmed on the ground. Surfaced live by comparing a water
+  source's most recent log entries; left as an open, visible disagreement
+  rather than picking one silently, per the ledger's own append-only design.
 - **The 7 peakbagger-sourced coordinates should be independently
   re-verified** (via USGS 3DEP/topo, with this project's own documented
   determination) rather than carried indefinitely as a third-party
-  dependency. That's real per-peak geographic verification work, not a
-  find-and-replace -- doing it carelessly risks introducing a wrong
-  coordinate for a real mountain feature, which is worse than the current
-  honestly-labeled dependency. Not yet done.
+  dependency -- surfaced live via `coord_source == "peakbagger"`. That's
+  real per-peak geographic verification work, not a find-and-replace --
+  doing it carelessly risks introducing a wrong coordinate for a real
+  mountain feature, which is worse than the current honestly-labeled
+  dependency. Not yet done.
 - **Two names ("Mount Johnson", "Thunder Mountain") appear under both
   `list=SPS` and `list=non-SPS` with conflicting elevation data** in the
   underlying Sierra Club source documents. `scripts/split_collections.py`
   applies a documented, conservative tie-break (prefer the primary SPS-list
   entry) so both `data/peaks.csv` and `data/collections/sps.csv` have a
   unique `name` key -- required for the core/collection join to be
-  meaningful at all. That tie-break resolves the operational issue (an
-  unfiltered load no longer crashes) but is not the same as determining
-  *which value is actually correct*; that independent investigation is
-  still open.
+  meaningful at all, and now also writes that conflict into the kept row's
+  `notes` field, so it's surfaced live by `open_questions()` rather than
+  living only in this file and a code comment. That tie-break resolves the
+  operational issue (an unfiltered load no longer crashes) but is not the
+  same as determining *which value is actually correct*; that independent
+  investigation is still open.
 
 ### Resolved by the core/collection split
 

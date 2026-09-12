@@ -110,6 +110,27 @@ def _parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--permit-source-log-file", default="data/permit_source_log.csv",
                    help="Source log dataset for --permit-sources "
                         "(default data/permit_source_log.csv)")
+    p.add_argument("--open-questions", action="store_true",
+                   help="Print every unconfirmed/missing/conflicting fact currently "
+                        "on file across the whole dataset (the global backlog view; "
+                        "see the README's 'The Scavenger Hunt' section) and exit. "
+                        "Unlike --permits' per-trip nudge, this isn't scoped to any "
+                        "objective.")
+    p.add_argument("--water-sources-file", default="data/water_sources.csv",
+                   help="Named backcountry water sources for --open-questions "
+                        "(default data/water_sources.csv)")
+    p.add_argument("--water-source-log-file", default="data/water_source_log.csv",
+                   help="Water-availability check ledger for --open-questions "
+                        "(default data/water_source_log.csv)")
+    p.add_argument("--campgrounds-file", default="data/campgrounds.csv",
+                   help="Backpack campgrounds for --open-questions "
+                        "(default data/campgrounds.csv)")
+    p.add_argument("--campsites-file", default="data/campsites.csv",
+                   help="Individually-bookable campsites for --open-questions "
+                        "(default data/campsites.csv)")
+    p.add_argument("--timed-entry-file", default="data/timed_entry.csv",
+                   help="Year-scoped timed-entry history for --open-questions "
+                        "(default data/timed_entry.csv)")
     p.add_argument("--list", default="SPS",
                    help="If the data has a 'list' column, keep only this list "
                         "(default SPS; use 'all' to keep everything). Requires "
@@ -172,8 +193,34 @@ def main(argv=None) -> int:
         print(format_source_log(log, permit_group=group))
         return 0
 
+    if args.open_questions:
+        from wayproof.access import load_approaches
+        from wayproof.camping import load_campgrounds, load_campsites
+        from wayproof.reports import open_questions, format_open_questions
+        from wayproof.timed_entry import load_timed_entry
+        from wayproof.water import load_water_sources, load_water_source_log
+
+        peaks = load_peaks(args.input or "data/peaks.csv",
+                            collections_path=args.collections_file or None)
+        approaches = load_approaches(args.approaches_file)
+        water_sources = load_water_sources(args.water_sources_file)
+        water_source_log = load_water_source_log(args.water_source_log_file)
+        campgrounds = load_campgrounds(args.campgrounds_file)
+        campsites = load_campsites(args.campsites_file)
+        by_park = load_timed_entry(args.timed_entry_file)
+        timed_entry = [p for policies in by_park.values() for p in policies]
+
+        questions = open_questions(
+            peaks=peaks, approaches=approaches, water_sources=water_sources,
+            water_source_log=water_source_log, campgrounds=campgrounds,
+            campsites=campsites, timed_entry=timed_entry, peak_names=None,
+        )
+        print(format_open_questions(questions))
+        return 0
+
     if not args.input:
-        print("error: --input is required (unless using --permit-sources)", file=sys.stderr)
+        print("error: --input is required (unless using --permit-sources or "
+              "--open-questions)", file=sys.stderr)
         return 2
 
     include_approach = args.include_approach or args.approach_report or args.permits

@@ -459,6 +459,20 @@ a static disclaimer:
   This is the point: the nudge shows up exactly when someone is already
   planning to be at that location, not on a separate list they'd have to
   go looking for.
+- **The full backlog, across the whole dataset**, not scoped to any one
+  trip:
+
+  ```bash
+  python cli.py --open-questions
+  ```
+
+  This is also where every previously-tracked data-quality item now lives
+  -- the 7 peakbagger-sourced coordinates flagged for re-verification, the
+  Mount Johnson/Thunder Mountain elevation conflict, secondary-sourced
+  `timed_entry.csv` rows -- surfaced live from the data's own confidence
+  signals rather than duplicated in a separate to-do list. `DATA_LICENSE.md`'s
+  Known follow-ups records *why* each one exists; this command is the
+  live, current view of what's actually still open.
 - **`--report`** submits a claim to `data/pending_reports.csv`, an
   append-only intake queue -- deliberately separate from the resolved
   domain ledgers (`water_source_log.csv` etc.), since a submission is a
@@ -560,7 +574,7 @@ Example summary output:
 
 | Flag | Default | Description |
 |------|---------|-------------|
-| `--input, -i` | required | Peak CSV or JSON file (e.g. `data/peaks.csv`); not required with `--permit-sources` |
+| `--input, -i` | required | Peak CSV or JSON file (e.g. `data/peaks.csv`); not required with `--permit-sources` or `--open-questions` |
 | `--collections-file` | `data/collections/sps.csv` | Collection metadata joined onto `--input` by name; pass `''` to load `--input` standalone |
 | `--output, -o` | - | Write ranked candidate groupings to this JSON file |
 | `--list` | `SPS` | Keep only this `list` value; use `all` to keep everything |
@@ -586,6 +600,12 @@ Example summary output:
 | `--approaches-file` | `data/approaches.csv` | Peak-specific approach/permit relationships used by `--permits` |
 | `--permit-sources [GROUP]` | off | Print the permit source-verification log and exit; optionally filtered by permit group |
 | `--permit-source-log-file` | `data/permit_source_log.csv` | Source log dataset for `--permit-sources` |
+| `--open-questions` | off | Print every unconfirmed/missing/conflicting fact across the whole dataset and exit (see "The Scavenger Hunt") |
+| `--water-sources-file` | `data/water_sources.csv` | Used by `--open-questions` |
+| `--water-source-log-file` | `data/water_source_log.csv` | Used by `--open-questions` |
+| `--campgrounds-file` | `data/campgrounds.csv` | Used by `--open-questions` |
+| `--campsites-file` | `data/campsites.csv` | Used by `--open-questions` |
+| `--timed-entry-file` | `data/timed_entry.csv` | Used by `--open-questions` |
 | `--use-passes` | off | Evaluate cross-crest distance through mountain passes instead of straight lines |
 | `--passes-file` | `data/passes.csv` | Passes dataset for `--use-passes` |
 | `--pass-tier` | `1` | Which passes may be used as crossings: `1` for named passes only, `2` for minor gaps/saddles too |
@@ -621,10 +641,13 @@ collection (a different range, a different list) would layer onto the same
 core.
 
 - **`data/peaks.csv`** (core, collection-agnostic): `name`, `latitude`,
-  `longitude`, `elevation_ft`, `elev_estimated`, `coord_source`, and the
-  project-computed `nearest_trailhead`/`nearest_trailhead_side`/
-  `nearest_trailhead_mi` access signal. A peak's presence here depends only
-  on having a name and a location.
+  `longitude`, `elevation_ft`, `elev_estimated`, `coord_source`, `region`,
+  the project-computed `nearest_trailhead`/`nearest_trailhead_side`/
+  `nearest_trailhead_mi` access signal, and an optional `notes` field for a
+  peak-specific data-quality flag (e.g. an unresolved SPS/non-SPS name
+  conflict) -- scanned by `wayproof.reports.open_questions()`, see "The
+  Scavenger Hunt". A peak's presence here depends only on having a name and
+  a location.
 - **`data/collections/sps.csv`** (the SPS collection): `list` (`SPS` or
   `non-SPS`), `section`, `class`, `emblem`, `mountaineers`, `mileage_rt`,
   `gain_ft`, `loss_ft`, `trailhead` (named route), `quad`, `benchmark`,
@@ -1161,7 +1184,8 @@ wayproof/
     ├── test_plan.py
     ├── test_facilities.py
     ├── test_timed_entry.py
-    └── test_reports.py
+    ├── test_reports.py
+    └── test_split_collections.py
 ```
 
 Run the tests:

@@ -18,18 +18,22 @@ from wayproof.model import Peak
 from wayproof.reports import (
     OpenQuestion,
     Report,
+    format_open_questions,
     open_questions,
     pending_reports,
     resolve_report,
     submit_report,
 )
+from wayproof.timed_entry import TimedEntryPolicy
 from wayproof.water import WaterSource, WaterSourceLogEntry
 
 
-def _peak(name, coord_source="GNIS", nearest_trailhead=""):
+def _peak(name, coord_source="GNIS", nearest_trailhead="", notes=""):
     meta = {"coord_source": coord_source}
     if nearest_trailhead:
         meta["nearest_trailhead"] = nearest_trailhead
+    if notes:
+        meta["notes"] = notes
     return Peak(name=name, latitude=37.0, longitude=-121.0, elevation_ft=3000, meta=meta)
 
 
@@ -82,6 +86,48 @@ def test_unconfirmed_coord_source_produces_a_question():
 def test_confirmed_gnis_coord_source_produces_no_question():
     peaks = [_peak("Rose Peak", coord_source="GNIS")]
     qs = open_questions(peaks=peaks, peak_names=["Rose Peak"])
+    assert qs == []
+
+
+def test_peakbagger_coord_source_flagged_for_reverification():
+    peaks = [_peak("Taylor Dome", coord_source="peakbagger")]
+    qs = open_questions(peaks=peaks, peak_names=["Taylor Dome"])
+    assert len(qs) == 1
+    assert "peakbagger.com" in qs[0].question
+    assert qs[0].target_file == "data/peaks.csv"
+
+
+def test_peakbagger_and_unconfirmed_are_mutually_exclusive_not_doubled():
+    # A peak flagged "unconfirmed" shouldn't also trip the plain-peakbagger
+    # branch and produce two questions about the same coordinate issue.
+    peaks = [_peak("Mission Peak", coord_source="USGS topo (GNIS ID unconfirmed)")]
+    qs = open_questions(peaks=peaks, peak_names=["Mission Peak"])
+    coord_qs = [q for q in qs if "coordinates" in q.question]
+    assert len(coord_qs) == 1
+
+
+# --- open_questions: peak notes (duplicate-name tie-break, etc.) ----------
+
+def test_peak_note_with_uncertainty_marker_produces_a_question():
+    note = ("Also appears under list=non-SPS with conflicting data; kept via a "
+            "documented tie-break. Which value is actually correct remains "
+            "unconfirmed -- see DATA_LICENSE.md's Known follow-ups.")
+    peaks = [_peak("Mount Johnson", notes=note)]
+    qs = open_questions(peaks=peaks, peak_names=["Mount Johnson"])
+    assert len(qs) == 1
+    assert qs[0].target_file == "data/peaks.csv"
+    assert "Mount Johnson" in qs[0].question
+
+
+def test_peak_note_without_uncertainty_marker_produces_no_question():
+    peaks = [_peak("Mount Whitney", notes="Emblem peak; benchmark rating S-1.0.")]
+    qs = open_questions(peaks=peaks, peak_names=["Mount Whitney"])
+    assert qs == []
+
+
+def test_peak_with_no_notes_produces_no_note_question():
+    peaks = [_peak("Mount Whitney")]
+    qs = open_questions(peaks=peaks, peak_names=["Mount Whitney"])
     assert qs == []
 
 
@@ -155,6 +201,49 @@ def test_campground_uncertain_note_flagged_globally():
     qs = open_questions(campgrounds=grounds, peak_names=None)
     assert len(qs) == 1
     assert "Del Valle Family Campground" in qs[0].target_key
+
+
+# --- open_questions: timed entry (global view only) ------------------------
+
+def test_secondary_sourced_timed_entry_flagged_globally():
+    policies = [TimedEntryPolicy(park="Yosemite National Park", year=2020, required=True,
+                                  notes="Secondary/aggregator source; not independently retrieved.")]
+    qs = open_questions(timed_entry=policies, peak_names=None)
+    assert len(qs) == 1
+    assert qs[0].target_file == "data/timed_entry.csv"
+
+
+def test_officially_sourced_timed_entry_not_flagged():
+    policies = [TimedEntryPolicy(park="Yosemite National Park", year=2026, required=False,
+                                  notes="Official NPS announcement.")]
+    qs = open_questions(timed_entry=policies, peak_names=None)
+    assert qs == []
+
+
+def test_timed_entry_not_surfaced_in_peak_filtered_view():
+    peaks = [_peak("Mount Whitney")]
+    policies = [TimedEntryPolicy(park="Yosemite National Park", year=2020, required=True,
+                                  notes="Secondary/aggregator source.")]
+    qs = open_questions(peaks=peaks, timed_entry=policies, peak_names=["Mount Whitney"])
+    assert qs == []
+
+
+# --- format_open_questions ---------------------------------------------------
+
+def test_format_open_questions_empty():
+    assert format_open_questions([]) == "No open questions on file."
+
+
+def test_format_open_questions_groups_by_target_file():
+    qs = [
+        OpenQuestion(target_file="data/peaks.csv", target_key="A", question="q1"),
+        OpenQuestion(target_file="data/peaks.csv", target_key="B", question="q2"),
+        OpenQuestion(target_file="data/water_sources.csv", target_key="C", question="q3"),
+    ]
+    text = format_open_questions(qs)
+    assert "3 open question(s) across 2 file(s)" in text
+    assert text.index("data/peaks.csv") < text.index("[A]") < text.index("[B]")
+    assert "data/water_sources.csv" in text
 
 
 # --- report queue -----------------------------------------------------------

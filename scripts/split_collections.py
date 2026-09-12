@@ -45,7 +45,7 @@ ROOT = Path(__file__).resolve().parent.parent
 _CORE_COLUMNS = [
     "name", "latitude", "longitude", "elevation_ft", "elev_estimated",
     "coord_source", "nearest_trailhead", "nearest_trailhead_side",
-    "nearest_trailhead_mi", "nearest_trailhead_pass",
+    "nearest_trailhead_mi", "nearest_trailhead_pass", "notes",
 ]
 
 # Facts specific to the Sierra Club SPS program's own compilation (the SPS
@@ -71,10 +71,17 @@ def _dedupe_by_name(df: pd.DataFrame) -> pd.DataFrame:
     actually correct* (not just which list to prefer) stays a separate,
     tracked follow-up -- this does not assert the dropped row was wrong,
     only that a peak needs exactly one core identity to be joinable.
+
+    The kept row's ``notes`` column records the conflict itself (rather than
+    leaving it only in this docstring and DATA_LICENSE.md), so
+    :func:`wayproof.reports.open_questions` can surface it live as an
+    unconfirmed fact instead of it living solely as static prose.
     """
     dupes = df[df.duplicated("name", keep=False)]
     if dupes.empty:
         return df
+    if "notes" not in df.columns:
+        df["notes"] = ""
     for name in sorted(dupes["name"].unique()):
         rows = dupes[dupes["name"] == name]
         lists = set(rows.get("list", pd.Series(dtype=str)).str.upper())
@@ -88,6 +95,13 @@ def _dedupe_by_name(df: pd.DataFrame) -> pd.DataFrame:
         print(f"NOTE: {name!r} appears under both SPS and non-SPS with "
               f"conflicting data -- keeping the SPS row for the split "
               f"output (see DATA_LICENSE.md's Known follow-ups).")
+        kept_idx = rows[rows["list"].str.upper() == "SPS"].index
+        df.loc[kept_idx, "notes"] = (
+            "Also appears under list=non-SPS with conflicting data; this "
+            "SPS-list entry was kept via a documented tie-break. Which "
+            "value is actually correct remains unconfirmed -- see "
+            "DATA_LICENSE.md's Known follow-ups."
+        )
     keep_mask = ~df.index.isin(dupes.index) | (df.get("list", "").str.upper() == "SPS")
     return df[keep_mask]
 
@@ -95,9 +109,10 @@ def _dedupe_by_name(df: pd.DataFrame) -> pd.DataFrame:
 def split(staging_path: Path, core_out: Path, collection_out: Path) -> None:
     df = pd.read_csv(staging_path)
 
-    missing = set(_CORE_COLUMNS + _COLLECTION_COLUMNS) - set(df.columns) - {"name"}
-    # "name" is required and always present; report anything else missing.
-    missing -= {"name"}
+    # "name" is always present; "notes" is an optional, project-added
+    # annotation (written by _dedupe_by_name when it fires) rather than a
+    # raw source field, so its absence from the staging file isn't an error.
+    missing = set(_CORE_COLUMNS + _COLLECTION_COLUMNS) - set(df.columns) - {"name", "notes"}
     if missing:
         raise ValueError(
             f"Staging file {staging_path} is missing expected column(s): "
@@ -105,6 +120,8 @@ def split(staging_path: Path, core_out: Path, collection_out: Path) -> None:
         )
 
     df = _dedupe_by_name(df)
+    if "notes" not in df.columns:
+        df["notes"] = ""
 
     core = df[[c for c in _CORE_COLUMNS if c in df.columns]].copy()
     collection = df[[c for c in _COLLECTION_COLUMNS if c in df.columns]].copy()
