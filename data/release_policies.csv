@@ -8,9 +8,9 @@ inyo_gtw,2,reservation,,14,,07:00,America/Los_Angeles,40,second_release,"Remaini
 sierra_nf,1,reservation,,182,,,,60,first_release,Continuous rolling window opening 6 months before entry; bookable up to 1 day before if space remains.
 sierra_nf,2,reservation,,,,,,40,second_release,"Remaining ~40% released for shorter-notice/walk-up-style booking on recreation.gov; exact release offset not stated by the source -- do not assume a specific date, check recreation.gov directly closer to the trip."
 seki,1,reservation,,182,,07:00,America/Los_Angeles,,release,"Full quota released daily at 7:00am Pacific, up to 6 months before entry."
-desolation,1,reservation,in_season,182,,,,67,first_release,"Roughly two-thirds of each zone's quota is reservable on recreation.gov up to 6 months before arrival. Permits print starting 7 days before entry."
+desolation,1,reservation,in_season,182,,,,67,first_release,Roughly two-thirds of each zone's quota is reservable on recreation.gov up to 6 months before arrival. Permits print starting 7 days before entry.
 desolation,2,walkup,in_season,,,,,33,same_day_walkup,"The remaining ~one-third of each zone's quota is never listed online -- issued same-day, first-come, at a ranger station on the date of the first night's stay."
-desolation,3,reservation,off_season,0,,,,,off_season_release,"Outside the quota season permits are still required, still booked through recreation.gov, and can be booked and printed on the day of entry -- not a trailhead self-issue kiosk."
+desolation,3,reservation,off_season,0,,,,,off_season_release,"Outside the quota season permits are still required, still booked through recreation.gov, and can be booked and printed on the day of entry -- not a trailhead self-issue kiosk. There is no limit on the number of overnight users per zone off-season, though the 12-person group cap still applies."
 whitney_zone,1,lottery_annual,in_season,,02-01,,,,apply_start,Lottery application window opens on recreation.gov.
 whitney_zone,2,lottery_annual,in_season,,03-01,,,,apply_end,Lottery application window closes.
 whitney_zone,3,lottery_annual,in_season,,03-15,,,,results,Lottery results published.
