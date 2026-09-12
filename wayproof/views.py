@@ -33,6 +33,7 @@ from typing import Dict, List, Optional, Sequence
 
 from .access import ApproachRoute
 from .model import Peak, Trailhead
+from .permit_zones import PermitZone
 from .permits import PermitRule, SourceLogEntry
 from .release_policy import CONTACT_REQUIRED, LOTTERY_ANNUAL, WALKUP, ReleasePhase
 from .reports import OpenQuestion
@@ -181,6 +182,7 @@ def trailhead_view(
     approaches: Sequence[ApproachRoute] = (),
     peaks: Sequence[Peak] = (),
     source_log: Sequence[SourceLogEntry] = (),
+    zones: Optional[Dict[str, List[PermitZone]]] = None,
     questions: Sequence[OpenQuestion] = (),
     today: Optional[date] = None,
 ) -> dict:
@@ -201,6 +203,7 @@ def trailhead_view(
     permit = _permit_block(rule, today)
     log = [entry for entry in source_log
            if rule is not None and entry.permit_group == rule.permit_group]
+    zone_list = (zones or {}).get(rule.permit_group, []) if rule is not None else []
 
     return {
         "type": "trailhead",
@@ -237,6 +240,19 @@ def trailhead_view(
             }
             for a in here
         ],
+        # Bookable zones, for the minority of permit groups whose quota
+        # attaches to a destination rather than to this entry point. Which
+        # zone serves a given objective is deliberately NOT asserted -- a
+        # zone is a mapped boundary, and its name is not that boundary.
+        "zones": {
+            "quota_by_zone": bool(zone_list),
+            "count": sum(1 for z in zone_list if z.zone_code is not None),
+            "entries": [
+                {"code": z.zone_code, "name": z.zone_name, "label": z.label,
+                 "type": z.zone_type, "notes": z.notes}
+                for z in zone_list
+            ],
+        },
         # Deliberately secondary and labelled: a geometric assignment, not a
         # curated approach list. See this module's docstring.
         "peaks_nearby": {
@@ -275,6 +291,7 @@ def trailhead_views(
     approaches: Sequence[ApproachRoute] = (),
     peaks: Sequence[Peak] = (),
     source_log: Sequence[SourceLogEntry] = (),
+    zones: Optional[Dict[str, List[PermitZone]]] = None,
     questions: Sequence[OpenQuestion] = (),
     today: Optional[date] = None,
 ) -> List[dict]:
@@ -284,8 +301,8 @@ def trailhead_views(
     page overwrite another.
     """
     views = [
-        trailhead_view(t, permits.get(t.permit_group), approaches, peaks,
-                       source_log, questions, today)
+        trailhead_view(t, permits.get(t.permit_group), approaches=approaches, peaks=peaks,
+                       source_log=source_log, zones=zones, questions=questions, today=today)
         for t in sorted(trailheads, key=lambda t: t.name)
     ]
     seen: Dict[str, str] = {}

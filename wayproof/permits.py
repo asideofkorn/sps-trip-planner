@@ -282,12 +282,39 @@ def _format_annual_lottery(
             f"first-come availability (cancellations happen) up to 2 days ahead.")
 
 
+def _format_walkup_share(phases: Sequence[ReleasePhase]) -> str:
+    """Describe walk-up/contact-only phases that sit *alongside* reservable ones."""
+    share = [p for p in phases if p.mechanism in (WALKUP, CONTACT_REQUIRED)]
+    if not share:
+        return ""
+    pct = next((f"{int(p.allocation_pct)}%" for p in share if p.allocation_pct), "A share")
+    lead = f"{pct} of" if pct.endswith("%") else f"{pct} of"
+    return (f"{lead} the quota is held back for same-day, first-come permits issued in "
+            f"person -- not bookable online at any point.")
+
+
 def _format_release_events(
     phases: Sequence[ReleasePhase], trip_date: date, today: date
 ) -> str:
-    """Dispatch a permit_group's applicable phases to the right renderer by mechanism."""
+    """Dispatch a permit_group's applicable phases to the right renderer by mechanism.
+
+    Mechanisms are not mutually exclusive within one season. Desolation splits
+    a single zone quota between a reservable share and a same-day walk-up
+    share, so a ``walkup`` phase sitting next to ``reservation`` phases
+    describes *part* of the rule, not the whole of it -- letting its presence
+    short-circuit to "not reservable in advance" would be exactly backwards
+    for the two-thirds that is reservable. Reservable phases therefore win the
+    dispatch whenever any exist, and the walk-up share is appended.
+    """
     if any(p.mechanism == LOTTERY_ANNUAL for p in phases):
         return _format_annual_lottery(phases, trip_date, today)
+
+    reservation_phases = [p for p in phases if p.mechanism == RESERVATION]
+    if reservation_phases:
+        status = _format_reservation_phases(reservation_phases, trip_date, today)
+        walkup = _format_walkup_share(phases)
+        return f"{status} {walkup}" if walkup else status
+
     if any(p.mechanism == WALKUP for p in phases):
         return ("Not reservable in advance -- issued in person on a first-come "
                 "basis; see the reservation method for timing.")

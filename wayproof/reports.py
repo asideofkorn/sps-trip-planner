@@ -47,6 +47,8 @@ from .access import ApproachRoute, UNCONFIRMED
 from .camping import Campground, Campsite
 from .park_access import ParkAccess
 from .model import Peak, Trailhead
+from .permits import PermitRule
+from .release_policy import OFF_SEASON
 from .timed_entry import TimedEntryPolicy
 from .water import WaterSource, WaterSourceLogEntry, log_by_source
 
@@ -110,6 +112,7 @@ def open_questions(
     timed_entry: Sequence[TimedEntryPolicy] = (),
     trailheads: Sequence[Trailhead] = (),
     park_access: Sequence[ParkAccess] = (),
+    permits: Sequence[PermitRule] = (),
     peak_names: Optional[Sequence[str]] = None,
 ) -> List[OpenQuestion]:
     """Derive the current list of unconfirmed/missing/conflicting facts.
@@ -284,6 +287,28 @@ def open_questions(
                     break  # one question per park-access row is enough
 
     if peak_names_lower is None:
+        # -- Quota'd permit groups with no off-season release phase. --
+        # permit_status() falls back to asserting the off-season permit is
+        # "free/self-issue, no reservation" for these. That assumption has
+        # now been caught wrong twice against a real source (Whitney Zone,
+        # then Desolation -- both actually still require an online booking
+        # out of season), so every remaining group carrying it is a claim
+        # this project is making without evidence, not a safe default.
+        for rule in permits:
+            if not rule.quota_required or not rule.release_phases:
+                continue
+            if any(p.season == OFF_SEASON for p in rule.release_phases):
+                continue
+            questions.append(OpenQuestion(
+                target_file="data/release_policies.csv",
+                target_key=f"{rule.permit_group} (off-season)",
+                question=(f"How is a {rule.permit_group} permit actually obtained outside its "
+                          "quota season? With no off-season phase on file we currently claim "
+                          "it's free/self-issue with no reservation -- an assumption already "
+                          "found wrong for two other groups."),
+                context=rule.permit_group,
+            ))
+
         # -- Timed-entry rows sourced to secondary/aggregator coverage rather
         # than the year's own official NPS announcement. Always global --
         # no trailhead in this dataset currently sets `park` to a park unit

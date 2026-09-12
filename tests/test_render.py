@@ -62,7 +62,8 @@ def _view(**overrides):
         source_url="https://example.gov/src", source_last_updated="2026-07-08",
         method="web", verdict="corrects-existing", summary="Only one results date.",
     )]
-    view = trailhead_view(trailhead, rule, approaches, peaks, log, (), TODAY)
+    view = trailhead_view(trailhead, rule, approaches=approaches, peaks=peaks,
+                          source_log=log, questions=(), today=TODAY)
     view.update(overrides)
     return view
 
@@ -127,6 +128,35 @@ def test_markdown_marks_the_proximity_peak_list_unverified():
 def test_markdown_keeps_approach_status_attached_to_each_route():
     out = render_trailhead_markdown(_view())
     assert "**Mount Russell** via Mountaineers Route [confirmed]" in out
+
+
+def test_zone_quota_groups_render_zones_without_claiming_which_one_to_pick():
+    zoned = _view(zones={
+        "quota_by_zone": True, "count": 2,
+        "entries": [
+            {"code": 33, "name": "Aloha", "label": "33 Aloha", "type": "destination_zone",
+             "notes": ""},
+            {"code": None, "name": "Tahoe Rim Trail (Thru Hike Only)",
+             "label": "Tahoe Rim Trail (Thru Hike Only)", "type": "thru_hike", "notes": ""},
+        ],
+    })
+    html_out = render_trailhead_html(zoned)
+    md_out = render_trailhead_markdown(zoned)
+
+    for out in (html_out, md_out):
+        assert "33 Aloha" in out
+        assert "Tahoe Rim Trail (Thru Hike Only)" in out
+        assert "first" in out.lower()  # the first-night rule is stated
+    # The name/boundary distinction has to survive into the agent surface --
+    # an LLM matching "Mount Ralston" to zone "45 Ralston" is the exact
+    # inference this data does not support.
+    assert "NOT ASSERTED" in md_out
+    assert "a name is not that boundary" in md_out
+
+
+def test_trailheads_without_zone_quotas_render_no_zone_section():
+    out = render_trailhead_html(_view())
+    assert "Destination zones" not in out
 
 
 def test_markdown_does_not_instruct_the_reading_agent():

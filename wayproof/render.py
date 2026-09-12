@@ -213,6 +213,24 @@ def render_trailhead_html(view: dict) -> str:
 
     body.append(_permit_html(permit))
 
+    zones = view.get("zones", {})
+    if zones.get("quota_by_zone"):
+        body.append(f'<h2>Destination zones ({zones["count"]})</h2>')
+        body.append('<p>This permit\'s quota is assigned per destination zone, not per '
+                    'trailhead. Booking asks which zone you will spend your <strong>first '
+                    'night</strong> in; after that night you may move between zones on the '
+                    'same permit, as long as you exit by the last date booked. A day hike '
+                    'needs no zone.</p>')
+        body.append('<p class="meta">Which zone serves a given objective is not asserted here. '
+                    'Zone names often match a lake or peak, but a zone is a mapped boundary and '
+                    'a name is not that boundary &mdash; that mapping needs the official zone '
+                    'map, and is an open question until it has one.</p>')
+        body.append('<ul class="plain">')
+        for zone in zones["entries"]:
+            note = f' <span class="meta">&mdash; {_e(zone["notes"])}</span>' if zone["notes"] else ""
+            body.append(f'<li><span class="pill">{_e(zone["label"])}</span>{note}</li>')
+        body.append('</ul>')
+
     if view["approach_exceptions"]:
         body.append('<h2>Route-specific permits from this trailhead</h2>')
         body.append('<p>These objectives do not simply inherit the trailhead default -- '
@@ -350,6 +368,20 @@ def render_trailhead_markdown(view: dict) -> str:
             out += ["### Notes", "", permit["notes"], ""]
         if permit["interagency_note"]:
             out += ["### Travel into neighbouring units", "", permit["interagency_note"], ""]
+
+    zones = view.get("zones", {})
+    if zones.get("quota_by_zone"):
+        out += [f'## Destination zones ({zones["count"]})', "",
+                "This permit's quota is assigned per destination zone, not per trailhead. "
+                "Booking asks which zone you will spend your FIRST night in; after that night "
+                "you may move between zones on the same permit, as long as you exit by the last "
+                "date booked. A day hike needs no zone.", "",
+                "NOT ASSERTED: which zone serves a given objective. Zone names often match a "
+                "lake or peak, but a zone is a mapped boundary and a name is not that boundary. "
+                "Do not infer that an objective lies in the similarly-named zone.", ""]
+        for zone in zones["entries"]:
+            out.append(f'- {zone["label"]}' + (f' -- {zone["notes"]}' if zone["notes"] else ""))
+        out.append("")
 
     if view["approach_exceptions"]:
         out += ["## Route-specific permits from this trailhead", "",
