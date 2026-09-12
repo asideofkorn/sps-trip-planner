@@ -33,6 +33,7 @@ from datetime import date
 from typing import Dict, List, Optional, Sequence
 
 from .access import ApproachRoute
+from .camping import Campground, Campsite
 from .model import Cluster, Peak, Trailhead
 from .approach import choose_trailhead
 from .permits import (
@@ -41,6 +42,8 @@ from .permits import (
     clusters_permit_info,
     format_permit_entry_body,
 )
+from .reports import OpenQuestion, open_questions
+from .water import WaterSource, WaterSourceLogEntry
 
 
 @dataclass
@@ -55,6 +58,7 @@ class PlanResult:
     trailhead_ambiguous: bool
     permit_entries: List[ClusterPermitInfo] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)
+    open_questions: List[OpenQuestion] = field(default_factory=list)
 
     def to_dict(self) -> dict:
         d: dict = {
@@ -92,6 +96,12 @@ class PlanResult:
         ]
         if self.warnings:
             d["warnings"] = self.warnings
+        if self.open_questions:
+            d["open_questions"] = [
+                {"target_file": q.target_file, "target_key": q.target_key,
+                 "question": q.question, "context": q.context}
+                for q in self.open_questions
+            ]
         return d
 
 
@@ -102,6 +112,10 @@ def resolve_plan(
     trailheads: Sequence[Trailhead],
     permits: Dict[str, PermitRule],
     approaches: Optional[Sequence[ApproachRoute]] = None,
+    water_sources: Optional[Sequence[WaterSource]] = None,
+    water_source_log: Optional[Sequence[WaterSourceLogEntry]] = None,
+    campgrounds: Optional[Sequence[Campground]] = None,
+    campsites: Optional[Sequence[Campsite]] = None,
     today: Optional[date] = None,
 ) -> PlanResult:
     """Resolve access and permit logistics for a specific, named set of objectives.
@@ -110,6 +124,13 @@ def resolve_plan(
     that doesn't match anything is reported in ``PlanResult.not_found``
     rather than raising -- a plan for a partially-known trip is more useful
     than none.
+
+    ``water_sources``/``water_source_log``/``campgrounds``/``campsites`` are
+    optional; when given, :func:`wayproof.reports.open_questions` derives
+    ``PlanResult.open_questions`` -- unconfirmed or missing facts relevant to
+    these specific objectives, e.g. "we don't have coordinates for this
+    trailhead's water source yet." This is the scavenger-hunt nudge: shown
+    exactly when someone is already planning to be at that location.
     """
     by_lower = {p.name.strip().lower(): p for p in peaks}
     objectives: List[Peak] = []
@@ -162,6 +183,18 @@ def resolve_plan(
                     f"(permit_group {trailhead.permit_group!r})."
                 )
 
+    questions: List[OpenQuestion] = []
+    if objectives:
+        questions = open_questions(
+            peaks=objectives,
+            approaches=approaches or [],
+            water_sources=water_sources or [],
+            water_source_log=water_source_log or [],
+            campgrounds=campgrounds or [],
+            campsites=campsites or [],
+            peak_names=[p.name for p in objectives],
+        )
+
     return PlanResult(
         requested_names=list(objective_names),
         objectives=objectives,
@@ -171,6 +204,7 @@ def resolve_plan(
         trailhead_ambiguous=trailhead_ambiguous,
         permit_entries=permit_entries,
         warnings=warnings,
+        open_questions=questions,
     )
 
 
@@ -233,6 +267,12 @@ def format_plan_summary(result: PlanResult) -> str:
         lines.append("Warnings")
         for w in result.warnings:
             lines.append(f"  - {w}")
+        lines.append("")
+
+    if result.open_questions:
+        lines.append("Help us confirm (if you're going, and you check, please report back)")
+        for q in result.open_questions:
+            lines.append(f"  - {q.question}")
         lines.append("")
 
     lines.append(

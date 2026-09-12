@@ -21,6 +21,13 @@ Write the resolved plan as structured JSON::
 
     python plan.py "Mount Williamson" "Mount Tyndall" --date 2027-07-15 \\
         --output plan.json
+
+Report back on something you confirmed or corrected while there (appends to
+the pending-review queue, ``data/pending_reports.csv`` -- it does not modify
+any dataset directly; a maintainer reviews and transcribes accepted reports)::
+
+    python plan.py "Rose Peak" --date 2027-06-01 \\
+        --report "Sunol Backpack Camp has 2 vault-toilet restrooms, no showers"
 """
 
 from __future__ import annotations
@@ -31,9 +38,12 @@ import json
 import sys
 
 from wayproof.access import load_approaches
+from wayproof.camping import load_campgrounds, load_campsites
 from wayproof.data_loader import load_peaks, load_trailheads
 from wayproof.permits import load_permits
 from wayproof.plan import resolve_plan, format_plan_summary
+from wayproof.reports import submit_report
+from wayproof.water import load_water_sources, load_water_source_log
 
 
 def _parse_args(argv=None) -> argparse.Namespace:
@@ -66,7 +76,28 @@ def _parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--approaches-file", default="data/approaches.csv",
                    help="Peak-specific approach/permit relationships "
                         "(default data/approaches.csv)")
+    p.add_argument("--water-sources-file", default="data/water_sources.csv",
+                   help="Named backcountry water sources (default data/water_sources.csv)")
+    p.add_argument("--water-source-log-file", default="data/water_source_log.csv",
+                   help="Append-only water-availability check ledger "
+                        "(default data/water_source_log.csv)")
+    p.add_argument("--campgrounds-file", default="data/campgrounds.csv",
+                   help="Backpack campgrounds (default data/campgrounds.csv)")
+    p.add_argument("--campsites-file", default="data/campsites.csv",
+                   help="Individually-bookable campsites (default data/campsites.csv)")
     p.add_argument("--output", "-o", help="Write the resolved plan to this JSON file")
+    p.add_argument("--report", metavar="TEXT",
+                   help="Submit a claim about these objectives to the pending-review "
+                        "queue (data/pending_reports.csv) instead of/alongside printing "
+                        "the plan -- e.g. something you confirmed or found wrong while "
+                        "there. Reviewed and transcribed manually; does not change any "
+                        "dataset by itself.")
+    p.add_argument("--evidence", default="",
+                   help="Optional supporting detail for --report (a link, a photo "
+                        "description, who told you, etc.)")
+    p.add_argument("--confidence", default="firsthand",
+                   choices=["firsthand", "official_source", "told_by_staff", "secondhand"],
+                   help="How solid --report's claim is (default firsthand)")
     return p.parse_args(argv)
 
 
@@ -80,11 +111,26 @@ def main(argv=None) -> int:
     trailheads = load_trailheads(args.trailheads_file)
     permits = load_permits(args.permits_file, args.release_policies_file)
     approaches = load_approaches(args.approaches_file)
+    water_sources = load_water_sources(args.water_sources_file)
+    water_source_log = load_water_source_log(args.water_source_log_file)
+    campgrounds = load_campgrounds(args.campgrounds_file)
+    campsites = load_campsites(args.campsites_file)
 
     result = resolve_plan(args.objectives, trip_date, peaks, trailheads, permits,
-                           approaches=approaches)
+                           approaches=approaches, water_sources=water_sources,
+                           water_source_log=water_source_log, campgrounds=campgrounds,
+                           campsites=campsites)
 
     print(format_plan_summary(result))
+
+    if args.report:
+        target_key = ", ".join(p.name for p in result.objectives) or ", ".join(args.objectives)
+        report = submit_report(
+            target_file="unspecified", target_key=target_key, claim=args.report,
+            evidence=args.evidence, confidence=args.confidence, channel="cli",
+        )
+        print(f"\nSubmitted report {report.report_id} to data/pending_reports.csv "
+              "(pending maintainer review).")
 
     if args.output:
         with open(args.output, "w") as fh:
