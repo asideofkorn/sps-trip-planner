@@ -6,25 +6,6 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
-- **Crowd-reported mobile coverage** (`data/connectivity.csv`,
-  `wayproof/connectivity.py`): the first table here sourced from visitors
-  rather than an agency, kept separate for exactly that reason. Desolation
-  reads Verizon "0.8 — Major Issues" from 272 reports. Three admissions are
-  structural rather than prose:
-  - The rating is scoped to the **permit area**, not to a trailhead. Signal
-    inside a wilderness varies by ridge and drainage far more than it varies
-    between wildernesses, so it answers "should I plan to be out of contact?"
-    and not "will I have a bar at this lake". Both surfaces say so.
-  - The page states **no scale** — "0.8" beside a five-bar icon, with no
-    maximum and no method. `rating_scale_known` stays false and the rendered
-    string carries "scale unstated" until a source says otherwise. Showing it
-    as 0.8 out of 5 would be inventing precision.
-  - A carrier with reports but **no rating read** is stored with a blank
-    rating, not dropped. AT&T's 209 reports are on file with its score unread,
-    since it fell below the fold of the source screenshot, and
-    `open_questions()` surfaces it. Silence would have implied no data existed.
-  Carriers sort worst-first, because the decision this informs is whether to
-  carry a satellite communicator and that turns on the carrier you have.
 - **Scoped regulations** (`data/regulations.csv`, `wayproof/regulations.py`):
   what applies *while you're out there* — fire, food storage, waste, pets,
   stock, group size — separated from `permits.csv`, which answers how you get
@@ -44,6 +25,27 @@ All notable changes to this project are documented here. The format is based on
     posing as the rule itself.
 
 ### Fixed
+- **There are two California Campfire Permits, and this project described one.**
+  CAL FIRE issues a permit for federal- and state-controlled lands (campfires,
+  barbeques, portable stoves) and a separate one for private lands, which also
+  needs written permission from the landowner. A reader following the old rule
+  could obtain the private-lands permit for a national forest trip and carry an
+  invalid document. The rule now names which type applies, and warns off the
+  debris-burning permits issued from the same portal.
+  - The land type it *can't* place is stated rather than glossed: every
+    trailhead here is on federal land except Del Valle and Stanford Ave, on
+    East Bay Regional Park District land. A regional park district is a special
+    district — neither federal, state, nor private — so the FAQ's two-way split
+    doesn't clearly cover it, and the rule says so.
+  - Both permit types carry "local burn restrictions may apply", independent
+    support for the precondition-not-permission wording fixed earlier.
+  - A minor discrepancy is recorded rather than silently resolved: the permits
+    FAQ omits lanterns from its enumeration where the campfire-safety page
+    includes them. The fuller list is kept.
+- **A permit group named `none` read as broken English in derived questions**
+  ("Are campfires actually allowed in none"). `none` is a real key meaning no
+  wilderness permit is required; the prose now says so while the key still
+  points at the row to fix.
 - **The bear canister rule claimed a limit its own source doesn't state.** It
   read "required for all overnight visitors"; the recreation.gov permit page
   states the requirement flat, with no overnight qualifier and no elevation or

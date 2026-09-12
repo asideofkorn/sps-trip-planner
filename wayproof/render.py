@@ -235,27 +235,6 @@ def render_trailhead_html(view: dict) -> str:
                          if rule["inherited"] else "")
                 body.append(f'<div class="card"><div>{_e(rule["summary"])}{scope}</div>{meta}</div>')
 
-    carriers = view.get("connectivity", {}).get("carriers", [])
-    if carriers:
-        body.append('<h2>Mobile coverage</h2>')
-        body.append('<p class="meta">Reported by visitors on recreation.gov, not stated by the '
-                    'managing agency, and recorded against the whole permit area rather than '
-                    'this trailhead. Signal inside a wilderness varies by ridge and drainage far '
-                    'more than it varies between wildernesses, so treat this as an answer to '
-                    '&ldquo;should I plan to be out of contact?&rdquo; and not as a prediction '
-                    'for any particular lake.</p>')
-        for c in carriers:
-            bits = []
-            if c["sample_size"] is not None:
-                bits.append(f'{c["sample_size"]} visitor reports')
-            if not c["rating_scale_known"] and not c["unread"]:
-                bits.append("the page does not state what the rating is out of")
-            if c["source_url"]:
-                bits.append(f'<a href="{_e(c["source_url"])}" rel="nofollow">source</a>')
-            meta = f'<div class="meta">{" &middot; ".join(bits)}</div>' if bits else ""
-            flag = ' <span class="flag">not read</span>' if c["unread"] else ""
-            body.append(f'<div class="card"><div>{_e(c["display"])}{flag}</div>{meta}</div>')
-
     zones = view.get("zones", {})
     if zones.get("quota_by_zone"):
         body.append(f'<h2>Destination zones ({zones["count"]})</h2>')
@@ -430,24 +409,6 @@ def render_trailhead_markdown(view: dict) -> str:
                     line += f' Source: {rule["source_url"]}'
                 out.append(line)
             out.append("")
-
-    carriers = view.get("connectivity", {}).get("carriers", [])
-    if carriers:
-        out += ["## Mobile coverage", "",
-                "Reported by visitors on recreation.gov, not stated by the managing agency, and "
-                "recorded against the whole permit area rather than this trailhead. Signal "
-                "inside a wilderness varies by ridge and drainage far more than it varies "
-                "between wildernesses, so this answers whether to plan on being out of contact, "
-                "not what the signal is at a given lake.", ""]
-        for c in carriers:
-            line = f'- {c["display"]}'
-            # An unread carrier already states its report count in `display`.
-            if c["sample_size"] is not None and not c["unread"]:
-                line += f' -- {c["sample_size"]} visitor reports'
-            if c["source_url"]:
-                line += f'. Source: {c["source_url"]}'
-            out.append(line)
-        out.append("")
 
     zones = view.get("zones", {})
     if zones.get("quota_by_zone"):

@@ -1,3 +1,0 @@
-area_type,area_id,carrier,rating,rating_label,sample_size,rating_scale_known,source_url,verified_date,notes
-permit_group,desolation,Verizon,0.8,Major Issues,272,False,https://www.recreation.gov/permits/233261,2026-09-12,"Read from the permit page's Mobile Coverage panel. The page shows ""0.8 - Major Issues"" beside a five-bar icon with one bar filled, and states neither the scale's maximum nor how the average is computed."
-permit_group,desolation,AT&T,,,209,False,https://www.recreation.gov/permits/233261,2026-09-12,"The carrier and its report count are visible on the permit page; the rating itself fell below the fold of the screenshot this was read from and has not been seen. Recorded as unread rather than omitted."

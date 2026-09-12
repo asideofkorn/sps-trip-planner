@@ -35,7 +35,6 @@ from wayproof.camping import load_campgrounds, load_campsites
 from wayproof.data_loader import load_peaks, load_trailheads
 from wayproof.park_access import load_park_access
 from wayproof.permit_zones import load_permit_zones
-from wayproof.connectivity import load_connectivity
 from wayproof.permits import load_permits, load_source_log
 from wayproof.render import (
     STYLESHEET,
@@ -200,11 +199,9 @@ def build(output_dir: Path, today: datetime.date | None = None) -> dict:
     data = _load_all_data()
     regulations = load_regulations("data/regulations.csv")
     source_log = load_source_log("data/permit_source_log.csv")
-    connectivity = load_connectivity("data/connectivity.csv")
     questions = open_questions(permits=list(permits.values()),
                                regulations=regulations,
-                               permit_source_log=source_log,
-                               connectivity=connectivity, **data)
+                               permit_source_log=source_log, **data)
 
     views = trailhead_views(
         trailheads=data["trailheads"],
@@ -212,7 +209,6 @@ def build(output_dir: Path, today: datetime.date | None = None) -> dict:
         approaches=data["approaches"],
         peaks=data["peaks"],
         source_log=source_log,
-        connectivity=connectivity,
         zones=load_permit_zones("data/permit_zones.csv"),
         regulations=regulations,
         questions=questions,

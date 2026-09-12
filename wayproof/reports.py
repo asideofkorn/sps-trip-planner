@@ -45,7 +45,6 @@ import pandas as pd
 
 from .access import ApproachRoute, UNCONFIRMED
 from .camping import Campground, Campsite
-from .connectivity import Coverage
 from .park_access import ParkAccess
 from .model import Peak, Trailhead
 from .permits import PermitRule, SourceLogEntry, open_conflicts
@@ -100,6 +99,16 @@ def _str_field(row, col: str) -> str:
     return str(val).strip()
 
 
+def _permit_group_label(permit_group: str) -> str:
+    """How to name a permit group inside a sentence a person will read.
+
+    ``none`` is a real key in ``permits.csv`` meaning "no wilderness permit
+    required", so interpolating it raw produced "campfires allowed in none".
+    The key itself still identifies the row to fix; only the prose changes.
+    """
+    return "areas needing no wilderness permit" if permit_group == "none" else permit_group
+
+
 def _matches_peak_names(name: str, peak_names_lower: set) -> bool:
     return name.strip().lower() in peak_names_lower
 
@@ -117,7 +126,6 @@ def open_questions(
     permits: Sequence[PermitRule] = (),
     regulations: Sequence[Regulation] = (),
     permit_source_log: Sequence[SourceLogEntry] = (),
-    connectivity: Sequence[Coverage] = (),
     peak_names: Optional[Sequence[str]] = None,
 ) -> List[OpenQuestion]:
     """Derive the current list of unconfirmed/missing/conflicting facts.
@@ -326,7 +334,8 @@ def open_questions(
             questions.append(OpenQuestion(
                 target_file="data/regulations.csv",
                 target_key=f"{rule.permit_group} (fire)",
-                question=(f"Are campfires actually allowed in {rule.permit_group}, and up to "
+                question=(f"Are campfires actually allowed in "
+                          f"{_permit_group_label(rule.permit_group)}, and up to "
                           "what elevation? Only the statewide California Campfire Permit rule "
                           "applies here so far, which is a precondition rather than permission "
                           "-- no local restriction is on file either way."),
@@ -377,29 +386,13 @@ def open_questions(
         # global rather than peak-filtered because a permit group covers many
         # peaks and the conflict belongs to the permit product, not to any one
         # summit.
-        # -- Carriers with visitor reports on file whose rating nobody here
-        # has actually read. Recording the carrier and its report count while
-        # leaving the rating blank states the gap; dropping the row would let
-        # silence imply there was no data.
-        for c in connectivity:
-            if not c.unread:
-                continue
-            questions.append(OpenQuestion(
-                target_file="data/connectivity.csv",
-                target_key=f"{c.area_id} ({c.carrier})",
-                question=(f"What coverage rating does recreation.gov show for {c.carrier} in "
-                          f"{c.area_id}? {c.sample_size or 0} visitor reports are on file and "
-                          "the number has not been read, so this project can say nothing about "
-                          "that carrier either way."),
-                context=c.area_id,
-            ))
-
         for conflict in open_conflicts(permit_source_log):
             since = f" Open since {conflict.opened}." if conflict.opened else ""
             questions.append(OpenQuestion(
                 target_file="data/permit_source_log.csv",
                 target_key=conflict.label,
-                question=(f"Two sources disagree about {conflict.permit_group} and the "
+                question=(f"Two sources disagree about "
+                          f"{_permit_group_label(conflict.permit_group)} and the "
                           f"disagreement is still open.{since} A value is stored regardless, "
                           "so this is a live risk of being confidently wrong rather than a "
                           "blank. Resolving it needs a first-hand read of the disputed source."),

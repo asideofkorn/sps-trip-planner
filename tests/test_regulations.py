@@ -279,3 +279,69 @@ def test_an_agency_key_still_renders_as_a_readable_name():
     rule = next(r for r in regs if r.regulation_id == "eldorado-dispersed-stay-limit")
     assert rule.scope_value == "eldorado_nf"      # what it matches on
     assert rule.scope_label == "Eldorado National Forest"  # what a reader sees
+
+
+# -- two campfire permits, and the wrong one is not a valid document --------
+
+def test_campfire_rule_distinguishes_the_two_permit_types():
+    # CAL FIRE issues one permit for federal- and state-controlled lands and a
+    # separate one for private lands. A hiker who grabs the private-lands
+    # permit for a national forest trip is carrying the wrong document, so the
+    # rule has to say which one applies rather than describing "the" permit.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "ca-campfire-permit")
+    text = f"{rule.summary} {rule.detail}".lower()
+    assert "federal- and state-controlled lands" in text
+    assert "private lands" in text
+    assert "written permission from the landowner" in text
+
+
+def test_campfire_rule_says_which_type_this_project_needs():
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "ca-campfire-permit")
+    text = f"{rule.summary} {rule.detail}".lower()
+    assert "not the private-lands one" in text
+
+
+def test_campfire_rule_flags_the_land_type_it_cannot_place():
+    # Every trailhead is on federal land except two on East Bay Regional Park
+    # District land -- a special district that is neither federal, state, nor
+    # private. Stating the gap beats silently implying the federal permit
+    # covers it.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "ca-campfire-permit")
+    assert "East Bay Regional Park District" in rule.detail
+    assert "not confirmed" in rule.detail
+
+
+def test_campfire_rule_warns_off_the_debris_burning_permit():
+    # The same portal issues debris-burn permits, which are a different
+    # product entirely.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "ca-campfire-permit")
+    assert "burning debris" in rule.detail.lower()
+
+
+def test_the_lantern_discrepancy_between_the_two_pages_is_recorded():
+    # The permits FAQ lists campfires, barbeques and portable stoves; the
+    # campfire-safety page adds lanterns. Keeping the fuller list is a choice,
+    # so it is written down rather than silently made.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "ca-campfire-permit")
+    assert "adds lanterns" in rule.detail
+
+
+def test_a_permit_group_named_none_reads_as_english_in_a_question():
+    # "none" is a real key meaning no wilderness permit is required. Rendered
+    # raw it produced "Are campfires actually allowed in none".
+    from wayproof.permits import PermitRule
+    from wayproof.reports import open_questions
+
+    rule = PermitRule(permit_group="none", agency="", permit_type="No wilderness permit required",
+                      quota_required=False, jurisdiction="CA")
+    regs = [_reg("ca-campfire-permit", JURISDICTION, "CA", category="fire")]
+    question = next(q for q in open_questions(permits=[rule], regulations=regs)
+                    if q.target_key.endswith("(fire)"))
+    assert "allowed in none" not in question.question
+    assert "areas needing no wilderness permit" in question.question
+    assert question.target_key == "none (fire)", "the key still points at the row to fix"

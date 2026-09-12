@@ -35,7 +35,6 @@ from .access import ApproachRoute
 from .model import Peak, Trailhead
 from .permit_zones import PermitZone
 from .regulations import Regulation, group_by_category, regulations_for
-from .connectivity import Coverage, coverage_for
 from .permits import PermitRule, SourceLogEntry
 from .release_policy import CONTACT_REQUIRED, LOTTERY_ANNUAL, WALKUP, ReleasePhase
 from .reports import OpenQuestion
@@ -184,7 +183,6 @@ def trailhead_view(
     approaches: Sequence[ApproachRoute] = (),
     peaks: Sequence[Peak] = (),
     source_log: Sequence[SourceLogEntry] = (),
-    connectivity: Sequence[Coverage] = (),
     zones: Optional[Dict[str, List[PermitZone]]] = None,
     regulations: Sequence[Regulation] = (),
     questions: Sequence[OpenQuestion] = (),
@@ -208,7 +206,6 @@ def trailhead_view(
     log = [entry for entry in source_log
            if rule is not None and entry.permit_group == rule.permit_group]
     zone_list = (zones or {}).get(rule.permit_group, []) if rule is not None else []
-    carriers = coverage_for(connectivity, rule.permit_group if rule else "")
     applicable = regulations_for(
         regulations,
         permit_group=rule.permit_group if rule else "",
@@ -279,21 +276,6 @@ def trailhead_view(
                 for z in zone_list
             ],
         },
-        # Crowd-reported, not agency-stated, and scoped to the permit area
-        # rather than to this entry point -- see wayproof.connectivity. It
-        # answers "should I plan to be out of contact", never "will I have a
-        # bar at this lake".
-        "connectivity": {
-            "basis": "crowd-reported",
-            "scope": "permit area",
-            "carriers": [
-                {"carrier": c.carrier, "rating": c.rating, "rating_label": c.rating_label,
-                 "sample_size": c.sample_size, "rating_scale_known": c.rating_scale_known,
-                 "unread": c.unread, "display": c.display, "source_url": c.source_url,
-                 "notes": c.notes}
-                for c in carriers
-            ],
-        },
         # Deliberately secondary and labelled: a geometric assignment, not a
         # curated approach list. See this module's docstring.
         "peaks_nearby": {
@@ -332,7 +314,6 @@ def trailhead_views(
     approaches: Sequence[ApproachRoute] = (),
     peaks: Sequence[Peak] = (),
     source_log: Sequence[SourceLogEntry] = (),
-    connectivity: Sequence[Coverage] = (),
     zones: Optional[Dict[str, List[PermitZone]]] = None,
     regulations: Sequence[Regulation] = (),
     questions: Sequence[OpenQuestion] = (),
@@ -345,8 +326,7 @@ def trailhead_views(
     """
     views = [
         trailhead_view(t, permits.get(t.permit_group), approaches=approaches, peaks=peaks,
-                       source_log=source_log, connectivity=connectivity,
-                       zones=zones, regulations=regulations,
+                       source_log=source_log, zones=zones, regulations=regulations,
                        questions=questions, today=today)
         for t in sorted(trailheads, key=lambda t: t.name)
     ]
