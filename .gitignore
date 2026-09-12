@@ -7,6 +7,10 @@ __pycache__/
 !charts/*.png
 out.json
 
+# scripts/build_site.py's build output -- published by .github/workflows/pages.yml,
+# not committed.
+_site/
+
 # Copyrighted Sierra Club source documents — not redistributed (see DATA_LICENSE.md).
 # Download from https://angeles.sierraclub.org/sierra_peaks to rebuild datasets.
 data/source/*.pdf

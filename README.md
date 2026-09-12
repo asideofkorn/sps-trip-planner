@@ -546,13 +546,22 @@ of the same two functions, not a redesign:
   whose fields map onto `submit_report()`'s parameters. A maintainer reads
   the issue and runs `report.py submit` with `--channel github_issue`,
   the same review step a CLI submission gets;
+- **a page rendering `open_questions()`** (built -- [wayproof.dev](https://wayproof.dev),
+  via `scripts/build_site.py`, rebuilt on every push to `main` by
+  `.github/workflows/pages.yml`). Its report links reuse the GitHub issue
+  template channel above (pre-filled title/question/target file) rather
+  than calling `submit_report()` directly -- there's no backend behind the
+  static site to write to `data/pending_reports.csv` yet;
 - an MCP tool exposing both functions to Claude (not built);
 - a ChatGPT Action calling the same two functions (not built);
-- a website form that calls `submit_report()` and a page that renders
-  `open_questions()` (not built).
+- a website form that calls `submit_report()` directly, with no GitHub
+  account required to use it (not built -- needs a small serverless
+  function in front of the static site, since GitHub Pages itself can't
+  run one).
 
-The latter three need real hosted infrastructure to exist at all; they
-stay documented extension points until there's a real reason to build one.
+The latter three need real hosted infrastructure beyond a static page;
+they stay documented extension points until there's a real reason to
+build one.
 
 ## Installation
 
@@ -1218,7 +1227,8 @@ wayproof/
 │   ├── parse_benchmarks.py      # benchmark route parser
 │   ├── plot_benchmarks.py       # benchmark charts
 │   ├── plot_approach_impact.py  # approach-impact chart
-│   └── map_clusters.py          # interactive candidate-group map
+│   ├── map_clusters.py          # interactive candidate-group map
+│   └── build_site.py            # wayproof.dev static site (live open_questions())
 ├── examples/
 │   ├── sps_full_output.json
 │   ├── sps_full_clusters.png

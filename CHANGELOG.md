@@ -5,6 +5,20 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added
+- **First pass at the wayproof.dev website** (`scripts/build_site.py`,
+  `.github/workflows/pages.yml`): a static site built and deployed to
+  GitHub Pages on every push to `main`. Its "Help us confirm" section is
+  generated live from `wayproof.reports.open_questions()` against the
+  currently committed data -- there's no separate hand-maintained copy to
+  drift out of sync. Each item deep-links to a pre-filled GitHub issue
+  (title, question, and target file already filled in) using
+  `.github/ISSUE_TEMPLATE/data_report.md`'s fields, closing the loop
+  between "here's a gap" and "here's how to tell us" with zero backend and
+  one click. Deliberately minimal: this is a first pass to prove the
+  DNS -> Pages -> live-data -> report pipeline works end to end before
+  investing in real site design/content/requirements.
+
 ### Changed
 - **Extracted reporting out of `plan.py` into a standalone `report.py`.**
   Reporting isn't planning: a claim isn't tied to a trip date, and its
