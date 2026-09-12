@@ -362,6 +362,7 @@ The repository currently includes:
 - `data/release_policies.csv` - structured, computable permit release phases
 - `data/approaches.csv` - peak-specific approach/permit relationships, confirmed and unconfirmed
 - `data/permit_source_log.csv` - append-only permit verification history
+- `data/connectivity.csv` - crowd-reported mobile coverage per permit area (visitor-sourced, not agency-stated; see below)
 - `data/campgrounds.csv` / `data/campsites.csv` - backpack campgrounds and their individually-bookable sites
 - `data/water_sources.csv` / `data/water_source_log.csv` - named backcountry water sources and an append-only ledger of dated availability checks (a source can go dry with no announcement, so a later check never overwrites an earlier one)
 - `data/park_access.csv` - park-level vehicle entrance fees, gate hours, and fee exemptions (distinct from a wilderness permit or a campsite reservation)
@@ -679,6 +680,24 @@ The guard matters more than the fix: a test now asserts that **every**
 regulation's scope reaches at least one permit group. A dead scope fails the
 build instead of quietly reading as covered. The forest-wide rule now reaches
 all three Eldorado groups and shows on 22 trailhead pages.
+
+### Crowd-reported coverage is a different kind of claim
+
+`data/connectivity.csv` is the only table here sourced from *visitors* rather
+than an agency, and it stays separate for that reason. Desolation reads
+Verizon **0.8 — "Major Issues"** from 272 reports on recreation.gov.
+
+That number is useful and easy to overclaim, so three admissions are built into
+the data rather than left to prose:
+
+| Temptation | What the data does instead |
+|---|---|
+| Attach it to a trailhead | Scoped to the **permit area**. Signal varies by ridge and drainage far more than between wildernesses, so it answers *plan to be out of contact?*, not *will I have a bar at this lake?* |
+| Render "0.8" as 0.8 / 5 | The page states **no maximum and no method**. `rating_scale_known` stays false and the string reads "scale unstated". |
+| Drop a carrier we haven't read | Stored with a blank rating. AT&T's 209 reports are on file with the score unread, and `open_questions()` surfaces it — silence would imply no data existed. |
+
+Carriers sort worst-first, since the decision this informs is whether to carry
+a satellite communicator, and that turns on the carrier you actually have.
 
 ## The Website
 

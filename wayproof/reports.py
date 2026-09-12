@@ -45,6 +45,7 @@ import pandas as pd
 
 from .access import ApproachRoute, UNCONFIRMED
 from .camping import Campground, Campsite
+from .connectivity import Coverage
 from .park_access import ParkAccess
 from .model import Peak, Trailhead
 from .permits import PermitRule, SourceLogEntry, open_conflicts
@@ -116,6 +117,7 @@ def open_questions(
     permits: Sequence[PermitRule] = (),
     regulations: Sequence[Regulation] = (),
     permit_source_log: Sequence[SourceLogEntry] = (),
+    connectivity: Sequence[Coverage] = (),
     peak_names: Optional[Sequence[str]] = None,
 ) -> List[OpenQuestion]:
     """Derive the current list of unconfirmed/missing/conflicting facts.
@@ -375,6 +377,23 @@ def open_questions(
         # global rather than peak-filtered because a permit group covers many
         # peaks and the conflict belongs to the permit product, not to any one
         # summit.
+        # -- Carriers with visitor reports on file whose rating nobody here
+        # has actually read. Recording the carrier and its report count while
+        # leaving the rating blank states the gap; dropping the row would let
+        # silence imply there was no data.
+        for c in connectivity:
+            if not c.unread:
+                continue
+            questions.append(OpenQuestion(
+                target_file="data/connectivity.csv",
+                target_key=f"{c.area_id} ({c.carrier})",
+                question=(f"What coverage rating does recreation.gov show for {c.carrier} in "
+                          f"{c.area_id}? {c.sample_size or 0} visitor reports are on file and "
+                          "the number has not been read, so this project can say nothing about "
+                          "that carrier either way."),
+                context=c.area_id,
+            ))
+
         for conflict in open_conflicts(permit_source_log):
             since = f" Open since {conflict.opened}." if conflict.opened else ""
             questions.append(OpenQuestion(

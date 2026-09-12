@@ -6,6 +6,25 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **Crowd-reported mobile coverage** (`data/connectivity.csv`,
+  `wayproof/connectivity.py`): the first table here sourced from visitors
+  rather than an agency, kept separate for exactly that reason. Desolation
+  reads Verizon "0.8 — Major Issues" from 272 reports. Three admissions are
+  structural rather than prose:
+  - The rating is scoped to the **permit area**, not to a trailhead. Signal
+    inside a wilderness varies by ridge and drainage far more than it varies
+    between wildernesses, so it answers "should I plan to be out of contact?"
+    and not "will I have a bar at this lake". Both surfaces say so.
+  - The page states **no scale** — "0.8" beside a five-bar icon, with no
+    maximum and no method. `rating_scale_known` stays false and the rendered
+    string carries "scale unstated" until a source says otherwise. Showing it
+    as 0.8 out of 5 would be inventing precision.
+  - A carrier with reports but **no rating read** is stored with a blank
+    rating, not dropped. AT&T's 209 reports are on file with its score unread,
+    since it fell below the fold of the source screenshot, and
+    `open_questions()` surfaces it. Silence would have implied no data existed.
+  Carriers sort worst-first, because the decision this informs is whether to
+  carry a satellite communicator and that turns on the carrier you have.
 - **Scoped regulations** (`data/regulations.csv`, `wayproof/regulations.py`):
   what applies *while you're out there* — fire, food storage, waste, pets,
   stock, group size — separated from `permits.csv`, which answers how you get
@@ -18,8 +37,21 @@ All notable changes to this project are documented here. The format is based on
     dataset is currently Californian, but that's a coincidence of coverage —
     inheriting statewide law off it would break silently on the first non-CA
     group, so the column states it rather than assuming it. Tested.
+  - New `fishing` category, holding Desolation's "State fish and game laws
+    apply" — recorded as the deferral it is. A wilderness permit is not a
+    fishing licence, and CDFW's season, limit, gear and licensing rules are
+    not in this project at all, so the row says to check CDFW rather than
+    posing as the rule itself.
 
 ### Fixed
+- **The bear canister rule claimed a limit its own source doesn't state.** It
+  read "required for all overnight visitors"; the recreation.gov permit page
+  states the requirement flat, with no overnight qualifier and no elevation or
+  zone exception — and that page was already cited as the row's source. The
+  narrowing was this project's own, and it's the kind that gets a day visitor
+  fined. Also re-attributed the $5,000 fine and the Placerville/LTBMU rental
+  terms to the 2022 USFS guide they actually come from; the permit page says
+  only that containers "may be available for rental".
 - **An agency-scoped regulation inherited to zero permit groups.** The Eldorado
   NF 10-day dispersed-camping limit was scoped to the agency string
   `Eldorado National Forest`, which no permit group carries: `permits.csv`'s

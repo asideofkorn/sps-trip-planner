@@ -223,6 +223,7 @@ def main(argv=None) -> int:
         timed_entry = [p for policies in by_park.values() for p in policies]
 
         from wayproof.permits import load_permits as _load_permits, load_source_log
+        from wayproof.connectivity import load_connectivity
         from wayproof.regulations import load_regulations
         questions = open_questions(
             peaks=peaks, approaches=approaches, water_sources=water_sources,
@@ -232,6 +233,7 @@ def main(argv=None) -> int:
             permits=list(_load_permits(args.permits_file, args.release_policies_file).values()),
             regulations=load_regulations(),
             permit_source_log=load_source_log(args.permit_source_log_file),
+            connectivity=load_connectivity(),
             peak_names=None,
         )
         print(format_open_questions(questions))
