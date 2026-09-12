@@ -83,7 +83,7 @@ def _render_questions_html(questions) -> str:
         items.append(
             '<li class="q">'
             f'<div class="q-text">{html.escape(q.question)}</div>'
-            f'<div class="q-meta"><code>{html.escape(q.target_file)}</code> &middot; '
+            f'<div class="q-meta"><code class="pill mono">{html.escape(q.target_file)}</code> &middot; '
             f'{html.escape(q.target_key)} &mdash; '
             f'<a href="{url}" target="_blank" rel="noopener">Report / confirm this</a></div>'
             "</li>"
@@ -109,7 +109,8 @@ PAGE_TEMPLATE = """<!doctype html>
     body {{ color: #e6e6e6; background: #0e0e0e; }}
     a {{ color: #7db8ff; }}
     .q {{ border-color: #333; }}
-    code {{ background: #1c1c1c; }}
+    pre {{ background: #1c1c1c; border-color: #333; color: #f2f2f2; }}
+    .pill {{ background: #1c1c1c; color: #f2f2f2; }}
   }}
   h1 {{ margin-bottom: 0.25rem; }}
   .tagline {{ color: #666; margin-top: 0; }}
@@ -119,7 +120,14 @@ PAGE_TEMPLATE = """<!doctype html>
   .q {{ border: 1px solid #ddd; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; }}
   .q-text {{ margin-bottom: 0.35rem; }}
   .q-meta {{ font-size: 0.85rem; color: #777; }}
-  code {{ background: #f3f3f3; padding: 0.1em 0.35em; border-radius: 4px; }}
+  .mono {{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }}
+  .pill {{ background: #f3f3f3; padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.9em; }}
+  pre {{
+    background: #f3f3f3; border: 1px solid #ddd; border-radius: 8px;
+    padding: 0.9rem 1rem; overflow-x: auto; font-size: 0.9rem;
+    line-height: 1.6; color: #1a1a1a;
+  }}
+  pre code {{ background: none; padding: 0; color: inherit; }}
   footer {{ margin-top: 3rem; font-size: 0.85rem; color: #777; }}
 </style>
 </head>
