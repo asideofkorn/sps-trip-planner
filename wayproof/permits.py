@@ -135,6 +135,10 @@ class PermitRule:
     # (see wayproof.release_policy). Empty for groups still on the
     # generic reservation_window_days fallback below (currently Yosemite).
     release_phases: List[ReleasePhase] = field(default_factory=list)
+    # State whose law applies, e.g. "CA". Used by wayproof.regulations to
+    # inherit statewide rules (the California Campfire Permit) without
+    # copying them into every permit_group.
+    jurisdiction: str = ""
     source_last_updated: str = ""  # the source page/doc's own "last updated" date, if shown
     verified_date: str = ""        # date this row was last checked against that source
 
@@ -191,6 +195,7 @@ def load_permits(
         rules[group] = PermitRule(
             permit_group=group,
             agency=_str_field(row, "agency"),
+            jurisdiction=_str_field(row, "jurisdiction"),
             permit_type=_str_field(row, "permit_type"),
             quota_required=_str_field(row, "quota_required").lower() == "yes",
             quota_season_start=_parse_mmdd(row.get("quota_season_start")),

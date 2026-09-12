@@ -212,3 +212,33 @@ def test_sitemap_and_robots_are_well_formed():
     assert sitemap.startswith('<?xml version="1.0" encoding="UTF-8"?>')
     assert "<loc>https://wayproof.dev/</loc>" in sitemap
     assert "Sitemap: https://wayproof.dev/sitemap.xml" in render_robots()
+
+
+def test_regulations_render_with_their_scope_on_both_surfaces():
+    regulated = _view(regulations=[{
+        "label": "Fire",
+        "rules": [
+            {"id": "desolation-campfire-ban", "summary": "Campfires are prohibited year-round.",
+             "detail": "", "citation": "", "source_url": "", "scope": "this permit",
+             "inherited": False},
+            {"id": "ca-campfire-permit", "summary": "A California Campfire Permit is required.",
+             "detail": "Covers stoves, lanterns and barbeques.",
+             "citation": "36 CFR 261.52(k); PRC 4433",
+             "source_url": "https://www.readyforwildfire.org/prevent-wildfire/campfire-safety",
+             "scope": "CA state law", "inherited": True},
+        ],
+    }])
+    html_out = render_trailhead_html(regulated)
+    md_out = render_trailhead_markdown(regulated)
+
+    for out in (html_out, md_out):
+        assert "Campfires are prohibited year-round." in out
+        assert "A California Campfire Permit is required." in out
+        # An inherited rule must be legible as inherited, not as this
+        # wilderness's own invention -- it applies statewide.
+        assert "CA state law" in out
+    assert "36 CFR 261.52(k); PRC 4433" in md_out
+
+
+def test_trailheads_without_regulations_render_no_rules_section():
+    assert "Rules in force" not in render_trailhead_html(_view())

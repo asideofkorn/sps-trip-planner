@@ -213,6 +213,28 @@ def render_trailhead_html(view: dict) -> str:
 
     body.append(_permit_html(permit))
 
+    regs = view.get("regulations", [])
+    if regs:
+        body.append('<h2>Rules in force</h2>')
+        body.append('<p class="meta">What applies once you hold the permit. Rules marked with a '
+                    'scope other than "this permit" are inherited &mdash; state law or an '
+                    'agency-wide policy &mdash; and are stored once rather than restated per '
+                    'permit.</p>')
+        for group in regs:
+            body.append(f'<h3>{_e(group["label"])}</h3>')
+            for rule in group["rules"]:
+                bits = []
+                if rule["detail"]:
+                    bits.append(_e(rule["detail"]))
+                if rule["citation"]:
+                    bits.append(f'<em>{_e(rule["citation"])}</em>')
+                if rule["source_url"]:
+                    bits.append(f'<a href="{_e(rule["source_url"])}" rel="nofollow">source</a>')
+                meta = (f'<div class="meta">{" &middot; ".join(bits)}</div>') if bits else ""
+                scope = (f' <span class="flag">{_e(rule["scope"])}</span>'
+                         if rule["inherited"] else "")
+                body.append(f'<div class="card"><div>{_e(rule["summary"])}{scope}</div>{meta}</div>')
+
     zones = view.get("zones", {})
     if zones.get("quota_by_zone"):
         body.append(f'<h2>Destination zones ({zones["count"]})</h2>')
@@ -368,6 +390,25 @@ def render_trailhead_markdown(view: dict) -> str:
             out += ["### Notes", "", permit["notes"], ""]
         if permit["interagency_note"]:
             out += ["### Travel into neighbouring units", "", permit["interagency_note"], ""]
+
+    regs = view.get("regulations", [])
+    if regs:
+        out += ["## Rules in force", "",
+                "What applies once you hold the permit. A rule whose scope is not "
+                "\"this permit\" is inherited from state law or an agency-wide policy and "
+                "applies to other permits in the same jurisdiction too.", ""]
+        for group in regs:
+            out += [f'### {group["label"]}', ""]
+            for rule in group["rules"]:
+                line = f'- **[{rule["scope"]}]** {rule["summary"]}'
+                if rule["detail"]:
+                    line += f' {rule["detail"]}'
+                if rule["citation"]:
+                    line += f' ({rule["citation"]})'
+                if rule["source_url"]:
+                    line += f' Source: {rule["source_url"]}'
+                out.append(line)
+            out.append("")
 
     zones = view.get("zones", {})
     if zones.get("quota_by_zone"):

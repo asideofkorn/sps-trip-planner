@@ -34,6 +34,7 @@ from typing import Dict, List, Optional, Sequence
 from .access import ApproachRoute
 from .model import Peak, Trailhead
 from .permit_zones import PermitZone
+from .regulations import Regulation, group_by_category, regulations_for
 from .permits import PermitRule, SourceLogEntry
 from .release_policy import CONTACT_REQUIRED, LOTTERY_ANNUAL, WALKUP, ReleasePhase
 from .reports import OpenQuestion
@@ -183,6 +184,7 @@ def trailhead_view(
     peaks: Sequence[Peak] = (),
     source_log: Sequence[SourceLogEntry] = (),
     zones: Optional[Dict[str, List[PermitZone]]] = None,
+    regulations: Sequence[Regulation] = (),
     questions: Sequence[OpenQuestion] = (),
     today: Optional[date] = None,
 ) -> dict:
@@ -204,6 +206,12 @@ def trailhead_view(
     log = [entry for entry in source_log
            if rule is not None and entry.permit_group == rule.permit_group]
     zone_list = (zones or {}).get(rule.permit_group, []) if rule is not None else []
+    applicable = regulations_for(
+        regulations,
+        permit_group=rule.permit_group if rule else "",
+        agency=rule.agency if rule else "",
+        jurisdiction=rule.jurisdiction if rule else "",
+    )
 
     return {
         "type": "trailhead",
@@ -239,6 +247,21 @@ def trailhead_view(
                 "notes": a.notes,
             }
             for a in here
+        ],
+        # What you may and may not do once you hold the permit, resolved
+        # across all three scopes (this permit, its agency, its state) so a
+        # statewide rule is inherited rather than copied per group.
+        "regulations": [
+            {
+                "label": label,
+                "rules": [
+                    {"id": r.regulation_id, "summary": r.summary, "detail": r.detail,
+                     "citation": r.citation, "source_url": r.source_url,
+                     "scope": r.scope_label, "inherited": r.inherited}
+                    for r in items
+                ],
+            }
+            for label, items in group_by_category(applicable)
         ],
         # Bookable zones, for the minority of permit groups whose quota
         # attaches to a destination rather than to this entry point. Which
@@ -292,6 +315,7 @@ def trailhead_views(
     peaks: Sequence[Peak] = (),
     source_log: Sequence[SourceLogEntry] = (),
     zones: Optional[Dict[str, List[PermitZone]]] = None,
+    regulations: Sequence[Regulation] = (),
     questions: Sequence[OpenQuestion] = (),
     today: Optional[date] = None,
 ) -> List[dict]:
@@ -302,7 +326,8 @@ def trailhead_views(
     """
     views = [
         trailhead_view(t, permits.get(t.permit_group), approaches=approaches, peaks=peaks,
-                       source_log=source_log, zones=zones, questions=questions, today=today)
+                       source_log=source_log, zones=zones, regulations=regulations,
+                       questions=questions, today=today)
         for t in sorted(trailheads, key=lambda t: t.name)
     ]
     seen: Dict[str, str] = {}
