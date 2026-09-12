@@ -6,6 +6,52 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **A general duplication check**, as a derived question rather than a test.
+  The pinned tests only protect facts already moved; a new one duplicated
+  tomorrow would pass all of them. Text similarity does not work here — the
+  Mokelumne duplication was a paraphrase sharing no six-word phrase with the
+  rule it restated, only the subject — so `CATEGORY_VOCABULARY` asks whether
+  prose mentions the vocabulary of a category that already has a rule for that
+  group. Noisy by nature, so it surfaces in `--open-questions` where a human
+  triages it rather than breaking the build, which would teach people to ignore
+  it. `interagency_note` is exempt: it exists to describe *other* units' rules.
+- **`permits.csv` gains `excludes`** — what a permit does *not* cover, and what
+  you need instead. It earns a field because being wrong is discovered at the
+  trailhead and cannot be fixed there. The Whitney Zone permit does not cover
+  the North Fork of Lone Pine Creek approaches (Mountaineers Route, East Face,
+  East Buttress, Mount Russell), which need an ordinary Inyo NF permit — a fact
+  previously buried in seven sentences of prose, now rendered above the rules
+  on all three surfaces. Also covers Golden Trout's Cottonwood entries and the
+  CPMA/general-Mokelumne split.
+- **Eight regulations migrated out of prose**: Hoover's group size and its
+  stricter Sawtooth Ridge Zone exception, four Stanislaus forest-wide rules
+  plus a 14-day stay limit, Sierra NF's stock cap, and Golden Trout's
+  conditional campfire restriction. The Stanislaus entry states that bear
+  canisters are **not** required — a stated non-requirement reads very
+  differently from silence, and Desolation next door requires one on pain of a
+  $5,000 fine.
+- **`scope_applies()`** extracted from `regulations_for()`, so any future
+  scoped table resolves identically instead of copying four-way scope logic.
+- **Claims cite the evidence behind them** (`wayproof/evidence.py`). Every log
+  entry gains a stable `entry_id` (`group-date-seq` — sayable out loud,
+  sortable, URL-safe), and `regulations.csv` and `permits.csv` gain
+  `log_entry_ids`. The log was a diary; it is now an index, traversable both
+  ways:
+  - **Forward, for a reader**: claim → entries → sources. Every rule on every
+    page now carries a one-line badge saying when it was last checked, which
+    sources back it, and whether anyone is arguing about it. All three
+    representations state it.
+  - **Backward, for ingestion**: source URL → entries → claims. A changed page
+    names the rows that depend on it. A diff on the Desolation permit page
+    currently implicates 12 rules and no Mokelumne ones. This is the hook the
+    change detector will pull on.
+  - Status is three-valued on purpose. `unverified` (nobody logged a check) is
+    a different state from `settled`, and a boolean would collapse them — which
+    is exactly how a gap ends up rendering as a clean bill of health. A
+    resolved conflict counts as settled but stays visible, because "we
+    considered this and resolved it" is more useful than silence.
+  - A citation naming no real entry is reported as a gap. It looks like
+    evidence and resolves to nothing, which is worse than citing nothing.
 - **A provenance model** (`data/sources.csv`, `data/source_deferrals.csv`,
   `wayproof/provenance.py`). Reconciling two official sources needed three
   separate judgements and only one was ever written down. Now all three are
@@ -92,6 +138,38 @@ All notable changes to this project are documented here. The format is based on
     posing as the rule itself.
 
 ### Fixed
+- **A group size limit was still duplicated in Desolation's `fee_notes`** after
+  the split. Found by the new overlap check on its first run, which is the
+  point of it.
+- **The `notes` field was holding five facts that were already rules.** Group
+  size, the campfire ban, the Emigrant Lake setback, the one-mile group
+  separation and Woods Lake's day-use status were each asserted twice in
+  `mokelumne_free` — in prose and as resolved rules, created hours apart on the
+  same day. That is the failure that produced seven drifting copies of the
+  campfire permit rule, live again. A new test asserts no `notes` field
+  restates a fact that resolves as a rule, which would have caught it the day
+  it happened.
+- **Verification narrative moved out of `notes` into the log it duplicated.**
+  "Confirmed word-for-word against the official page", "CORRECTS an earlier
+  assumption", "Source conflict resolved by weight of evidence" and similar are
+  history, not permit facts, and were already restated at greater length in the
+  source log. Rows now state the answer and cite the entry id.
+- **Desolation restated its own structured columns**: the quota season sat in
+  `notes` as well as `quota_season_start`/`end`, and parking fees sat in `notes`
+  as well as `fee_notes`.
+- `notes` drops from ~14,400 characters to 7,652, with a test failing any field
+  over 1,400 so it cannot quietly refill a third time.
+- **The day-use reasoning was stored twice.** The full argument — recreation.gov's
+  overview against its own operational section — sat in both the Desolation
+  notes field and the log entry that closed the conflict. Two copies of one
+  argument is the drift this project keeps paying for. The note now states the
+  answer and cites the entries; `notes` drops from 2475 to ~1900 characters.
+- **Conflict citations were attached too broadly.** Bulk-citing every entry for
+  a permit group marked settled rules as contested — the campfire ban read
+  "sources disagree" because an unrelated setback dispute was open. A badge
+  that cries wolf is worse than no badge. A conflict entry is now cited only by
+  the rule it concerns, and a test enforces it: exactly one rule is contested,
+  and it is the disputed one.
 - **Desolation's group size of 12 no longer implies it covers day use.** The
   figure comes from recreation.gov's booking widget, where a destination zone
   is selected for the first night — that's the overnight quota mechanism, and

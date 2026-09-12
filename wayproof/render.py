@@ -164,11 +164,38 @@ def _permit_html(permit: dict) -> str:
         out.append(f'<h3>How reservations work</h3><p>{_e(permit["reservation_method"])}</p>')
     if permit["notes"]:
         out.append(f'<h3>Notes</h3><p>{_e(permit["notes"])}</p>')
+    if permit.get("excludes"):
+        out.append('<h3>What this permit does NOT cover</h3>'
+                   f'<div class="card warn"><p>{_e(permit["excludes"])}</p></div>')
     if permit["interagency_note"]:
         out.append(f'<h3>Travel into neighbouring units</h3>'
                    f'<p>{_e(permit["interagency_note"])}</p>')
     return "\n".join(out)
 
+
+
+def _evidence_html(evidence: dict | None) -> str:
+    """A one-line badge saying whether anyone is arguing about this claim.
+
+    Deliberately three-valued. "Verified" and "not independently verified" are
+    different states and a boolean would collapse them, which is how a gap ends
+    up reading as a clean bill of health.
+    """
+    if not evidence:
+        return ""
+    status = evidence.get("status")
+    if status == "unverified":
+        return ('<div class="meta">Not independently verified &mdash; '
+                'no logged check cites this.</div>')
+    bits = [f'{_e(evidence["label"])} {_e(evidence["last_checked"])}']
+    if evidence.get("open_conflicts"):
+        bits.append("open conflict: " + ", ".join(
+            _e(c) for c in evidence["open_conflicts"]))
+    elif evidence.get("resolved_conflicts"):
+        bits.append("previously disputed, resolved: " + ", ".join(
+            _e(c) for c in evidence["resolved_conflicts"]))
+    bits.append("evidence " + ", ".join(_e(e["entry_id"]) for e in evidence["entries"]))
+    return f'<div class="meta">{" &middot; ".join(bits)}</div>'
 
 def _provenance_html(permit: dict, source_log: Sequence[dict]) -> str:
     out = ['<h2>Provenance</h2>']
@@ -189,8 +216,15 @@ def _provenance_html(permit: dict, source_log: Sequence[dict]) -> str:
         for entry in source_log:
             link = (f'<a href="{_e(entry["source_url"])}" rel="nofollow">source</a>'
                     if entry["source_url"] else "")
-            out.append(f'<tr><td>{_e(entry["date_checked"])}</td>'
-                       f'<td>{_e(entry["verdict"])}<div class="meta">'
+            # The id is what a rule above cites, so it has to be visible here
+            # for the citation to be followable rather than decorative.
+            handle = (f'<div class="meta">{_e(entry["entry_id"])}</div>'
+                      if entry.get("entry_id") else "")
+            conflict = (f'<div class="meta">conflict: {_e(entry["conflict_id"])}'
+                        f'{" (" + _e(entry["conflict_kind"]) + ")" if entry.get("conflict_kind") else ""}'
+                        f'</div>' if entry.get("conflict_id") else "")
+            out.append(f'<tr><td>{_e(entry["date_checked"])}{handle}</td>'
+                       f'<td>{_e(entry["verdict"])}{conflict}<div class="meta">'
                        f'{_e(entry["summary"])}</div></td><td>{link}</td></tr>')
         out.append('</tbody></table>')
     return "\n".join(out)
@@ -233,7 +267,8 @@ def render_trailhead_html(view: dict) -> str:
                 meta = (f'<div class="meta">{" &middot; ".join(bits)}</div>') if bits else ""
                 scope = (f' <span class="flag">{_e(rule["scope"])}</span>'
                          if rule["inherited"] else "")
-                body.append(f'<div class="card"><div>{_e(rule["summary"])}{scope}</div>{meta}</div>')
+                body.append(f'<div class="card"><div>{_e(rule["summary"])}{scope}</div>{meta}'
+                            f'{_evidence_html(rule.get("evidence"))}</div>')
 
     zones = view.get("zones", {})
     if zones.get("quota_by_zone"):
@@ -333,6 +368,22 @@ def render_trailhead_html(view: dict) -> str:
 # Trailhead: Markdown (agent surface)
 # --------------------------------------------------------------------------
 
+
+def _evidence_markdown(evidence: dict | None) -> str:
+    """The same three states as the HTML badge, stated rather than styled."""
+    if not evidence:
+        return ""
+    if evidence.get("status") == "unverified":
+        return " Evidence: none logged; not independently verified."
+    parts = [f'Evidence: {evidence["label"].lower()}, last checked {evidence["last_checked"]}']
+    if evidence.get("open_conflicts"):
+        parts.append("open conflict " + ", ".join(evidence["open_conflicts"]))
+    elif evidence.get("resolved_conflicts"):
+        parts.append("previously disputed and resolved: "
+                     + ", ".join(evidence["resolved_conflicts"]))
+    parts.append("log entries " + ", ".join(e["entry_id"] for e in evidence["entries"]))
+    return " " + "; ".join(parts) + "."
+
 def render_trailhead_markdown(view: dict) -> str:
     permit = view["permit"]
     loc, land = view["location"], view["land"]
@@ -388,6 +439,8 @@ def render_trailhead_markdown(view: dict) -> str:
             out += ["### How reservations work", "", permit["reservation_method"], ""]
         if permit["notes"]:
             out += ["### Notes", "", permit["notes"], ""]
+        if permit.get("excludes"):
+            out += ["### What this permit does NOT cover", "", permit["excludes"], ""]
         if permit["interagency_note"]:
             out += ["### Travel into neighbouring units", "", permit["interagency_note"], ""]
 
@@ -407,6 +460,7 @@ def render_trailhead_markdown(view: dict) -> str:
                     line += f' ({rule["citation"]})'
                 if rule["source_url"]:
                     line += f' Source: {rule["source_url"]}'
+                line += _evidence_markdown(rule.get("evidence"))
                 out.append(line)
             out.append("")
 
@@ -465,7 +519,12 @@ def render_trailhead_markdown(view: dict) -> str:
     if view["source_log"]:
         out += ["## Verification history", ""]
         for entry in view["source_log"]:
-            out.append(f'- {entry["date_checked"]} [{entry["verdict"]}] {entry["summary"]}'
+            handle = f'{entry["entry_id"]} ' if entry.get("entry_id") else ""
+            conflict = (f' Conflict: {entry["conflict_id"]}'
+                        f'{" (" + entry["conflict_kind"] + ")" if entry.get("conflict_kind") else ""}.'
+                        if entry.get("conflict_id") else "")
+            out.append(f'- {handle}{entry["date_checked"]} [{entry["verdict"]}] '
+                       f'{entry["summary"]}{conflict}'
                        f'{" Source: " + entry["source_url"] if entry["source_url"] else ""}')
         out.append("")
 

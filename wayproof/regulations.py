@@ -75,6 +75,39 @@ CATEGORY_LABELS = {
 }
 
 
+#: Words that signal prose is talking about a regulation category. Used to spot
+#: a fact being restated in a permit's free text when a rule already carries it.
+#:
+#: Deliberately a *vocabulary* check rather than a text-similarity one. The
+#: duplication this is meant to catch was a paraphrase, not a copy: "Max group
+#: size 8 people outside the CPMA" against "Maximum group size is 8 people
+#: overnight and 12 for a day hike" share no six-word phrase, so shingle
+#: matching found nothing. What they share is the subject.
+#:
+#: Noisy by design, which is why it feeds ``open_questions()`` rather than a
+#: test. A permit's prose can mention camping without restating the camping
+#: rule, and a human has to look. Silence would be worse: the campfire rule was
+#: copied into seven rows and drifted before anyone noticed.
+CATEGORY_VOCABULARY = {
+    "fire": ("campfire", "camp fire", "wood fire", "camp stove", "fire ban", "fire danger"),
+    "food_storage": ("bear canister", "bear-resistant", "bear proof", "food storage"),
+    # "party size" is excluded: "changing party size costs $5" is a fee
+    # mechanic, not a restatement of a group limit.
+    "group_size": ("group size", "people per permit", "max group"),
+    # "setback" and "designated site" are excluded: prose legitimately
+    # cross-references a rule ("the water setbacks still apply") and describes
+    # permit allocation ("14 designated sites") without restating either.
+    "camping": ("camp within", "camping within", "stay limit", "consecutive days"),
+    "waste": ("cat hole", "human waste", "pack out", "toilet paper"),
+    "water": ("treat all water", "purification"),
+    "pets": ("leash", "dog waste"),
+    "stock": ("livestock", "pack animal", "weed free", "weed-free"),
+    "weapons": ("firearm", "discharge"),
+    "fishing": ("fish and game", "fishing licence", "fishing license"),
+    "aircraft": ("drone", "hang glider", "over-snow", "game cart"),
+}
+
+
 @dataclass
 class Regulation:
     """One row of ``data/regulations.csv``."""
@@ -89,6 +122,12 @@ class Regulation:
     source_url: str = ""
     source_last_updated: str = ""
     verified_date: str = ""
+    log_entry_ids: str = ""
+    """Semicolon-separated ``entry_id`` values from the permit source log.
+
+    Blank means nobody has logged a check of this rule, which renders as
+    unverified rather than as fine. See :mod:`wayproof.evidence`.
+    """
     scope_display: str = ""
     """How to name this rule's scope to a reader, when the key isn't readable.
 
@@ -152,9 +191,40 @@ def load_regulations(path: str | Path = "data/regulations.csv") -> List[Regulati
             source_url=_str_field(row, "source_url"),
             source_last_updated=_str_field(row, "source_last_updated"),
             verified_date=_str_field(row, "verified_date"),
+            log_entry_ids=_str_field(row, "log_entry_ids"),
             scope_display=_str_field(row, "scope_display"),
         ))
     return out
+
+
+SPECIFICITY = {PERMIT_GROUP: 0, WILDERNESS: 1, AGENCY: 2, JURISDICTION: 3}
+"""Lower is more specific. A permit's own rule reads above the wilderness
+rulebook, which reads above forest policy, which reads above state law."""
+
+
+def scope_applies(scope_type: str, scope_value: str, permit_group: str = "",
+                  agency: "str | Sequence[str]" = "", jurisdiction: str = "",
+                  wilderness: str = "") -> bool:
+    """Does a rule at ``scope_type``/``scope_value`` reach this permit group?
+
+    Split out of :func:`regulations_for` so any other scoped table -- conditions,
+    hazards, seasonal access -- resolves identically instead of copying four-way
+    scope logic and drifting from it.
+
+    ``agency`` takes one key or several, because a wilderness can be co-managed.
+    Pass ``PermitRule.agency_ids``, never ``PermitRule.agency``: the latter is a
+    display string, and matching on it once made a forest-wide rule inherit to
+    nothing.
+    """
+    if scope_type == PERMIT_GROUP:
+        return bool(permit_group) and scope_value == permit_group
+    if scope_type == WILDERNESS:
+        return bool(wilderness) and scope_value == wilderness
+    if scope_type == AGENCY:
+        agencies = {agency} if isinstance(agency, str) else set(agency)
+        agencies.discard("")
+        return scope_value in agencies
+    return bool(jurisdiction) and scope_value == jurisdiction
 
 
 def regulations_for(
@@ -175,24 +245,14 @@ def regulations_for(
     wilderness can be co-managed, as Desolation is by Eldorado NF and the Lake
     Tahoe Basin Management Unit; a rule from either manager applies.
     """
-    agencies = {agency} if isinstance(agency, str) else set(agency)
-    agencies.discard("")
-
     def applies(reg: Regulation) -> bool:
-        if reg.scope_type == PERMIT_GROUP:
-            return bool(permit_group) and reg.scope_value == permit_group
-        if reg.scope_type == WILDERNESS:
-            return bool(wilderness) and reg.scope_value == wilderness
-        if reg.scope_type == AGENCY:
-            return reg.scope_value in agencies
-        return bool(jurisdiction) and reg.scope_value == jurisdiction
-
-    specificity = {PERMIT_GROUP: 0, WILDERNESS: 1, AGENCY: 2, JURISDICTION: 3}
+        return scope_applies(reg.scope_type, reg.scope_value, permit_group=permit_group,
+                             agency=agency, jurisdiction=jurisdiction, wilderness=wilderness)
 
     def sort_key(reg: Regulation):
         category_rank = (CATEGORY_ORDER.index(reg.category)
                          if reg.category in CATEGORY_ORDER else len(CATEGORY_ORDER))
-        return (category_rank, specificity.get(reg.scope_type, 3), reg.regulation_id)
+        return (category_rank, SPECIFICITY.get(reg.scope_type, 4), reg.regulation_id)
 
     return sorted((r for r in regulations if applies(r)), key=sort_key)
 

@@ -47,12 +47,16 @@ from .access import ApproachRoute, UNCONFIRMED
 from .camping import Campground, Campsite
 from .park_access import ParkAccess
 from .model import Peak, Trailhead
+from .evidence import UNVERIFIED, dangling_citations, evidence_for
 from .permits import PermitRule, SourceLogEntry, open_conflicts
 from .provenance import (
     REGULATION as PROV_REGULATION, STALE_DAYS, Deferral, Source,
     age_days, source_for,
 )
-from .regulations import PERMIT_GROUP as REG_PERMIT_GROUP, Regulation
+from .regulations import (
+    CATEGORY_VOCABULARY, PERMIT_GROUP as REG_PERMIT_GROUP, Regulation,
+    regulations_for,
+)
 from .release_policy import OFF_SEASON
 from .timed_entry import TimedEntryPolicy
 from .water import WaterSource, WaterSourceLogEntry, log_by_source
@@ -448,6 +452,78 @@ def open_questions(
                     question=("This URL is cited but not in the source registry, so nothing can "
                               "say whether its publisher owns the claim or has deferred it. Add "
                               "it with a role, or replace the citation."),
+                    context="",
+                ))
+
+        # -- Permit prose talking about a subject a rule already covers.
+        # The duplication this catches is a paraphrase, not a copy -- five
+        # Mokelumne facts were live in both places, created hours apart, and
+        # shared no six-word phrase, so text matching found nothing. What they
+        # shared was the subject.
+        #
+        # interagency_note is excluded: it exists to describe OTHER units'
+        # rules, so category vocabulary there is expected rather than
+        # suspicious. Even so this is a prompt to look, not a verdict -- prose
+        # can mention camping without restating the camping rule.
+        for rule in permits:
+            applicable = regulations_for(regulations, rule.permit_group, rule.agency_ids,
+                                         rule.jurisdiction, rule.wilderness_area)
+            covered = {r.category for r in applicable}
+            if not covered:
+                continue
+            for field in ("notes", "fee_notes", "reservation_method"):
+                text = str(getattr(rule, field, "") or "").lower()
+                if not text:
+                    continue
+                for category in sorted(covered):
+                    hit = next((t for t in CATEGORY_VOCABULARY.get(category, ())
+                                if t in text), None)
+                    if hit is None:
+                        continue
+                    questions.append(OpenQuestion(
+                        target_file="data/permits.csv",
+                        # Not "(category)": that shape is already used by the missing-local-fire-rule
+                        # gap, and two different questions sharing a key shape makes both
+                        # unfilterable.
+                        target_key=(f"{_permit_group_label(rule.permit_group)}"
+                                    f".{field} may restate {category}"),
+                        question=(f"This prose mentions {hit!r} while a {category} rule already "
+                                  "applies to this permit group. Check whether it restates the "
+                                  "rule -- a fact asserted in two places is a fact maintained in "
+                                  "neither -- or is genuinely about something else."),
+                        context=rule.permit_group,
+                    ))
+
+        # -- Citations naming no real log entry. Worse than no citation,
+        # because it renders as evidence and resolves to nothing.
+        claims = ([(f"regulations.csv:{r.regulation_id}", r.log_entry_ids) for r in regulations]
+                  + [(f"permits.csv:{r.permit_group}", r.log_entry_ids) for r in permits])
+        for key, bad_id in dangling_citations(permit_source_log, claims):
+            questions.append(OpenQuestion(
+                target_file="data/permit_source_log.csv",
+                target_key=f"{key} -> {bad_id}",
+                question=(f"{key} cites log entry {bad_id}, which does not exist. A citation "
+                          "that resolves to nothing looks like evidence and is not; either fix "
+                          "the id or drop it."),
+                context="",
+            ))
+
+        # -- Rules nobody has logged a check of. Blank is not "fine", and the
+        # page says so rather than rendering them like verified ones.
+        if permit_source_log:
+            unverified = sorted(
+                r.regulation_id for r in regulations
+                if evidence_for(r.log_entry_ids, permit_source_log).status == UNVERIFIED
+            )
+            if unverified:
+                questions.append(OpenQuestion(
+                    target_file="data/regulations.csv",
+                    target_key=f"{len(unverified)} rules with no logged check",
+                    question=(f"{len(unverified)} regulations cite no verification event, so "
+                              "nothing records who checked them or when: "
+                              f"{', '.join(unverified[:6])}"
+                              f"{'...' if len(unverified) > 6 else ''}. They render as "
+                              "unverified rather than as confirmed, but they still need a check."),
                     context="",
                 ))
 

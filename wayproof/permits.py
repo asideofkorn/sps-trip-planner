@@ -154,6 +154,16 @@ class PermitRule:
     apply_url: str = ""
     notes: str = ""
     interagency_note: str = ""
+    excludes: str = ""
+    """What this permit does NOT cover, and what you need instead.
+
+    A boundary statement about the permit product, distinct from a regulation
+    (what you may do) and from provenance (how we know). It earns a field
+    because getting it wrong means arriving at a trailhead holding a document
+    that does not admit you: the Whitney Zone permit does not cover the North
+    Fork of Lone Pine Creek approaches, which need an ordinary Inyo NF permit,
+    and that fact was previously buried in seven sentences of prose.
+    """
     # Structured release phases from data/release_policies.csv, if migrated
     # (see wayproof.release_policy). Empty for groups still on the
     # generic reservation_window_days fallback below (currently Yosemite).
@@ -193,6 +203,9 @@ class PermitRule:
     false and quietly ages the row wrong in both directions.
     """
     verified_date: str = ""        # date this row was last checked against that source
+    log_entry_ids: str = ""
+    """Semicolon-separated ``entry_id`` values establishing this row's current
+    state. See :mod:`wayproof.evidence`."""
 
     def in_quota_season(self, trip_date: date) -> bool:
         """Whether ``trip_date`` falls in this rule's quota season.
@@ -262,9 +275,11 @@ def load_permits(
             apply_url=_str_field(row, "apply_url"),
             notes=_str_field(row, "notes"),
             interagency_note=_str_field(row, "interagency_note"),
+            excludes=_str_field(row, "excludes"),
             release_phases=phases_by_group.get(group, []),
             source_last_updated=_str_field(row, "source_last_updated"),
             verified_date=_str_field(row, "verified_date"),
+            log_entry_ids=_str_field(row, "log_entry_ids"),
         )
     return rules
 
@@ -670,6 +685,14 @@ class SourceLogEntry:
     the costume of a cross-source dispute. See :mod:`wayproof.provenance`.
     """
 
+    entry_id: str = ""
+    """Stable, sayable handle for this check: ``group-date-seq``.
+
+    Claims cite it, so a reader can walk from one sentence on a page to the
+    verification event behind it, and a changed source can name the rows that
+    depend on it. See :mod:`wayproof.evidence`.
+    """
+
 
 @dataclass
 class OpenConflict:
@@ -721,6 +744,7 @@ def load_source_log(
             summary=_str_field(row, "summary"),
             conflict_id=_str_field(row, "conflict_id"),
             conflict_kind=_str_field(row, "conflict_kind"),
+            entry_id=_str_field(row, "entry_id"),
         )
         for _, row in df.iterrows()
     ]

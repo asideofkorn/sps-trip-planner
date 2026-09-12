@@ -274,9 +274,10 @@ def test_rules_resting_on_a_non_owning_source_are_flagged(reg):
     keys = [q.target_key for q in open_questions(regulations=regs, sources=sources,
                                                  deferrals=deferrals, today=TODAY)
             if "sourced to" in q.target_key]
-    assert keys == ["desolation (sourced to Recreation.gov)"], (
-        "the Desolation rules were transcribed from the booking platform, which restates "
-        "the land manager's regulations rather than making them"
+    assert sorted(keys) == ["desolation (sourced to Recreation.gov)",
+                            "sierra_nf (sourced to Recreation.gov)"], (
+        "these rules were transcribed from the booking platform, which restates the land "
+        "manager's regulations rather than making them"
     )
 
 
