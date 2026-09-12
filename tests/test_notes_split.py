@@ -212,3 +212,54 @@ def test_a_permit_with_no_exclusion_renders_no_block():
     th = Trailhead(name="Anywhere", latitude=37.0, longitude=-119.0, permit_group="seki")
     md = render_trailhead_markdown(trailhead_view(th, _permits()["seki"]))
     assert "does NOT cover" not in md
+
+
+# -- the general guard, and why it isn't a test -----------------------------
+#
+# The pinned lists above only protect facts already moved. A NEW fact
+# duplicated tomorrow passes every one of them, and the length cap has ~50
+# characters of headroom. So the general check is a derived question rather
+# than an assertion: it is noisy enough that breaking the build on it would
+# teach people to ignore it, and it needs a human to judge.
+
+def test_the_overlap_check_catches_the_historical_duplication():
+    # Validation that matters: replay the prose actually deleted from
+    # mokelumne_free and confirm the check fires on it. Text-similarity did
+    # not -- the duplication was a paraphrase sharing no six-word phrase with
+    # the rule, only the subject.
+    from wayproof.regulations import CATEGORY_VOCABULARY
+
+    deleted = ("Max group size 8 people outside the CPMA; groups may not camp/travel within one "
+               "mile of another group. Campfires are NOT allowed anywhere in the Mokelumne "
+               "Wilderness -- a stove is allowed. Camping within 300ft of Emigrant Lake's "
+               "shoreline is prohibited.")
+    rule = _permits()["mokelumne_free"]
+    regs = load_regulations(REGS)
+    covered = {r.category for r in regulations_for(regs, "mokelumne_free", rule.agency_ids,
+                                                   rule.jurisdiction, rule.wilderness_area)}
+    fired = {c for c in covered
+             if any(t in deleted.lower() for t in CATEGORY_VOCABULARY.get(c, ()))}
+    assert {"fire", "group_size", "camping"} <= fired
+
+
+def test_interagency_notes_are_exempt_from_the_overlap_check():
+    # That field exists to describe OTHER units' rules, so category vocabulary
+    # in it is expected. Including it produced three false positives out of
+    # eight, all of them notes about a neighbouring agency's requirements.
+    from wayproof.reports import open_questions
+    permits = _permits()
+    keys = [q.target_key for q in open_questions(permits=list(permits.values()),
+                                                 regulations=load_regulations(REGS))
+            if "may restate" in q.target_key]
+    assert not any("interagency" in k for k in keys)
+
+
+def test_the_overlap_check_is_quiet_enough_to_be_read():
+    # A check nobody reads is a check that does not exist. If this climbs, the
+    # vocabulary needs tightening, not the threshold raising.
+    from wayproof.reports import open_questions
+    permits = _permits()
+    keys = [q.target_key for q in open_questions(permits=list(permits.values()),
+                                                 regulations=load_regulations(REGS))
+            if "may restate" in q.target_key]
+    assert len(keys) <= 3, f"overlap findings have grown noisy: {keys}"

@@ -53,7 +53,10 @@ from .provenance import (
     REGULATION as PROV_REGULATION, STALE_DAYS, Deferral, Source,
     age_days, source_for,
 )
-from .regulations import PERMIT_GROUP as REG_PERMIT_GROUP, Regulation
+from .regulations import (
+    CATEGORY_VOCABULARY, PERMIT_GROUP as REG_PERMIT_GROUP, Regulation,
+    regulations_for,
+)
 from .release_policy import OFF_SEASON
 from .timed_entry import TimedEntryPolicy
 from .water import WaterSource, WaterSourceLogEntry, log_by_source
@@ -451,6 +454,45 @@ def open_questions(
                               "it with a role, or replace the citation."),
                     context="",
                 ))
+
+        # -- Permit prose talking about a subject a rule already covers.
+        # The duplication this catches is a paraphrase, not a copy -- five
+        # Mokelumne facts were live in both places, created hours apart, and
+        # shared no six-word phrase, so text matching found nothing. What they
+        # shared was the subject.
+        #
+        # interagency_note is excluded: it exists to describe OTHER units'
+        # rules, so category vocabulary there is expected rather than
+        # suspicious. Even so this is a prompt to look, not a verdict -- prose
+        # can mention camping without restating the camping rule.
+        for rule in permits:
+            applicable = regulations_for(regulations, rule.permit_group, rule.agency_ids,
+                                         rule.jurisdiction, rule.wilderness_area)
+            covered = {r.category for r in applicable}
+            if not covered:
+                continue
+            for field in ("notes", "fee_notes", "reservation_method"):
+                text = str(getattr(rule, field, "") or "").lower()
+                if not text:
+                    continue
+                for category in sorted(covered):
+                    hit = next((t for t in CATEGORY_VOCABULARY.get(category, ())
+                                if t in text), None)
+                    if hit is None:
+                        continue
+                    questions.append(OpenQuestion(
+                        target_file="data/permits.csv",
+                        # Not "(category)": that shape is already used by the missing-local-fire-rule
+                        # gap, and two different questions sharing a key shape makes both
+                        # unfilterable.
+                        target_key=(f"{_permit_group_label(rule.permit_group)}"
+                                    f".{field} may restate {category}"),
+                        question=(f"This prose mentions {hit!r} while a {category} rule already "
+                                  "applies to this permit group. Check whether it restates the "
+                                  "rule -- a fact asserted in two places is a fact maintained in "
+                                  "neither -- or is genuinely about something else."),
+                        context=rule.permit_group,
+                    ))
 
         # -- Citations naming no real log entry. Worse than no citation,
         # because it renders as evidence and resolves to nothing.

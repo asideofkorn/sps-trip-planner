@@ -6,6 +6,15 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **A general duplication check**, as a derived question rather than a test.
+  The pinned tests only protect facts already moved; a new one duplicated
+  tomorrow would pass all of them. Text similarity does not work here — the
+  Mokelumne duplication was a paraphrase sharing no six-word phrase with the
+  rule it restated, only the subject — so `CATEGORY_VOCABULARY` asks whether
+  prose mentions the vocabulary of a category that already has a rule for that
+  group. Noisy by nature, so it surfaces in `--open-questions` where a human
+  triages it rather than breaking the build, which would teach people to ignore
+  it. `interagency_note` is exempt: it exists to describe *other* units' rules.
 - **`permits.csv` gains `excludes`** — what a permit does *not* cover, and what
   you need instead. It earns a field because being wrong is discovered at the
   trailhead and cannot be fixed there. The Whitney Zone permit does not cover
@@ -129,6 +138,9 @@ All notable changes to this project are documented here. The format is based on
     posing as the rule itself.
 
 ### Fixed
+- **A group size limit was still duplicated in Desolation's `fee_notes`** after
+  the split. Found by the new overlap check on its first run, which is the
+  point of it.
 - **The `notes` field was holding five facts that were already rules.** Group
   size, the campfire ban, the Emigrant Lake setback, the one-mile group
   separation and Woods Lake's day-use status were each asserted twice in

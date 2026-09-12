@@ -719,6 +719,31 @@ the Mountaineers Route or Mount Russell, which need an ordinary Inyo NF permit.
 That fact spent seven sentences buried in prose; it now renders above the rules
 on all three surfaces.
 
+### Four layers, because one would not hold
+
+The pinned tests below protect the facts already moved. A *new* fact duplicated
+tomorrow would pass all of them, so the guard is layered:
+
+| Layer | Catches | Where it fires |
+|---|---|---|
+| Pinned no-loss tests | a migrated fact vanishing | CI |
+| Pinned no-duplication tests | a migrated fact coming back | CI |
+| Length cap (1,400 chars) | slow re-accretion | CI |
+| Category-vocabulary overlap | **new** duplication | `--open-questions` and the site |
+
+The last one is the general case and it is deliberately **not** a test. Text
+similarity does not work here: the Mokelumne duplication was a paraphrase,
+sharing no six-word phrase with the rule it restated, only the subject. So the
+check asks whether prose mentions the *vocabulary* of a category that already
+has a rule for that group — noisy by nature, since prose can mention camping
+without restating the camping rule. Breaking the build on it would teach people
+to ignore it; surfacing it as a question puts it where a human triages it,
+alongside every other gap.
+
+It earned itself immediately: run against the split above it found a group-size
+limit still sitting in Desolation's `fee_notes`, and `interagency_note` had to
+be exempted because that field exists to describe *other* units' rules.
+
 What deliberately stays in `notes` is genuine miscellany — permit validity
 mechanics, cancellation policy, hazards and seasonal access. No single-row
 tables were invented for facts that occur once. A test fails any `notes` field

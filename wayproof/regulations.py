@@ -75,6 +75,39 @@ CATEGORY_LABELS = {
 }
 
 
+#: Words that signal prose is talking about a regulation category. Used to spot
+#: a fact being restated in a permit's free text when a rule already carries it.
+#:
+#: Deliberately a *vocabulary* check rather than a text-similarity one. The
+#: duplication this is meant to catch was a paraphrase, not a copy: "Max group
+#: size 8 people outside the CPMA" against "Maximum group size is 8 people
+#: overnight and 12 for a day hike" share no six-word phrase, so shingle
+#: matching found nothing. What they share is the subject.
+#:
+#: Noisy by design, which is why it feeds ``open_questions()`` rather than a
+#: test. A permit's prose can mention camping without restating the camping
+#: rule, and a human has to look. Silence would be worse: the campfire rule was
+#: copied into seven rows and drifted before anyone noticed.
+CATEGORY_VOCABULARY = {
+    "fire": ("campfire", "camp fire", "wood fire", "camp stove", "fire ban", "fire danger"),
+    "food_storage": ("bear canister", "bear-resistant", "bear proof", "food storage"),
+    # "party size" is excluded: "changing party size costs $5" is a fee
+    # mechanic, not a restatement of a group limit.
+    "group_size": ("group size", "people per permit", "max group"),
+    # "setback" and "designated site" are excluded: prose legitimately
+    # cross-references a rule ("the water setbacks still apply") and describes
+    # permit allocation ("14 designated sites") without restating either.
+    "camping": ("camp within", "camping within", "stay limit", "consecutive days"),
+    "waste": ("cat hole", "human waste", "pack out", "toilet paper"),
+    "water": ("treat all water", "purification"),
+    "pets": ("leash", "dog waste"),
+    "stock": ("livestock", "pack animal", "weed free", "weed-free"),
+    "weapons": ("firearm", "discharge"),
+    "fishing": ("fish and game", "fishing licence", "fishing license"),
+    "aircraft": ("drone", "hang glider", "over-snow", "game cart"),
+}
+
+
 @dataclass
 class Regulation:
     """One row of ``data/regulations.csv``."""
