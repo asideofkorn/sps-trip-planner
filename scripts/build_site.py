@@ -213,6 +213,7 @@ def build(output_dir: Path, today: datetime.date | None = None) -> dict:
         approaches=data["approaches"],
         peaks=data["peaks"],
         source_log=source_log,
+        sources=load_sources("data/sources.csv"),
         zones=load_permit_zones("data/permit_zones.csv"),
         regulations=regulations,
         questions=questions,

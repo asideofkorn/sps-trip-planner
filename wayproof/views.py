@@ -34,7 +34,9 @@ from typing import Dict, List, Optional, Sequence
 from .access import ApproachRoute
 from .model import Peak, Trailhead
 from .permit_zones import PermitZone
+from .provenance import Source
 from .regulations import Regulation, group_by_category, regulations_for
+from .evidence import evidence_for
 from .permits import PermitRule, SourceLogEntry
 from .release_policy import CONTACT_REQUIRED, LOTTERY_ANNUAL, WALKUP, ReleasePhase
 from .reports import OpenQuestion
@@ -183,6 +185,7 @@ def trailhead_view(
     approaches: Sequence[ApproachRoute] = (),
     peaks: Sequence[Peak] = (),
     source_log: Sequence[SourceLogEntry] = (),
+    sources: Sequence[Source] = (),
     zones: Optional[Dict[str, List[PermitZone]]] = None,
     regulations: Sequence[Regulation] = (),
     questions: Sequence[OpenQuestion] = (),
@@ -258,7 +261,8 @@ def trailhead_view(
                 "rules": [
                     {"id": r.regulation_id, "summary": r.summary, "detail": r.detail,
                      "citation": r.citation, "source_url": r.source_url,
-                     "scope": r.scope_label, "inherited": r.inherited}
+                     "scope": r.scope_label, "inherited": r.inherited,
+                     "evidence": evidence_for(r.log_entry_ids, source_log, sources).as_dict()}
                     for r in items
                 ],
             }
@@ -289,6 +293,10 @@ def trailhead_view(
             {"target_file": q.target_file, "target_key": q.target_key, "question": q.question}
             for q in relevant_questions
         ],
+        # Where this permit row's current state came from, walkable forward
+        # to the sources and any argument still open against them.
+        "evidence": (evidence_for(rule.log_entry_ids, source_log, sources).as_dict()
+                     if rule is not None else evidence_for("", source_log, sources).as_dict()),
         "source_log": [
             {
                 "date_checked": e.date_checked,
@@ -297,6 +305,9 @@ def trailhead_view(
                 "method": e.method,
                 "verdict": e.verdict,
                 "summary": e.summary,
+                "entry_id": e.entry_id,
+                "conflict_id": e.conflict_id,
+                "conflict_kind": e.conflict_kind,
             }
             for e in log
         ],
@@ -315,6 +326,7 @@ def trailhead_views(
     approaches: Sequence[ApproachRoute] = (),
     peaks: Sequence[Peak] = (),
     source_log: Sequence[SourceLogEntry] = (),
+    sources: Sequence[Source] = (),
     zones: Optional[Dict[str, List[PermitZone]]] = None,
     regulations: Sequence[Regulation] = (),
     questions: Sequence[OpenQuestion] = (),
@@ -327,7 +339,8 @@ def trailhead_views(
     """
     views = [
         trailhead_view(t, permits.get(t.permit_group), approaches=approaches, peaks=peaks,
-                       source_log=source_log, zones=zones, regulations=regulations,
+                       source_log=source_log, sources=sources,
+                       zones=zones, regulations=regulations,
                        questions=questions, today=today)
         for t in sorted(trailheads, key=lambda t: t.name)
     ]

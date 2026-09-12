@@ -6,6 +6,26 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **Claims cite the evidence behind them** (`wayproof/evidence.py`). Every log
+  entry gains a stable `entry_id` (`group-date-seq` — sayable out loud,
+  sortable, URL-safe), and `regulations.csv` and `permits.csv` gain
+  `log_entry_ids`. The log was a diary; it is now an index, traversable both
+  ways:
+  - **Forward, for a reader**: claim → entries → sources. Every rule on every
+    page now carries a one-line badge saying when it was last checked, which
+    sources back it, and whether anyone is arguing about it. All three
+    representations state it.
+  - **Backward, for ingestion**: source URL → entries → claims. A changed page
+    names the rows that depend on it. A diff on the Desolation permit page
+    currently implicates 12 rules and no Mokelumne ones. This is the hook the
+    change detector will pull on.
+  - Status is three-valued on purpose. `unverified` (nobody logged a check) is
+    a different state from `settled`, and a boolean would collapse them — which
+    is exactly how a gap ends up rendering as a clean bill of health. A
+    resolved conflict counts as settled but stays visible, because "we
+    considered this and resolved it" is more useful than silence.
+  - A citation naming no real entry is reported as a gap. It looks like
+    evidence and resolves to nothing, which is worse than citing nothing.
 - **A provenance model** (`data/sources.csv`, `data/source_deferrals.csv`,
   `wayproof/provenance.py`). Reconciling two official sources needed three
   separate judgements and only one was ever written down. Now all three are
@@ -92,6 +112,17 @@ All notable changes to this project are documented here. The format is based on
     posing as the rule itself.
 
 ### Fixed
+- **The day-use reasoning was stored twice.** The full argument — recreation.gov's
+  overview against its own operational section — sat in both the Desolation
+  notes field and the log entry that closed the conflict. Two copies of one
+  argument is the drift this project keeps paying for. The note now states the
+  answer and cites the entries; `notes` drops from 2475 to ~1900 characters.
+- **Conflict citations were attached too broadly.** Bulk-citing every entry for
+  a permit group marked settled rules as contested — the campfire ban read
+  "sources disagree" because an unrelated setback dispute was open. A badge
+  that cries wolf is worse than no badge. A conflict entry is now cited only by
+  the rule it concerns, and a test enforces it: exactly one rule is contested,
+  and it is the disputed one.
 - **Desolation's group size of 12 no longer implies it covers day use.** The
   figure comes from recreation.gov's booking widget, where a destination zone
   is selected for the first night — that's the overnight quota mechanism, and

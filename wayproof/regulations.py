@@ -89,6 +89,12 @@ class Regulation:
     source_url: str = ""
     source_last_updated: str = ""
     verified_date: str = ""
+    log_entry_ids: str = ""
+    """Semicolon-separated ``entry_id`` values from the permit source log.
+
+    Blank means nobody has logged a check of this rule, which renders as
+    unverified rather than as fine. See :mod:`wayproof.evidence`.
+    """
     scope_display: str = ""
     """How to name this rule's scope to a reader, when the key isn't readable.
 
@@ -152,6 +158,7 @@ def load_regulations(path: str | Path = "data/regulations.csv") -> List[Regulati
             source_url=_str_field(row, "source_url"),
             source_last_updated=_str_field(row, "source_last_updated"),
             verified_date=_str_field(row, "verified_date"),
+            log_entry_ids=_str_field(row, "log_entry_ids"),
             scope_display=_str_field(row, "scope_display"),
         ))
     return out

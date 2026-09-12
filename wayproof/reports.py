@@ -47,6 +47,7 @@ from .access import ApproachRoute, UNCONFIRMED
 from .camping import Campground, Campsite
 from .park_access import ParkAccess
 from .model import Peak, Trailhead
+from .evidence import UNVERIFIED, dangling_citations, evidence_for
 from .permits import PermitRule, SourceLogEntry, open_conflicts
 from .provenance import (
     REGULATION as PROV_REGULATION, STALE_DAYS, Deferral, Source,
@@ -448,6 +449,39 @@ def open_questions(
                     question=("This URL is cited but not in the source registry, so nothing can "
                               "say whether its publisher owns the claim or has deferred it. Add "
                               "it with a role, or replace the citation."),
+                    context="",
+                ))
+
+        # -- Citations naming no real log entry. Worse than no citation,
+        # because it renders as evidence and resolves to nothing.
+        claims = ([(f"regulations.csv:{r.regulation_id}", r.log_entry_ids) for r in regulations]
+                  + [(f"permits.csv:{r.permit_group}", r.log_entry_ids) for r in permits])
+        for key, bad_id in dangling_citations(permit_source_log, claims):
+            questions.append(OpenQuestion(
+                target_file="data/permit_source_log.csv",
+                target_key=f"{key} -> {bad_id}",
+                question=(f"{key} cites log entry {bad_id}, which does not exist. A citation "
+                          "that resolves to nothing looks like evidence and is not; either fix "
+                          "the id or drop it."),
+                context="",
+            ))
+
+        # -- Rules nobody has logged a check of. Blank is not "fine", and the
+        # page says so rather than rendering them like verified ones.
+        if permit_source_log:
+            unverified = sorted(
+                r.regulation_id for r in regulations
+                if evidence_for(r.log_entry_ids, permit_source_log).status == UNVERIFIED
+            )
+            if unverified:
+                questions.append(OpenQuestion(
+                    target_file="data/regulations.csv",
+                    target_key=f"{len(unverified)} rules with no logged check",
+                    question=(f"{len(unverified)} regulations cite no verification event, so "
+                              "nothing records who checked them or when: "
+                              f"{', '.join(unverified[:6])}"
+                              f"{'...' if len(unverified) > 6 else ''}. They render as "
+                              "unverified rather than as confirmed, but they still need a check."),
                     context="",
                 ))
 

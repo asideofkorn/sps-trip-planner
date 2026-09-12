@@ -694,6 +694,31 @@ regulation's scope reaches at least one permit group. A dead scope fails the
 build instead of quietly reading as covered. The forest-wide rule now reaches
 all three Eldorado groups and shows on 22 trailhead pages.
 
+## Every Claim Cites Its Evidence
+
+`data/permit_source_log.csv` always recorded *why* this project believes
+things. What it could not do is tell you which belief a given entry supports —
+it was a diary, not an index. So a reader who doubted one sentence had no route
+to the evidence for that sentence, and a maintainer who found a source had
+changed had no way to learn which rows depended on it.
+
+Both are the same missing edge. Every entry now carries a stable `entry_id`
+(`desolation-2026-09-12-11` — sayable, sortable, URL-safe), and claims cite the
+ids that established them:
+
+- **Forward**, for a reader: claim → entries → sources. Each rule carries a
+  badge with its last check, its sources, and any open argument.
+- **Backward**, for ingestion: source URL → entries → claims. A changed page
+  names the rows to re-check. A diff on the Desolation permit page implicates
+  12 rules today, and no Mokelumne ones.
+
+Status is three-valued, never boolean. `unverified` means nobody logged a
+check, which is a different thing from `settled` and must not render like it. A
+conflict that was opened and closed counts as settled but stays visible,
+because "we considered this and resolved it" tells the next reader more than
+silence. A citation that resolves to no entry is reported as a gap: it looks
+like evidence and isn't.
+
 ## Whose Claim Is It?
 
 Two official sources disagreeing is the normal case, not the exception, and

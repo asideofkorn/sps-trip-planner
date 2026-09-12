@@ -6,6 +6,7 @@ Run with:  python -m pytest tests/test_regulations.py
 from __future__ import annotations
 
 import os
+import re
 import sys
 
 import pytest
@@ -563,16 +564,31 @@ def test_the_booking_widget_cap_is_recorded_as_flat_not_per_zone():
     assert "flat rather than per zone" in rule.detail
 
 
-def test_the_day_use_answer_rests_on_the_losing_sources_own_words():
-    # recreation.gov contradicts itself: its overview says day visits need a
-    # permit year-round, its operational section says day use permits come from
-    # a Forest Service office "or at trailheads in the summer". Citing that is
-    # stronger than ranking one agency over another.
+def test_the_day_use_answer_cites_its_reasoning_instead_of_repeating_it():
+    # The full argument -- recreation.gov's overview against its own
+    # operational section -- is told once, in the log entry that closed the
+    # conflict. The note states the answer, names the contrary source, and
+    # points at the entry. Two copies of one argument is the drift this
+    # project keeps paying for.
+    from wayproof.evidence import index_log
+    from wayproof.permits import load_source_log
+
     permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
                            os.path.join(ROOT, "data", "release_policies.csv"))
     notes = permits["desolation"].notes
-    assert "IN THE SUMMER" in notes
-    assert "contradicts itself" in notes
+    assert "ONLY during quota season" in notes
+    assert "contradicts its own operational section" in notes
+
+    entry = index_log(load_source_log(os.path.join(ROOT, "data", "permit_source_log.csv")))
+    reasoning = re.search(r"reasoning is logged at (\S+?) ", notes)
+    closed = re.search(r"conflict was closed at (\S+?)\.", notes)
+    assert reasoning and closed, "the note must point at both entries"
+    for m in (reasoning, closed):
+        assert m.group(1) in entry, f"{m.group(1)} must resolve to a real log entry"
+    assert "in the summer" in entry[reasoning.group(1)].summary.lower(), (
+        "the entry cited for the reasoning must actually hold the argument"
+    )
+    assert entry[closed.group(1)].conflict_id == "desolation-day-use-season"
 
 
 def test_the_missing_desolation_trailheads_are_stated_not_implied():
