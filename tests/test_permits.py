@@ -673,3 +673,22 @@ def test_load_release_policies_rejects_invalid_season():
             load_release_policies(path)
     finally:
         os.unlink(path)
+
+
+def test_source_last_updated_is_never_borrowed_from_a_second_source():
+    # This field is the apply_url page's own date. Enriching a row from a
+    # forest FAQ once stamped that FAQ's date here, overwriting two accurate
+    # dates and claiming the booking page had been updated when it had not.
+    # The enriching source's date belongs in the source log with its URL.
+    permits = load_permits(PERMITS)
+    faq_date = "2026-06-12"
+    borrowed = [
+        g for g, r in permits.items()
+        if r.source_last_updated == faq_date and "fs.usda.gov" not in r.apply_url
+    ]
+    assert borrowed == [], (
+        f"{borrowed} carry the Eldorado FAQ's date but don't point at an fs.usda.gov page"
+    )
+    # The two rows whose own pages genuinely carry these dates.
+    assert permits["cpma"].source_last_updated == "2026-04-06"
+    assert permits["mokelumne_free"].source_last_updated == "2026-03-03"

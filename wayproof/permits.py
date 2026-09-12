@@ -174,7 +174,15 @@ class PermitRule:
     is administered jointly by Eldorado NF and the Lake Tahoe Basin Management
     Unit, and a rule from either applies.
     """
-    source_last_updated: str = ""  # the source page/doc's own "last updated" date, if shown
+    source_last_updated: str = ""
+    """The ``apply_url`` page's OWN "last updated" date, if it shows one.
+
+    One row, one date, describing one page. When a row is enriched from a
+    second source -- a forest FAQ, a trip-planning guide -- that source's date
+    belongs in ``data/permit_source_log.csv`` alongside its URL, not here.
+    Stamping it here reads as "the apply_url page was updated then", which is
+    false and quietly ages the row wrong in both directions.
+    """
     verified_date: str = ""        # date this row was last checked against that source
 
     def in_quota_season(self, trip_date: date) -> bool:
