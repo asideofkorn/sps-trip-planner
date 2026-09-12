@@ -39,7 +39,8 @@ Issues = "https://github.com/asideofkorn/wayproof/issues"
 [project.scripts]
 wayproof = "plan:main"
 wayproof-cluster = "cli:main"
+wayproof-report = "report:main"
 
 [tool.setuptools]
 packages = ["wayproof"]
-py-modules = ["cli", "plan"]
+py-modules = ["cli", "plan", "report"]

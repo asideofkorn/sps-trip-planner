@@ -30,8 +30,11 @@ python tests/test_pipeline.py        # or: python -m pytest tests/
 
 ## Reporting bugs / requesting features
 
-Open an issue using the templates in `.github/ISSUE_TEMPLATE/`. For data errors,
-include the peak name and the correct value with a source.
+Open an issue using the templates in `.github/ISSUE_TEMPLATE/`. For a data
+correction, confirmation, or something missing (a peak, trailhead, permit,
+water source, campground, etc.), use the "Data report" template -- see the
+README's "The Scavenger Hunt" section for how these get reviewed and
+turned into the actual dataset via `report.py`.
 
 ## License
 

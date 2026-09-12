@@ -498,54 +498,61 @@ a static disclaimer:
   signals rather than duplicated in a separate to-do list. `DATA_LICENSE.md`'s
   Known follow-ups records *why* each one exists; this command is the
   live, current view of what's actually still open.
-- **`--report`** submits a claim to `data/pending_reports.csv`, an
+- **`report.py`** submits a claim to `data/pending_reports.csv`, an
   append-only intake queue -- deliberately separate from the resolved
   domain ledgers (`water_source_log.csv` etc.), since a submission is a
-  claim to review, not yet a fact:
+  claim to review, not yet a fact. This is a standalone tool, not a `plan.py`
+  flag: reporting isn't planning -- it's not tied to a trip date, and its
+  target doesn't need to already exist in the dataset, so it doesn't belong
+  on `plan.py`'s objective/date-resolution flow:
 
   ```bash
-  python plan.py "Rose Peak" --date 2027-06-01 \
-    --report "Sunol Backpack Camp has 2 vault-toilet restrooms, no showers" \
-    --confidence firsthand
+  python report.py submit data/campgrounds.csv "Sunol Backpack Camp" \
+    "Has 2 vault-toilet restrooms, no showers" --confidence firsthand
   ```
 
-  A maintainer reviews pending reports and, if accepted, manually
-  transcribes them into the relevant CSV (citing the report ID), then calls
-  `wayproof.reports.resolve_report()` to close it out. Nothing here writes
-  to a dataset automatically.
-
-  The objective doesn't need to already be in the dataset first -- a name
-  that doesn't resolve is exactly how someone reports a peak that's
-  missing entirely. `--target-file` then defaults to `data/peaks.csv`
-  instead of `unspecified`:
+  That's also exactly how to report a peak missing entirely -- name it as
+  the `target_key`, and point `target_file` at `data/peaks.csv`:
 
   ```bash
-  python plan.py "Mount Carillon" --date 2027-07-01 \
-    --report "Believed to be a real SPS peak near Mount Russell, not yet in data/peaks.csv" \
+  python report.py submit data/peaks.csv "Mount Carillon" \
+    "Believed to be a real SPS peak near Mount Russell, not in the dataset" \
     --confidence secondhand
   ```
 
-  `python cli.py --open-questions` prints both the derived gaps *and* the
-  pending-review queue, so a submission like this is visible in the same
-  place as everything else, not hidden in a CSV nobody looks at.
+  `report.py list` shows everything awaiting review; `python cli.py
+  --open-questions` prints the same pending-review queue alongside the
+  derived gaps, so a submission is visible in the same place as everything
+  else, not hidden in a CSV nobody looks at. A maintainer reviews a pending
+  report and, if accepted, manually transcribes it into the relevant
+  domain CSV (citing the report ID), then closes it out:
+
+  ```bash
+  python report.py resolve R0001 accepted --notes "Added to data/peaks.csv, see PR #20"
+  ```
+
+  Nothing here writes to a domain dataset automatically -- accepting a
+  report is still a deliberate, separate step.
 
 **Why this is built as infrastructure, not a feature of the CLI.**
 `open_questions()` and `submit_report()` don't know or care that CLI is
-calling them -- they're plain, typed Python functions. Right now this
-project has exactly one contributor (its maintainer, populating this by
-hand from real trips), so CLI is the only front door. As that changes, each
-of these becomes an *additional caller* of the same two functions, not a
-redesign:
+calling them -- they're plain, typed Python functions; `report.py` is a
+thin wrapper. Right now this project has exactly one contributor (its
+maintainer, populating this by hand from real trips), so CLI is the only
+front door. As that changes, each of these becomes an *additional caller*
+of the same two functions, not a redesign:
 
-- a GitHub issue template whose fields map onto `submit_report()`'s
-  parameters, reviewed and transcribed the same way a CLI submission is;
-- an MCP tool exposing both functions to Claude;
-- a ChatGPT Action calling the same two functions;
+- **a GitHub issue template** (built -- see `.github/ISSUE_TEMPLATE/data_report.md`)
+  whose fields map onto `submit_report()`'s parameters. A maintainer reads
+  the issue and runs `report.py submit` with `--channel github_issue`,
+  the same review step a CLI submission gets;
+- an MCP tool exposing both functions to Claude (not built);
+- a ChatGPT Action calling the same two functions (not built);
 - a website form that calls `submit_report()` and a page that renders
-  `open_questions()`.
+  `open_questions()` (not built).
 
-None of these four are built yet -- they're deliberately just documented
-extension points until there's a real reason to build one.
+The latter three need real hosted infrastructure to exist at all; they
+stay documented extension points until there's a real reason to build one.
 
 ## Installation
 
@@ -607,10 +614,26 @@ Example summary output:
 | `--campsites-file` | `data/campsites.csv` | Individually-bookable campsites |
 | `--park-access-file` | `data/park_access.csv` | Park-level entrance fee/hours dataset |
 | `--output, -o` | - | Write the resolved plan to this JSON file |
-| `--report TEXT` | - | Submit a claim about these objectives to `data/pending_reports.csv` (see "The Scavenger Hunt") -- also how to report a peak missing entirely, just by naming one that doesn't resolve |
-| `--evidence` | `""` | Optional supporting detail for `--report` |
-| `--confidence` | `firsthand` | `firsthand` / `official_source` / `told_by_staff` / `secondhand` |
-| `--target-file` | auto | Which dataset `--report` is about; defaults to `data/peaks.csv` if the objective didn't resolve, else `unspecified` |
+
+### `report.py`
+
+Submit, list, and resolve data reports -- see "The Scavenger Hunt". Not
+tied to a trip date or an existing dataset entry, so it's a separate tool
+from `plan.py` rather than a flag on it.
+
+| Command | Description |
+|---------|-------------|
+| `submit <target_file> <target_key> <claim>` | Submit a report (positional: which dataset, which item, the claim itself) |
+| `list` | Print every report awaiting review |
+| `resolve <report_id> <status>` | Mark a report `accepted` / `rejected` / `needs-more-evidence` (still a separate step from transcribing it into the domain CSV) |
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--evidence` | `""` | A link, photo description, who told you, a GPS track, etc. (`submit` only) |
+| `--confidence` | `firsthand` | `firsthand` / `official_source` / `told_by_staff` / `secondhand` (`submit` only) |
+| `--channel` | `cli` | Where this came from, e.g. `github_issue` when transcribing an issue (`submit` only) |
+| `--notes` | `""` | Resolution notes, e.g. what CSV row or PR this became (`resolve` only) |
+| `--pending-reports-file` | `data/pending_reports.csv` | The intake queue itself |
 
 ### `cli.py` (experimental candidate grouping)
 
@@ -1162,6 +1185,7 @@ included for quick experimentation.
 ```text
 wayproof/
 ├── plan.py                      # resolve logistics for named objectives (flagship)
+├── report.py                    # submit/list/resolve data reports
 ├── cli.py                       # experimental candidate-grouping entry point
 ├── requirements.txt
 ├── data/

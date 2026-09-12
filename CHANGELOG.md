@@ -5,6 +5,25 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Changed
+- **Extracted reporting out of `plan.py` into a standalone `report.py`.**
+  Reporting isn't planning: a claim isn't tied to a trip date, and its
+  target doesn't need to already exist, so forcing every report through
+  `plan.py`'s objective/date-resolution flow (including a required `--date`
+  that had nothing to do with the claim) was the wrong coupling.
+  `report.py submit <target_file> <target_key> <claim>` replaces
+  `plan.py ... --report`; new `report.py list` and `report.py resolve
+  <report_id> <status>` subcommands give the whole reviewed lifecycle a
+  single dedicated tool for the first time, rather than `resolve_report()`
+  only being reachable by writing a one-off script. `wayproof-report`
+  console-script entry point added alongside `wayproof`/`wayproof-cluster`.
+  Built `.github/ISSUE_TEMPLATE/data_report.md` (replacing the older,
+  narrower `data_correction.md`), whose fields map directly onto
+  `submit_report()`'s parameters and cover confirmation/missing-peak
+  reports, not just corrections -- the first of the four documented
+  future channels for #7 to actually get built. `CONTRIBUTING.md` and the
+  README's "The Scavenger Hunt" section updated accordingly.
+
 ### Added
 - **`plan` now surfaces facilities data itself, not just its gaps**
   (`PlanResult.facilities`, new `wayproof.plan.FacilitiesInfo`, also in the
