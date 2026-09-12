@@ -28,6 +28,14 @@ any dataset directly; a maintainer reviews and transcribes accepted reports)::
 
     python plan.py "Rose Peak" --date 2027-06-01 \\
         --report "Sunol Backpack Camp has 2 vault-toilet restrooms, no showers"
+
+The objective doesn't need to already be in the dataset -- a name that
+doesn't resolve is exactly how someone reports a peak that's missing
+entirely (``--target-file`` defaults to ``data/peaks.csv`` in that case)::
+
+    python plan.py "Mount Carillon" --date 2027-07-01 \\
+        --report "Believed to be a real SPS peak near Mount Russell, not yet in data/peaks.csv" \\
+        --confidence secondhand
 """
 
 from __future__ import annotations
@@ -98,6 +106,12 @@ def _parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--confidence", default="firsthand",
                    choices=["firsthand", "official_source", "told_by_staff", "secondhand"],
                    help="How solid --report's claim is (default firsthand)")
+    p.add_argument("--target-file", default="",
+                   help="Which dataset --report's claim is about (e.g. "
+                        "data/water_sources.csv, data/approaches.csv). Defaults to "
+                        "data/peaks.csv if the objective name didn't resolve to a known "
+                        "peak (i.e. you're reporting a peak that's missing entirely), "
+                        "otherwise 'unspecified'.")
     return p.parse_args(argv)
 
 
@@ -125,8 +139,9 @@ def main(argv=None) -> int:
 
     if args.report:
         target_key = ", ".join(p.name for p in result.objectives) or ", ".join(args.objectives)
+        target_file = args.target_file or ("data/peaks.csv" if result.not_found else "unspecified")
         report = submit_report(
-            target_file="unspecified", target_key=target_key, claim=args.report,
+            target_file=target_file, target_key=target_key, claim=args.report,
             evidence=args.evidence, confidence=args.confidence, channel="cli",
         )
         print(f"\nSubmitted report {report.report_id} to data/pending_reports.csv "

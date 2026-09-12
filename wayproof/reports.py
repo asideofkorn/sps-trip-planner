@@ -275,6 +275,24 @@ def format_open_questions(questions: Sequence[OpenQuestion]) -> str:
     return "\n".join(lines).rstrip()
 
 
+def format_pending_reports(reports: Sequence[Report]) -> str:
+    """Render the pending-review queue: submitted claims awaiting a
+    maintainer's decision, separate from `open_questions()`'s derived gaps
+    -- one is "please go check this," the other is "someone already told us
+    something, still needs review." """
+    pending = [r for r in reports if r.status == "pending"]
+    if not pending:
+        return "No pending reports."
+    lines: List[str] = [f"{len(pending)} pending report(s) awaiting review", ""]
+    for r in pending:
+        lines.append(f"[{r.report_id}] {r.target_file} / {r.target_key}")
+        lines.append(f"  Claim ({r.confidence}, via {r.channel}, {r.submitted_date}): {r.claim}")
+        if r.evidence:
+            lines.append(f"  Evidence: {r.evidence}")
+        lines.append("")
+    return "\n".join(lines).rstrip()
+
+
 def submit_report(
     target_file: str,
     target_key: str,

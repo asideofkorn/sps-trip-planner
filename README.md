@@ -489,6 +489,21 @@ a static disclaimer:
   `wayproof.reports.resolve_report()` to close it out. Nothing here writes
   to a dataset automatically.
 
+  The objective doesn't need to already be in the dataset first -- a name
+  that doesn't resolve is exactly how someone reports a peak that's
+  missing entirely. `--target-file` then defaults to `data/peaks.csv`
+  instead of `unspecified`:
+
+  ```bash
+  python plan.py "Mount Carillon" --date 2027-07-01 \
+    --report "Believed to be a real SPS peak near Mount Russell, not yet in data/peaks.csv" \
+    --confidence secondhand
+  ```
+
+  `python cli.py --open-questions` prints both the derived gaps *and* the
+  pending-review queue, so a submission like this is visible in the same
+  place as everything else, not hidden in a CSV nobody looks at.
+
 **Why this is built as infrastructure, not a feature of the CLI.**
 `open_questions()` and `submit_report()` don't know or care that CLI is
 calling them -- they're plain, typed Python functions. Right now this
@@ -566,9 +581,10 @@ Example summary output:
 | `--campgrounds-file` | `data/campgrounds.csv` | Backpack campgrounds |
 | `--campsites-file` | `data/campsites.csv` | Individually-bookable campsites |
 | `--output, -o` | - | Write the resolved plan to this JSON file |
-| `--report TEXT` | - | Submit a claim about these objectives to `data/pending_reports.csv` (see "The Scavenger Hunt") |
+| `--report TEXT` | - | Submit a claim about these objectives to `data/pending_reports.csv` (see "The Scavenger Hunt") -- also how to report a peak missing entirely, just by naming one that doesn't resolve |
 | `--evidence` | `""` | Optional supporting detail for `--report` |
 | `--confidence` | `firsthand` | `firsthand` / `official_source` / `told_by_staff` / `secondhand` |
+| `--target-file` | auto | Which dataset `--report` is about; defaults to `data/peaks.csv` if the objective didn't resolve, else `unspecified` |
 
 ### `cli.py` (experimental candidate grouping)
 
@@ -606,6 +622,7 @@ Example summary output:
 | `--campgrounds-file` | `data/campgrounds.csv` | Used by `--open-questions` |
 | `--campsites-file` | `data/campsites.csv` | Used by `--open-questions` |
 | `--timed-entry-file` | `data/timed_entry.csv` | Used by `--open-questions` |
+| `--pending-reports-file` | `data/pending_reports.csv` | Used by `--open-questions`, printed alongside the derived gaps |
 | `--use-passes` | off | Evaluate cross-crest distance through mountain passes instead of straight lines |
 | `--passes-file` | `data/passes.csv` | Passes dataset for `--use-passes` |
 | `--pass-tier` | `1` | Which passes may be used as crossings: `1` for named passes only, `2` for minor gaps/saddles too |
