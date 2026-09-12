@@ -652,6 +652,7 @@ So a regulation is now stored once and *inherited*, by `scope_type`:
 |---|---|---|
 | `jurisdiction` | `PermitRule.jurisdiction` | California Campfire Permit |
 | `agency` | `PermitRule.agency_ids` | Eldorado NF's 10-day dispersed-camping limit |
+| `wilderness` | `PermitRule.wilderness_area` | Mokelumne's campfire ban, shared by both its permits |
 | `permit_group` | the permit product itself | Desolation's bear canister requirement |
 
 `regulations_for()` resolves all three layers, sorting the specific before the
@@ -664,6 +665,12 @@ every group in the dataset is currently Californian: *"all our groups are in
 California"* is true today by coincidence of coverage, and inheriting statewide
 law off that coincidence would break silently the first time a Nevada or Oregon
 group is added. There's a test for exactly that.
+
+The `wilderness` layer earned itself immediately. Mokelumne Wilderness is
+entered on two different permits — the free general self-issue one and the
+quota'd Carson Pass Management Area one — under a single rulebook. Storing
+those eleven rules per permit group would have meant maintaining each of them
+twice. Both permits now resolve 17 rules with no duplicated row.
 
 ### A scope that matches nothing is worse than a missing rule
 
@@ -686,6 +693,50 @@ The guard matters more than the fix: a test now asserts that **every**
 regulation's scope reaches at least one permit group. A dead scope fails the
 build instead of quietly reading as covered. The forest-wide rule now reaches
 all three Eldorado groups and shows on 22 trailhead pages.
+
+## Whose Claim Is It?
+
+Two official sources disagreeing is the normal case, not the exception, and
+reconciling them needs three separate judgements. `data/sources.csv` and
+`data/source_deferrals.csv` make all three checkable.
+
+**Authority is per topic.** The Forest Service regulates; recreation.gov is the
+booking system. Neither outranks the other globally:
+
+| Topic | Owner | Why |
+|---|---|---|
+| `regulation`, `permit_requirement`, `access` | USDA Forest Service | It writes and enforces the rules |
+| `booking_mechanics`, `fees`, `availability` | Recreation.gov | It is the thing that books and charges you |
+
+That split is why trusting recreation.gov on the fee tier and the Forest
+Service on the day-use season were *both* right.
+
+**Deferrals are observed, not asserted.** Rather than declaring who ought to
+win, watch a publisher decline a question — recreation.gov's own permit page
+says a day-use permit comes "from a local Forest Service office". Each deferral
+is stored with the sentence that establishes it, so it stops being true if the
+wording changes. Not every outbound link is a deferral: the same page cites a
+2022 trip-planning guide, which endorses a document rather than handing over a
+question, and inherits its staleness instead of transferring authority.
+
+**Check for self-contradiction before ranking anyone.** Desolation's day-use
+conflict was resolved by ranking the forest above the booking platform —
+correctly, but unnecessarily. recreation.gov's overview says a permit is needed
+for day visits year-round while its own operational section says day-use
+permits come from a Forest Service office "or at trailheads in the summer". It
+had already told us which of its statements not to trust. Two of three
+conflicts that week were self-contradictions wearing the costume of a
+cross-source dispute, so `conflict_kind` records which kind each one is.
+
+**Authority and currency are different axes.** The governing body can be stale
+— two permit rows here rest on Forest Service pages last updated in 2021. When
+the owner's page is materially older than the non-owner's, `resolve()` refuses
+to pick, because a stale regulator page is exactly how a superseded rule
+survives online. That is a real open question, not a tie to break.
+
+The rule is tested against every conflict this project has actually resolved
+and defended in prose. A model that disagrees with the decisions it was derived
+from is wrong.
 
 ## The Website
 

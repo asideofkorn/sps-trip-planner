@@ -211,6 +211,7 @@ def trailhead_view(
         permit_group=rule.permit_group if rule else "",
         agency=rule.agency_ids if rule else (),
         jurisdiction=rule.jurisdiction if rule else "",
+        wilderness=rule.wilderness_area if rule else "",
     )
 
     return {

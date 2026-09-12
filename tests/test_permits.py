@@ -468,13 +468,20 @@ def test_format_source_log_labels_each_conflict_thread():
     assert "conflict day-use-season (still open)" in report
 
 
-def test_the_real_desolation_log_keeps_two_conflicts_open_and_one_closed():
-    # The exact case that forced this: the fee tier was settled by the permit
-    # page's Fees & Cancellation tab, while the day-use season and the 25-vs-30
-    # ft Special Management Area setback both remain genuinely unsettled.
+def test_the_real_desolation_log_closes_conflicts_one_at_a_time():
+    # Desolation has opened three separate disagreements. Two are now settled
+    # on their own evidence -- the fee tier by the permit page's Fees &
+    # Cancellation tab, the day-use season by Eldorado NF's FAQ -- while the
+    # 25-vs-30 ft Special Management Area setback is still genuinely unsettled.
+    # Under the old group-level tracking, closing either of the first two would
+    # have closed this one too.
     log = load_source_log(SOURCE_LOG)
     ids = {c.conflict_id for c in open_conflicts(log) if c.permit_group == "desolation"}
-    assert ids == {"desolation-day-use-season", "desolation-sma-distance"}
+    assert ids == {"desolation-sma-distance"}
+
+    closed = {"desolation-fee-tier", "desolation-day-use-season"}
+    logged = {e.conflict_id for e in log if e.conflict_id}
+    assert closed <= logged, "the closed conflicts must still be visible in the log"
 
 
 def test_every_conflict_entry_in_the_real_log_names_its_conflict():
@@ -666,3 +673,94 @@ def test_load_release_policies_rejects_invalid_season():
             load_release_policies(path)
     finally:
         os.unlink(path)
+
+
+def test_source_last_updated_is_never_borrowed_from_a_second_source():
+    # This field is the apply_url page's own date. Enriching a row from a
+    # forest FAQ once stamped that FAQ's date here, overwriting two accurate
+    # dates and claiming the booking page had been updated when it had not.
+    # The enriching source's date belongs in the source log with its URL.
+    permits = load_permits(PERMITS)
+    faq_date = "2026-06-12"
+    borrowed = [
+        g for g, r in permits.items()
+        if r.source_last_updated == faq_date and "fs.usda.gov" not in r.apply_url
+    ]
+    assert borrowed == [], (
+        f"{borrowed} carry the Eldorado FAQ's date but don't point at an fs.usda.gov page"
+    )
+    # A bare year is what a PDF stamps on itself, never what a web page
+    # publishes as its last-updated date. It caught this same borrowing a
+    # second time, from the 2025 Mokelumne PDFs.
+    year_only = [g for g, r in permits.items()
+                 if r.source_last_updated and len(r.source_last_updated) == 4]
+    assert year_only == [], (
+        f"{year_only} carry a bare year, which is a document stamp rather than a page date"
+    )
+    # The two rows whose own pages genuinely carry these dates.
+    assert permits["cpma"].source_last_updated == "2026-04-06"
+    assert permits["mokelumne_free"].source_last_updated == "2026-03-03"
+
+
+def test_two_cpma_conflicts_are_open_and_independent():
+    # One is a source contradicting its own arithmetic (13 sites vs a 3+5+6
+    # breakdown); the other is two 2025 Forest Service documents disagreeing on
+    # whether a season pass exists. Unrelated, and neither closes the other.
+    log = load_source_log(SOURCE_LOG)
+    ids = {c.conflict_id for c in open_conflicts(log) if c.permit_group == "cpma"}
+    assert ids == {"cpma-designated-site-count", "mokelumne-carson-pass-season-pass"}
+
+
+def test_conflicts_stay_separate_across_permit_groups():
+    log = load_source_log(SOURCE_LOG)
+    by_group = {}
+    for c in open_conflicts(log):
+        by_group.setdefault(c.permit_group, set()).add(c.conflict_id)
+    assert by_group == {
+        "desolation": {"desolation-sma-distance"},
+        "cpma": {"cpma-designated-site-count", "mokelumne-carson-pass-season-pass"},
+    }
+
+
+def test_the_cpma_site_count_states_which_number_is_carried():
+    permits = load_permits(PERMITS)
+    notes = permits["cpma"].notes
+    assert "14" in notes and "13" in notes
+    assert "sums to 14" in notes
+
+
+def test_the_america_the_beautiful_rules_differ_between_the_two_permits():
+    # Accepted for CPMA trailhead parking, explicitly NOT accepted on the
+    # Desolation overnight permit. Generalising from one breaks the other.
+    permits = load_permits(PERMITS)
+    assert "ARE accepted" in permits["cpma"].fee_notes
+    assert "do NOT apply" in permits["desolation"].fee_notes
+
+
+def test_conflict_kind_says_how_each_open_conflict_must_be_resolved():
+    # A self-contradicting document has already discredited its own blanket
+    # statement and needs no ranking of publishers; two documents disagreeing
+    # do. Recording which kind it is saves rediscovering that each time.
+    log = load_source_log(SOURCE_LOG)
+    kinds = {c.conflict_id: c.kind for c in open_conflicts(log)}
+    assert kinds == {
+        "desolation-sma-distance": "cross_source",
+        "cpma-designated-site-count": "internal",
+        "mokelumne-carson-pass-season-pass": "cross_source",
+    }
+
+
+def test_every_logged_conflict_declares_its_kind():
+    log = load_source_log(SOURCE_LOG)
+    undeclared = sorted({e.conflict_id for e in log if e.conflict_id and not e.conflict_kind})
+    assert undeclared == [], f"conflicts with no kind: {undeclared}"
+
+
+def test_adding_a_field_did_not_reorder_the_positional_arguments():
+    # conflict_kind was briefly inserted before conflict_id, which silently
+    # made every 8-positional construction pass the wrong value.
+    from wayproof.permits import SourceLogEntry
+    entry = SourceLogEntry("2026-01-01", "g", "https://x", "", "test",
+                           "unresolved-conflict", "summary", "my-conflict")
+    assert entry.conflict_id == "my-conflict"
+    assert entry.conflict_kind == ""

@@ -36,6 +36,7 @@ from wayproof.data_loader import load_peaks, load_trailheads
 from wayproof.park_access import load_park_access
 from wayproof.permit_zones import load_permit_zones
 from wayproof.permits import load_permits, load_source_log
+from wayproof.provenance import load_deferrals, load_sources
 from wayproof.render import (
     STYLESHEET,
     render_json,
@@ -201,7 +202,10 @@ def build(output_dir: Path, today: datetime.date | None = None) -> dict:
     source_log = load_source_log("data/permit_source_log.csv")
     questions = open_questions(permits=list(permits.values()),
                                regulations=regulations,
-                               permit_source_log=source_log, **data)
+                               permit_source_log=source_log,
+                               sources=load_sources("data/sources.csv"),
+                               deferrals=load_deferrals("data/source_deferrals.csv"),
+                               today=today, **data)
 
     views = trailhead_views(
         trailheads=data["trailheads"],

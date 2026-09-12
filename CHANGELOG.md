@@ -6,6 +6,73 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **A provenance model** (`data/sources.csv`, `data/source_deferrals.csv`,
+  `wayproof/provenance.py`). Reconciling two official sources needed three
+  separate judgements and only one was ever written down. Now all three are
+  data:
+  - **Authority is per topic, not a ranking.** The Forest Service owns
+    regulation, permit requirement and access; recreation.gov owns booking
+    mechanics, fees and availability, because it is the system that performs
+    them. Neither outranks the other globally — which is why trusting the
+    booking platform on the fee tier and the forest on the day-use rule were
+    both right.
+  - **Deferrals are observed, not asserted.** recreation.gov's own page says a
+    day use permit comes "from a local Forest Service office", handing the
+    question back. Each deferral is stored with the sentence that establishes
+    it, so it stops being true if the wording changes. Not every outbound link
+    is one: the same page cites a 2022 guide, which endorses a document rather
+    than transferring a question.
+  - **Self-contradiction is checked before anyone is ranked.** Two of the three
+    conflicts opened this week were one document disagreeing with itself.
+    `SourceLogEntry` gains `conflict_kind` (`internal` / `cross_source`),
+    because that decides how a conflict gets resolved.
+  - **A stale owner does not win on authority.** When the source that owns a
+    topic is materially older than the one that doesn't, `resolve()` refuses to
+    pick. A stale regulator page is how a superseded rule survives online.
+  - Three new derived gaps: rules resting on a source that doesn't own the
+    claim (13 Desolation rules transcribed from the booking platform), sources
+    stale beyond two years (two rows on 2021 Forest Service pages), and cited
+    URLs missing from the registry.
+  - The resolution rule is tested against every conflict this project actually
+    resolved and defended in prose. A model that disagrees with the decisions
+    it was derived from is wrong.
+- **A `wilderness` regulation scope** (`permits.csv` gains `wilderness_area`).
+  Mokelumne Wilderness is entered on two different permits — the free general
+  self-issue one and the quota'd Carson Pass Management Area one — under a
+  single rulebook. Scoping its rules per permit group would have meant
+  maintaining eleven rules in two places, the exact drift this table exists to
+  stop. Sorts between `permit_group` and `agency`.
+- **The Mokelumne Wilderness rulebook** (11 rules, from the forest's 2025
+  regulations sheet and permit instructions). Both Mokelumne permits go from 6
+  resolved rules to 17, with no duplicated row. Things worth knowing:
+  - **Bear canisters are recommended here, not required**, and counterbalance
+    hanging is accepted — where neighbouring Desolation *requires* a hard-sided
+    canister on pain of a $5,000 fine. The habit generalises wrong in both
+    directions, so the rule says so.
+  - **Day-use group size is 12, overnight is 8** — easy to get backwards.
+  - The campfire ban carries an ecological reason, not just a fire-risk one:
+    downed wood is critical alpine habitat, which is why the forest-wide
+    firewood-gathering allowance doesn't become a fire here.
+  - Mechanized equipment is barred including **strollers and game carts** — the
+    rule is about mechanical transport, not engines.
+  - Natural **and historic** features are protected, broader than Desolation's
+    natural-features-only wording.
+- **Four forest-wide Eldorado NF rules**, from the forest's own FAQ (last
+  updated 2026-06-12), stored once and inherited by all three Eldorado permit
+  groups:
+  - **Firewood**: gather downed wood while camping without a permit, cut no
+    tree, take none home, and bring none from outside the forest (pest
+    transport). Written so it can't read as permission to have a fire — both
+    wildernesses here ban campfires outright.
+  - **Dogs**: physically restrained on a leash under six feet for the whole
+    visit. Materially stricter than the "under control at all times" wording
+    carried from the Desolation permit page, which a reader could plan from and
+    be out of compliance.
+  - **Firearms**: carry only visible and unloaded unless actively hunting —
+    governs carry, where Desolation's existing rule governs discharge.
+  - **Drones**: allowed on the forest but not over designated wilderness, which
+    is nearly every objective here, nor under a Temporary Flight Restriction.
+    New `aircraft` category.
 - **Scoped regulations** (`data/regulations.csv`, `wayproof/regulations.py`):
   what applies *while you're out there* — fire, food storage, waste, pets,
   stock, group size — separated from `permits.csv`, which answers how you get
@@ -25,6 +92,41 @@ All notable changes to this project are documented here. The format is based on
     posing as the rule itself.
 
 ### Fixed
+- **Desolation's group size of 12 no longer implies it covers day use.** The
+  figure comes from recreation.gov's booking widget, where a destination zone
+  is selected for the first night — that's the overnight quota mechanism, and
+  Desolation day-use permits are free, self-issued at the trailhead, and not
+  booked there. No source on hand gives a day-use group size, and assuming it
+  equals the overnight cap is a demonstrably unsafe guess: Mokelumne, under the
+  same forest, caps day hikes at 12 and overnight groups at 8. The absence is
+  now stated on the page rather than read as covered. The widget did confirm
+  the cap is flat rather than per zone, and its "06 Rubicon" dropdown matches
+  the label built from `permit_zones.csv` exactly.
+- **The Carson Pass parking fee was wrong in three ways.** It's charged at the
+  Meiss and Carson Pass Overflow trailheads too, not just Carson Pass; it's
+  paid at a self-service iron ranger with a dashboard tag; and Woods Lake is
+  concession-operated at $8 rather than $5. America the Beautiful Senior and
+  Access passes **are** accepted here — and explicitly are **not** on the
+  Desolation overnight permit, so generalising from one breaks the other.
+- **Desolation day-use permits are quota-season only, not year-round.** This
+  was logged as an unresolved conflict rather than guessed, and it is now
+  closed: Eldorado NF's FAQ states plainly that outside quota season "no day
+  use permits are needed", and it is the second Eldorado NF page saying so —
+  this time read first-hand, with its own 2026-06-12 last-updated date, which
+  was the exact blocker the original conflict entry named. recreation.gov and a
+  2011 zone map say year-round; a booking platform is not the regulating
+  authority, and the forest that administers the land decides. The stored note
+  names the losing source and why, so a reader meeting contrary text while
+  booking isn't left thinking we're wrong.
+  - The Special Management Area setback conflict (25 vs 30 ft) is untouched by
+    this page and stays open. Under the old group-level tracking, closing the
+    day-use question would have closed it too.
+- **The campfire permit must be carried for inspection** while camping — a
+  requirement this project didn't hold. Holding one isn't enough.
+- **The lantern discrepancy is settled.** CAL FIRE's permits FAQ omitted
+  lanterns where the campfire-safety page included them; Eldorado NF's FAQ
+  independently names them, so the fuller list rests on two sources against one
+  summary. The hedge is replaced with the finding.
 - **There are two California Campfire Permits, and this project described one.**
   CAL FIRE issues a permit for federal- and state-controlled lands (campfires,
   barbeques, portable stoves) and a separate one for private lands, which also
