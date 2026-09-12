@@ -48,6 +48,7 @@ from .camping import Campground, Campsite
 from .park_access import ParkAccess
 from .model import Peak, Trailhead
 from .permits import PermitRule
+from .regulations import PERMIT_GROUP as REG_PERMIT_GROUP, Regulation
 from .release_policy import OFF_SEASON
 from .timed_entry import TimedEntryPolicy
 from .water import WaterSource, WaterSourceLogEntry, log_by_source
@@ -113,6 +114,7 @@ def open_questions(
     trailheads: Sequence[Trailhead] = (),
     park_access: Sequence[ParkAccess] = (),
     permits: Sequence[PermitRule] = (),
+    regulations: Sequence[Regulation] = (),
     peak_names: Optional[Sequence[str]] = None,
 ) -> List[OpenQuestion]:
     """Derive the current list of unconfirmed/missing/conflicting facts.
@@ -287,6 +289,47 @@ def open_questions(
                     break  # one question per park-access row is enough
 
     if peak_names_lower is None:
+        # -- Permit groups with no local fire rule on file. --
+        # The California Campfire Permit is inherited by every group in the
+        # state, and on its own it reads like permission. It isn't: CAL FIRE's
+        # own guidance says local rules override, and Sierra wildernesses
+        # commonly ban fires outright or above an elevation. A group with the
+        # statewide rule and nothing local is therefore silent on the question
+        # a reader will actually ask, and silence next to an inherited permit
+        # rule is worse than a stated gap.
+        fire_rules_by_group = {
+            r.scope_value for r in regulations
+            if r.category == "fire" and r.scope_type == REG_PERMIT_GROUP
+        }
+        # Only ask where a broader fire rule is actually being inherited: the
+        # gap is that an inherited permit requirement reads as permission with
+        # nothing local beside it. With no such rule in play there's nothing
+        # to misread, and nothing to ask about.
+        inherited_fire = {
+            r.scope_value for r in regulations
+            if r.category == "fire" and r.scope_type != REG_PERMIT_GROUP
+        }
+        for rule in permits:
+            if not ({rule.jurisdiction, rule.agency} & inherited_fire):
+                continue
+            if rule.permit_group in fire_rules_by_group:
+                continue
+            # Transitional: several groups still carry their fire rule as prose
+            # in notes rather than as a structured regulation. Those aren't
+            # silent, just unmigrated, so don't report them as unknown.
+            prose = f"{rule.notes} {rule.reservation_method}".lower()
+            if "campfire" in prose:
+                continue
+            questions.append(OpenQuestion(
+                target_file="data/regulations.csv",
+                target_key=f"{rule.permit_group} (fire)",
+                question=(f"Are campfires actually allowed in {rule.permit_group}, and up to "
+                          "what elevation? Only the statewide California Campfire Permit rule "
+                          "applies here so far, which is a precondition rather than permission "
+                          "-- no local restriction is on file either way."),
+                context=rule.permit_group,
+            ))
+
         # -- Quota'd permit groups with no off-season release phase. --
         # permit_status() falls back to asserting the off-season permit is
         # "free/self-issue, no reservation" for these. That assumption has

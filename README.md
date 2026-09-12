@@ -346,6 +346,8 @@ The repository currently includes:
   distance estimates
 - `data/permit_zones.csv` - bookable destination zones for permit groups
   whose quota attaches to a destination rather than an entry point
+- `data/regulations.csv` - rules in force once you hold a permit (fire, food
+  storage, waste, pets, stock), scoped by state, agency, or permit group
 
 The project does not currently:
 
@@ -591,6 +593,47 @@ several. Both the human and agent surfaces state this non-claim explicitly,
 because an agent matching "Ralston Peak" to zone "45 Ralston" is exactly the
 inference the data doesn't support. Resolving it needs the official zone map's
 geometry, and until that's read it stays an open question.
+
+## Regulations: Stored Once, Inherited
+
+`data/permits.csv` answers *how do I get and keep a permit* — quota, release
+dates, fees, cancellation, what makes the document valid. `data/regulations.csv`
+answers the separate question of *what rules apply while I'm out there*: fire,
+food storage, waste, pets, stock, group size.
+
+Splitting them fixed a real failure rather than a hypothetical one. The
+California Campfire Permit requirement is state law (PRC 4433), restated by
+every forest, and it had been copy-pasted into **seven** `permits.csv` rows —
+where it promptly drifted:
+
+- five of the seven described it as covering a "stove", when it actually covers
+  campfires, stoves, **lanterns and barbeques**;
+- all of them treated "outside a developed campground" as the trigger, when the
+  issuing forest says it's also required *in some developed campgrounds*;
+- they offered **three different URLs** between them, and the Eldorado NF page
+  itself cites one that doesn't resolve;
+- none carried the 18-and-over signer requirement, or the citation
+  (36 CFR 261.52(k), PRC 4433).
+
+A fact asserted in seven places is a fact maintained in none of them. So a
+regulation is now stored once and *inherited*, by `scope_type`:
+
+| Scope | Matches | Example |
+|---|---|---|
+| `jurisdiction` | `PermitRule.jurisdiction` | California Campfire Permit |
+| `agency` | `PermitRule.agency` | Eldorado NF's 10-day dispersed-camping limit |
+| `permit_group` | the permit product itself | Desolation's bear canister requirement |
+
+`regulations_for()` resolves all three layers, sorting the specific before the
+general so a wilderness's own fire ban reads above the statewide permit rule it
+sits on top of. Both the human and agent surfaces label an inherited rule with
+its scope, so nobody mistakes state law for one wilderness's local quirk.
+
+This is why `permits.csv` carries an explicit `jurisdiction` column even though
+every group in the dataset is currently Californian: *"all our groups are in
+California"* is true today by coincidence of coverage, and inheriting statewide
+law off that coincidence would break silently the first time a Nevada or Oregon
+group is added. There's a test for exactly that.
 
 ## The Website
 
@@ -1305,6 +1348,7 @@ wayproof/
 │   ├── park_access.csv           # park-level entrance fees, gate hours, exemptions
 │   ├── timed_entry.csv           # year-scoped vehicle timed-entry requirements
 │   ├── permit_zones.csv          # bookable destination zones (quota by destination, not entry)
+│   ├── regulations.csv           # rules in force, scoped by state / agency / permit group
 │   ├── pending_reports.csv       # community/self submission intake queue (created on first use)
 │   └── source/                   # official Sierra Club files + trimmed GNIS subset
 ├── scripts/
@@ -1344,6 +1388,7 @@ wayproof/
 │   ├── water.py
 │   ├── park_access.py
 │   ├── permit_zones.py
+│   ├── regulations.py
 │   ├── timed_entry.py
 │   ├── reports.py
 │   ├── plan.py

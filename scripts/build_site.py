@@ -45,6 +45,7 @@ from wayproof.render import (
     render_trailhead_index_html,
     render_trailhead_markdown,
 )
+from wayproof.regulations import load_regulations
 from wayproof.reports import open_questions
 from wayproof.timed_entry import load_timed_entry
 from wayproof.views import SITE_URL, trailhead_views
@@ -196,7 +197,9 @@ def build(output_dir: Path, today: datetime.date | None = None) -> dict:
     today = today or datetime.date.today()
     permits = load_permits("data/permits.csv", "data/release_policies.csv")
     data = _load_all_data()
-    questions = open_questions(permits=list(permits.values()), **data)
+    regulations = load_regulations("data/regulations.csv")
+    questions = open_questions(permits=list(permits.values()),
+                               regulations=regulations, **data)
 
     views = trailhead_views(
         trailheads=data["trailheads"],
@@ -205,6 +208,7 @@ def build(output_dir: Path, today: datetime.date | None = None) -> dict:
         peaks=data["peaks"],
         source_log=load_source_log("data/permit_source_log.csv"),
         zones=load_permit_zones("data/permit_zones.csv"),
+        regulations=regulations,
         questions=questions,
         today=today,
     )

@@ -6,6 +6,53 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **Scoped regulations** (`data/regulations.csv`, `wayproof/regulations.py`):
+  what applies *while you're out there* — fire, food storage, waste, pets,
+  stock, group size — separated from `permits.csv`, which answers how you get
+  and keep a permit. A regulation is stored once and inherited via
+  `scope_type`: `jurisdiction` (state law), `agency` (forest- or park-wide), or
+  `permit_group`. `regulations_for()` resolves all three, sorting specific
+  before general so a wilderness's own fire ban reads above the statewide rule
+  it sits on top of, and both surfaces label inherited rules with their scope.
+  - `permits.csv` gains an explicit `jurisdiction` column. Every group in the
+    dataset is currently Californian, but that's a coincidence of coverage —
+    inheriting statewide law off it would break silently on the first non-CA
+    group, so the column states it rather than assuming it. Tested.
+
+### Fixed
+- **An inherited rule can read as permission.** The statewide campfire rule,
+  rendered alone on a page with no local fire rule beside it, said "a permit is
+  required for any campfire" and nothing else -- which reads as *campfires are
+  allowed here if you have one*. CAL FIRE's own guidance says the opposite: the
+  permit is a precondition, and local rules override it. Reworded to say so,
+  and `open_questions()` now derives a gap for any group that inherits a
+  broader fire rule with no local one on file (currently 10 groups, including
+  `whitney_zone` and all three Inyo groups). The absence is stated rather than
+  left to imply permission.
+- **The California Campfire Permit rule was wrong in five places and
+  inconsistent across seven.** It's state law (PRC 4433) restated by every
+  forest, and had been copy-pasted into seven `permits.csv` rows, where it
+  drifted: five described it as covering a "stove" when it covers campfires,
+  stoves, **lanterns and barbeques**; all treated "outside a developed
+  campground" as the trigger when the issuing forest says it's also required
+  *in some developed campgrounds*; they carried three different URLs between
+  them; and none had the 18-and-over signer requirement or the citation
+  (36 CFR 261.52(k), PRC 4433). Now stored once, scoped to CA, inherited by all
+  15 groups, with a test asserting no permit row restates it.
+  - URL corrected too: Eldorado NF's own camping page cites
+    `www.preventwildfiresca.org`, which doesn't resolve. The working path is
+    `readyforwildfire.org/prevent-wildfire/campfire-safety`, which links
+    through to the permit portal at `permit.preventwildfiresca.org` — meaning
+    the `gtw_free` row's link was the closest to correct all along.
+
+### Changed
+- **Desolation's `notes` field cut from ~3,500 characters to 955.** Its
+  wilderness regulations moved to `regulations.csv`; what stays in `permits.csv`
+  is permit mechanics — quota season, what makes the permit valid, cancellation
+  and change policy, and the unresolved day-use question.
+- Added an Eldorado NF-wide rule from its camping page: dispersed camping
+  outside a developed campground is capped at 10 days per ranger district per
+  calendar year.
 - **Destination zones** (`data/permit_zones.csv`, `wayproof/permit_zones.py`), and a
   substantial Desolation Wilderness reconciliation behind them. Desolation's
   quota attaches to *where you go* rather than *where you enter*: you book one
