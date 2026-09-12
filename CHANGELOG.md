@@ -18,8 +18,85 @@ All notable changes to this project are documented here. The format is based on
     dataset is currently Californian, but that's a coincidence of coverage —
     inheriting statewide law off it would break silently on the first non-CA
     group, so the column states it rather than assuming it. Tested.
+  - New `fishing` category, holding Desolation's "State fish and game laws
+    apply" — recorded as the deferral it is. A wilderness permit is not a
+    fishing licence, and CDFW's season, limit, gear and licensing rules are
+    not in this project at all, so the row says to check CDFW rather than
+    posing as the rule itself.
 
 ### Fixed
+- **There are two California Campfire Permits, and this project described one.**
+  CAL FIRE issues a permit for federal- and state-controlled lands (campfires,
+  barbeques, portable stoves) and a separate one for private lands, which also
+  needs written permission from the landowner. A reader following the old rule
+  could obtain the private-lands permit for a national forest trip and carry an
+  invalid document. The rule now names which type applies, and warns off the
+  debris-burning permits issued from the same portal.
+  - The land type it *can't* place is stated rather than glossed: every
+    trailhead here is on federal land except Del Valle and Stanford Ave, on
+    East Bay Regional Park District land. A regional park district is a special
+    district — neither federal, state, nor private — so the FAQ's two-way split
+    doesn't clearly cover it, and the rule says so.
+  - Both permit types carry "local burn restrictions may apply", independent
+    support for the precondition-not-permission wording fixed earlier.
+  - A minor discrepancy is recorded rather than silently resolved: the permits
+    FAQ omits lanterns from its enumeration where the campfire-safety page
+    includes them. The fuller list is kept.
+- **A permit group named `none` read as broken English in derived questions**
+  ("Are campfires actually allowed in none"). `none` is a real key meaning no
+  wilderness permit is required; the prose now says so while the key still
+  points at the row to fix.
+- **The bear canister rule claimed a limit its own source doesn't state.** It
+  read "required for all overnight visitors"; the recreation.gov permit page
+  states the requirement flat, with no overnight qualifier and no elevation or
+  zone exception — and that page was already cited as the row's source. The
+  narrowing was this project's own, and it's the kind that gets a day visitor
+  fined. Also re-attributed the $5,000 fine and the Placerville/LTBMU rental
+  terms to the 2022 USFS guide they actually come from; the permit page says
+  only that containers "may be available for rental".
+- **An agency-scoped regulation inherited to zero permit groups.** The Eldorado
+  NF 10-day dispersed-camping limit was scoped to the agency string
+  `Eldorado National Forest`, which no permit group carries: `permits.csv`'s
+  `agency` column is a display name with ranger-district and co-management
+  detail (`Eldorado NF / LTBMU`, `Eldorado NF (Amador Ranger District)`). The
+  rule looked filed and applied to nobody — the same failure mode as the
+  campfire drift it was meant to fix, one layer up.
+  - `permits.csv` gains `agency_id`: a stable matching key beside the prose,
+    semicolon-separated because co-management is real (Desolation is jointly
+    administered by Eldorado NF and the Lake Tahoe Basin Management Unit, and a
+    rule from either applies). `regulations_for()` takes one key or several.
+  - `regulations.csv` gains an optional `scope_display`, so a scope matched as
+    `eldorado_nf` still reads as "Eldorado National Forest" on both surfaces.
+  - A test now asserts every regulation's scope reaches at least one permit
+    group, and another asserts the display string does *not* match — a dead
+    scope fails the build rather than quietly reading as covered. The rule now
+    reaches all three Eldorado groups and appears on 22 trailhead pages.
+- **Resolving one conflict silently closed every other conflict on the same
+  permit group.** `unresolved_conflicts()` read only each group's most recent
+  log entry, so a group could carry at most one live disagreement. Desolation
+  opened three in one session (day-use season, fee tier, and the 25-vs-30 ft
+  Special Management Area setback) and the limitation bit twice the same day;
+  the workaround both times was to log a settled question under a deliberately
+  dirty `unresolved-conflict` verdict so the still-open ones stayed visible,
+  which does not survive a third. Closing a live conflict is worse than not
+  tracking it -- it converts a known unknown into a confident wrong answer.
+  - `permit_source_log.csv` gains a `conflict_id` column, and conflicts are now
+    tracked per `(permit_group, conflict_id)`. New `open_conflicts()` reports
+    each disagreement separately, with when it opened and what the latest entry
+    says; `unresolved_conflicts()` stays as a roll-up to the affected groups.
+  - Crossing threads never closes anything: an entry naming one `conflict_id`
+    leaves the group's others untouched, and an unkeyed entry cannot close a
+    keyed one, so a routine fee re-check can't settle an argument about a
+    season. Blank ids share one per-group bucket -- the previous behaviour,
+    which is still right for a group with one conflict at a time.
+  - `open_questions()` now derives a gap per open conflict, so they surface in
+    `--open-questions` and on the website instead of only in the source-log
+    report. Nine historical rows were keyed retroactively, and an appended
+    `corrects-existing` entry closes `desolation-fee-tier` on evidence already
+    logged -- the deliberately dirty entry stands unedited, since the log is
+    append-only and the workaround is part of the history.
+  - `cli.py --open-questions` was also missing `regulations`, so the inherited
+    fire-rule gaps never appeared there. Both are now passed.
 - **An inherited rule can read as permission.** The statewide campfire rule,
   rendered alone on a page with no local fire rule beside it, said "a permit is
   required for any campfire" and nothing else -- which reads as *campfires are

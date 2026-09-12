@@ -394,3 +394,41 @@ def test_resolve_report_unknown_id_raises(tmp_path):
     submit_report("f", "k", "claim", path=path)
     with pytest.raises(ValueError):
         resolve_report("R9999", "accepted", path=path)
+
+
+# -- open permit conflicts surface in the derived backlog --------------------
+
+def test_open_permit_conflicts_become_open_questions():
+    from wayproof.permits import SourceLogEntry
+    log = [
+        SourceLogEntry("2026-01-01", "desolation", "", "", "test",
+                       "unresolved-conflict", "day use year-round or not",
+                       "day-use-season"),
+        SourceLogEntry("2026-01-02", "desolation", "", "", "test",
+                       "unresolved-conflict", "25 ft or 30 ft", "sma-distance"),
+        SourceLogEntry("2026-01-03", "desolation", "", "", "test",
+                       "corrects-existing", "settled", "sma-distance"),
+    ]
+    keys = [q.target_key for q in open_questions(permit_source_log=log)
+            if q.target_file == "data/permit_source_log.csv"]
+    assert keys == ["desolation (day-use-season)"]
+
+
+def test_a_closed_conflict_is_not_an_open_question():
+    from wayproof.permits import SourceLogEntry
+    log = [
+        SourceLogEntry("2026-01-01", "g", "", "", "test", "unresolved-conflict", "x", "a"),
+        SourceLogEntry("2026-01-02", "g", "", "", "test", "corrects-existing", "y", "a"),
+    ]
+    assert [q for q in open_questions(permit_source_log=log)
+            if q.target_file == "data/permit_source_log.csv"] == []
+
+
+def test_conflict_questions_are_global_not_peak_filtered():
+    # A conflict belongs to the permit product, which covers many peaks -- it
+    # can't be attributed to any one summit.
+    from wayproof.permits import SourceLogEntry
+    log = [SourceLogEntry("2026-01-01", "g", "", "", "test",
+                          "unresolved-conflict", "x", "a")]
+    assert [q for q in open_questions(permit_source_log=log, peak_names=["Mount Tallac"])
+            if q.target_file == "data/permit_source_log.csv"] == []

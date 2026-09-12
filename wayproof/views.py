@@ -209,7 +209,7 @@ def trailhead_view(
     applicable = regulations_for(
         regulations,
         permit_group=rule.permit_group if rule else "",
-        agency=rule.agency if rule else "",
+        agency=rule.agency_ids if rule else (),
         jurisdiction=rule.jurisdiction if rule else "",
     )
 

@@ -17,6 +17,7 @@ from wayproof.model import Cluster, Peak
 from wayproof.permits import (
     load_permits,
     load_source_log,
+    open_conflicts,
     unresolved_conflicts,
     format_source_log,
     permit_status,
@@ -371,6 +372,123 @@ def test_unresolved_conflict_is_detected():
     ]
     assert unresolved_conflicts(log) == ["test_group"]
     assert "UNRESOLVED CONFLICTS: test_group" in format_source_log(log)
+
+
+# -- several conflicts open at once on one permit group ---------------------
+#
+# The bug this replaced: conflicts were tracked per permit_group, so only the
+# group's last log entry was read. Desolation opened three unrelated
+# disagreements in one session, and closing any one of them closed all three.
+# Silently closing a live conflict is worse than not tracking it -- it turns a
+# known unknown into a confident wrong answer.
+
+def _entry(date, group, verdict, conflict_id="", summary="x"):
+    from wayproof.permits import SourceLogEntry
+    return SourceLogEntry(date_checked=date, permit_group=group, source_url="",
+                          source_last_updated="", method="test", verdict=verdict,
+                          summary=summary, conflict_id=conflict_id)
+
+
+def test_two_conflicts_on_one_group_open_and_close_independently():
+    log = [
+        _entry("2026-01-01", "g", "unresolved-conflict", "fee-tier"),
+        _entry("2026-01-02", "g", "unresolved-conflict", "day-use-season"),
+        _entry("2026-01-03", "g", "corrects-existing", "fee-tier"),
+    ]
+    assert [c.conflict_id for c in open_conflicts(log)] == ["day-use-season"]
+    assert unresolved_conflicts(log) == ["g"]
+
+
+def test_closing_the_last_conflict_clears_the_group():
+    log = [
+        _entry("2026-01-01", "g", "unresolved-conflict", "fee-tier"),
+        _entry("2026-01-02", "g", "unresolved-conflict", "day-use-season"),
+        _entry("2026-01-03", "g", "corrects-existing", "fee-tier"),
+        _entry("2026-01-04", "g", "corrects-existing", "day-use-season"),
+    ]
+    assert open_conflicts(log) == []
+    assert unresolved_conflicts(log) == []
+
+
+def test_an_unkeyed_entry_does_not_close_an_identified_conflict():
+    # A routine re-check of a permit's fee must not quietly resolve an open
+    # argument about its season. Only an entry naming the conflict closes it.
+    log = [
+        _entry("2026-01-01", "g", "unresolved-conflict", "day-use-season"),
+        _entry("2026-01-02", "g", "confirms-existing"),
+    ]
+    assert [c.conflict_id for c in open_conflicts(log)] == ["day-use-season"]
+
+
+def test_a_conflict_does_not_close_a_different_one_on_the_same_group():
+    log = [
+        _entry("2026-01-01", "g", "unresolved-conflict", "a"),
+        _entry("2026-01-02", "g", "corrects-existing", "b"),
+    ]
+    assert [c.conflict_id for c in open_conflicts(log)] == ["a"]
+
+
+def test_unkeyed_entries_keep_the_old_group_level_behaviour():
+    # Most groups only ever carry one argument at a time; they shouldn't have
+    # to invent an id for it.
+    opened = [_entry("2026-01-01", "g", "unresolved-conflict")]
+    closed = opened + [_entry("2026-01-02", "g", "corrects-existing")]
+    assert unresolved_conflicts(opened) == ["g"]
+    assert unresolved_conflicts(closed) == []
+
+
+def test_conflicts_on_different_groups_stay_separate():
+    log = [
+        _entry("2026-01-01", "a", "unresolved-conflict", "x"),
+        _entry("2026-01-02", "b", "corrects-existing", "x"),
+    ]
+    assert [c.permit_group for c in open_conflicts(log)] == ["a"]
+
+
+def test_open_conflict_reports_when_it_opened_not_when_last_touched():
+    log = [
+        _entry("2026-01-01", "g", "unresolved-conflict", "x"),
+        _entry("2026-03-05", "g", "unresolved-conflict", "x", summary="still stuck"),
+    ]
+    conflict = open_conflicts(log)[0]
+    assert (conflict.opened, conflict.last_checked) == ("2026-01-01", "2026-03-05")
+    assert conflict.summary == "still stuck"
+    assert conflict.label == "g (x)"
+
+
+def test_format_source_log_labels_each_conflict_thread():
+    log = [
+        _entry("2026-01-01", "g", "unresolved-conflict", "fee-tier"),
+        _entry("2026-01-02", "g", "unresolved-conflict", "day-use-season"),
+        _entry("2026-01-03", "g", "corrects-existing", "fee-tier"),
+    ]
+    report = format_source_log(log)
+    assert "UNRESOLVED CONFLICTS: g (day-use-season)" in report
+    assert "conflict fee-tier (closed)" in report
+    assert "conflict day-use-season (still open)" in report
+
+
+def test_the_real_desolation_log_keeps_two_conflicts_open_and_one_closed():
+    # The exact case that forced this: the fee tier was settled by the permit
+    # page's Fees & Cancellation tab, while the day-use season and the 25-vs-30
+    # ft Special Management Area setback both remain genuinely unsettled.
+    log = load_source_log(SOURCE_LOG)
+    ids = {c.conflict_id for c in open_conflicts(log) if c.permit_group == "desolation"}
+    assert ids == {"desolation-day-use-season", "desolation-sma-distance"}
+
+
+def test_every_conflict_entry_in_the_real_log_names_its_conflict():
+    # An unkeyed conflict is only safe while a group has at most one. Desolation
+    # proved that assumption breaks, so require ids wherever a group has more
+    # than one conflict entry on file.
+    log = load_source_log(SOURCE_LOG)
+    by_group = {}
+    for e in log:
+        if e.verdict == "unresolved-conflict":
+            by_group.setdefault(e.permit_group, []).append(e)
+    unkeyed = [f"{g} [{e.date_checked}]" for g, entries in by_group.items()
+               if len(entries) > 1 for e in entries if not e.conflict_id]
+    assert unkeyed == [], f"conflicts sharing a group but no conflict_id: {unkeyed}"
 
 
 def test_format_source_log_empty():

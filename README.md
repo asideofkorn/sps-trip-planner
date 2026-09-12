@@ -205,8 +205,9 @@ data.
 
 It records individual source checks rather than only storing the latest answer.
 A log entry includes the permit group, source URL, source date where available,
-how the evidence was obtained, notes about what the source says, and a
-verification verdict.
+how the evidence was obtained, notes about what the source says, a verification
+verdict, and an optional `conflict_id` naming the specific disagreement the
+entry opens, restates, or closes.
 
 The current verdicts are:
 
@@ -231,6 +232,28 @@ verification event explaining the resolution.
 
 The earlier conflicting record remains in the ledger. It simply stops
 representing the current unresolved state.
+
+#### One group can be carrying several arguments at once
+
+Conflicts are tracked per `(permit_group, conflict_id)`, not per permit group.
+Desolation opened three unrelated disagreements in a single session -- whether
+day-use permits are required year-round or only in quota season, which fee tier
+applies, and whether the Special Management Area camping setback is 25 or 30
+feet. With group-level tracking, resolving any one of them closed all three,
+because only the group's last entry was read. Closing a conflict that is still
+open is worse than not tracking it at all: it turns a known unknown into a
+silent wrong answer.
+
+So a resolving entry closes only the `conflict_id` it names. An entry naming a
+different id leaves the others exactly as they were, and an entry naming none
+cannot quietly settle a specific identified dispute -- a routine re-check of a
+permit's fee does not resolve an open argument about its season. Entries with a
+blank `conflict_id` share one per-group bucket, which is fine for a group that
+only ever has one conflict open at a time.
+
+Open conflicts also appear in `--open-questions` and on the website's gaps list.
+They are the sharpest kind of gap in the dataset: not "nobody has checked" but
+"two sources were checked and they disagree", with a value stored anyway.
 
 This gives the project two complementary views:
 
@@ -615,13 +638,20 @@ where it promptly drifted:
 - none carried the 18-and-over signer requirement, or the citation
   (36 CFR 261.52(k), PRC 4433).
 
-A fact asserted in seven places is a fact maintained in none of them. So a
-regulation is now stored once and *inherited*, by `scope_type`:
+A fact asserted in seven places is a fact maintained in none of them. And the
+consolidated rule was still incomplete: CAL FIRE actually issues **two**
+campfire permits, one for federal- and state-controlled lands and one for
+private lands, the latter also requiring written permission from the landowner.
+A reader who picks the wrong one is carrying an invalid document. The rule now
+names which type applies, and warns off the debris-burning permits sold from
+the same portal.
+
+So a regulation is now stored once and *inherited*, by `scope_type`:
 
 | Scope | Matches | Example |
 |---|---|---|
 | `jurisdiction` | `PermitRule.jurisdiction` | California Campfire Permit |
-| `agency` | `PermitRule.agency` | Eldorado NF's 10-day dispersed-camping limit |
+| `agency` | `PermitRule.agency_ids` | Eldorado NF's 10-day dispersed-camping limit |
 | `permit_group` | the permit product itself | Desolation's bear canister requirement |
 
 `regulations_for()` resolves all three layers, sorting the specific before the
@@ -634,6 +664,28 @@ every group in the dataset is currently Californian: *"all our groups are in
 California"* is true today by coincidence of coverage, and inheriting statewide
 law off that coincidence would break silently the first time a Nevada or Oregon
 group is added. There's a test for exactly that.
+
+### A scope that matches nothing is worse than a missing rule
+
+The agency layer taught this the hard way. The Eldorado NF dispersed-camping
+limit was scoped to the agency `Eldorado National Forest`, and **it inherited to
+zero permit groups** -- because `permits.csv`'s `agency` column is a *display*
+name carrying ranger-district and co-management detail. Desolation's reads
+`Eldorado NF / LTBMU`; the Mokelumne groups read
+`Eldorado NF (Amador Ranger District)`. None of them is the string the rule
+matched on, and nothing said so. The rule looked filed. It applied to nobody.
+
+So `permits.csv` carries `agency_id` alongside `agency`: a stable key for
+matching, separate from the prose for reading. It's a *list*, semicolon
+separated, because co-management is real -- Desolation is administered jointly
+by Eldorado NF and the Lake Tahoe Basin Management Unit, and a rule from either
+applies. Regulations scope on the key and carry an optional `scope_display` so a
+reader still sees "Eldorado National Forest" rather than `eldorado_nf`.
+
+The guard matters more than the fix: a test now asserts that **every**
+regulation's scope reaches at least one permit group. A dead scope fails the
+build instead of quietly reading as covered. The forest-wide rule now reaches
+all three Eldorado groups and shows on 22 trailhead pages.
 
 ## The Website
 

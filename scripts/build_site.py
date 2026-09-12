@@ -198,15 +198,17 @@ def build(output_dir: Path, today: datetime.date | None = None) -> dict:
     permits = load_permits("data/permits.csv", "data/release_policies.csv")
     data = _load_all_data()
     regulations = load_regulations("data/regulations.csv")
+    source_log = load_source_log("data/permit_source_log.csv")
     questions = open_questions(permits=list(permits.values()),
-                               regulations=regulations, **data)
+                               regulations=regulations,
+                               permit_source_log=source_log, **data)
 
     views = trailhead_views(
         trailheads=data["trailheads"],
         permits=permits,
         approaches=data["approaches"],
         peaks=data["peaks"],
-        source_log=load_source_log("data/permit_source_log.csv"),
+        source_log=source_log,
         zones=load_permit_zones("data/permit_zones.csv"),
         regulations=regulations,
         questions=questions,

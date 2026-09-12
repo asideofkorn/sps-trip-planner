@@ -47,7 +47,7 @@ from .access import ApproachRoute, UNCONFIRMED
 from .camping import Campground, Campsite
 from .park_access import ParkAccess
 from .model import Peak, Trailhead
-from .permits import PermitRule
+from .permits import PermitRule, SourceLogEntry, open_conflicts
 from .regulations import PERMIT_GROUP as REG_PERMIT_GROUP, Regulation
 from .release_policy import OFF_SEASON
 from .timed_entry import TimedEntryPolicy
@@ -99,6 +99,16 @@ def _str_field(row, col: str) -> str:
     return str(val).strip()
 
 
+def _permit_group_label(permit_group: str) -> str:
+    """How to name a permit group inside a sentence a person will read.
+
+    ``none`` is a real key in ``permits.csv`` meaning "no wilderness permit
+    required", so interpolating it raw produced "campfires allowed in none".
+    The key itself still identifies the row to fix; only the prose changes.
+    """
+    return "areas needing no wilderness permit" if permit_group == "none" else permit_group
+
+
 def _matches_peak_names(name: str, peak_names_lower: set) -> bool:
     return name.strip().lower() in peak_names_lower
 
@@ -115,6 +125,7 @@ def open_questions(
     park_access: Sequence[ParkAccess] = (),
     permits: Sequence[PermitRule] = (),
     regulations: Sequence[Regulation] = (),
+    permit_source_log: Sequence[SourceLogEntry] = (),
     peak_names: Optional[Sequence[str]] = None,
 ) -> List[OpenQuestion]:
     """Derive the current list of unconfirmed/missing/conflicting facts.
@@ -323,7 +334,8 @@ def open_questions(
             questions.append(OpenQuestion(
                 target_file="data/regulations.csv",
                 target_key=f"{rule.permit_group} (fire)",
-                question=(f"Are campfires actually allowed in {rule.permit_group}, and up to "
+                question=(f"Are campfires actually allowed in "
+                          f"{_permit_group_label(rule.permit_group)}, and up to "
                           "what elevation? Only the statewide California Campfire Permit rule "
                           "applies here so far, which is a precondition rather than permission "
                           "-- no local restriction is on file either way."),
@@ -366,6 +378,26 @@ def open_questions(
                               "not yet confirmed against that year's original NPS announcement."),
                     context=t.park,
                 ))
+
+        # -- Live disagreements between sources, straight from the append-only
+        # permit source log. These are the sharpest gaps this project has: not
+        # "nobody has checked" but "two sources were checked and they don't
+        # agree", with a stored value that had to be picked anyway. They're
+        # global rather than peak-filtered because a permit group covers many
+        # peaks and the conflict belongs to the permit product, not to any one
+        # summit.
+        for conflict in open_conflicts(permit_source_log):
+            since = f" Open since {conflict.opened}." if conflict.opened else ""
+            questions.append(OpenQuestion(
+                target_file="data/permit_source_log.csv",
+                target_key=conflict.label,
+                question=(f"Two sources disagree about "
+                          f"{_permit_group_label(conflict.permit_group)} and the "
+                          f"disagreement is still open.{since} A value is stored regardless, "
+                          "so this is a live risk of being confidently wrong rather than a "
+                          "blank. Resolving it needs a first-hand read of the disputed source."),
+                context=conflict.summary,
+            ))
 
     return questions
 

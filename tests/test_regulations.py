@@ -128,7 +128,7 @@ def test_campfire_permit_is_stored_once_and_inherited_by_every_california_group(
     permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
                            os.path.join(ROOT, "data", "release_policies.csv"))
     for group, rule in permits.items():
-        applicable = regulations_for(regs, rule.permit_group, rule.agency, rule.jurisdiction)
+        applicable = regulations_for(regs, rule.permit_group, rule.agency_ids, rule.jurisdiction)
         assert any(r.regulation_id == "ca-campfire-permit" for r in applicable), (
             f"{group} should inherit the statewide campfire permit rule"
         )
@@ -208,3 +208,140 @@ def test_a_group_stating_its_fire_rule_in_prose_is_not_flagged_as_unknown():
     regs = [_reg("ca-campfire-permit", JURISDICTION, "CA", category="fire")]
     assert [q for q in open_questions(permits=[prose], regulations=regs)
             if q.target_key.endswith("(fire)")] == []
+
+
+# -- the scope that inherited to nothing ------------------------------------
+#
+# `eldorado-dispersed-stay-limit` was scoped to the agency "Eldorado National
+# Forest". No permit group carries that string: Desolation's agency reads
+# "Eldorado NF / LTBMU" and the Mokelumne groups read "Eldorado NF (Amador
+# Ranger District)", because that column is a display name carrying ranger
+# district and co-management detail. So the forest-wide rule applied to zero
+# groups and nothing said so. These tests make a dead scope fail loudly.
+
+def test_every_regulation_scope_reaches_at_least_one_permit_group():
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
+                           os.path.join(ROOT, "data", "release_policies.csv"))
+    reached = set()
+    for rule in permits.values():
+        for reg in regulations_for(regs, rule.permit_group, rule.agency_ids, rule.jurisdiction):
+            reached.add(reg.regulation_id)
+    dead = [r.regulation_id for r in regs if r.regulation_id not in reached]
+    assert dead == [], (
+        f"regulations whose scope matches no permit group: {dead}. A rule that "
+        "inherits to nothing is worse than a missing one -- it reads as covered."
+    )
+
+
+def test_permit_groups_carry_agency_keys_not_just_display_names():
+    permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
+                           os.path.join(ROOT, "data", "release_policies.csv"))
+    missing = [g for g, r in permits.items() if r.agency and not r.agency_ids]
+    assert missing == [], f"permit groups with an agency but no agency_id: {missing}"
+
+
+def test_agency_matching_ignores_the_display_string():
+    # Passing the display name must not accidentally work -- that's the habit
+    # that hid the dead scope.
+    permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
+                           os.path.join(ROOT, "data", "release_policies.csv"))
+    desolation = permits["desolation"]
+    regs = [_reg("forest-rule", AGENCY, "eldorado_nf", category="camping")]
+    assert regulations_for(regs, agency=desolation.agency) == []
+    assert len(regulations_for(regs, agency=desolation.agency_ids)) == 1
+
+
+def test_a_co_managed_group_inherits_from_either_manager():
+    # Desolation is administered jointly by Eldorado NF and the Lake Tahoe
+    # Basin Management Unit. A rule from either applies.
+    regs = [
+        _reg("eldorado-rule", AGENCY, "eldorado_nf", category="camping"),
+        _reg("ltbmu-rule", AGENCY, "ltbmu", category="waste"),
+        _reg("inyo-rule", AGENCY, "inyo_nf", category="food_storage"),
+    ]
+    got = regulations_for(regs, agency=("eldorado_nf", "ltbmu"))
+    assert {r.regulation_id for r in got} == {"eldorado-rule", "ltbmu-rule"}
+
+
+def test_the_eldorado_forest_wide_rule_reaches_all_three_eldorado_groups():
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
+                           os.path.join(ROOT, "data", "release_policies.csv"))
+    got = {g for g, r in permits.items()
+           if any(x.regulation_id == "eldorado-dispersed-stay-limit"
+                  for x in regulations_for(regs, r.permit_group, r.agency_ids, r.jurisdiction))}
+    assert got == {"desolation", "cpma", "mokelumne_free"}
+
+
+def test_an_agency_key_still_renders_as_a_readable_name():
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "eldorado-dispersed-stay-limit")
+    assert rule.scope_value == "eldorado_nf"      # what it matches on
+    assert rule.scope_label == "Eldorado National Forest"  # what a reader sees
+
+
+# -- two campfire permits, and the wrong one is not a valid document --------
+
+def test_campfire_rule_distinguishes_the_two_permit_types():
+    # CAL FIRE issues one permit for federal- and state-controlled lands and a
+    # separate one for private lands. A hiker who grabs the private-lands
+    # permit for a national forest trip is carrying the wrong document, so the
+    # rule has to say which one applies rather than describing "the" permit.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "ca-campfire-permit")
+    text = f"{rule.summary} {rule.detail}".lower()
+    assert "federal- and state-controlled lands" in text
+    assert "private lands" in text
+    assert "written permission from the landowner" in text
+
+
+def test_campfire_rule_says_which_type_this_project_needs():
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "ca-campfire-permit")
+    text = f"{rule.summary} {rule.detail}".lower()
+    assert "not the private-lands one" in text
+
+
+def test_campfire_rule_flags_the_land_type_it_cannot_place():
+    # Every trailhead is on federal land except two on East Bay Regional Park
+    # District land -- a special district that is neither federal, state, nor
+    # private. Stating the gap beats silently implying the federal permit
+    # covers it.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "ca-campfire-permit")
+    assert "East Bay Regional Park District" in rule.detail
+    assert "not confirmed" in rule.detail
+
+
+def test_campfire_rule_warns_off_the_debris_burning_permit():
+    # The same portal issues debris-burn permits, which are a different
+    # product entirely.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "ca-campfire-permit")
+    assert "burning debris" in rule.detail.lower()
+
+
+def test_the_lantern_discrepancy_between_the_two_pages_is_recorded():
+    # The permits FAQ lists campfires, barbeques and portable stoves; the
+    # campfire-safety page adds lanterns. Keeping the fuller list is a choice,
+    # so it is written down rather than silently made.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "ca-campfire-permit")
+    assert "adds lanterns" in rule.detail
+
+
+def test_a_permit_group_named_none_reads_as_english_in_a_question():
+    # "none" is a real key meaning no wilderness permit is required. Rendered
+    # raw it produced "Are campfires actually allowed in none".
+    from wayproof.permits import PermitRule
+    from wayproof.reports import open_questions
+
+    rule = PermitRule(permit_group="none", agency="", permit_type="No wilderness permit required",
+                      quota_required=False, jurisdiction="CA")
+    regs = [_reg("ca-campfire-permit", JURISDICTION, "CA", category="fire")]
+    question = next(q for q in open_questions(permits=[rule], regulations=regs)
+                    if q.target_key.endswith("(fire)"))
+    assert "allowed in none" not in question.question
+    assert "areas needing no wilderness permit" in question.question
+    assert question.target_key == "none (fire)", "the key still points at the row to fix"
