@@ -20,6 +20,32 @@ All notable changes to this project are documented here. The format is based on
     group, so the column states it rather than assuming it. Tested.
 
 ### Fixed
+- **Resolving one conflict silently closed every other conflict on the same
+  permit group.** `unresolved_conflicts()` read only each group's most recent
+  log entry, so a group could carry at most one live disagreement. Desolation
+  opened three in one session (day-use season, fee tier, and the 25-vs-30 ft
+  Special Management Area setback) and the limitation bit twice the same day;
+  the workaround both times was to log a settled question under a deliberately
+  dirty `unresolved-conflict` verdict so the still-open ones stayed visible,
+  which does not survive a third. Closing a live conflict is worse than not
+  tracking it -- it converts a known unknown into a confident wrong answer.
+  - `permit_source_log.csv` gains a `conflict_id` column, and conflicts are now
+    tracked per `(permit_group, conflict_id)`. New `open_conflicts()` reports
+    each disagreement separately, with when it opened and what the latest entry
+    says; `unresolved_conflicts()` stays as a roll-up to the affected groups.
+  - Crossing threads never closes anything: an entry naming one `conflict_id`
+    leaves the group's others untouched, and an unkeyed entry cannot close a
+    keyed one, so a routine fee re-check can't settle an argument about a
+    season. Blank ids share one per-group bucket -- the previous behaviour,
+    which is still right for a group with one conflict at a time.
+  - `open_questions()` now derives a gap per open conflict, so they surface in
+    `--open-questions` and on the website instead of only in the source-log
+    report. Nine historical rows were keyed retroactively, and an appended
+    `corrects-existing` entry closes `desolation-fee-tier` on evidence already
+    logged -- the deliberately dirty entry stands unedited, since the log is
+    append-only and the workaround is part of the history.
+  - `cli.py --open-questions` was also missing `regulations`, so the inherited
+    fire-rule gaps never appeared there. Both are now passed.
 - **An inherited rule can read as permission.** The statewide campfire rule,
   rendered alone on a page with no local fire rule beside it, said "a permit is
   required for any campfire" and nothing else -- which reads as *campfires are

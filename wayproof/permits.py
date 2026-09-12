@@ -75,13 +75,30 @@ is the append-only complement: one row per verification event (never
 edited, only appended to), recording the source URL, the source's own
 "last updated" date, how it was checked, and a verdict of ``new-group``,
 ``confirms-existing``, ``corrects-existing``, or ``unresolved-conflict``.
-:func:`unresolved_conflicts` reports any permit_group whose *most recent*
-logged entry is still an unresolved conflict. When a new source disagrees
-with what's already logged, log it as ``unresolved-conflict`` first (don't
-silently pick one), then once it's reconciled -- by updating
-``data/permits.csv`` and appending a follow-up ``corrects-existing`` entry
-explaining which source won and why -- the group drops out of the conflict
-list because the log is read in chronological order.
+When a new source disagrees with what's already logged, log it as
+``unresolved-conflict`` first (don't silently pick one), then once it's
+reconciled -- by updating ``data/permits.csv`` and appending a follow-up
+``corrects-existing`` entry explaining which source won and why -- the
+disagreement closes, because the log is read in chronological order.
+
+Conflicts are tracked per ``(permit_group, conflict_id)``, not per
+permit_group. That distinction was learned the hard way: Desolation opened
+three unrelated disagreements in one session (whether day-use permits are
+year-round or quota-season-only, which fee tier applies, and whether the
+Special Management Area setback is 25 or 30 feet). With group-level
+tracking, resolving any one of them closed all three, because only the
+group's last entry was read. Closing a conflict that is still open is worse
+than not tracking it at all -- it converts a known unknown into a silent
+wrong answer -- so the workaround at the time was to leave a resolved
+verdict deliberately dirty, which does not survive a third conflict.
+
+:func:`open_conflicts` reports each open disagreement separately;
+:func:`unresolved_conflicts` rolls those up to the permit_groups affected.
+A resolving entry closes only the ``conflict_id`` it names, so a generic
+``confirms-existing`` row never silently closes a specific identified
+disagreement. Entries with no ``conflict_id`` share one per-group bucket,
+which is the old behaviour and is fine for a group that only ever has one
+conflict open at a time.
 """
 
 from __future__ import annotations
@@ -594,6 +611,39 @@ class SourceLogEntry:
     method: str
     verdict: str
     summary: str
+    conflict_id: str = ""
+    """Names the specific disagreement this entry opens, restates, or closes.
+
+    Free-form but stable, e.g. ``desolation-sma-distance``. Leave blank for
+    an ordinary verification that isn't about a disagreement; blank entries
+    share one per-group bucket, so a group with at most one live conflict
+    needs no ids at all.
+    """
+
+
+@dataclass
+class OpenConflict:
+    """One disagreement that is still open: sources conflict and nothing
+    logged since has closed it."""
+
+    permit_group: str
+    conflict_id: str
+    opened: str
+    """``date_checked`` of the entry that first opened this disagreement."""
+    last_checked: str
+    entries: List[SourceLogEntry] = field(default_factory=list)
+    """Every entry in this thread, chronologically -- the resolved ones too."""
+
+    @property
+    def label(self) -> str:
+        """``"desolation (desolation-fee-tier)"``, or just the group when the
+        thread carries no id."""
+        return f"{self.permit_group} ({self.conflict_id})" if self.conflict_id else self.permit_group
+
+    @property
+    def summary(self) -> str:
+        """What the most recent entry says the disagreement is."""
+        return self.entries[-1].summary if self.entries else ""
 
 
 def load_source_log(
@@ -617,22 +667,58 @@ def load_source_log(
             method=_str_field(row, "method"),
             verdict=_str_field(row, "verdict"),
             summary=_str_field(row, "summary"),
+            conflict_id=_str_field(row, "conflict_id"),
         )
         for _, row in df.iterrows()
     ]
 
 
-def unresolved_conflicts(log: Sequence[SourceLogEntry]) -> List[str]:
-    """permit_groups whose most recently logged entry is still a conflict.
+def open_conflicts(log: Sequence[SourceLogEntry]) -> List[OpenConflict]:
+    """Every disagreement whose thread still ends in ``unresolved-conflict``.
 
-    Assumes ``log`` is in chronological order (as loaded from the file) --
-    the last entry seen per permit_group wins, so a later ``corrects-existing``
-    entry resolves an earlier ``unresolved-conflict`` for the same group.
+    Threads are keyed on ``(permit_group, conflict_id)``, so several can be
+    open on one permit group at once and close independently. Assumes ``log``
+    is in chronological order, as loaded from the file: within a thread the
+    last entry wins, so a later ``corrects-existing`` closes an earlier
+    ``unresolved-conflict``.
+
+    Crossing threads never closes anything. An entry naming one
+    ``conflict_id`` leaves the group's other threads exactly as they were,
+    and an entry naming none closes only the unkeyed bucket -- a routine
+    re-check of a permit's fee cannot quietly resolve an open argument about
+    its season. Returned in the order each thread first appears in the log.
     """
-    latest: Dict[str, SourceLogEntry] = {}
+    threads: Dict[tuple, List[SourceLogEntry]] = {}
     for entry in log:
-        latest[entry.permit_group] = entry
-    return [group for group, entry in latest.items() if entry.verdict == _CONFLICT_VERDICT]
+        threads.setdefault((entry.permit_group, entry.conflict_id), []).append(entry)
+
+    out: List[OpenConflict] = []
+    for (group, conflict_id), entries in threads.items():
+        if entries[-1].verdict != _CONFLICT_VERDICT:
+            continue
+        disagreements = [e for e in entries if e.verdict == _CONFLICT_VERDICT]
+        out.append(OpenConflict(
+            permit_group=group,
+            conflict_id=conflict_id,
+            opened=disagreements[0].date_checked,
+            last_checked=entries[-1].date_checked,
+            entries=list(entries),
+        ))
+    return out
+
+
+def unresolved_conflicts(log: Sequence[SourceLogEntry]) -> List[str]:
+    """permit_groups with at least one open conflict, first-seen order.
+
+    A roll-up of :func:`open_conflicts` for callers that only need to know
+    whether a group is disputed at all. Use ``open_conflicts`` where the
+    answer matters -- one group can be carrying several unrelated arguments.
+    """
+    groups: List[str] = []
+    for conflict in open_conflicts(log):
+        if conflict.permit_group not in groups:
+            groups.append(conflict.permit_group)
+    return groups
 
 
 def format_source_log(
@@ -644,22 +730,37 @@ def format_source_log(
         return f"No source log entries{f' for {permit_group}' if permit_group else ''}."
 
     lines = []
-    conflicts = set(unresolved_conflicts(log))
-    if conflicts and permit_group is None:
-        lines.append(f"UNRESOLVED CONFLICTS: {', '.join(sorted(conflicts))}")
+    conflicts = [c for c in open_conflicts(log)
+                 if permit_group is None or c.permit_group == permit_group]
+    open_keys = {(c.permit_group, c.conflict_id) for c in conflicts}
+    open_per_group: Dict[str, int] = {}
+    for c in conflicts:
+        open_per_group[c.permit_group] = open_per_group.get(c.permit_group, 0) + 1
+    if conflicts:
+        lines.append("UNRESOLVED CONFLICTS: "
+                     + ", ".join(sorted(c.label for c in conflicts)))
         lines.append("")
 
     current_group = None
     for e in rows:
         if e.permit_group != current_group:
             current_group = e.permit_group
-            flag = "  <-- UNRESOLVED CONFLICT" if current_group in conflicts else ""
+            count = open_per_group.get(current_group, 0)
+            flag = ""
+            if count == 1:
+                flag = "  <-- UNRESOLVED CONFLICT"
+            elif count > 1:
+                flag = f"  <-- {count} UNRESOLVED CONFLICTS"
             lines.append(f"=== {current_group}{flag} ===")
         marker = {"new-group": "NEW", "confirms-existing": "CONFIRMS",
                    "corrects-existing": "CORRECTS", _CONFLICT_VERDICT: "CONFLICT"}.get(e.verdict, e.verdict)
-        src = e.source_url or "(no single URL -- web search / general knowledge)"
+        url = e.source_url or "(no single URL -- web search / general knowledge)"
         updated = f", source updated {e.source_last_updated}" if e.source_last_updated else ""
-        lines.append(f"  [{e.date_checked}] {marker} via {e.method}{updated}")
-        lines.append(f"    {src}")
+        thread = ""
+        if e.conflict_id:
+            state = "still open" if (e.permit_group, e.conflict_id) in open_keys else "closed"
+            thread = f", conflict {e.conflict_id} ({state})"
+        lines.append(f"  [{e.date_checked}] {marker} via {e.method}{updated}{thread}")
+        lines.append(f"    {url}")
         lines.append(f"    {e.summary}")
     return "\n".join(lines)

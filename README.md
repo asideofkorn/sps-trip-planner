@@ -205,8 +205,9 @@ data.
 
 It records individual source checks rather than only storing the latest answer.
 A log entry includes the permit group, source URL, source date where available,
-how the evidence was obtained, notes about what the source says, and a
-verification verdict.
+how the evidence was obtained, notes about what the source says, a verification
+verdict, and an optional `conflict_id` naming the specific disagreement the
+entry opens, restates, or closes.
 
 The current verdicts are:
 
@@ -231,6 +232,28 @@ verification event explaining the resolution.
 
 The earlier conflicting record remains in the ledger. It simply stops
 representing the current unresolved state.
+
+#### One group can be carrying several arguments at once
+
+Conflicts are tracked per `(permit_group, conflict_id)`, not per permit group.
+Desolation opened three unrelated disagreements in a single session -- whether
+day-use permits are required year-round or only in quota season, which fee tier
+applies, and whether the Special Management Area camping setback is 25 or 30
+feet. With group-level tracking, resolving any one of them closed all three,
+because only the group's last entry was read. Closing a conflict that is still
+open is worse than not tracking it at all: it turns a known unknown into a
+silent wrong answer.
+
+So a resolving entry closes only the `conflict_id` it names. An entry naming a
+different id leaves the others exactly as they were, and an entry naming none
+cannot quietly settle a specific identified dispute -- a routine re-check of a
+permit's fee does not resolve an open argument about its season. Entries with a
+blank `conflict_id` share one per-group bucket, which is fine for a group that
+only ever has one conflict open at a time.
+
+Open conflicts also appear in `--open-questions` and on the website's gaps list.
+They are the sharpest kind of gap in the dataset: not "nobody has checked" but
+"two sources were checked and they disagree", with a value stored anyway.
 
 This gives the project two complementary views:
 

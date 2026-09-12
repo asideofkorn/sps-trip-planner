@@ -47,7 +47,7 @@ from .access import ApproachRoute, UNCONFIRMED
 from .camping import Campground, Campsite
 from .park_access import ParkAccess
 from .model import Peak, Trailhead
-from .permits import PermitRule
+from .permits import PermitRule, SourceLogEntry, open_conflicts
 from .regulations import PERMIT_GROUP as REG_PERMIT_GROUP, Regulation
 from .release_policy import OFF_SEASON
 from .timed_entry import TimedEntryPolicy
@@ -115,6 +115,7 @@ def open_questions(
     park_access: Sequence[ParkAccess] = (),
     permits: Sequence[PermitRule] = (),
     regulations: Sequence[Regulation] = (),
+    permit_source_log: Sequence[SourceLogEntry] = (),
     peak_names: Optional[Sequence[str]] = None,
 ) -> List[OpenQuestion]:
     """Derive the current list of unconfirmed/missing/conflicting facts.
@@ -366,6 +367,25 @@ def open_questions(
                               "not yet confirmed against that year's original NPS announcement."),
                     context=t.park,
                 ))
+
+        # -- Live disagreements between sources, straight from the append-only
+        # permit source log. These are the sharpest gaps this project has: not
+        # "nobody has checked" but "two sources were checked and they don't
+        # agree", with a stored value that had to be picked anyway. They're
+        # global rather than peak-filtered because a permit group covers many
+        # peaks and the conflict belongs to the permit product, not to any one
+        # summit.
+        for conflict in open_conflicts(permit_source_log):
+            since = f" Open since {conflict.opened}." if conflict.opened else ""
+            questions.append(OpenQuestion(
+                target_file="data/permit_source_log.csv",
+                target_key=conflict.label,
+                question=(f"Two sources disagree about {conflict.permit_group} and the "
+                          f"disagreement is still open.{since} A value is stored regardless, "
+                          "so this is a live risk of being confidently wrong rather than a "
+                          "blank. Resolving it needs a first-hand read of the disputed source."),
+                context=conflict.summary,
+            ))
 
     return questions
 
