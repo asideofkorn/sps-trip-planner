@@ -48,6 +48,10 @@ from .camping import Campground, Campsite
 from .park_access import ParkAccess
 from .model import Peak, Trailhead
 from .permits import PermitRule, SourceLogEntry, open_conflicts
+from .provenance import (
+    REGULATION as PROV_REGULATION, STALE_DAYS, Deferral, Source,
+    age_days, source_for,
+)
 from .regulations import PERMIT_GROUP as REG_PERMIT_GROUP, Regulation
 from .release_policy import OFF_SEASON
 from .timed_entry import TimedEntryPolicy
@@ -126,6 +130,9 @@ def open_questions(
     permits: Sequence[PermitRule] = (),
     regulations: Sequence[Regulation] = (),
     permit_source_log: Sequence[SourceLogEntry] = (),
+    sources: Sequence[Source] = (),
+    deferrals: Sequence[Deferral] = (),
+    today: Optional[date] = None,
     peak_names: Optional[Sequence[str]] = None,
 ) -> List[OpenQuestion]:
     """Derive the current list of unconfirmed/missing/conflicting facts.
@@ -386,6 +393,64 @@ def open_questions(
         # global rather than peak-filtered because a permit group covers many
         # peaks and the conflict belongs to the permit product, not to any one
         # summit.
+        # -- Provenance gaps, from data/sources.csv. Three distinct failures,
+        # all of which previously looked identical to a well-sourced row.
+        if sources:
+            # (a) A rule resting on a source that does not own that claim.
+            # recreation.gov restates the land manager's regulations; it is
+            # authoritative for booking, fees and availability, not for what
+            # you may do on the ground. Grouped per permit group, because
+            # checking the regulator's own pages is one action, not thirteen.
+            borrowed: dict = {}
+            for regulation in regulations:
+                src = source_for(regulation.source_url, sources)
+                if src is not None and not src.owns(PROV_REGULATION):
+                    borrowed.setdefault((regulation.scope_value, src.publisher), []).append(
+                        regulation.regulation_id)
+            for (scope, publisher), ids in sorted(borrowed.items()):
+                questions.append(OpenQuestion(
+                    target_file="data/regulations.csv",
+                    target_key=f"{scope} (sourced to {publisher})",
+                    question=(f"{len(ids)} {scope} rules cite {publisher}, which does not own "
+                              "what you may do on the ground -- it restates the land manager's "
+                              "regulations rather than making them. Check them against the "
+                              "regulator's own pages, which may be more specific, stricter, or "
+                              "simply different."),
+                    context=scope,
+                ))
+
+            # (b) A source page old enough that a season, fee or quota could
+            # have changed underneath it without the page being touched.
+            for rule in permits:
+                age = age_days(rule.source_last_updated, today)
+                if age is None or age <= STALE_DAYS:
+                    continue
+                questions.append(OpenQuestion(
+                    target_file="data/permits.csv",
+                    target_key=f"{_permit_group_label(rule.permit_group)} (stale source)",
+                    question=(f"This row rests on a page last updated {rule.source_last_updated}, "
+                              f"{age} days ago. Being the governing body does not make an old "
+                              "page current -- a stale page is how a superseded rule survives "
+                              "online. Re-read the source before trusting a date or a fee here."),
+                    context=rule.permit_group,
+                ))
+
+            # (c) A cited URL with no registry entry, so nothing here knows
+            # whether that publisher is entitled to answer.
+            unregistered = sorted({
+                r.source_url for r in regulations
+                if r.source_url and source_for(r.source_url, sources) is None
+            })
+            for url in unregistered:
+                questions.append(OpenQuestion(
+                    target_file="data/sources.csv",
+                    target_key=url,
+                    question=("This URL is cited but not in the source registry, so nothing can "
+                              "say whether its publisher owns the claim or has deferred it. Add "
+                              "it with a role, or replace the citation."),
+                    context="",
+                ))
+
         for conflict in open_conflicts(permit_source_log):
             since = f" Open since {conflict.opened}." if conflict.opened else ""
             questions.append(OpenQuestion(

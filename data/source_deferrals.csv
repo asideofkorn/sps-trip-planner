@@ -1,0 +1,6 @@
+from_source,to_source,topic,observed_date,evidence_url,evidence
+recreation_gov,fs_usda,permit_requirement,2026-09-12,https://www.recreation.gov/permits/233261,"Day Use Permit: Obtain a free permit from a local Forest Service office , or at trailheads in the summer."
+recreation_gov,cdfw,regulation,2026-09-12,https://www.recreation.gov/permits/233261,State fish and game laws apply.
+fs_usda,recreation_gov,booking_mechanics,2026-09-12,https://www.fs.usda.gov/r05/eldorado/permits,"Because of its beauty and accessibility, Desolation Wilderness is one of the most heavily used wilderness areas in the United States. [...] Desolation Permits [link to recreation.gov]"
+fs_usda,cdfw,regulation,2026-09-12,https://www.fs.usda.gov/sites/nfs/files/r05/eldorado/publication/2025%20Moke%20Permit%20Instructions%20Summer_0.pdf,"Follow the state, local, and federal laws and regulations pertaining to hunting, including seasons, dates, and licensing."
+fs_usda,parks_ca,permit_requirement,2026-09-12,https://www.fs.usda.gov/r05/eldorado/wilderness/carson-pass-management-area-permits,A different Snow Park permit is required for parking in the Carson Pass and the Meiss trailhead parking lots between November 1st - May 31st every year.

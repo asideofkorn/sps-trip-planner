@@ -735,3 +735,32 @@ def test_the_america_the_beautiful_rules_differ_between_the_two_permits():
     permits = load_permits(PERMITS)
     assert "ARE accepted" in permits["cpma"].fee_notes
     assert "do NOT apply" in permits["desolation"].fee_notes
+
+
+def test_conflict_kind_says_how_each_open_conflict_must_be_resolved():
+    # A self-contradicting document has already discredited its own blanket
+    # statement and needs no ranking of publishers; two documents disagreeing
+    # do. Recording which kind it is saves rediscovering that each time.
+    log = load_source_log(SOURCE_LOG)
+    kinds = {c.conflict_id: c.kind for c in open_conflicts(log)}
+    assert kinds == {
+        "desolation-sma-distance": "cross_source",
+        "cpma-designated-site-count": "internal",
+        "mokelumne-carson-pass-season-pass": "cross_source",
+    }
+
+
+def test_every_logged_conflict_declares_its_kind():
+    log = load_source_log(SOURCE_LOG)
+    undeclared = sorted({e.conflict_id for e in log if e.conflict_id and not e.conflict_kind})
+    assert undeclared == [], f"conflicts with no kind: {undeclared}"
+
+
+def test_adding_a_field_did_not_reorder_the_positional_arguments():
+    # conflict_kind was briefly inserted before conflict_id, which silently
+    # made every 8-positional construction pass the wrong value.
+    from wayproof.permits import SourceLogEntry
+    entry = SourceLogEntry("2026-01-01", "g", "https://x", "", "test",
+                           "unresolved-conflict", "summary", "my-conflict")
+    assert entry.conflict_id == "my-conflict"
+    assert entry.conflict_kind == ""

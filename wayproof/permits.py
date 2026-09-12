@@ -659,6 +659,17 @@ class SourceLogEntry:
     needs no ids at all.
     """
 
+    conflict_kind: str = ""
+    """``internal`` when one document disagrees with itself, ``cross_source``
+    when two documents disagree.
+
+    It decides how to resolve the conflict, so it is worth recording rather
+    than rediscovering. A self-contradicting document has already told you its
+    blanket statement is unreliable, and needs no ranking of publishers -- two
+    of the three conflicts opened in one week turned out to be this, wearing
+    the costume of a cross-source dispute. See :mod:`wayproof.provenance`.
+    """
+
 
 @dataclass
 class OpenConflict:
@@ -667,9 +678,11 @@ class OpenConflict:
 
     permit_group: str
     conflict_id: str
-    opened: str
+    kind: str = ""
+    """``internal`` or ``cross_source`` -- how this one has to be resolved."""
+    opened: str = ""
     """``date_checked`` of the entry that first opened this disagreement."""
-    last_checked: str
+    last_checked: str = ""
     entries: List[SourceLogEntry] = field(default_factory=list)
     """Every entry in this thread, chronologically -- the resolved ones too."""
 
@@ -707,6 +720,7 @@ def load_source_log(
             verdict=_str_field(row, "verdict"),
             summary=_str_field(row, "summary"),
             conflict_id=_str_field(row, "conflict_id"),
+            conflict_kind=_str_field(row, "conflict_kind"),
         )
         for _, row in df.iterrows()
     ]
@@ -739,6 +753,7 @@ def open_conflicts(log: Sequence[SourceLogEntry]) -> List[OpenConflict]:
         out.append(OpenConflict(
             permit_group=group,
             conflict_id=conflict_id,
+            kind=next((e.conflict_kind for e in reversed(entries) if e.conflict_kind), ""),
             opened=disagreements[0].date_checked,
             last_checked=entries[-1].date_checked,
             entries=list(entries),

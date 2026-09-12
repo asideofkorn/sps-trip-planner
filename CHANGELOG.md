@@ -6,6 +6,36 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **A provenance model** (`data/sources.csv`, `data/source_deferrals.csv`,
+  `wayproof/provenance.py`). Reconciling two official sources needed three
+  separate judgements and only one was ever written down. Now all three are
+  data:
+  - **Authority is per topic, not a ranking.** The Forest Service owns
+    regulation, permit requirement and access; recreation.gov owns booking
+    mechanics, fees and availability, because it is the system that performs
+    them. Neither outranks the other globally — which is why trusting the
+    booking platform on the fee tier and the forest on the day-use rule were
+    both right.
+  - **Deferrals are observed, not asserted.** recreation.gov's own page says a
+    day use permit comes "from a local Forest Service office", handing the
+    question back. Each deferral is stored with the sentence that establishes
+    it, so it stops being true if the wording changes. Not every outbound link
+    is one: the same page cites a 2022 guide, which endorses a document rather
+    than transferring a question.
+  - **Self-contradiction is checked before anyone is ranked.** Two of the three
+    conflicts opened this week were one document disagreeing with itself.
+    `SourceLogEntry` gains `conflict_kind` (`internal` / `cross_source`),
+    because that decides how a conflict gets resolved.
+  - **A stale owner does not win on authority.** When the source that owns a
+    topic is materially older than the one that doesn't, `resolve()` refuses to
+    pick. A stale regulator page is how a superseded rule survives online.
+  - Three new derived gaps: rules resting on a source that doesn't own the
+    claim (13 Desolation rules transcribed from the booking platform), sources
+    stale beyond two years (two rows on 2021 Forest Service pages), and cited
+    URLs missing from the registry.
+  - The resolution rule is tested against every conflict this project actually
+    resolved and defended in prose. A model that disagrees with the decisions
+    it was derived from is wrong.
 - **A `wilderness` regulation scope** (`permits.csv` gains `wilderness_area`).
   Mokelumne Wilderness is entered on two different permits — the free general
   self-issue one and the quota'd Carson Pass Management Area one — under a

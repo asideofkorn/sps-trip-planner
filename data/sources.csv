@@ -1,0 +1,8 @@
+source_id,publisher,url_prefix,role,regulates,notes
+fs_usda,USDA Forest Service,https://www.fs.usda.gov/,regulator,regulation;permit_requirement;access,"The land manager. It writes and enforces the rules on national forest land, so it owns what you may do and whether a permit is needed. It does NOT own booking mechanics -- it hands those to recreation.gov."
+nps,National Park Service,https://www.nps.gov/,regulator,regulation;permit_requirement;access,The land manager for national park units.
+recreation_gov,Recreation.gov,https://www.recreation.gov/,booking_platform,booking_mechanics;fees;availability,"The system of record for reservations across agencies. It owns release windows, what it charges, change and cancellation policy, and the live quota calendar, because it is the thing that performs them. Its narrative descriptions of rules are restatements of the land manager's, not the source of them."
+readyforwildfire,CAL FIRE,https://www.readyforwildfire.org/,regulator,regulation;permit_requirement,"CAL FIRE's public entry point for the California Campfire Permit, which is state law rather than a forest rule."
+parks_ca,California State Parks,https://www.parks.ca.gov/,regulator,permit_requirement,Issues the Sno-Park permit required at some trailheads in winter.
+cdfw,California Department of Fish and Wildlife,https://wildlife.ca.gov/,regulator,regulation,"Owns fishing and hunting seasons, limits and licensing. Both the Forest Service and recreation.gov defer to it rather than restating its rules."
+desowv,Desolation Wilderness Volunteers,http://desowv.org/,secondary,,"A volunteer partner organisation. Hosts useful copies of agency documents, but owns no claim -- anything it says traces back to the Forest Service."
