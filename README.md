@@ -344,6 +344,8 @@ The repository currently includes:
 - `data/park_access.csv` - park-level vehicle entrance fees, gate hours, and fee exemptions (distinct from a wilderness permit or a campsite reservation)
 - `data/passes.csv` - Sierra pass data used for optional coarse cross-crest
   distance estimates
+- `data/permit_zones.csv` - bookable destination zones for permit groups
+  whose quota attaches to a destination rather than an entry point
 
 The project does not currently:
 
@@ -564,6 +566,31 @@ of the same two functions, not a redesign:
 The latter three need real hosted infrastructure beyond a static page;
 they stay documented extension points until there's a real reason to
 build one.
+
+## Destination Zones: Quota By Where You Go
+
+Most permit groups here quota the **entry point** — Inyo NF and Hoover count
+people per trailhead, so your trailhead tells you which quota you're competing
+for. Desolation Wilderness doesn't work that way. Its quota is assigned per
+**destination zone**, and booking asks which of 45 numbered zones you'll spend
+your *first night* in; after that night you may move freely, provided you exit
+by the last date booked. A day hike needs no zone at all.
+
+That makes a zone a genuinely separate entity from both the trailhead and the
+objective — one trailhead reaches many zones, one zone is reachable from several
+trailheads — so `data/permit_zones.csv` keys them by `permit_group` rather than
+hanging them off a trailhead or peak, the same way `release_policies.csv` holds
+release phases that used to be prose.
+
+**What this data deliberately does not say is which zone serves which
+objective.** Zone names frequently match a lake or a peak — Aloha, Gilmore,
+Dick's Peak, Ralston — which makes name-matching tempting and wrong. A zone is
+a mapped boundary; its name is not that boundary. Mount Tallac is the clean
+counterexample: it has no zone named for it at all, and its trailhead reaches
+several. Both the human and agent surfaces state this non-claim explicitly,
+because an agent matching "Ralston Peak" to zone "45 Ralston" is exactly the
+inference the data doesn't support. Resolving it needs the official zone map's
+geometry, and until that's read it stays an open question.
 
 ## The Website
 
@@ -1277,6 +1304,7 @@ wayproof/
 │   ├── water_source_log.csv      # append-only water-availability check ledger
 │   ├── park_access.csv           # park-level entrance fees, gate hours, exemptions
 │   ├── timed_entry.csv           # year-scoped vehicle timed-entry requirements
+│   ├── permit_zones.csv          # bookable destination zones (quota by destination, not entry)
 │   ├── pending_reports.csv       # community/self submission intake queue (created on first use)
 │   └── source/                   # official Sierra Club files + trimmed GNIS subset
 ├── scripts/
@@ -1315,6 +1343,7 @@ wayproof/
 │   ├── camping.py
 │   ├── water.py
 │   ├── park_access.py
+│   ├── permit_zones.py
 │   ├── timed_entry.py
 │   ├── reports.py
 │   ├── plan.py

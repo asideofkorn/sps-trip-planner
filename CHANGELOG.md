@@ -6,6 +6,62 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **Destination zones** (`data/permit_zones.csv`, `wayproof/permit_zones.py`), and a
+  substantial Desolation Wilderness reconciliation behind them. Desolation's
+  quota attaches to *where you go* rather than *where you enter*: you book one
+  of 45 numbered destination zones and must spend your first night in it. All
+  45 are now recorded, plus the separate "Tahoe Rim Trail (Thru Hike Only)"
+  option, which is selectable alongside them but isn't a numbered zone.
+  - The count is now corroborated by four independent sources: the
+    recreation.gov booking dropdown (2026), the permit page text (2026), the
+    USFS trip-planning guide (2022), and the official Eldorado NF zone map
+    (2011), whose labels also show the numbering is contiguous 1-45.
+  - **Which zone serves a given objective is deliberately not asserted.** Zone
+    names frequently match a lake or peak, but a zone is a mapped boundary and
+    a name is not that boundary -- and Mount Tallac, the trailhead that
+    prompted this work, has no zone named for it at all. Both the HTML and
+    agent surfaces state this non-claim explicitly, since an LLM matching
+    "Ralston Peak" to zone "45 Ralston" is exactly the inference the data
+    doesn't support.
+
+### Fixed
+- **`permit_status()` treated release mechanisms as mutually exclusive.** Any
+  `walkup` phase short-circuited a permit group to "not reservable in advance,"
+  which was fine while every migrated group was homogeneous but is backwards
+  for Desolation, where roughly two-thirds of each zone's quota *is* reservable
+  online and only the remaining third is same-day. Reservable phases now win
+  the dispatch whenever they exist, with the walk-up share appended.
+- **Desolation's off-season answer was wrong.** With no `off_season` phase on
+  file, `permit_status()` fell back to asserting off-season permits are
+  "free/self-issue, no reservation" -- but recreation.gov states they are still
+  booked through it, merely bookable and printable on the day of entry. This is
+  the *second* group where that assumption proved wrong against a real source
+  (Whitney Zone was the first), so `open_questions()` now derives the same gap
+  for every remaining quota'd group carrying it (currently `hoover`,
+  `inyo_jmw_aaw`, `inyo_gtw`, `sierra_nf`, `seki`) rather than leaving five
+  unevidenced claims in place. They're surfaced as questions, not silently
+  "fixed" -- each needs its own source check.
+
+### Changed
+- **`data/permits.csv`'s `desolation` row substantially corrected and expanded**
+  against the live recreation.gov permit page, with five new
+  `permit_source_log.csv` entries recording what each source confirmed. Newly
+  captured hard requirements that were missing entirely: bear canister required
+  with fines up to $5,000 under 36 CFR 261.58(cc); a signed *printed* permit
+  must be carried and a reservation confirmation is explicitly not a valid
+  permit; permits print starting 7 days before entry; campfires prohibited
+  year-round though camp stoves are permitted; the four Special Management
+  Areas with designated campsites; the $20 annual pass; and the "exit by the
+  last date booked" limit on roaming after the first night.
+  - Fees corrected from per-*person* to per-*adult* -- children 12 and under
+    are free, an omission that materially over-quoted a family.
+  - Two conflicts are recorded as `unresolved-conflict` rather than silently
+    resolved: the upper fee tier (2-14 nights per recreation.gov 2026 vs 2-13
+    per the 2022 USFS guide), and whether a day-use permit is required
+    year-round (recreation.gov and the zone map say yes; Eldorado NF's own
+    day-use page says only during quota season -- and that reading came from a
+    search snippet rather than a direct fetch, so it explicitly needs a
+    first-hand read before anything is changed on it).
 - **Trailhead pages on wayproof.dev, led by permit content** (`wayproof/views.py`,
   `wayproof/render.py`): one page per trailhead (88 today), each published in
   three representations from a single view model -- HTML for people,

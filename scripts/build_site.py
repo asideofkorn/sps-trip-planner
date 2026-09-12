@@ -34,6 +34,7 @@ from wayproof.access import load_approaches
 from wayproof.camping import load_campgrounds, load_campsites
 from wayproof.data_loader import load_peaks, load_trailheads
 from wayproof.park_access import load_park_access
+from wayproof.permit_zones import load_permit_zones
 from wayproof.permits import load_permits, load_source_log
 from wayproof.render import (
     STYLESHEET,
@@ -193,15 +194,17 @@ def _featured_html(views) -> str:
 
 def build(output_dir: Path, today: datetime.date | None = None) -> dict:
     today = today or datetime.date.today()
+    permits = load_permits("data/permits.csv", "data/release_policies.csv")
     data = _load_all_data()
-    questions = open_questions(**data)
+    questions = open_questions(permits=list(permits.values()), **data)
 
     views = trailhead_views(
         trailheads=data["trailheads"],
-        permits=load_permits("data/permits.csv", "data/release_policies.csv"),
+        permits=permits,
         approaches=data["approaches"],
         peaks=data["peaks"],
         source_log=load_source_log("data/permit_source_log.csv"),
+        zones=load_permit_zones("data/permit_zones.csv"),
         questions=questions,
         today=today,
     )
