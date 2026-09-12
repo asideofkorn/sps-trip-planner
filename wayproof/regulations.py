@@ -45,7 +45,8 @@ _VALID_SCOPES = {JURISDICTION, AGENCY, PERMIT_GROUP}
 # Ordered for presentation: the ones that carry a fine or ruin a trip first.
 CATEGORY_ORDER = [
     "fire", "food_storage", "group_size", "camping", "waste", "water",
-    "fishing", "pets", "stock", "weapons", "natural_features", "commercial",
+    "fishing", "pets", "stock", "weapons", "aircraft", "natural_features",
+    "commercial",
 ]
 
 CATEGORY_LABELS = {
@@ -59,6 +60,7 @@ CATEGORY_LABELS = {
     "pets": "Pets",
     "stock": "Stock and livestock",
     "weapons": "Firearms",
+    "aircraft": "Drones and aircraft",
     "natural_features": "Natural features",
     "commercial": "Commercial use",
 }

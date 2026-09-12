@@ -468,13 +468,20 @@ def test_format_source_log_labels_each_conflict_thread():
     assert "conflict day-use-season (still open)" in report
 
 
-def test_the_real_desolation_log_keeps_two_conflicts_open_and_one_closed():
-    # The exact case that forced this: the fee tier was settled by the permit
-    # page's Fees & Cancellation tab, while the day-use season and the 25-vs-30
-    # ft Special Management Area setback both remain genuinely unsettled.
+def test_the_real_desolation_log_closes_conflicts_one_at_a_time():
+    # Desolation has opened three separate disagreements. Two are now settled
+    # on their own evidence -- the fee tier by the permit page's Fees &
+    # Cancellation tab, the day-use season by Eldorado NF's FAQ -- while the
+    # 25-vs-30 ft Special Management Area setback is still genuinely unsettled.
+    # Under the old group-level tracking, closing either of the first two would
+    # have closed this one too.
     log = load_source_log(SOURCE_LOG)
     ids = {c.conflict_id for c in open_conflicts(log) if c.permit_group == "desolation"}
-    assert ids == {"desolation-day-use-season", "desolation-sma-distance"}
+    assert ids == {"desolation-sma-distance"}
+
+    closed = {"desolation-fee-tier", "desolation-day-use-season"}
+    logged = {e.conflict_id for e in log if e.conflict_id}
+    assert closed <= logged, "the closed conflicts must still be visible in the log"
 
 
 def test_every_conflict_entry_in_the_real_log_names_its_conflict():

@@ -322,13 +322,75 @@ def test_campfire_rule_warns_off_the_debris_burning_permit():
     assert "burning debris" in rule.detail.lower()
 
 
-def test_the_lantern_discrepancy_between_the_two_pages_is_recorded():
-    # The permits FAQ lists campfires, barbeques and portable stoves; the
-    # campfire-safety page adds lanterns. Keeping the fuller list is a choice,
-    # so it is written down rather than silently made.
+def test_the_lantern_discrepancy_was_settled_by_a_third_source():
+    # CAL FIRE's permits FAQ omitted lanterns where the campfire-safety page
+    # included them. Eldorado NF's FAQ independently names lanterns, so the
+    # fuller list now rests on two sources against one summary -- and the
+    # detail says so rather than leaving the old hedge in place.
     regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
     rule = next(r for r in regs if r.regulation_id == "ca-campfire-permit")
-    assert "adds lanterns" in rule.detail
+    assert "lantern question is settled" in rule.detail
+    assert "two sources against one summary" in rule.detail
+
+
+def test_the_campfire_permit_must_be_carried_for_inspection():
+    # Holding one is not enough: Eldorado NF says it must be available for
+    # rangers to check while camping.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    rule = next(r for r in regs if r.regulation_id == "ca-campfire-permit")
+    assert "YOU MUST CARRY IT" in rule.detail
+    assert "inspect" in rule.detail or "check" in rule.detail
+
+
+# -- forest-wide rules from the Eldorado NF FAQ -----------------------------
+
+def _eldorado_rules_for(group):
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
+                           os.path.join(ROOT, "data", "release_policies.csv"))
+    rule = permits[group]
+    return {r.regulation_id for r in regulations_for(regs, group, rule.agency_ids,
+                                                     rule.jurisdiction)}
+
+
+def test_the_faq_rules_reach_all_three_eldorado_groups():
+    added = {"eldorado-firewood-gathering", "eldorado-dog-leash",
+             "eldorado-firearm-carry", "eldorado-drones"}
+    for group in ("desolation", "mokelumne_free", "cpma"):
+        assert added <= _eldorado_rules_for(group), f"{group} should inherit all four"
+
+
+def test_the_faq_rules_do_not_leak_to_other_forests():
+    assert "eldorado-dog-leash" not in _eldorado_rules_for("whitney_zone")
+
+
+def test_the_forest_leash_rule_is_stricter_than_the_permit_pages_wording():
+    # recreation.gov says "under control at all times"; the forest says
+    # physically restrained on a leash under six feet. A reader planning from
+    # the looser wording alone would be out of compliance.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    leash = next(r for r in regs if r.regulation_id == "eldorado-dog-leash")
+    assert "six feet" in leash.summary
+    assert "physically restrained" in leash.summary
+    assert "stricter" in leash.detail
+
+
+def test_firewood_gathering_does_not_read_as_permission_to_have_a_fire():
+    # Gathering wood is allowed forest-wide; campfires are banned outright in
+    # both wildernesses this forest administers. The rule has to say so, or it
+    # reads as an invitation.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    wood = next(r for r in regs if r.regulation_id == "eldorado-firewood-gathering")
+    assert "permits the gathering, not the fire" in wood.detail
+    assert "Desolation" in wood.detail and "Mokelumne" in wood.detail
+
+
+def test_the_drone_rule_states_the_practical_answer():
+    # "Allowed on the forest, except over wilderness" is technically true and
+    # practically backwards here, since nearly every objective is in wilderness.
+    regs = load_regulations(os.path.join(ROOT, "data", "regulations.csv"))
+    drones = next(r for r in regs if r.regulation_id == "eldorado-drones")
+    assert "the practical answer for a summit flight is no" in drones.detail
 
 
 def test_a_permit_group_named_none_reads_as_english_in_a_question():
@@ -345,3 +407,41 @@ def test_a_permit_group_named_none_reads_as_english_in_a_question():
     assert "allowed in none" not in question.question
     assert "areas needing no wilderness permit" in question.question
     assert question.target_key == "none (fire)", "the key still points at the row to fix"
+
+
+# -- the day-use conflict this FAQ closed -----------------------------------
+
+def test_desolation_day_use_is_now_quota_season_only():
+    # Resolved in favour of the land manager: Eldorado NF says so on two of its
+    # own pages, one last updated 2026-06-12, while recreation.gov (a booking
+    # platform, not the regulating authority) and a 2011 map say year-round.
+    permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
+                           os.path.join(ROOT, "data", "release_policies.csv"))
+    notes = permits["desolation"].notes
+    assert "ONLY during quota season" in notes
+    assert "no day-use permit is needed" in notes
+
+
+def test_the_losing_source_is_still_named_in_the_stored_answer():
+    # A reader who books on recreation.gov will meet text saying the opposite.
+    # Stating which source lost, and why, beats letting them think we're wrong.
+    permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
+                           os.path.join(ROOT, "data", "release_policies.csv"))
+    notes = permits["desolation"].notes
+    assert "recreation.gov" in notes and "year-round" in notes
+    assert "booking platform rather than the regulating authority" in notes
+
+
+def test_mokelumne_needs_no_day_use_permit_at_all():
+    # Adjacent to Desolation and easily confused with it.
+    permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
+                           os.path.join(ROOT, "data", "release_policies.csv"))
+    assert "no day-use permit is needed for day hiking" in permits["mokelumne_free"].notes
+
+
+def test_the_cpma_naming_trap_is_recorded():
+    # The agency calls one unit CPMA on its permit page and CPMU in its FAQ.
+    permits = load_permits(os.path.join(ROOT, "data", "permits.csv"),
+                           os.path.join(ROOT, "data", "release_policies.csv"))
+    notes = permits["cpma"].notes
+    assert "CPMU" in notes and "CPMA" in notes

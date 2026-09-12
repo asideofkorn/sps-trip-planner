@@ -6,6 +6,22 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **Four forest-wide Eldorado NF rules**, from the forest's own FAQ (last
+  updated 2026-06-12), stored once and inherited by all three Eldorado permit
+  groups:
+  - **Firewood**: gather downed wood while camping without a permit, cut no
+    tree, take none home, and bring none from outside the forest (pest
+    transport). Written so it can't read as permission to have a fire — both
+    wildernesses here ban campfires outright.
+  - **Dogs**: physically restrained on a leash under six feet for the whole
+    visit. Materially stricter than the "under control at all times" wording
+    carried from the Desolation permit page, which a reader could plan from and
+    be out of compliance.
+  - **Firearms**: carry only visible and unloaded unless actively hunting —
+    governs carry, where Desolation's existing rule governs discharge.
+  - **Drones**: allowed on the forest but not over designated wilderness, which
+    is nearly every objective here, nor under a Temporary Flight Restriction.
+    New `aircraft` category.
 - **Scoped regulations** (`data/regulations.csv`, `wayproof/regulations.py`):
   what applies *while you're out there* — fire, food storage, waste, pets,
   stock, group size — separated from `permits.csv`, which answers how you get
@@ -25,6 +41,25 @@ All notable changes to this project are documented here. The format is based on
     posing as the rule itself.
 
 ### Fixed
+- **Desolation day-use permits are quota-season only, not year-round.** This
+  was logged as an unresolved conflict rather than guessed, and it is now
+  closed: Eldorado NF's FAQ states plainly that outside quota season "no day
+  use permits are needed", and it is the second Eldorado NF page saying so —
+  this time read first-hand, with its own 2026-06-12 last-updated date, which
+  was the exact blocker the original conflict entry named. recreation.gov and a
+  2011 zone map say year-round; a booking platform is not the regulating
+  authority, and the forest that administers the land decides. The stored note
+  names the losing source and why, so a reader meeting contrary text while
+  booking isn't left thinking we're wrong.
+  - The Special Management Area setback conflict (25 vs 30 ft) is untouched by
+    this page and stays open. Under the old group-level tracking, closing the
+    day-use question would have closed it too.
+- **The campfire permit must be carried for inspection** while camping — a
+  requirement this project didn't hold. Holding one isn't enough.
+- **The lantern discrepancy is settled.** CAL FIRE's permits FAQ omitted
+  lanterns where the campfire-safety page included them; Eldorado NF's FAQ
+  independently names them, so the fuller list rests on two sources against one
+  summary. The hedge is replaced with the finding.
 - **There are two California Campfire Permits, and this project described one.**
   CAL FIRE issues a permit for federal- and state-controlled lands (campfires,
   barbeques, portable stoves) and a separate one for private lands, which also
