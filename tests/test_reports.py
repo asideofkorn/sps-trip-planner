@@ -19,6 +19,7 @@ from wayproof.reports import (
     OpenQuestion,
     Report,
     format_open_questions,
+    format_pending_reports,
     open_questions,
     pending_reports,
     resolve_report,
@@ -244,6 +245,34 @@ def test_format_open_questions_groups_by_target_file():
     assert "3 open question(s) across 2 file(s)" in text
     assert text.index("data/peaks.csv") < text.index("[A]") < text.index("[B]")
     assert "data/water_sources.csv" in text
+
+
+# --- format_pending_reports --------------------------------------------------
+
+def test_format_pending_reports_empty():
+    assert format_pending_reports([]) == "No pending reports."
+
+
+def test_format_pending_reports_shows_only_pending_status():
+    reports = [
+        Report(report_id="R0001", submitted_date="2026-09-01", target_file="data/peaks.csv",
+               target_key="Mount Carillon", claim="missing peak", confidence="secondhand",
+               channel="cli", status="pending"),
+        Report(report_id="R0002", submitted_date="2026-09-02", target_file="data/water_sources.csv",
+               target_key="Boyd Camp", claim="running", confidence="firsthand",
+               channel="cli", status="accepted"),
+    ]
+    text = format_pending_reports(reports)
+    assert "R0001" in text
+    assert "R0002" not in text
+    assert "1 pending report(s)" in text
+
+
+def test_format_pending_reports_includes_evidence_when_present():
+    reports = [Report(report_id="R0001", submitted_date="2026-09-01", target_file="f",
+                       target_key="k", claim="c", evidence="GPS track", status="pending")]
+    text = format_pending_reports(reports)
+    assert "GPS track" in text
 
 
 # --- report queue -----------------------------------------------------------

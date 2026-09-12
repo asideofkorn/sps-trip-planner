@@ -6,6 +6,24 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- **Reporting a peak missing entirely, and a real first case (Mount
+  Carillon).** `plan.py --report` now works when the objective name doesn't
+  resolve at all -- `--target-file` defaults to `data/peaks.csv` in that
+  case instead of `unspecified`, since that's exactly how someone reports
+  "this peak doesn't exist in the dataset yet" rather than a fact about a
+  peak already in it. New `wayproof.reports.format_pending_reports()`, and
+  `cli.py --open-questions` now prints the pending-review queue
+  (`data/pending_reports.csv`, new `--pending-reports-file` flag) alongside
+  the derived gaps, so a submission is visible in the same backlog as
+  everything else. Submitted a real report for Mount Carillon -- absent
+  from `data/peaks.csv`/`data/collections/sps.csv` entirely, believed to be
+  a real SPS peak near Mount Russell but not independently confirmed here
+  -- replacing the old plan of the maintainer just adding it directly.
+  This is the previously-tracked "add Mount Carillon as an unconfirmed
+  approach row" item, reframed: instead of the maintainer doing the
+  research and asserting an answer, it's now a `status=pending` claim
+  awaiting confirmation, the same as any future community submission would
+  be. New tests in `tests/test_reports.py` for `format_pending_reports()`.
 - **Migrated every previously session-tracked data-quality item onto the
   live `open_questions()` system**, plus a new `cli.py --open-questions`
   flag printing the full backlog across the whole dataset (not scoped to a

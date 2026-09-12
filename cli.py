@@ -131,6 +131,9 @@ def _parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--timed-entry-file", default="data/timed_entry.csv",
                    help="Year-scoped timed-entry history for --open-questions "
                         "(default data/timed_entry.csv)")
+    p.add_argument("--pending-reports-file", default="data/pending_reports.csv",
+                   help="Submitted-but-unreviewed reports for --open-questions "
+                        "(default data/pending_reports.csv)")
     p.add_argument("--list", default="SPS",
                    help="If the data has a 'list' column, keep only this list "
                         "(default SPS; use 'all' to keep everything). Requires "
@@ -196,7 +199,10 @@ def main(argv=None) -> int:
     if args.open_questions:
         from wayproof.access import load_approaches
         from wayproof.camping import load_campgrounds, load_campsites
-        from wayproof.reports import open_questions, format_open_questions
+        from wayproof.reports import (
+            open_questions, format_open_questions,
+            pending_reports, format_pending_reports,
+        )
         from wayproof.timed_entry import load_timed_entry
         from wayproof.water import load_water_sources, load_water_source_log
 
@@ -216,6 +222,8 @@ def main(argv=None) -> int:
             campsites=campsites, timed_entry=timed_entry, peak_names=None,
         )
         print(format_open_questions(questions))
+        print()
+        print(format_pending_reports(pending_reports(args.pending_reports_file)))
         return 0
 
     if not args.input:
