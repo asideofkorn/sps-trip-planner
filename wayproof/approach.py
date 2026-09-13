@@ -18,7 +18,9 @@ currency as the rest of the candidate sequence.
 
 from __future__ import annotations
 
+import re
 from collections import Counter
+from dataclasses import dataclass
 from typing import List, Optional, Sequence, Tuple
 
 from .model import Peak, Trailhead
@@ -27,6 +29,70 @@ from .distances import haversine_miles, naismith_effective_miles
 # Trails switchback and contour, so on-trail distance exceeds the straight line.
 # Used only for the geometric fallback when official mileage is unavailable.
 DEFAULT_SINUOSITY = 1.25
+
+
+
+@dataclass
+class EntryConflict:
+    """A peak whose sourced route contradicts the trailhead geometry picked.
+
+    ``nearest_trailhead`` is computed by ``scripts/assign_trailheads.py`` as
+    great-circle distance from the summit. It is geometry, not evidence, and
+    ``views.py`` already labels it "UNVERIFIED ... do not state these as this
+    trailhead's approach list". The collections file carries a *sourced* route
+    name for the same peak. Where the two name different places, this project
+    does not know which governs, and must say so instead of preferring the one
+    it can compute.
+    """
+
+    peak_name: str
+    sourced_route: str
+    computed_trailhead: str
+
+    def __str__(self) -> str:
+        return (f"{self.peak_name}: its sourced route is {self.sourced_route!r}, but this "
+                f"plan resolved entry via {self.computed_trailhead!r} from straight-line "
+                "proximity. Those may be different entry points under different agencies.")
+
+
+def _tokens(value: str) -> set:
+    """Comparable words, minus the noise that decorates route names."""
+    noise = {"trail", "trailhead", "th", "road", "rd", "creek", "lake", "lakes",
+             "canyon", "pass", "the", "via", "and", "of"}
+    words = {w for w in re.split(r"[^a-z0-9]+", str(value or "").lower()) if len(w) > 2}
+    stripped = words - noise
+    # "Shepherd Pass Trail" vs "Shepherd Pass" must still match on "shepherd";
+    # but a name made only of noise words falls back to the full set.
+    return stripped or words
+
+
+def names_same_place(sourced: str, trailhead_name: str) -> bool:
+    """True when a sourced route name plausibly refers to this trailhead.
+
+    Deliberately generous. A false match here hides a real conflict, but a
+    false *mismatch* only produces an extra "we are not sure" -- and being
+    unsure out loud is the behaviour this is protecting.
+    """
+    a, b = _tokens(sourced), _tokens(trailhead_name)
+    return bool(a & b)
+
+
+def entry_conflicts(peaks: Sequence[Peak], chosen: Optional[Trailhead]) -> List[EntryConflict]:
+    """Every objective whose sourced route disagrees with the chosen trailhead.
+
+    Returns ``[]`` when there is nothing to compare, which is not the same as
+    agreement: a peak with no sourced route is unchecked, not confirmed.
+    """
+    if chosen is None:
+        return []
+    out: List[EntryConflict] = []
+    for peak in peaks:
+        sourced = str(peak.meta.get("trailhead") or "").strip()
+        if not sourced or names_same_place(sourced, chosen.name):
+            continue
+        out.append(EntryConflict(peak_name=peak.name, sourced_route=sourced,
+                                 computed_trailhead=chosen.name))
+    return out
 
 
 def choose_trailhead(

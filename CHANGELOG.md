@@ -138,6 +138,30 @@ All notable changes to this project are documented here. The format is based on
     posing as the rule itself.
 
 ### Fixed
+- **`plan.py` answered permit questions with straight-line geometry and said
+  nothing.** It resolves entry through `Peak.meta["nearest_trailhead"]`, which
+  `scripts/assign_trailheads.py` computes as great-circle distance from the
+  summit. `views.py` labels that same field *"UNVERIFIED: assigned by
+  straight-line proximity... Do not state these as this trailhead's approach
+  list"* — and `plan.py` stated it, under a line reading "we last checked this
+  against the source on &lt;date&gt;".
+  - Picket Guard Peak returned **Mineral King and a SEKI permit**. The
+    project's own sourced route for it is Shepherd Pass Trail — Inyo NF, the
+    opposite side of the crest, a different agency. The same output then quoted
+    "23.2 mi round trip from its standard trailhead", a figure measured from
+    Shepherd Pass. Two mutually inconsistent facts in one answer.
+  - The existing mismatch warning only fired when *several* objectives
+    disagreed with each other. A single objective contradicting its own sourced
+    route was silent.
+  - `plan.py` now compares the sourced route against the chosen trailhead per
+    objective. Where they disagree it leads with "ENTRY POINT UNRESOLVED", names
+    both candidates, labels the permit "CANDIDATE ONLY", states that the
+    verification dates belong to the permit rule rather than to the claim that
+    it governs your route, and warns that the mileage is probably measured from
+    the other trailhead. 153 of 247 SPS peaks are now flagged; 94 still answer
+    cleanly.
+  - `to_dict()` carries `entry_point_resolved` and the conflict detail, so an
+    agent reading the JSON sees what a human reading the warnings sees.
 - **A group size limit was still duplicated in Desolation's `fee_notes`** after
   the split. Found by the new overlap check on its first run, which is the
   point of it.
