@@ -45,6 +45,15 @@ TRIP = date(2027, 7, 15)
 TODAY = date(2026, 9, 13)
 
 
+def _plan_with_approaches(*names):
+    from wayproof.access import load_approaches
+    peaks = load_peaks(PEAKS, collections_path=COLLECTIONS)
+    return resolve_plan(list(names), TRIP, peaks, load_trailheads(TRAILHEADS),
+                        load_permits(PERMITS, POLICIES),
+                        approaches=load_approaches(os.path.join(ROOT, "data", "approaches.csv")),
+                        today=TODAY)
+
+
 def _plan(*names):
     peaks = load_peaks(PEAKS, collections_path=COLLECTIONS)
     return resolve_plan(list(names), TRIP, peaks, load_trailheads(TRAILHEADS),
@@ -133,3 +142,56 @@ def test_the_fix_does_not_silence_the_whole_dataset():
     assert clean <= len(sps) - 50, (
         f"{clean} of {len(sps)} answer cleanly -- the detector has stopped detecting"
     )
+
+
+# -- item 3: the override entry used to assert the opposite of its own point --
+
+def test_an_override_never_borrows_the_trailheads_wilderness():
+    # An approach override exists BECAUSE the peak is not governed by the
+    # trailhead's default permit. Mount Russell via the Mountaineers Route
+    # rendered as "Mount Whitney Zone (John Muir Wilderness)" -- being outside
+    # the Whitney Zone is the entire reason the row exists.
+    from wayproof.access import load_approaches
+    result = _plan_with_approaches("Mount Russell")
+    override = [e for e in result.permit_entries if "Mount Russell" in (e.peak_note or "")]
+    assert override, "the Mount Russell override should still be emitted"
+    assert "Whitney Zone" not in override[0].wilderness_area
+    assert override[0].agency == "Inyo National Forest"
+
+
+def test_an_unknown_wilderness_says_so_rather_than_guessing():
+    result = _plan_with_approaches("Mount Russell")
+    override = [e for e in result.permit_entries if "Mount Russell" in (e.peak_note or "")][0]
+    assert "not recorded" in override.wilderness_area
+
+
+def test_two_peaks_sharing_an_override_are_both_named():
+    # `seen` skipped the second peak and left the first labelled "only",
+    # which is false as soon as two peaks need the same override.
+    from wayproof.access import ApproachRoute
+    from wayproof.model import Cluster
+    from wayproof.permits import clusters_permit_info
+    from datetime import date as _date
+
+    peaks = load_peaks(PEAKS, collections_path=COLLECTIONS)
+    trailheads = load_trailheads(TRAILHEADS)
+    permits = load_permits(PERMITS, POLICIES)
+    # Case-insensitive on purpose: the source list uppercases emblem peaks,
+    # Kept case-insensitive on principle: a caller should not have to know
+    # how the source list typeset a name.
+    by_name = {p.name.lower(): p for p in peaks}
+    pair = [by_name["mount russell"], by_name["mount whitney"]]
+    routes = [
+        ApproachRoute(peak_name=p.name, trailhead="Whitney Portal",
+                      approach_name="North Fork", permit_group="inyo_jmw_aaw",
+                      status="confirmed")
+        for p in pair
+    ]
+    cluster = Cluster(cluster_id=1, peaks=pair, trailhead="Whitney Portal")
+    rows = clusters_permit_info([cluster], trailheads, permits, TRIP,
+                                approaches=routes, today=TODAY)
+    notes = [r.peak_note for r in rows if r.peak_note and "via North Fork" in r.peak_note]
+    assert len(notes) == 1, f"expected one combined override entry, got {notes}"
+    # Lowercased comparison so this does not re-pin a display spelling.
+    assert "mount russell" in notes[0].lower() and "mount whitney" in notes[0].lower()
+    assert "only" not in notes[0], "two peaks share it, so 'only' is false"

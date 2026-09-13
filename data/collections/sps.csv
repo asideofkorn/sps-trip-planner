@@ -26,7 +26,7 @@ Sawtooth Peak (S),SPS,1.5,2,False,False,4.1,2445.0,,Pacific Crest Trail,Nine Mil
 Castle Peak,SPS,24.3,1s3,False,False,4.2,2235.0,360.0,Boreal Ridge Parking,Nordon,False,
 North Peak,SPS,22.3,2,False,False,4.2,2630.0,490.0,Saddlebag Lake,Tioga Pass,False,
 Stanislaus Peak,SPS,23.3,1,False,False,4.2,2570.0,755.0,St. Mary's Pass Trail,Disaster Peak,False,
-Mount Carillion,SPS,5.4,2,False,False,4.2,5465.0,250.0,Mount Whitney Trail,Mount Whitney,False,
+Mount Carillon,SPS,5.4,2,False,False,4.2,5465.0,250.0,Mount Whitney Trail,Mount Whitney,False,
 North Maggie Mountain,SPS,2.4,1,False,False,4.3,4315.0,,Shakes Camp,Moses Mountain,False,
 Mount Russell,SPS,5.3,3,False,True,4.5,6100.0,310.0,Mount Whitney Trail,Mount Whitney,False,
 Mount Tallac,SPS,23.11,1,False,False,4.6,3295.0,65.0,Mount Tallac Trail,Emerald Bay,False,
@@ -42,7 +42,7 @@ Cartago Peak,SPS,3.2,2s3,False,False,5.0,6710.0,,West side of aquaduct,Olancha,F
 Mount Mills,SPS,17.1,3,False,False,5.1,3320.0,100.0,Mono Pass Trail,Mount Abbot,False,
 Mount Rose,SPS,24.4,1,False,False,5.2,1955.0,,Mount  Rose Highway,Mount Rose,True,S-1.0
 Mount Dade,SPS,17.8,2,False,False,5.3,3470.0,100.0,Mono Pass Trail,Mount Abbot,False,
-MOUNT ABBOT,SPS,17.9,3,True,False,5.3,3575.0,100.0,Mono Pass Trail,MOUNT ABBOT,False,
+Mount Abbot,SPS,17.9,3,True,False,5.3,3575.0,100.0,Mono Pass Trail,MOUNT ABBOT,False,
 Mount Morgan (S),SPS,17.11,2,False,False,5.3,4340.0,300.0,Tamarack Lakes Trail,Mount Morgan,False,
 Freel Peak,SPS,23.8,1,False,False,5.4,3050.0,,Fountain Place,Freel Peak,False,
 Mount Gilbert,SPS,14.11,2,False,False,5.5,3675.0,380.0,Bishop Pass Trail,Mount Thompson,False,
@@ -58,9 +58,9 @@ San Joaquin Mountain,SPS,19.9,1,False,False,5.9,2340.0,,Minaret Vista Parking,Ma
 Pyramid Peak (N),SPS,23.9,2,False,False,6.0,3285.0,,Lyon Creek Trail,Pyramid Peak,False,
 Mount Gould,SPS,9.4,1s3,False,False,6.0,4150.0,335.0,Kearsarge Pass Trail,Mt. Clarence King,False,
 Highland Peak,SPS,23.5,2,False,False,6.1,2935.0,640.0,Pacific Crest Trail,Ebbetts Pass,False,
-Mount Muah,SPS,3.3,2,False,False,6.2,1980.0,880.0,Mulkey Stock Horseshoe Meadow Road,Bartlett,False,
+Muah Mountain,SPS,3.3,2,False,False,6.2,1980.0,880.0,Mulkey Stock Horseshoe Meadow Road,Bartlett,False,
 Mount Goode,SPS,14.8,2,False,False,6.2,3375.0,100.0,Bishop Pass Trail,North Palisade,False,
-MATTERHORN PEAK,SPS,22.9,2,True,False,6.2,5180.0,,Horse Creek Trail,MATTERHORN PEAK,True,S-2.1
+Matterhorn Peak,SPS,22.9,2,True,False,6.2,5180.0,,Horse Creek Trail,MATTERHORN PEAK,True,S-2.1
 Alta Peak,SPS,6.1,1,False,False,6.3,4060.0,80.0,Alta Peak Trail,Lodgepole,False,
 Crag Peak,SPS,1.9,3,False,False,6.4,1885.0,800.0,SNF 21S36,Crag Peak,False,
 Dicks Peak,SPS,23.1,2,False,False,6.5,3740.0,325.0,12N16 Parking,Rockbound Vly.,False,
@@ -90,9 +90,9 @@ Mount Stanford (N),SPS,18.5,2,False,False,7.6,3355.0,360.0,Davis Lake Trail,Moun
 Iron Mountain,SPS,19.1,1,False,False,7.7,4560.0,540.0,West campground parking,Cattle Mountain,False,
 Needham Mountain,SPS,2.1,2s3,False,False,7.8,6060.0,1350.0,Sawtooth Pass Trail,Mineral King,False,
 Mount Corcoran,SPS,4.1,2,False,False,8.0,7155.0,,Granite View Drive,Mount Langley,False,
-MOUNT DARWIN,SPS,15.7,3s4,True,False,8.0,5950.0,1380.0,Lamark Lakes Trail,MOUNT DARWIN,False,
+Mount Darwin,SPS,15.7,3s4,True,False,8.0,5950.0,1380.0,Lamark Lakes Trail,MOUNT DARWIN,False,
 Florence Peak,SPS,2.8,2,False,False,8.0,6520.0,1940.0,Farewell Gap Trail,Mineral King,False,
-Mount LeConte,SPS,4.2,3,False,True,8.1,7270.0,,Granite View Drive,Mount Whitney,True,S-4.0
+Mount Le Conte,SPS,4.2,3,False,True,8.1,7270.0,,Granite View Drive,Mount Whitney,True,S-4.0
 Mokelumne Peak,SPS,23.6,2,False,False,8.2,4135.0,1200.0,Tanglefoot Trail,Mokelumne Pk.,False,
 Mount Tom,SPS,16.6,2,False,False,8.2,5980.0,100.0,Horton Lakes Trail,Mount Tom,True,S-2.2
 Half Dome,SPS,20.6,2,False,False,8.2,5975.0,1160.0,John Muir Trail,Half Dome,False,
@@ -129,23 +129,23 @@ Mount Wynne,SPS,10.4,2,False,False,10.0,7995.0,550.0,Scotty Spring,Mount Pinchot
 Goat Mountain,SPS,11.4,2,False,False,10.1,7410.0,240.0,Granite Pass Trail,The Sphinx,False,
 Mount Pinchot,SPS,10.5,2,False,False,10.1,8010.0,250.0,Scotty Spring,Mount Pinchot,False,
 Mount Wallace,SPS,15.3,2s3,False,False,10.2,4450.0,150.0,Sabrina Basin Trail,Mount Darwin,False,
-MOUNT HUMPHREYS,SPS,16.3,4,True,False,10.2,5045.0,400.0,Piute Pass Trail,MOUNT TOM,True,S-4.1
+Mount Humphreys,SPS,16.3,4,True,False,10.2,5045.0,400.0,Piute Pass Trail,MOUNT TOM,True,S-4.1
 Angora Mountain,SPS,2.2,2,False,False,10.2,5880.0,1500.0,Jerky Meadows Trail,Kern Lake,False,
 Mount Huxley,SPS,15.6,3,False,False,10.2,5875.0,1850.0,Sabrina Basin Trail,Mount Darwin,False,
 Mount Hitchcock,SPS,3.11,1,False,False,10.3,5300.0,475.0,Mount Whitney Trail,Mount Whitney,False,
-Mount Julius Ceasar,SPS,17.3,2,False,False,10.3,6100.0,300.0,Pine Creek Pass Trail,Mount Hilgard,False,
+Mount Julius Caesar,SPS,17.3,2,False,False,10.3,6100.0,300.0,Pine Creek Pass Trail,Mount Hilgard,False,
 Spanish Mountain,SPS,11.8,1,False,False,10.4,3610.0,280.0,Crown Valley Trail,Rough Spur,False,
 Pilot Knob (N),SPS,16.7,2,False,False,10.5,3795.0,800.0,North Lake Trail,Mount Hilgard,False,
-NORTH PALISADE,SPS,14.4,4,True,False,10.5,6530.0,100.0,North Fork Trail,NORTH PALISADE,True,S-4.1
-SPLIT MOUNTAIN,SPS,12.1,1,True,False,10.5,9305.0,80.0,Red Lake Trail,SPLIT MOUNTAIN,False,
+North Palisade,SPS,14.4,4,True,False,10.5,6530.0,100.0,North Fork Trail,NORTH PALISADE,True,S-4.1
+Split Mountain,SPS,12.1,1,True,False,10.5,9305.0,80.0,Red Lake Trail,SPLIT MOUNTAIN,False,
 Giraud Peak,SPS,13.2,2,False,False,10.6,5045.0,1350.0,Bishop Pass Trail,North Palisade,False,
 Mount Baxter,SPS,10.1,2,False,False,10.6,8355.0,1200.0,Baxter Pass Trail,Kearsarge Peak,False,
 Mount Hale,SPS,5.2,1,False,False,10.7,6945.0,1750.0,Mount Whitney Trail,Mount Whitney,False,
 Mount Young,SPS,5.1,1,False,False,10.8,6625.0,1750.0,Mount Whitney Trail,Mount Whitney,False,
 Red Slate Mountain,SPS,18.4,1,False,True,10.9,4990.0,,McGee Creek Trail,Convict Lake,False,
-MOUNT WHITNEY,SPS,4.7,1,True,False,10.9,6390.0,200.0,Mount Whitney Trail,MOUNT WHITNEY,True,S-1.0
+Mount Whitney,SPS,4.7,1,True,False,10.9,6390.0,200.0,Mount Whitney Trail,MOUNT WHITNEY,True,S-1.0
 Mount Silliman,SPS,6.2,1,False,False,11.0,4770.0,330.0,Silliman Pass Trail,Mount Silliman,False,
-OLANCHA PEAK,SPS,3.1,2,True,False,11.0,6435.0,100.0,Olancha Pass Trail,OLANCHA,True,S-2.1
+Olancha Peak,SPS,3.1,2,True,False,11.0,6435.0,100.0,Olancha Pass Trail,OLANCHA,True,S-2.1
 Goodale Mountain,SPS,10.9,2s3,False,False,11.0,7395.0,40.0,Taboose Pass Trail,Mount Pinchot,False,
 Mount Langley,SPS,3.5,1,False,False,11.1,4795.0,400.0,Cottonwood Lakes Trail,Mount Langley,True,S-1.1
 Mount Tyndall,SPS,5.8,2,False,False,11.1,8360.0,650.0,Shepherd Pass Trail,Mount Williamson,False,
@@ -158,7 +158,7 @@ Mount Fiske,SPS,15.5,2,False,False,11.5,5630.0,1200.0,Sabrina Basin Trail,Mount 
 Diamond Peak,SPS,9.12,2,False,False,11.6,8860.0,1765.0,Baxter Pass Trail,Mount Clarence King,False,
 Mount Sill,SPS,14.3,2,False,True,11.9,7685.0,1340.0,North Fork Trail,North Palisade,False,
 North Guard,SPS,7.1,3s4,False,False,12.0,5715.0,200.0,Roads end to Bubbs Creek Trail,Mount Brewer,False,
-MOUNT RITTER,SPS,19.3,2,True,False,12.2,6070.0,1250.0,Pacific Crest Trail,MOUNT RITTER,True,S-3.2
+Mount Ritter,SPS,19.3,2,True,False,12.2,6070.0,1250.0,Pacific Crest Trail,MOUNT RITTER,True,S-3.2
 Kennedy Mountain,SPS,11.5,1,False,False,12.2,7685.0,800.0,Jerky Meadows Trail,Slide Bluffs,False,
 Mount Harrington,SPS,11.6,3,False,False,12.4,7210.0,750.0,Kennedy Pass Trail,Cedar Grove,False,
 Junction Peak,SPS,8.8,3,False,True,12.4,8185.0,650.0,Shepherd Pass Trail,Mount Williamson,False,
@@ -169,17 +169,17 @@ Mount Izaak Walton,SPS,18.2,2,False,False,12.6,5215.0,800.0,Mono Creek Trail,Gra
 Trojan Peak,SPS,5.7,2,False,False,12.6,8565.0,920.0,Shepherd Pass Trail,Mount Williamson,False,
 West Vidette,SPS,8.7,2,False,False,12.7,5695.0,2350.0,Kearsarge Pass Trail,Mount Brewer,False,
 Recess Peak,SPS,17.5,2,False,False,12.9,6385.0,1150.0,Bear Ridge Trail,Mount Abbot,False,
-MOUNT WILLIAMSON,SPS,5.9,2,True,False,12.9,8990.0,920.0,Shepherd Pass Trail,MOUNT WILLIAMSON,True,S-3.1
+Mount Williamson,SPS,5.9,2,True,False,12.9,8990.0,920.0,Shepherd Pass Trail,MOUNT WILLIAMSON,True,S-3.1
 Colosseum Mountain,SPS,10.2,1,False,False,13.0,8405.0,520.0,Sawmill Pass Trail,Aberdeen,False,
 Mount Florence,SPS,21.3,2,False,False,13.2,5050.0,100.0,John Muir Trail,Mount Lyell,False,
-MOUNT BREWER,SPS,7.9,2,True,False,13.5,6310.0,550.0,Roads end to Bubbs Creek Trail,MOUNT BREWER,False,
+Mount Brewer,SPS,7.9,2,True,False,13.5,6310.0,550.0,Roads end to Bubbs Creek Trail,MOUNT BREWER,False,
 Black Giant,SPS,13.6,1,False,False,13.5,5655.0,1400.0,Sabrina Basin Trail,Mount Goddard,False,
 Tehipite Dome,SPS,11.7,2s3,False,True,13.5,5680.0,2800.0,Rancheria Trail,Tehipite Dome,False,
 Rogers Peak,SPS,19.6,2,False,False,13.5,7490.0,1750.0,Rush Creek Trail,Mount Lyell,False,
 Electra Peak,SPS,19.7,2,False,False,13.5,7800.0,2600.0,Rush Creek Trail,Mount Lyell,False,
 Mount Hilgard,SPS,17.4,2,False,False,13.7,7760.0,1800.0,Pine Creek Pass Trail,Mount Hilgard,False,
-Mount MacClure,SPS,21.4,3,False,False,13.8,4280.0,120.0,John Muir Trail,Mount Lyell,False,
-MOUNT LYELL,SPS,21.5,3,True,False,13.8,4545.0,120.0,John Muir Trail,MOUNT LYELL,False,
+Mount Maclure,SPS,21.4,3,False,False,13.8,4280.0,120.0,John Muir Trail,Mount Lyell,False,
+Mount Lyell,SPS,21.5,3,True,False,13.8,4545.0,120.0,John Muir Trail,MOUNT LYELL,False,
 Mount Gabb,SPS,17.6,2,False,False,13.8,7905.0,1625.0,Pine Creek Pass Trail,Mount Abbot,False,
 Mount Barnard,SPS,5.6,2,False,False,13.9,9330.0,1650.0,Shepherd Pass Trail,Mount Williamson,False,
 Charybdis,SPS,13.7,3,False,True,14.0,5820.0,1800.0,Sabrina Basin Trail,Mount Goddard,False,
@@ -199,7 +199,7 @@ Mount Eisen,SPS,6.3,2,False,False,16.5,6750.0,2400.0,Sawtooth Pass Trail,Mineral
 Joe Devel Peak,SPS,3.7,2,False,False,17.0,5285.0,1900.0,Cottonwood Pass Trail,Mount Whitney,False,
 Mount McDuffie,SPS,13.5,2,False,True,17.0,8870.0,3400.0,Bishop Pass Trail,Mount Goddard,False,
 Kern Peak,SPS,2.1,1,False,False,17.2,4920.0,3350.0,Cottonwood Pass Trail,Kern Peak,False,
-MOUNT CLARENCE KING,SPS,9.9,4s5,True,False,17.2,6445.0,2730.0,Kearsarge Pass Trail,MT CLARENCE KING,False,
+Mount Clarence King,SPS,9.9,4s5,True,False,17.2,6445.0,2730.0,Kearsarge Pass Trail,MT CLARENCE KING,False,
 Mount Ericsson,SPS,8.3,2,False,True,17.5,8150.0,200.0,Roads end to Bubbs Creek Trail,Mount Brewer,False,
 Tower Peak,SPS,22.13,3,False,True,17.7,5325.0,800.0,Leavitt Meadows Trail,Tower Peak,False,
 Mount Guyot,SPS,3.6,1,False,False,18.1,4760.0,2400.0,Cottonwood Pass Trail,Mount Whitney,False,
@@ -207,7 +207,7 @@ Mount Hooper,SPS,16.11,2s4,False,False,18.2,5790.0,800.0,Blayney Meadows Trail,F
 Mount Pickering,SPS,3.8,2,False,False,18.5,5900.0,2365.0,Cottonwood Pass Trail,Mount Whitney,False,
 Merced Peak,SPS,20.1,2,False,False,18.5,6900.0,2405.0,Mono Meadows TH,Merced Peak,False,
 Mount Stanford (S),SPS,8.4,3,False,False,18.5,9140.0,200.0,Roads end to Bubbs Creek Trail,Mount Brewer,False,
-Devils Crag #1,SPS,13.3,4,False,True,18.5,6410.0,3820.0,Bishop Pass Trail,North Palisade,False,
+Devils Crags,SPS,13.3,4,False,True,18.5,6410.0,3820.0,Bishop Pass Trail,North Palisade,False,
 Lion Rock,SPS,6.7,2,False,False,18.5,7650.0,2550.0,Alta Peak Trail,Triple Divide Peak,False,
 Mount McGee,SPS,15.11,3,False,False,18.5,7140.0,3450.0,Lamark Lakes Trail,Mount Darwin,False,
 Mount Ruskin,SPS,11.1,3,False,True,18.5,9705.0,2200.0,Taboose Pass Trail,Mount Pinchot,False,
@@ -215,12 +215,12 @@ Piute Mountain,SPS,22.12,2,False,False,18.7,4640.0,1200.0,Barney Lake Trail,Piut
 State Peak,SPS,11.3,2,False,False,18.7,8305.0,720.0,Granite Pass Trail,Marion Peak,False,
 Wheel Mountain,SPS,13.4,3,False,False,18.7,6815.0,3850.0,Bishop Pass Trail,Mount Goddard,False,
 Mount Chamberlin,SPS,3.9,1,False,False,18.8,5130.0,1900.0,Cottonwood Pass Trail,Mount Whitney,False,
-MOUNT GODDARD,SPS,13.9,2,True,False,18.8,7960.0,2200.0,Bishop Pass Trail,MOUNT GODDARD,False,
+Mount Goddard,SPS,13.9,2,True,False,18.8,7960.0,2200.0,Bishop Pass Trail,MOUNT GODDARD,False,
 Caltech Peak,SPS,8.12,2,False,False,18.9,9275.0,1775.0,Shepherd Pass Trail,Mount Brewer,False,
 Mount Newcomb,SPS,3.1,2,False,False,19.0,5380.0,1900.0,Cottonwood Pass Trail,Mount Whitney,False,
 Triple Divide Peak,SPS,7.1,2,False,True,19.2,7325.0,2450.0,Alta Peak Trail,Triple Divide Peak,False,
 Red Peak,SPS,20.2,2,False,False,19.5,5470.0,1000.0,Mono Meadows Trail,Merced Peak,False,
-Forester Peak,SPS,19.8,2,False,False,19.8,6385.0,1300.0,Iceberg Pass Trail,Mount Lyell,False,
+Foerster Peak,SPS,19.8,2,False,False,19.8,6385.0,1300.0,Iceberg Pass Trail,Mount Lyell,False,
 Table Mountain,SPS,7.6,3,False,True,19.9,9920.0,2600.0,Shepherd Pass Trail,Mount Brewer,False,
 Mount Henry,SPS,15.13,2,False,False,20.0,4715.0,700.0,Blackcap Basin Trail,Mount Henry,False,
 Thunder Mountain,SPS,7.7,3s4,False,True,20.0,9625.0,2420.0,Shepherd Pass Trail,Mount Brewer,False,
@@ -232,7 +232,7 @@ Observation Peak,SPS,13.1,2,False,False,20.7,7550.0,4000.0,Bishop Pass Trail,Nor
 Mount Jordan,SPS,8.1,3s4,False,False,20.8,9885.0,1600.0,Granite Pass Trail,Mount Brewer,False,
 Emerald Peak,SPS,15.12,2,False,False,21.5,6035.0,850.0,Blayney Meadows Trail,Mount Henry,False,
 Gray Peak,SPS,20.3,2,False,False,22.0,6045.0,1700.0,Mono Meadows Trail,Merced Peak,False,
-Mount Lippincott,SPS,6.4,2,False,False,22.0,8405.0,3950.0,Sawtooth Pass Trail,Triple Divide Peak,False,
+Lippincott Mountain,SPS,6.4,2,False,False,22.0,8405.0,3950.0,Sawtooth Pass Trail,Triple Divide Peak,False,
 Eagle Scout Peak,SPS,6.5,2,False,False,22.2,8290.0,3350.0,Alta Peak Trail,Triple Divide Peak,False,
 Mount Stewart,SPS,6.6,2,False,False,22.7,7940.0,3000.0,Alta Peak Trail,Triple Divide Peak,False,
 Black Kaweah,SPS,6.1,3,False,True,22.7,10010.0,4100.0,Sawtooth Pass Trail,Triple Divide Peak,False,
@@ -243,7 +243,7 @@ Tunemah Peak,SPS,13.12,2,False,False,24.0,7625.0,2450.0,Crown Valley Trail,Slide
 Whaleback,SPS,7.3,3,False,False,24.0,6225.0,2850.0,Marvin Pass Trail,Sphinx Lake,False,
 Pettit Peak,SPS,22.1,2,False,False,25.0,6390.0,2700.0,Barney Lake Trail,Falls Ridge,False,
 Glacier Ridge,SPS,7.2,2s4,False,False,25.0,6870.0,2850.0,Marvin Pass Trail,Triple Divide Peak,False,
-MOUNT KAWEAH,SPS,6.8,1,True,False,25.0,10390.0,4400.0,Sawtooth Pass Trail,MOUNT KAWEAH,False,
+Mount Kaweah,SPS,6.8,1,True,False,25.0,10390.0,4400.0,Sawtooth Pass Trail,MOUNT KAWEAH,False,
 Finger Peak,SPS,13.11,2,False,False,28.0,7485.0,1800.0,Crown Valley Trail,Mount Goddard,False,
 Mount Reinstein,SPS,13.1,2,False,False,29.5,5385.0,1000.0,Maxson Trail,Mount Goddard,False,
 Lamont Point/Benchmark,non-SPS,1.11,2,False,False,,,,,Peak,False,

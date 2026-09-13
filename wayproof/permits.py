@@ -506,6 +506,25 @@ def _permit_entry(
     )
 
 
+
+def _override_wilderness(rule: PermitRule) -> str:
+    """The wilderness to show on an approach-override entry.
+
+    Never the trailhead's. An override exists because this peak is NOT governed
+    by the trailhead's default permit, so borrowing the trailhead's wilderness
+    label states the opposite of the row's own point -- Mount Russell via the
+    Mountaineers Route rendered as "Mount Whitney Zone (John Muir Wilderness)"
+    when being outside the Whitney Zone is the entire reason the override
+    exists.
+
+    Falls back to an explicit "not recorded" rather than a plausible-looking
+    wrong one. ``permits.csv`` populates ``wilderness_area`` on 4 of 15 rows
+    today, so most overrides have nothing true to show, and saying so is the
+    honest answer.
+    """
+    return rule.wilderness_area or "not recorded for this permit"
+
+
 def clusters_permit_info(
     clusters: Sequence[Cluster],
     trailheads: Sequence[Trailhead],
@@ -550,6 +569,7 @@ def clusters_permit_info(
                                    rule, trip_date, today))
 
         seen = set()
+        overrides: Dict[str, tuple] = {}
         for peak in c.peaks:
             for route in by_peak.get(peak.name, []):
                 if route.trailhead and route.trailhead != c.trailhead:
@@ -579,20 +599,29 @@ def clusters_permit_info(
 
                 if not route.permit_group or route.permit_group == th.permit_group:
                     continue
-                if route.permit_group in seen:
-                    continue  # avoid duplicate entries when >1 peak shares an approach
                 override_rule = permits.get(route.permit_group)
                 if override_rule is None:
                     continue
-                seen.add(route.permit_group)
-                note = f"for {peak.name} only"
-                if route.approach_name:
-                    note += f" -- via {route.approach_name}"
-                rows.append(_permit_entry(
-                    c.cluster_id, c.trailhead, th.wilderness_area, override_rule,
-                    trip_date, today, peak_note=note,
-                    approach_name=route.approach_name, approach_status=route.status,
-                ))
+                key = route.permit_group
+                if key in overrides:
+                    # A second peak needs the same override. Name it rather
+                    # than dropping it: the first entry said "only", which was
+                    # false the moment another peak shared the permit.
+                    overrides[key][1].append(peak.name)
+                else:
+                    overrides[key] = (route, [peak.name])
+
+        for group, (route, peak_names) in overrides.items():
+            override_rule = permits[group]
+            only = " only" if len(peak_names) == 1 else ""
+            note = f"for {', '.join(peak_names)}{only}"
+            if route.approach_name:
+                note += f" -- via {route.approach_name}"
+            rows.append(_permit_entry(
+                c.cluster_id, c.trailhead, _override_wilderness(override_rule),
+                override_rule, trip_date, today, peak_note=note,
+                approach_name=route.approach_name, approach_status=route.status,
+            ))
     return rows
 
 

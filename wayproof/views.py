@@ -210,6 +210,8 @@ def trailhead_view(
     relevant_questions = [q for q in questions if q.context in contexts]
 
     permit = _permit_block(rule, today)
+    if rule is not None:
+        permit["evidence"] = evidence_for(rule.log_entry_ids, source_log, sources).as_dict()
     log = [entry for entry in source_log
            if rule is not None and entry.permit_group == rule.permit_group]
     zone_list = (zones or {}).get(rule.permit_group, []) if rule is not None else []
@@ -297,10 +299,6 @@ def trailhead_view(
             {"target_file": q.target_file, "target_key": q.target_key, "question": q.question}
             for q in relevant_questions
         ],
-        # Where this permit row's current state came from, walkable forward
-        # to the sources and any argument still open against them.
-        "evidence": (evidence_for(rule.log_entry_ids, source_log, sources).as_dict()
-                     if rule is not None else evidence_for("", source_log, sources).as_dict()),
         "source_log": [
             {
                 "date_checked": e.date_checked,

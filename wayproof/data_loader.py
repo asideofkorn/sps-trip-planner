@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 import json
 from pathlib import Path
 from typing import List
@@ -57,7 +59,73 @@ _META_COLUMNS = [
     "benchmark", "benchmark_rating",
     "nearest_trailhead", "nearest_trailhead_side", "nearest_trailhead_mi",
     "notes",
+    "aliases",
 ]
+
+
+
+def normalize_peak_name(name: str) -> str:
+    """A peak name reduced to what a person would actually type.
+
+    ``data/peaks.csv`` keys on the Sierra Club list's own formatting, which
+    carries emblem/mountaineers markers, stray quotes and double spaces:
+    ``Duane Bliss Peak  @``, ``Cirque Peak #``, ``Twin Peaks" (Palisades)``.
+    Fifteen names are ALLCAPS because the source uppercases emblem peaks. None
+    of that is part of the peak's name, and all of it made the tool answer
+    "not found" to the real one.
+
+    Disambiguators like ``(N)`` and ``(S)`` are deliberately KEPT: twelve names
+    collide once they are stripped, including two different Mount Stanfords.
+    """
+    cleaned = re.sub(r'["\u201c\u201d@#]', " ", str(name or ""))
+    return re.sub(r"\s+", " ", cleaned).strip().lower()
+
+
+def resolve_peak_name(query: str, peaks) -> tuple:
+    """``(peak, candidates)`` for a typed name.
+
+    Exactly one of the two is meaningful. A unique match returns
+    ``(peak, [])``; an ambiguous one returns ``(None, [...])`` so the caller can
+    show the options instead of picking. Three real pairs differ only by the
+    source's markup character -- ``Cirque Peak`` and ``Cirque Peak #`` are
+    different summits -- and silently choosing one would be the same class of
+    error as guessing a trailhead.
+    """
+    wanted = str(query or "").strip()
+    if not wanted:
+        return None, []
+
+    by_exact = {p.name: p for p in peaks}
+    if wanted in by_exact:
+        return by_exact[wanted], []
+
+    lowered = wanted.lower()
+    exact_ci = [p for p in peaks if p.name.strip().lower() == lowered]
+    if len(exact_ci) == 1:
+        return exact_ci[0], []
+
+    aliased = [p for p in peaks
+               if any(a.strip().lower() == lowered
+                      for a in str(p.meta.get("aliases") or "").split(";") if a.strip())]
+    if len(aliased) == 1:
+        return aliased[0], []
+
+    target = normalize_peak_name(wanted)
+    loose = [p for p in peaks if normalize_peak_name(p.name) == target]
+    if len(loose) == 1:
+        return loose[0], []
+    if len(loose) > 1:
+        return None, sorted(p.name for p in loose)
+
+    # Last resort: ignore the (N)/(S) disambiguator to offer candidates. Never
+    # to pick one -- Mount Stanford (N) and (S) are 40 miles apart.
+    bare = re.sub(r"\s*\((?:n|s|e|w|\d+)\)\s*$", "", target).strip()
+    near = [p for p in peaks
+            if re.sub(r"\s*\((?:n|s|e|w|\d+)\)\s*$", "", normalize_peak_name(p.name)).strip()
+            == bare]
+    if len(near) == 1:
+        return near[0], []
+    return None, sorted(p.name for p in near)
 
 
 def load_peaks(

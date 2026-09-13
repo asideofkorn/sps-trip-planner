@@ -209,6 +209,11 @@ def _provenance_html(permit: dict, source_log: Sequence[dict]) -> str:
         out.append('</dl>')
         out.append('<p class="meta">Those are different claims: a source can be current '
                    'and still not have been re-checked here recently.</p>')
+        # The JSON has carried this since the evidence layer shipped; the HTML
+        # and Markdown did not, so 66 pages told a machine the permit was
+        # unverified while telling a person nothing. Whatever the three
+        # surfaces say here, they now say together.
+        out.append(_evidence_html(permit.get("evidence")))
     if source_log:
         out.append('<h3>Verification history</h3>')
         out.append('<table><thead><tr><th>Checked</th><th>Verdict</th><th>Source</th>'
@@ -420,6 +425,9 @@ def render_trailhead_markdown(view: dict) -> str:
             out.append(f'- Apply: {permit["apply_url"]}')
         out.append(f'- Source last updated: {permit["source_last_updated"] or "unknown"}; '
                    f'last verified by Wayproof: {permit["verified_date"] or "not recorded"}')
+        evidence = _evidence_markdown(permit.get("evidence")).strip()
+        if evidence:
+            out.append(f'- {evidence}')
         out.append("")
 
         if permit["release_events"]:

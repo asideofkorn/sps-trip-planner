@@ -36,6 +36,7 @@ from .access import ApproachRoute
 from .camping import Campground, Campsite
 from .model import Cluster, Peak, Trailhead
 from .approach import EntryConflict, choose_trailhead, entry_conflicts
+from .data_loader import resolve_peak_name
 from .park_access import ParkAccess
 from .permits import (
     ClusterPermitInfo,
@@ -223,19 +224,31 @@ def resolve_plan(
     status, a nearby campground's reservation method, the park's entrance
     fee), linked to the resolved trailhead the same conservative way.
     """
-    by_lower = {p.name.strip().lower(): p for p in peaks}
     objectives: List[Peak] = []
     not_found: List[str] = []
+    ambiguous: Dict[str, List[str]] = {}
     for name in objective_names:
-        peak = by_lower.get(name.strip().lower())
-        if peak is None:
-            not_found.append(name)
-        else:
+        # Not a plain lowercase lookup: peaks.csv keys on the source list's own
+        # formatting, so "Mount Carillon" (the GNIS spelling), "Duane Bliss
+        # Peak" (stored with a trailing emblem marker) and "Mount Whitney"
+        # (stored ALLCAPS) all used to return nothing.
+        peak, candidates = resolve_peak_name(name, peaks)
+        if peak is not None:
             objectives.append(peak)
+        elif candidates:
+            ambiguous[name] = candidates
+        else:
+            not_found.append(name)
 
     warnings: List[str] = [
         f"Objective not found in peak data: {name!r}" for name in not_found
     ]
+    for name, candidates in ambiguous.items():
+        warnings.append(
+            f"{name!r} matches more than one peak: {', '.join(candidates)}. "
+            "Name the one you mean -- these are different summits, and picking "
+            "for you is how you end up planning the wrong trip."
+        )
 
     trailhead: Optional[Trailhead] = None
     trailhead_ambiguous = False
